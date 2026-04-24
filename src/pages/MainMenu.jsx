@@ -1,7 +1,9 @@
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import { Box, Typography } from "@mui/material";
 import ViewContainer from "../components/ViewContainer";
 import MenuCircle from "../components/MenuCircle";
+import { useAuth } from "../contexts/AuthContext";
 import blueGoat from "../assets/icons/blue_goat.png";
 import udder from "../assets/icons/udder.png";
 import milkPail from "../assets/icons/milk_pail.png";
@@ -11,6 +13,10 @@ import cattlePen from "../assets/icons/cattle_pen.png";
 import barn from "../assets/icons/barn.png";
 import pest from "../assets/icons/pest.png";
 import sheet from "../assets/icons/sheet.png";
+import user from "../assets/icons/user.png";
+import newUser from "../assets/icons/new_user.png";
+import config from "../assets/icons/config.png";
+import logoutIcon from "../assets/icons/logout.png";
 
 const ButtonsContainer = ({ children }) => (
   <Box
@@ -33,6 +39,13 @@ const ButtonsContainer = ({ children }) => (
 
 const MainMenu = () => {
   const { t } = useTranslation();
+  const { logout, currentUser } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate("/");
+  };
 
   const myDayItems = [
     { icon: blueGoat, label: t("mainMenu.beforeMilking") },
@@ -49,10 +62,18 @@ const MainMenu = () => {
     { icon: sheet, label: t("mainMenu.myRecords") },
   ];
 
+  const accountActionItems = [
+    { icon: user, label: t("mainMenu.myProfile") },
+    { icon: config, label: t("mainMenu.settings") },
+    currentUser?.isAnonymous
+      ? { icon: newUser, label: t("mainMenu.createAccount"), onClick: () => navigate("/register") }
+      : { icon: logoutIcon, label: t("mainMenu.logout"), onClick: handleLogout },
+  ];
+
   return (
     <ViewContainer title={t("mainMenu.panelTitle")}>
 
-      <Box px={2} display="flex" flexDirection="column" gap={3}>
+      <Box px={2} display="flex" flexDirection="column" gap={3} marginBottom={"20px"}>
         {/* MI DÍA section */}
         <Box>
           <Typography
@@ -94,6 +115,30 @@ const MainMenu = () => {
                   icon={item.icon}
                   label={item.label}
                   borderColor="#757575"
+                />
+              ))}
+          </ButtonsContainer>
+        </Box>
+
+        {/* MI CUENTA section */}
+        <Box>
+          <Typography
+            variant="subtitle1"
+            fontWeight="bold"
+            textAlign="center"
+            textTransform="uppercase"
+            sx={{ color: "#1a8090", mb: 1.5 }}
+          >
+            {t("mainMenu.myAccount")}
+          </Typography>
+          <ButtonsContainer>
+              {accountActionItems.map((item) => (
+                <MenuCircle
+                  key={item.label}
+                  icon={item.icon}
+                  label={item.label}
+                  borderColor="#757575"
+                  onClick={item.onClick}
                 />
               ))}
           </ButtonsContainer>

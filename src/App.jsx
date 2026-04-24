@@ -9,7 +9,7 @@ import { useAuth } from "./contexts/AuthContext";
 const GuestRoute = ({ children }) => {
   const { currentUser, loading } = useAuth();
   if (loading) return null;
-  if (currentUser) return <Navigate to="/app" replace />;
+  if (currentUser && !currentUser.isAnonymous) return <Navigate to="/app" replace />;
   return children;
 };
 

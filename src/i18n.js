@@ -43,6 +43,11 @@ const resources = {
         mySupplies: "My Supplies",
         pests: "Pests & Rodents",
         myRecords: "My Records",
+        myAccount: "My Account",
+        myProfile: "My Profile",
+        settings: "Settings",
+        logout: "Logout",
+        createAccount: "Create Account",
       },
       common: {
         loading: "Loading...",
@@ -90,6 +95,11 @@ const resources = {
         mySupplies: "Mis insumos",
         pests: "Plagas y roedores",
         myRecords: "Mis registros",
+        myAccount: "Mi cuenta",
+        myProfile: "Mi perfil",
+        settings: "Configuración",
+        logout: "Cerrar sesión",
+        createAccount: "Crear cuenta",
       },
       common: {
         loading: "Cargando...",

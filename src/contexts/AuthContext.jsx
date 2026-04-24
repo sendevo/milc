@@ -1,5 +1,18 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInAnonymously, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { 
+  createContext, 
+  useContext, 
+  useEffect, 
+  useState 
+} from "react";
+import { 
+  createUserWithEmailAndPassword, 
+  EmailAuthProvider,
+  linkWithCredential,
+  onAuthStateChanged, 
+  signInAnonymously, 
+  signInWithEmailAndPassword, 
+  signOut 
+} from "firebase/auth";
 import { ref, set } from "firebase/database";
 import { auth, db } from "../firebase";
 
@@ -23,7 +36,9 @@ export const AuthProvider = ({ children }) => {
   const loginAnonymously = () => signInAnonymously(auth);
 
   const register = (email, password) =>
-    createUserWithEmailAndPassword(auth, email, password);
+    currentUser?.isAnonymous
+      ? linkWithCredential(currentUser, EmailAuthProvider.credential(email, password))
+      : createUserWithEmailAndPassword(auth, email, password);
 
   const saveUserProfile = (uid, profile) =>
     set(ref(db, `users/${uid}`), profile);

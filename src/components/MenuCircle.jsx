@@ -1,7 +1,14 @@
 import { Box, Typography } from "@mui/material";
 
-const MenuCircle = ({ icon, label, borderColor }) => (
-  <Box display="flex" flexDirection="column" alignItems="center" gap={0.75}>
+const MenuCircle = ({ icon, label, borderColor, onClick }) => (
+  <Box
+    display="flex"
+    flexDirection="column"
+    alignItems="center"
+    gap={0.75}
+    onClick={onClick}
+    sx={{ cursor: onClick ? "pointer" : "default" }}
+  >
     <Box
       sx={{
         width: 72,
