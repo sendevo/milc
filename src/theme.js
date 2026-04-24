@@ -25,8 +25,7 @@ const theme = createTheme({
           textTransform: "uppercase",
           paddingTop: 13,
           paddingBottom: 13,
-          fontSize: "1rem",
-          letterSpacing: 1,
+          fontSize: "1rem"
         },
       },
     },

@@ -7,8 +7,17 @@ import FormCard from "../components/FormCard";
 
 const Login = () => {
   const { t } = useTranslation();
-  const { login } = useAuth();
+  const { login, loginAnonymously } = useAuth();
   const navigate = useNavigate();
+
+  const handleContinueWithoutAccount = async () => {
+    try {
+      await loginAnonymously();
+      navigate("/app");
+    } catch (err) {
+      setError(err.message);
+    }
+  };
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -66,7 +75,7 @@ const Login = () => {
 
       <Box flexGrow={1} minHeight={60} />
 
-      <Box width="100%" maxWidth={380} display="flex" flexDirection="column" gap={1}>
+      <Box width="100%" maxWidth={380} display="flex" flexDirection="column" gap={1.5}>
         <Button
           type="submit"
           form="login-form"
@@ -78,12 +87,20 @@ const Login = () => {
           {t("login.submit")}
         </Button>
         <Button
-          variant="text"
+          variant="contained"
           onClick={() => navigate("/register")}
           fullWidth
-          sx={{ color: "#1a8898" }}
+          sx={{ bgcolor: "#1a8898", "&:hover": { bgcolor: "#157a88" } }}
         >
           {t("login.register")}
+        </Button>
+        <Button
+          variant="contained"
+          onClick={handleContinueWithoutAccount}
+          fullWidth
+          sx={{ bgcolor: "#757575", "&:hover": { bgcolor: "#616161" } }}
+        >
+          {t("login.continueWithoutAccount")}
         </Button>
       </Box>
     </Box>

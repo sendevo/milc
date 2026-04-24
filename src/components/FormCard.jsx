@@ -20,8 +20,7 @@ const FormCard = ({ id, onSubmit, title, error, children }) => (
     <Typography
       variant="h6"
       textAlign="center"
-      fontWeight={700}
-      letterSpacing={2}
+      fontWeight="bold"
       textTransform="uppercase"
       sx={{ color: "#5a5a5a", mb: 1 }}
     >

@@ -16,6 +16,7 @@ const resources = {
         submit: "Login",
         error: "Login failed. Please check your credentials.",
         register: "Create an account",
+        continueWithoutAccount: "Continue without account",
       },
       register: {
         title: "Register",
@@ -62,6 +63,7 @@ const resources = {
         submit: "Ingresar",
         error: "Error al iniciar sesión. Verifica tus credenciales.",
         register: "Crear una cuenta",
+        continueWithoutAccount: "Continuar sin cuenta",
       },
       register: {
         title: "Registrarse",

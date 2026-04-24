@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { Box, Button, Typography } from "@mui/material";
@@ -7,14 +6,12 @@ import { useAuth } from "../contexts/AuthContext";
 
 const Welcome = () => {
   const { t } = useTranslation();
-  const { currentUser, loading } = useAuth();
+  const { currentUser } = useAuth();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!loading && currentUser) {
-      navigate("/app", { replace: true });
-    }
-  }, [currentUser, loading, navigate]);
+  const handleStart = () => {
+    navigate(currentUser ? "/app" : "/login");
+  };
 
   return (
     <Box
@@ -67,7 +64,7 @@ const Welcome = () => {
         <Button
           variant="contained"
           fullWidth
-          onClick={() => navigate("/login")}
+          onClick={handleStart}
           sx={{
             bgcolor: "#ffffff",
             color: "#333333",
