@@ -5,7 +5,8 @@ const resources = {
   en: {
     translation: {
       welcome: {
-        title: "Welcome",
+        title: "MILC APP",
+        subtitle: "Your guide to healthy goat milk",
         start: "Start",
       },
       login: {
@@ -18,6 +19,9 @@ const resources = {
       },
       register: {
         title: "Register",
+        name: "Name",
+        place: "Location",
+        healthCard: "Health Card (Carnet Sanitario)",
         confirmPassword: "Confirm Password",
         submit: "Create Account",
         error: "Registration failed. Please try again.",
@@ -25,7 +29,19 @@ const resources = {
         backToLogin: "Back to Login",
       },
       mainMenu: {
-        title: "Main Menu",
+        title: "Control Panel",
+        panelTitle: "Control Panel",
+        myDay: "My Day",
+        moreActions: "More Actions",
+        beforeMilking: "Before Milking",
+        duringMilking: "During Milking",
+        milkCare: "Milk Care",
+        health: "Health",
+        food: "Food",
+        facilities: "Facilities",
+        mySupplies: "My Supplies",
+        pests: "Pests & Rodents",
+        myRecords: "My Records",
       },
       common: {
         loading: "Loading...",
@@ -35,7 +51,8 @@ const resources = {
   es: {
     translation: {
       welcome: {
-        title: "Bienvenido",
+        title: "MILC APP",
+        subtitle: "Tu guía para una leche saludable de cabra",
         start: "Comenzar",
       },
       login: {
@@ -48,6 +65,9 @@ const resources = {
       },
       register: {
         title: "Registrarse",
+        name: "Nombre",
+        place: "Lugar",
+        healthCard: "Carnet Sanitario",
         confirmPassword: "Confirmar contraseña",
         submit: "Crear cuenta",
         error: "Error al registrarse. Inténtalo de nuevo.",
@@ -55,7 +75,19 @@ const resources = {
         backToLogin: "Volver al inicio de sesión",
       },
       mainMenu: {
-        title: "Menú principal",
+        title: "Panel de Control",
+        panelTitle: "Panel de Control",
+        myDay: "Mi Día",
+        moreActions: "Más Acciones",
+        beforeMilking: "Antes de ordeñar",
+        duringMilking: "Durante el ordeño",
+        milkCare: "Cuidado de la leche",
+        health: "Salud",
+        food: "Alimento",
+        facilities: "Instalaciones",
+        mySupplies: "Mis insumos",
+        pests: "Plagas y roedores",
+        myRecords: "Mis registros",
       },
       common: {
         loading: "Cargando...",

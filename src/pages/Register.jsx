@@ -1,20 +1,18 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import {
-  Alert,
-  Box,
-  Button,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 import { useAuth } from "../contexts/AuthContext";
+import FormCard from "../components/FormCard";
 
-export default function Register() {
+const Register = () => {
   const { t } = useTranslation();
-  const { register } = useAuth();
+  const { register, saveUserProfile } = useAuth();
   const navigate = useNavigate();
 
+  const [name, setName] = useState("");
+  const [place, setPlace] = useState("");
+  const [healthCard, setHealthCard] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -29,7 +27,8 @@ export default function Register() {
     setError("");
     setLoading(true);
     try {
-      await register(email, password);
+      const { user } = await register(email, password);
+      await saveUserProfile(user.uid, { name, place, healthCard, email });
       navigate("/app");
     } catch {
       setError(t("register.error"));
@@ -43,23 +42,44 @@ export default function Register() {
       display="flex"
       flexDirection="column"
       alignItems="center"
-      justifyContent="center"
       minHeight="100vh"
+      bgcolor="#ffffff"
+      px={3}
+      pt={8}
+      pb={5}
     >
-      <Box
-        component="form"
+      <FormCard
+        id="register-form"
         onSubmit={handleSubmit}
-        display="flex"
-        flexDirection="column"
-        gap={2}
-        width={320}
+        title={t("register.title")}
+        error={error}
       >
-        <Typography variant="h4" textAlign="center">
-          {t("register.title")}
-        </Typography>
-        {error && <Alert severity="error">{error}</Alert>}
         <TextField
-          label={t("login.email")}
+          placeholder={t("register.name")}
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+          fullWidth
+        />
+        <TextField
+          placeholder={t("register.place")}
+          type="text"
+          value={place}
+          onChange={(e) => setPlace(e.target.value)}
+          required
+          fullWidth
+        />
+        <TextField
+          placeholder={t("register.healthCard")}
+          type="text"
+          value={healthCard}
+          onChange={(e) => setHealthCard(e.target.value)}
+          required
+          fullWidth
+        />
+        <TextField
+          placeholder={t("login.email")}
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -67,7 +87,7 @@ export default function Register() {
           fullWidth
         />
         <TextField
-          label={t("login.password")}
+          placeholder={t("login.password")}
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -75,20 +95,39 @@ export default function Register() {
           fullWidth
         />
         <TextField
-          label={t("register.confirmPassword")}
+          placeholder={t("register.confirmPassword")}
           type="password"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
           required
           fullWidth
         />
-        <Button type="submit" variant="contained" disabled={loading} fullWidth>
+      </FormCard>
+
+      <Box flexGrow={1} minHeight={60} />
+
+      <Box width="100%" maxWidth={380} display="flex" flexDirection="column" gap={1}>
+        <Button
+          type="submit"
+          form="register-form"
+          variant="contained"
+          fullWidth
+          disabled={loading}
+          sx={{ bgcolor: "#1a5f70", "&:hover": { bgcolor: "#154f5e" } }}
+        >
           {t("register.submit")}
         </Button>
-        <Button variant="text" onClick={() => navigate("/login")} fullWidth>
+        <Button
+          variant="text"
+          onClick={() => navigate("/login")}
+          fullWidth
+          sx={{ color: "#1a8898" }}
+        >
           {t("register.backToLogin")}
         </Button>
       </Box>
     </Box>
   );
-}
+};
+
+export default Register;

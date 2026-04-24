@@ -1,37 +1,36 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { Typography } from "@mui/material";
-import { useAuth } from "./contexts/AuthContext";
-import { useTranslation } from "react-i18next";
 import Welcome from "./pages/Welcome";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import MainMenu from "./pages/MainMenu";
+import ProtectedRoute from "./components/ProtectedRoute";
+import { useAuth } from "./contexts/AuthContext";
 
-function ProtectedRoute({ children }) {
+const GuestRoute = ({ children }) => {
   const { currentUser, loading } = useAuth();
-  const { t } = useTranslation();
-
-  if (loading) return <Typography sx={{ p: 4 }}>{t("common.loading")}</Typography>;
-  if (!currentUser) return <Navigate to="/login" replace />;
+  if (loading) return null;
+  if (currentUser) return <Navigate to="/app" replace />;
   return children;
-}
+};
 
-export default function App() {
+const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Welcome />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route
-          path="/app"
-          element={
-            <ProtectedRoute>
-              <MainMenu />
-            </ProtectedRoute>
-          }
-        />
+          <Route path="/" element={<Welcome />} />
+          <Route path="/login" element={<GuestRoute><Login /></GuestRoute>} />
+          <Route path="/register" element={<GuestRoute><Register /></GuestRoute>} />
+          <Route
+            path="/app"
+            element={
+              <ProtectedRoute>
+                <MainMenu />
+              </ProtectedRoute>
+            }
+          />
       </Routes>
     </BrowserRouter>
   );
-}
+};
+
+export default App;

@@ -1,16 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import {
-  Alert,
-  Box,
-  Button,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 import { useAuth } from "../contexts/AuthContext";
+import FormCard from "../components/FormCard";
 
-export default function Login() {
+const Login = () => {
   const { t } = useTranslation();
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -39,23 +34,20 @@ export default function Login() {
       display="flex"
       flexDirection="column"
       alignItems="center"
-      justifyContent="center"
       minHeight="100vh"
+      bgcolor="#ffffff"
+      px={3}
+      pt={8}
+      pb={5}
     >
-      <Box
-        component="form"
+      <FormCard
+        id="login-form"
         onSubmit={handleSubmit}
-        display="flex"
-        flexDirection="column"
-        gap={2}
-        width={320}
+        title={t("login.title")}
+        error={error}
       >
-        <Typography variant="h4" textAlign="center">
-          {t("login.title")}
-        </Typography>
-        {error && <Alert severity="error">{error}</Alert>}
         <TextField
-          label={t("login.email")}
+          placeholder={t("login.email")}
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -63,20 +55,39 @@ export default function Login() {
           fullWidth
         />
         <TextField
-          label={t("login.password")}
+          placeholder={t("login.password")}
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
           fullWidth
         />
-        <Button type="submit" variant="contained" disabled={loading} fullWidth>
+      </FormCard>
+
+      <Box flexGrow={1} minHeight={60} />
+
+      <Box width="100%" maxWidth={380} display="flex" flexDirection="column" gap={1}>
+        <Button
+          type="submit"
+          form="login-form"
+          variant="contained"
+          fullWidth
+          disabled={loading}
+          sx={{ bgcolor: "#1a5f70", "&:hover": { bgcolor: "#154f5e" } }}
+        >
           {t("login.submit")}
         </Button>
-        <Button variant="text" onClick={() => navigate("/register")} fullWidth>
+        <Button
+          variant="text"
+          onClick={() => navigate("/register")}
+          fullWidth
+          sx={{ color: "#1a8898" }}
+        >
           {t("login.register")}
         </Button>
       </Box>
     </Box>
   );
-}
+};
+
+export default Login;
