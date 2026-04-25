@@ -1,33 +1,48 @@
 /**
  * Survey tree — each key is a node ID.
  *
+ * All human-readable text is stored in labels.json and referenced here by key.
+ * Key convention:
+ *   "<nodeId>.title"                         → node title
+ *   "<nodeId>.<fieldId>.label"               → yes_no or select question text
+ *   "<nodeId>.<fieldId>.message"             → alert body text
+ *   "<nodeId>.<fieldId>.option.<optionValue>"→ select option label
+ *
  * Node shape:
  * {
- *   id:       string,          // must match the key
- *   title:    string,          // shown in the page header
- *   fields:   Field[],         // ordered list of fields to render
- *   next:     null             // terminal — branch ends here
- *           | "node-id"        // unconditional jump
- *           | { field: "fieldId", map: { value: "node-id", default: "node-id" } }
+ *   id:       string,
+ *   title:    string,          // key into labels.json
+ *   fields:   Field[],
+ *   next:     null | "node-id" | { field, map }
  * }
  *
  * Field shape (type discriminated union):
- *   { id, type: "yes_no",  label }
- *   { id, type: "select",  label, options: [{ value, label }] }
- *   { id, type: "alert",   severity: "info"|"warning"|"error"|"success", message }
+ *   { id, type: "yes_no",  label }                               ← label is a key
+ *   { id, type: "select",  label, options: [{ value, label }] }  ← labels are keys
+ *   { id, type: "alert",   severity, message }                   ← message is a key
  */
+import labels from "./labels.json";
+import i18n from "../i18n";
+
+/** Resolves a label key using the active i18n language. Falls back to English, then the key itself. */
+export const t = (key) => {
+  const lang = i18n.language?.slice(0, 2) ?? "es";
+  const entry = labels[key];
+  return entry?.[lang] ?? entry?.en ?? key;
+};
+
 const nodes = {
 
   // ─── Before Milking ───────────────────────────────────────────────────────
 
   "before-milking-start": {
     id: "before-milking-start",
-    title: "Before Milking",
+    title: "before-milking-start.title",
     fields: [
       {
         id: "udder_clean",
         type: "yes_no",
-        label: "Are the udders clean and dry?",
+        label: "before-milking-start.udder_clean.label",
       },
     ],
     next: {
@@ -38,19 +53,18 @@ const nodes = {
 
   "before-milking-cleaning": {
     id: "before-milking-cleaning",
-    title: "Udder Cleaning",
+    title: "before-milking-cleaning.title",
     fields: [
       {
         id: "cleaning_reminder",
         type: "alert",
         severity: "warning",
-        message:
-          "Clean each teat with an individual damp cloth and dry thoroughly before proceeding.",
+        message: "before-milking-cleaning.cleaning_reminder.message",
       },
       {
         id: "cleaned_now",
         type: "yes_no",
-        label: "Have you cleaned and dried the udders?",
+        label: "before-milking-cleaning.cleaned_now.label",
       },
     ],
     next: {
@@ -61,14 +75,13 @@ const nodes = {
 
   "before-milking-vet-advice": {
     id: "before-milking-vet-advice",
-    title: "Veterinary Advice",
+    title: "before-milking-vet-advice.title",
     fields: [
       {
         id: "vet_alert",
         type: "alert",
         severity: "error",
-        message:
-          "The animal may require veterinary attention. Do not proceed with milking and contact your vet.",
+        message: "before-milking-vet-advice.vet_alert.message",
       },
     ],
     next: null,
@@ -76,12 +89,12 @@ const nodes = {
 
   "before-milking-pre-dip": {
     id: "before-milking-pre-dip",
-    title: "Pre-Dip",
+    title: "before-milking-pre-dip.title",
     fields: [
       {
         id: "pre_dip_done",
         type: "yes_no",
-        label: "Did you apply pre-dip disinfectant?",
+        label: "before-milking-pre-dip.pre_dip_done.label",
       },
     ],
     next: {
@@ -92,14 +105,13 @@ const nodes = {
 
   "before-milking-pre-dip-reminder": {
     id: "before-milking-pre-dip-reminder",
-    title: "Pre-Dip Reminder",
+    title: "before-milking-pre-dip-reminder.title",
     fields: [
       {
         id: "pre_dip_info",
         type: "alert",
         severity: "info",
-        message:
-          "Pre-dipping reduces teat bacteria by up to 50%. Apply disinfectant, wait 30 seconds, then dry. It is strongly recommended.",
+        message: "before-milking-pre-dip-reminder.pre_dip_info.message",
       },
     ],
     next: "before-milking-method",
@@ -107,15 +119,15 @@ const nodes = {
 
   "before-milking-method": {
     id: "before-milking-method",
-    title: "Milking Method",
+    title: "before-milking-method.title",
     fields: [
       {
         id: "milking_method",
         type: "select",
-        label: "How will you milk today?",
+        label: "before-milking-method.milking_method.label",
         options: [
-          { value: "manual", label: "Manual" },
-          { value: "machine", label: "Machine" },
+          { value: "manual", label: "before-milking-method.milking_method.option.manual" },
+          { value: "machine", label: "before-milking-method.milking_method.option.machine" },
         ],
       },
     ],
@@ -130,14 +142,13 @@ const nodes = {
 
   "before-milking-manual-tips": {
     id: "before-milking-manual-tips",
-    title: "Manual Milking",
+    title: "before-milking-manual-tips.title",
     fields: [
       {
         id: "manual_tips",
         type: "alert",
         severity: "info",
-        message:
-          "Wash and dry your hands. Use a smooth, rhythmic motion. Ready to start.",
+        message: "before-milking-manual-tips.manual_tips.message",
       },
     ],
     next: null,
@@ -145,14 +156,13 @@ const nodes = {
 
   "before-milking-machine-tips": {
     id: "before-milking-machine-tips",
-    title: "Machine Milking",
+    title: "before-milking-machine-tips.title",
     fields: [
       {
         id: "machine_tips",
         type: "alert",
         severity: "info",
-        message:
-          "Verify that the milking machine is sanitized and vacuum pressure is within range. Ready to start.",
+        message: "before-milking-machine-tips.machine_tips.message",
       },
     ],
     next: null,

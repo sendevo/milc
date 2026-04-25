@@ -4,6 +4,7 @@ import ViewContainer from "../ViewContainer";
 import YesNoField from "./YesNoField";
 import SelectField from "./SelectField";
 import AlertBlock from "./AlertBlock";
+import { t } from "../../survey/tree";
 
 /**
  * Renders a single survey node.
@@ -42,7 +43,7 @@ const SurveyStep = ({ node, onSubmit, onBack }) => {
         return (
           <YesNoField
             key={field.id}
-            label={field.label}
+            label={t(field.label)}
             value={answers[field.id]}
             onChange={(val) => handleYesNoChange(field.id, val)}
           />
@@ -51,21 +52,21 @@ const SurveyStep = ({ node, onSubmit, onBack }) => {
         return (
           <SelectField
             key={field.id}
-            label={field.label}
+            label={t(field.label)}
             value={answers[field.id]}
             onChange={(val) => setAnswer(field.id, val)}
-            options={field.options}
+            options={field.options.map((o) => ({ ...o, label: t(o.label) }))}
           />
         );
       case "alert":
-        return <AlertBlock key={field.id} severity={field.severity} message={field.message} />;
+        return <AlertBlock key={field.id} severity={field.severity} message={t(field.message)} />;
       default:
         return null;
     }
   };
 
   return (
-    <ViewContainer title={node.title} onBack={onBack}>
+    <ViewContainer title={t(node.title)} onBack={onBack}>
       <Box display="flex" flexDirection="column" gap={2} mt={2}>
         {node.fields.map(renderField)}
 
