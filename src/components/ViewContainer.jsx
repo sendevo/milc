@@ -1,4 +1,5 @@
-import { Box, Typography } from "@mui/material";
+import { Box, IconButton, Typography } from "@mui/material";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 
 const ViewContainer = ({title, onBack, children}) => {
   return (
@@ -17,8 +18,23 @@ const ViewContainer = ({title, onBack, children}) => {
             borderBottomRightRadius: 32,
             py: 4,
             px: 3,
+            position: "relative",
             textAlign: "center",
         }}>
+            {onBack && (
+                <IconButton
+                    onClick={onBack}
+                    sx={{
+                        position: "absolute",
+                        left: 12,
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                        color: "#ffffff",
+                    }}
+                >
+                    <ArrowBackIosNewIcon fontSize="small" />
+                </IconButton>
+            )}
             <Typography
                 variant="h6"
                 fontWeight="bold"

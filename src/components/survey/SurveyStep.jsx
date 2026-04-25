@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Divider } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import ViewContainer from "../ViewContainer";
 import YesNoField from "./YesNoField";
 import SelectField from "./SelectField";
@@ -20,6 +21,7 @@ import { t } from "../../survey/tree";
  */
 const SurveyStep = ({ node, onSubmit, onBack }) => {
   const [answers, setAnswers] = useState({});
+  const navigate = useNavigate();
 
   const inputFields = node.fields.filter((f) => f.type !== "alert");
   const autoAdvance =
@@ -80,6 +82,16 @@ const SurveyStep = ({ node, onSubmit, onBack }) => {
             {node.next ? "Siguiente" : "Finalizar"}
           </Button>
         )}
+
+        <Divider sx={{ mt: 1 }} />
+        <Button
+          variant="text"
+          color="inherit"
+          onClick={() => navigate("/app")}
+          sx={{ color: "text.secondary", fontSize: "0.8rem" }}
+        >
+          Volver al menú principal
+        </Button>
       </Box>
     </ViewContainer>
   );
