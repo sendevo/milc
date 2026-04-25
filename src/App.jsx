@@ -5,6 +5,7 @@ import Register from "./pages/Register";
 import MainMenu from "./pages/MainMenu";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useAuth } from "./contexts/AuthContext";
+import './index.css';
 
 const GuestRoute = ({ children }) => {
   const { currentUser, loading } = useAuth();
@@ -15,21 +16,23 @@ const GuestRoute = ({ children }) => {
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-          <Route path="/" element={<Welcome />} />
-          <Route path="/login" element={<GuestRoute><Login /></GuestRoute>} />
-          <Route path="/register" element={<GuestRoute><Register /></GuestRoute>} />
-          <Route
-            path="/app"
-            element={
-              <ProtectedRoute>
-                <MainMenu />
-              </ProtectedRoute>
-            }
-          />
-      </Routes>
-    </BrowserRouter>
+    <div className="app-container">
+      <BrowserRouter>
+        <Routes>
+            <Route path="/" element={<Welcome />} />
+            <Route path="/login" element={<GuestRoute><Login /></GuestRoute>} />
+            <Route path="/register" element={<GuestRoute><Register /></GuestRoute>} />
+            <Route
+              path="/app"
+              element={
+                <ProtectedRoute>
+                  <MainMenu />
+                </ProtectedRoute>
+              }
+            />
+        </Routes>
+      </BrowserRouter>
+    </div>
   );
 };
 

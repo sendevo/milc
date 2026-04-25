@@ -47,6 +47,7 @@ const resources = {
         myProfile: "My Profile",
         settings: "Settings",
         logout: "Logout",
+        info: "Information & Help",
         createAccount: "Create Account",
       },
       common: {
@@ -99,6 +100,7 @@ const resources = {
         myProfile: "Mi perfil",
         settings: "Configuración",
         logout: "Cerrar sesión",
+        info: "Información y ayuda",
         createAccount: "Crear cuenta",
       },
       common: {

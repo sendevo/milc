@@ -17,6 +17,7 @@ import user from "../assets/icons/user.png";
 import newUser from "../assets/icons/new_user.png";
 import config from "../assets/icons/config.png";
 import logoutIcon from "../assets/icons/logout.png";
+import info from "../assets/icons/info_help.png";
 
 const ButtonsContainer = ({ children }) => (
   <Box
@@ -65,9 +66,12 @@ const MainMenu = () => {
   const accountActionItems = [
     { icon: user, label: t("mainMenu.myProfile") },
     { icon: config, label: t("mainMenu.settings") },
+    { icon: info, label: t("mainMenu.info") },
+    /*
     currentUser?.isAnonymous
       ? { icon: newUser, label: t("mainMenu.createAccount"), onClick: () => navigate("/register") }
       : { icon: logoutIcon, label: t("mainMenu.logout"), onClick: handleLogout },
+    */
   ];
 
   return (
