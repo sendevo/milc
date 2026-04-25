@@ -3,6 +3,7 @@ import Welcome from "./pages/Welcome";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import MainMenu from "./pages/MainMenu";
+import SurveyPage from "./pages/SurveyPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useAuth } from "./contexts/AuthContext";
 import './index.css';
@@ -27,6 +28,14 @@ const App = () => {
               element={
                 <ProtectedRoute>
                   <MainMenu />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/survey/:nodeId"
+              element={
+                <ProtectedRoute>
+                  <SurveyPage />
                 </ProtectedRoute>
               }
             />

@@ -14,9 +14,7 @@ import barn from "../assets/icons/barn.png";
 import pest from "../assets/icons/pest.png";
 import sheet from "../assets/icons/sheet.png";
 import user from "../assets/icons/user.png";
-import newUser from "../assets/icons/new_user.png";
 import config from "../assets/icons/config.png";
-import logoutIcon from "../assets/icons/logout.png";
 import info from "../assets/icons/info_help.png";
 
 const ButtonsContainer = ({ children }) => (
@@ -49,7 +47,11 @@ const MainMenu = () => {
   };
 
   const myDayItems = [
-    { icon: blueGoat, label: t("mainMenu.beforeMilking") },
+    {
+      icon: blueGoat,
+      label: t("mainMenu.beforeMilking"),
+      onClick: () => navigate("/survey/before-milking-start"),
+    },
     { icon: udder, label: t("mainMenu.duringMilking") },
     { icon: milkPail, label: t("mainMenu.milkCare") },
   ];
@@ -96,6 +98,7 @@ const MainMenu = () => {
                   icon={item.icon}
                   label={item.label}
                   borderColor="#1a8090"
+                  onClick={item.onClick}
                 />
               ))}
           </ButtonsContainer>
