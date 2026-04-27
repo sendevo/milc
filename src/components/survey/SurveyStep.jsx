@@ -69,7 +69,11 @@ const SurveyStep = ({ node, onSubmit, onBack }) => {
     };
 
     return (
-        <ViewContainer title={t(node.title)} onBack={onBack}>
+        <ViewContainer 
+            title={t(node.title)}
+            subtitle={t(node.subtitle)} 
+            showDate={true}
+            onBack={onBack}>
             <Box sx={styles.fieldsBox}>
                 {node.fields.map(renderField)}
 

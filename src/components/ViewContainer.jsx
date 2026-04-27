@@ -1,9 +1,10 @@
 import { Box, IconButton, Typography } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import DateTime from "../components/DateTime";
 import { viewContainerStyles as styles } from "../theme/ViewContainer.styles";
 
 
-const ViewContainer = ({ title, onBack, children }) => {
+const ViewContainer = ({ title, subtitle, showDate, onBack, children }) => {
     return (
         <Box
             sx={styles.container}>
@@ -22,6 +23,15 @@ const ViewContainer = ({ title, onBack, children }) => {
                     {title}
                 </Typography>
             </Box>
+            { showDate && <DateTime sx={styles.date} /> }
+            { subtitle && 
+                <Box sx={styles.subtitleContainer}>
+                    <Typography
+                        sx={styles.subtitleText}>
+                        {subtitle}
+                    </Typography>
+                </Box>
+            }
             <Box sx={styles.content}>
                 {children}
             </Box>

@@ -1,4 +1,4 @@
-import { FormControl, InputLabel, MenuItem, Select, Typography } from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 /**
  * Controlled select dropdown.
@@ -6,10 +6,8 @@ import { FormControl, InputLabel, MenuItem, Select, Typography } from "@mui/mate
  */
 const SelectField = ({ label, value, onChange, options }) => (
     <FormControl fullWidth>
-        <InputLabel>{label}</InputLabel>
         <Select
             value={value ?? ""}
-            label={label}
             onChange={(e) => onChange(e.target.value)}>
             {options.map((opt) => (
                 <MenuItem key={opt.value} value={opt.value}>

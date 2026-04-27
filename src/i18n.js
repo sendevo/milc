@@ -62,6 +62,11 @@ const resources = {
                 yes: "Yes",
                 no: "No",
             },
+            captchaDialog: {
+                title: "Verify you are human",
+                confirm: "Confirm",
+                cancel: "Cancel",
+            },
         },
     },
     es: {
@@ -121,6 +126,11 @@ const resources = {
                 backToMenu: "Volver al menú principal",
                 yes: "Sí",
                 no: "No",
+            },
+            captchaDialog: {
+                title: "Verifica que eres humano",
+                confirm: "Confirmar",
+                cancel: "Cancelar",
             },
         },
     },

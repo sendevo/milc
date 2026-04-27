@@ -20,6 +20,23 @@ export const viewContainerStyles = {
         color: "#ffffff",
         textTransform: "uppercase",
     },
+    subtitleContainer: {
+        display: "flex",
+        justifyContent: "center",
+        border: "1px solid",
+        borderColor: "text.secondary",
+        background: "linear-gradient(90deg, #1a8090 0%, #2dc5a2 100%)",
+        borderRadius: 16,
+        px: 2,
+        py: 2,
+        margin: "20px 10px 20px 10px",
+    },
+    subtitleText: {
+        color: "#ffffff",
+        px: 2,
+        py: 0.5,
+        fontWeight: "bold"
+    },
     backButton: {
         position: "absolute",
         left: 12,

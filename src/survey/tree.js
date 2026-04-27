@@ -38,6 +38,8 @@ const nodes = {
     "before-milking-start": {
         id: "before-milking-start",
         title: "before-milking-start.title",
+        subtitle: "before-milking-start.subtitle",
+        showDate: true,
         fields: [{
             id: "udder_clean",
             type: "yes_no",
@@ -55,6 +57,8 @@ const nodes = {
     "before-milking-cleaning": {
         id: "before-milking-cleaning",
         title: "before-milking-cleaning.title",
+        subtitle: "before-milking-cleaning.subtitle",
+        showDate: true,
         fields: [{
                 id: "cleaning_reminder",
                 type: "alert",
@@ -79,6 +83,8 @@ const nodes = {
     "before-milking-vet-advice": {
         id: "before-milking-vet-advice",
         title: "before-milking-vet-advice.title",
+        subtitle: "before-milking-vet-advice.subtitle",
+        showDate: true,
         fields: [{
             id: "vet_alert",
             type: "alert",
@@ -91,6 +97,8 @@ const nodes = {
     "before-milking-pre-dip": {
         id: "before-milking-pre-dip",
         title: "before-milking-pre-dip.title",
+        subtitle: "before-milking-pre-dip.subtitle",
+        showDate: true,
         fields: [{
             id: "pre_dip_done",
             type: "yes_no",
@@ -108,6 +116,7 @@ const nodes = {
     "before-milking-pre-dip-reminder": {
         id: "before-milking-pre-dip-reminder",
         title: "before-milking-pre-dip-reminder.title",
+        showDate: true,
         fields: [{
             id: "pre_dip_info",
             type: "alert",
@@ -120,6 +129,8 @@ const nodes = {
     "before-milking-method": {
         id: "before-milking-method",
         title: "before-milking-method.title",
+        subtitle: "before-milking-method.subtitle",
+        showDate: true,
         fields: [{
             id: "milking_method",
             type: "select",
@@ -146,6 +157,7 @@ const nodes = {
     "before-milking-manual-tips": {
         id: "before-milking-manual-tips",
         title: "before-milking-manual-tips.title",
+        showDate: true,
         fields: [{
             id: "manual_tips",
             type: "alert",
@@ -158,6 +170,7 @@ const nodes = {
     "before-milking-machine-tips": {
         id: "before-milking-machine-tips",
         title: "before-milking-machine-tips.title",
+        showDate: true,
         fields: [{
             id: "machine_tips",
             type: "alert",

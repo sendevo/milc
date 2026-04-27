@@ -3,11 +3,14 @@
         "en": "Before Milking",
         "es": "Antes del Ordeño"
     },
+    "before-milking-start.subtitle": {
+        "en": "Have you cleaned the space?",
+        "es": "¿Limpiaste la sala?"
+    },
     "before-milking-start.udder_clean.label": {
         "en": "Are the udders clean and dry?",
         "es": "¿Las ubres están limpias y secas?"
     },
-
     "before-milking-cleaning.title": {
         "en": "Udder Cleaning",
         "es": "Limpieza de Ubres"
