@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Box, Typography } from "@mui/material";
 import ViewContainer from "../components/ViewContainer";
 import MenuCircle from "../components/MenuCircle";
+import { mainMenuStyles as styles } from "../theme/MainMenu.styles";
 import { useAuth } from "../contexts/AuthContext";
 import blueGoat from "../assets/icons/blue_goat.png";
 import udder from "../assets/icons/udder.png";
@@ -18,13 +19,7 @@ import config from "../assets/icons/config.png";
 import info from "../assets/icons/info_help.png";
 
 const ButtonsContainer = ({ children }) => (
-    <Box
-        sx={{
-            border: "1.5px solid #d0d0d0",
-            borderRadius: 3,
-            boxShadow: "0px 4px 12px rgba(0,0,0,0.1)",
-            p: 2.5,
-        }}>
+    <Box sx={styles.buttonsContainer}>
         <Box
             display="grid"
             gridTemplateColumns="repeat(3, 1fr)"
@@ -85,7 +80,7 @@ const MainMenu = () => {
                         fontWeight="bold"
                         textAlign="center"
                         textTransform="uppercase"
-                        sx={{ color: "#1a8090", mb: 1.5, mt: 2 }}>
+                        sx={styles.sectionTitleFirst}>
                         {t("mainMenu.myDay")}
                     </Typography>
                     <ButtonsContainer>
@@ -107,7 +102,7 @@ const MainMenu = () => {
                         fontWeight="bold"
                         textAlign="center"
                         textTransform="uppercase"
-                        sx={{ color: "#1a8090", mb: 1.5 }}>
+                        sx={styles.sectionTitle}>
                         {t("mainMenu.moreActions")}
                     </Typography>
                     <ButtonsContainer>
@@ -128,7 +123,7 @@ const MainMenu = () => {
                         fontWeight="bold"
                         textAlign="center"
                         textTransform="uppercase"
-                        sx={{ color: "#1a8090", mb: 1.5 }}>
+                        sx={styles.sectionTitle}>
                         {t("mainMenu.myAccount")}
                     </Typography>
                     <ButtonsContainer>

@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Box, Button, TextField } from "@mui/material";
 import { useAuth } from "../contexts/AuthContext";
 import FormCard from "../components/FormCard";
+import { registerStyles as styles } from "../theme/Register.styles";
 
 const Register = () => {
     const { t } = useTranslation();
@@ -43,10 +44,10 @@ const Register = () => {
             flexDirection="column"
             alignItems="center"
             minHeight="100vh"
-            bgcolor="#ffffff"
             px={3}
             pt={8}
-            pb={5}>
+            pb={5}
+            sx={styles.page}>
             <FormCard
                 id="register-form"
                 onSubmit={handleSubmit}
@@ -105,14 +106,14 @@ const Register = () => {
                     variant="contained"
                     fullWidth
                     disabled={loading}
-                    sx={{ bgcolor: "#1a5f70", "&:hover": { bgcolor: "#154f5e" } }}>
+                    sx={styles.submitButton}>
                     {t("register.submit")}
                 </Button>
                 <Button
                     variant="text"
                     onClick={() => navigate("/login")}
                     fullWidth
-                    sx={{ color: "#1a8898" }}>
+                    sx={styles.backToLoginButton}>
                     {t("register.backToLogin")}
                 </Button>
             </Box>

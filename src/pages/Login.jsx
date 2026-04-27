@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Box, Button, TextField } from "@mui/material";
 import { useAuth } from "../contexts/AuthContext";
 import FormCard from "../components/FormCard";
+import { loginStyles as styles } from "../theme/Login.styles";
 
 const Login = () => {
     const { t } = useTranslation();
@@ -44,10 +45,10 @@ const Login = () => {
             flexDirection="column"
             alignItems="center"
             minHeight="100vh"
-            bgcolor="#ffffff"
             px={3}
             pt={8}
-            pb={5}>
+            pb={5}
+            sx={styles.page}>
             <FormCard
                 id="login-form"
                 onSubmit={handleSubmit}
@@ -78,21 +79,21 @@ const Login = () => {
                     variant="contained"
                     fullWidth
                     disabled={loading}
-                    sx={{ bgcolor: "#1a5f70", "&:hover": { bgcolor: "#154f5e" } }}>
+                    sx={styles.submitButton}>
                     {t("login.submit")}
                 </Button>
                 <Button
                     variant="contained"
                     onClick={() => navigate("/register")}
                     fullWidth
-                    sx={{ bgcolor: "#1a8898", "&:hover": { bgcolor: "#157a88" } }}>
+                    sx={styles.registerButton}>
                     {t("login.register")}
                 </Button>
                 <Button
                     variant="contained"
                     onClick={handleContinueWithoutAccount}
                     fullWidth
-                    sx={{ bgcolor: "#757575", "&:hover": { bgcolor: "#616161" } }}>
+                    sx={styles.anonymousButton}>
                     {t("login.continueWithoutAccount")}
                 </Button>
             </Box>

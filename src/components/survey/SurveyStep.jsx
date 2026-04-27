@@ -7,6 +7,7 @@ import YesNoField from "./YesNoField";
 import SelectField from "./SelectField";
 import AlertBlock from "./AlertBlock";
 import { t } from "../../survey/tree";
+import { surveyStepStyles as styles } from "../../theme/SurveyStep.styles";
 
 /**
  * Renders a single survey node.
@@ -69,7 +70,7 @@ const SurveyStep = ({ node, onSubmit, onBack }) => {
 
     return (
         <ViewContainer title={t(node.title)} onBack={onBack}>
-            <Box display="flex" flexDirection="column" gap={2} mt={2}>
+            <Box sx={styles.fieldsBox}>
                 {node.fields.map(renderField)}
 
                 {!autoAdvance && (
@@ -77,23 +78,17 @@ const SurveyStep = ({ node, onSubmit, onBack }) => {
                         variant="contained"
                         disabled={!isComplete}
                         onClick={() => onSubmit(answers)}
-                        sx={{ mt: 1 }}>
+                        sx={styles.submitButton}>
                         {node.next ? tUI("survey.next") : tUI("survey.finish")}
                     </Button>
                 )}
 
-                <Divider sx={{ mt: 1 }} />
+                <Divider sx={styles.divider} />
                 <Button
                     variant="text"
                     color="inherit"
                     onClick={() => navigate("/app")}
-                    sx={{
-                        color: "text.secondary",
-                        fontSize: "0.8rem",
-                        border: "1px solid",
-                        borderColor: "text.secondary",
-                        mt: 1,
-                    }}>
+                    sx={styles.backToMenuButton}>
                     {tUI("survey.backToMenu")}
                 </Button>
             </Box>

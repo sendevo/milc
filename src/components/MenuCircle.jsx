@@ -1,4 +1,5 @@
 import { Box, Typography } from "@mui/material";
+import { menuCircleStyles as styles } from "../theme/MenuCircle.styles";
 
 const MenuCircle = ({ icon, label, borderColor, onClick }) => (
     <Box
@@ -7,23 +8,14 @@ const MenuCircle = ({ icon, label, borderColor, onClick }) => (
         alignItems="center"
         gap={0.75}
         onClick={onClick}
-        sx={{ cursor: onClick ? "pointer" : "default" }}>
-        <Box
-            sx={{
-                width: 72,
-                height: 72,
-                borderRadius: "50%",
-                border: `2.5px solid ${borderColor}`,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-            }}>
-            <img src={icon} alt={label} style={{ width: 40, height: 40, objectFit: "contain" }} />
+        sx={styles.wrapper(Boolean(onClick))}>
+        <Box sx={styles.circle(borderColor)}>
+            <img src={icon} alt={label} style={styles.icon} />
         </Box>
         <Typography
             variant="caption"
             textAlign="center"
-            sx={{ maxWidth: 76, lineHeight: 1.3, fontSize: 12, color: "#444" }}>
+            sx={styles.label}>
             {label}
         </Typography>
     </Box>

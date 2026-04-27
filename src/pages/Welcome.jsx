@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Box, Button, Typography } from "@mui/material";
 import whiteGoat from "../assets/icons/white_goat.png";
 import { useAuth } from "../contexts/AuthContext";
+import { welcomeStyles as styles } from "../theme/Welcome.styles";
 
 const Welcome = () => {
     const { t } = useTranslation();
@@ -20,12 +21,7 @@ const Welcome = () => {
             alignItems="center"
             justifyContent="space-between"
             minHeight="100vh"
-            sx={{
-                background: "linear-gradient(160deg, #1a8090 0%, #2dc5a2 100%)",
-                px: 5,
-                pt: 10,
-                pb: 6,
-            }}>
+            sx={styles.page}>
             {/* Top: title + subtitle + logo */}
             <Box display="flex" flexDirection="column" alignItems="flex-start" gap={2} width="100%">
                 <Typography
@@ -51,7 +47,7 @@ const Welcome = () => {
                         component="img"
                         src={whiteGoat}
                         alt="MILC goat logo"
-                        sx={{ width: 120, height: 120, objectFit: "contain", mt: 2 }} />
+                        sx={styles.logo} />
                 </Box>
             </Box>
 
@@ -61,13 +57,7 @@ const Welcome = () => {
                     variant="contained"
                     fullWidth
                     onClick={handleStart}
-                    sx={{
-                        bgcolor: "#ffffff",
-                        color: "#333333",
-                        fontWeight: 700,
-                        boxShadow: "0px 6px 18px rgba(0,0,0,0.35)",
-                        "&:hover": { bgcolor: "#f0f0f0" },
-                    }}>
+                    sx={styles.startButton}>
                     {t("welcome.start")}
                 </Button>
             </Box>
