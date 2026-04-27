@@ -7,6 +7,7 @@ import Select from "./Select";
 import AlertBlock from "./AlertBlock";
 import NumberInput from "./NumberInput";
 import ImageList from "./ImageList";
+import MonthPicker from "./MonthPicker";
 import { t } from "../../survey/tree";
 import { surveyStepStyles as styles } from "../../theme/SurveyStep.styles";
 
@@ -23,7 +24,7 @@ import { surveyStepStyles as styles } from "../../theme/SurveyStep.styles";
  *   onBack   — () => void                 optional back navigation handler
  */
 
-const inputFieldTypes = ["select", "number_input"];
+const inputFieldTypes = ["select", "number_input", "month_picker"];
 
 const SurveyStep = ({ node, onSubmit, onBack }) => {
     const [answers, setAnswers] = useState({});
@@ -76,6 +77,18 @@ const SurveyStep = ({ node, onSubmit, onBack }) => {
                 return <AlertBlock 
                     key={field.id} 
                     message={t(field.message)} />;
+            case "month_picker":
+                return (
+                    <MonthPicker
+                        key={field.id}
+                        value={answers[field.id] ?? []}
+                        onChange={(val) => setAnswers((prev) => ({ ...prev, [field.id]: val }))}
+                        onSave={(val) => {
+                            const newAnswers = { ...answers, [field.id]: val };
+                            setAnswers(newAnswers);
+                            onSubmit(newAnswers);
+                        }} />
+                );
             case "image_list":
                 return (
                     <ImageList

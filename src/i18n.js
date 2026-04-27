@@ -62,6 +62,11 @@ const resources = {
                 yes: "Yes",
                 no: "No",
                 save: "Save",
+                months: {
+                    jan: "Jan", feb: "Feb", mar: "Mar", apr: "Apr",
+                    may: "May", jun: "Jun", jul: "Jul", aug: "Aug",
+                    sep: "Sep", oct: "Oct", nov: "Nov", dec: "Dec",
+                },
             },
             captchaDialog: {
                 title: "Verify you are human",
@@ -127,7 +132,12 @@ const resources = {
                 backToMenu: "Volver al menú principal",
                 yes: "Sí",
                 no: "No",
-                save: "Registrar"
+                save: "Registrar",
+                months: {
+                    jan: "Ene", feb: "Feb", mar: "Mar", apr: "Abr",
+                    may: "May", jun: "Jun", jul: "Jul", aug: "Ago",
+                    sep: "Sep", oct: "Oct", nov: "Nov", dec: "Dic",
+                },
             },
             captchaDialog: {
                 title: "Verifica que eres humano",
