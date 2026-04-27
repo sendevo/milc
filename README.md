@@ -35,9 +35,8 @@ src/
 │   ├── ViewContainer.jsx  # Page layout shell with gradient header
 │   └── survey/
 │       ├── AlertBlock.jsx   # Informational/warning display field
-│       ├── SelectField.jsx  # Dropdown select field
-│       ├── SurveyStep.jsx   # Renders a single survey node
-│       └── YesNoField.jsx   # Yes / No toggle buttons
+│       ├── Select.jsx       # List of options
+│       └── SurveyStep.jsx   # Renders a single survey node
 ├── contexts/
 │   └── AuthContext.jsx  # Firebase auth state + helper methods
 ├── pages/
@@ -94,6 +93,12 @@ npm run dev
 ```bash
 npm run build
 npm run preview   # preview the built output locally
+```
+
+### Deployment
+
+```bash
+firebase deploy --only hosting
 ```
 
 ## Survey System

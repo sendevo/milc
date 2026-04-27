@@ -61,6 +61,7 @@ const resources = {
                 backToMenu: "Back to main menu",
                 yes: "Yes",
                 no: "No",
+                save: "Save",
             },
             captchaDialog: {
                 title: "Verify you are human",
@@ -126,6 +127,7 @@ const resources = {
                 backToMenu: "Volver al menú principal",
                 yes: "Sí",
                 no: "No",
+                save: "Registrar"
             },
             captchaDialog: {
                 title: "Verifica que eres humano",

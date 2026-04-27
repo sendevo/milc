@@ -62,7 +62,11 @@ const MainMenu = () => {
     const accountActionItems = [
         { icon: user, label: t("mainMenu.myProfile") },
         { icon: config, label: t("mainMenu.settings") },
-        { icon: info, label: t("mainMenu.info") },
+        { 
+            icon: info, 
+            label: t("mainMenu.info"),
+            onClick: () => navigate("/info") 
+        },
         /*
         currentUser?.isAnonymous
           ? { icon: newUser, label: t("mainMenu.createAccount"), onClick: () => navigate("/register") }

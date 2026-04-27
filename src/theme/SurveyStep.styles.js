@@ -7,6 +7,7 @@ export const surveyStepStyles = {
     },
     submitButton: {
         mt: 1,
+        mb: 2
     },
     divider: {
         mt: 1,
@@ -17,5 +18,5 @@ export const surveyStepStyles = {
         border: "1px solid",
         borderColor: "text.secondary",
         mt: 1,
-    },
+    }
 };

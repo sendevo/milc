@@ -8,6 +8,7 @@ export const viewContainerStyles = {
     header: {
         width: "100%",
         background: "linear-gradient(90deg, #1a8090 0%, #2dc5a2 100%)",
+        boxShadow: "1px 1px 10px gray",
         borderBottomLeftRadius: 32,
         borderBottomRightRadius: 32,
         py: 4,
@@ -23,7 +24,7 @@ export const viewContainerStyles = {
     subtitleContainer: {
         display: "flex",
         justifyContent: "center",
-        border: "1px solid",
+        boxShadow: "2px 2px 10px gray",
         borderColor: "text.secondary",
         background: "linear-gradient(90deg, #1a8090 0%, #2dc5a2 100%)",
         borderRadius: 16,
@@ -36,6 +37,17 @@ export const viewContainerStyles = {
         px: 2,
         py: 0.5,
         fontWeight: "bold"
+    },
+    iconContainer: {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        py: 1,
+    },
+    icon: {
+        width: 60,
+        height: 60,
+        objectFit: "contain",
     },
     backButton: {
         position: "absolute",

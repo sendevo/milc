@@ -4,6 +4,7 @@
  * All human-readable text is stored in labels.json and referenced here by key.
  * Key convention:
  *   "<nodeId>.title"                         → node title
+ *   "<nodeId>.subtitle"                      → node subtitle (optional)
  *   "<nodeId>.<fieldId>.label"               → yes_no or select question text
  *   "<nodeId>.<fieldId>.message"             → alert body text
  *   "<nodeId>.<fieldId>.option.<optionValue>"→ select option label
@@ -12,12 +13,12 @@
  * {
  *   id:       string,
  *   title:    string,          // key into labels.json
+ *   subtitle: string,          // key into labels.json (optional)
  *   fields:   Field[],
  *   next:     null | "node-id" | { field, map }
  * }
  *
  * Field shape (type discriminated union):
- *   { id, type: "yes_no",  label }                               ← label is a key
  *   { id, type: "select",  label, options: [{ value, label }] }  ← labels are keys
  *   { id, type: "alert",   severity, message }                   ← message is a key
  */
@@ -40,145 +41,54 @@ const nodes = {
         title: "before-milking-start.title",
         subtitle: "before-milking-start.subtitle",
         showDate: true,
+        icon: "shroom.png",
         fields: [{
             id: "udder_clean",
-            type: "yes_no",
-            label: "before-milking-start.udder_clean.label",
+            type: "select",
+            options: [
+                { value: "yes", label: "yes" },
+                { value: "no", label: "no" },
+                { value: "dont_know", label: "dont_know" }
+            ]
         }, ],
         next: {
             field: "udder_clean",
             map: {
-                yes: "before-milking-pre-dip",
-                no: "before-milking-cleaning"
-            },
-        },
+                yes: "before-milking-start-animal-count",
+                no: "before-milking-start-animal-count",
+                dont_know: "before-milking-start-parlor-tip"
+            }
+        }
     },
 
-    "before-milking-cleaning": {
-        id: "before-milking-cleaning",
-        title: "before-milking-cleaning.title",
-        subtitle: "before-milking-cleaning.subtitle",
-        showDate: true,
+    "before-milking-start-parlor-tip": {
+        id: "before-milking-start-parlor-tip",
+        title: "before-milking-start-parlor-tip.title",
         fields: [{
-                id: "cleaning_reminder",
-                type: "alert",
-                severity: "warning",
-                message: "before-milking-cleaning.cleaning_reminder.message",
-            },
-            {
-                id: "cleaned_now",
-                type: "yes_no",
-                label: "before-milking-cleaning.cleaned_now.label",
-            },
-        ],
-        next: {
-            field: "cleaned_now",
-            map: {
-                yes: "before-milking-pre-dip",
-                no: "before-milking-vet-advice"
-            },
-        },
+            id: "my_images",
+            type: "image_list",
+            images: [
+                {src: "parlor_1.png"},
+                {src: "milk_tanks.png"},
+            ]
+        }],
+        next: null
     },
 
-    "before-milking-vet-advice": {
-        id: "before-milking-vet-advice",
-        title: "before-milking-vet-advice.title",
-        subtitle: "before-milking-vet-advice.subtitle",
-        showDate: true,
+    "before-milking-start-animal-count": {
+        id: "before-milking-start-animal-count",
+        title: "before-milking-start-animal-count.title",
+        subtitle: "before-milking-start-animal-count.animal_count.label",
         fields: [{
-            id: "vet_alert",
-            type: "alert",
-            severity: "error",
-            message: "before-milking-vet-advice.vet_alert.message",
-        }, ],
-        next: null,
-    },
-
-    "before-milking-pre-dip": {
-        id: "before-milking-pre-dip",
-        title: "before-milking-pre-dip.title",
-        subtitle: "before-milking-pre-dip.subtitle",
-        showDate: true,
-        fields: [{
-            id: "pre_dip_done",
-            type: "yes_no",
-            label: "before-milking-pre-dip.pre_dip_done.label",
-        }, ],
-        next: {
-            field: "pre_dip_done",
-            map: {
-                yes: "before-milking-method",
-                no: "before-milking-pre-dip-reminder"
-            },
-        },
-    },
-
-    "before-milking-pre-dip-reminder": {
-        id: "before-milking-pre-dip-reminder",
-        title: "before-milking-pre-dip-reminder.title",
-        showDate: true,
-        fields: [{
-            id: "pre_dip_info",
-            type: "alert",
-            severity: "info",
-            message: "before-milking-pre-dip-reminder.pre_dip_info.message",
-        }, ],
-        next: "before-milking-method",
-    },
-
-    "before-milking-method": {
-        id: "before-milking-method",
-        title: "before-milking-method.title",
-        subtitle: "before-milking-method.subtitle",
-        showDate: true,
-        fields: [{
-            id: "milking_method",
-            type: "select",
-            label: "before-milking-method.milking_method.label",
-            options: [{
-                    value: "manual",
-                    label: "before-milking-method.milking_method.option.manual"
-                },
-                {
-                    value: "machine",
-                    label: "before-milking-method.milking_method.option.machine"
-                },
-            ],
-        }, ],
-        next: {
-            field: "milking_method",
-            map: {
-                manual: "before-milking-manual-tips",
-                machine: "before-milking-machine-tips",
-            },
-        },
-    },
-
-    "before-milking-manual-tips": {
-        id: "before-milking-manual-tips",
-        title: "before-milking-manual-tips.title",
-        showDate: true,
-        fields: [{
-            id: "manual_tips",
-            type: "alert",
-            severity: "info",
-            message: "before-milking-manual-tips.manual_tips.message",
-        }, ],
-        next: null,
-    },
-
-    "before-milking-machine-tips": {
-        id: "before-milking-machine-tips",
-        title: "before-milking-machine-tips.title",
-        showDate: true,
-        fields: [{
-            id: "machine_tips",
-            type: "alert",
-            severity: "info",
-            message: "before-milking-machine-tips.machine_tips.message",
-        }, ],
-        next: null,
-    },
+            id: "animal_count",
+            type: "number_input",
+            label: "before-milking-start-animal-count.animal_count.label",
+            default: 1,
+            min: 1,
+            step: 1,
+        }],
+        next: null
+    }
 };
 
 export default nodes;

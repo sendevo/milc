@@ -4,7 +4,7 @@ import DateTime from "../components/DateTime";
 import { viewContainerStyles as styles } from "../theme/ViewContainer.styles";
 
 
-const ViewContainer = ({ title, subtitle, showDate, onBack, children }) => {
+const ViewContainer = ({ title, subtitle, showDate, icon, onBack, children }) => {
     return (
         <Box
             sx={styles.container}>
@@ -30,6 +30,11 @@ const ViewContainer = ({ title, subtitle, showDate, onBack, children }) => {
                         sx={styles.subtitleText}>
                         {subtitle}
                     </Typography>
+                </Box>
+            }
+            { icon &&
+                <Box sx={styles.iconContainer}>
+                    <img src={icon} alt="Icon" style={styles.icon} />
                 </Box>
             }
             <Box sx={styles.content}>

@@ -3,7 +3,7 @@ import { Typography, Box } from "@mui/material";
 import { dateTimeStyles as styles } from "../theme/DateTime.styles";
 
 const DateTime = ({ date }) => {
-    const formattedDate = moment(date).format("DD/mm/yyyy");
+    const formattedDate = moment(date).format("DD/MM/yyyy");
     return (
         <Box sx={styles.container}>
             <Typography 
