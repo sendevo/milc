@@ -12,29 +12,28 @@ import SurveyStep from "../components/survey/SurveyStep";
  *   If the branch ends (next: null) or the node is unknown, returns to /app.
  */
 const SurveyPage = () => {
-  const { nodeId } = useParams();
-  const navigate = useNavigate();
+    const { nodeId } = useParams();
+    const navigate = useNavigate();
 
-  const node = nodes[nodeId];
+    const node = nodes[nodeId];
 
-  if (!node) {
-    navigate("/app", { replace: true });
-    return null;
-  }
+    if (!node) {
+        navigate("/app", { replace: true });
+        return null;
+    }
 
-  const handleSubmit = (answers) => {
-    const nextId = resolveNext(node, answers);
-    navigate(nextId ? `/survey/${nextId}` : "/app");
-  };
+    const handleSubmit = (answers) => {
+        const nextId = resolveNext(node, answers);
+        navigate(nextId ? `/survey/${nextId}` : "/app");
+    };
 
-  return (
-    <SurveyStep
-      key={node.id}
-      node={node}
-      onSubmit={handleSubmit}
-      onBack={() => navigate(-1)}
-    />
-  );
+    return (
+        <SurveyStep
+            key={node.id}
+            node={node}
+            onSubmit={handleSubmit}
+            onBack={() => navigate(-1)} />
+    );
 };
 
 export default SurveyPage;

@@ -7,12 +7,12 @@ import "./i18n";
 import App from "./App";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <AuthProvider>
-        <CssBaseline />
-        <App />
-      </AuthProvider>
+    <React.StrictMode>
+        <ThemeProvider theme={theme}>
+            <AuthProvider>
+                <CssBaseline />
+                <App />
+            </AuthProvider>
     </ThemeProvider>
-  </React.StrictMode>
+    </React.StrictMode>
 );

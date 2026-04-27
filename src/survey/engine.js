@@ -10,9 +10,9 @@
  * Returns the next node ID string, or null if the branch is finished.
  */
 export function resolveNext(node, answers) {
-  const { next } = node;
-  if (!next) return null;
-  if (typeof next === "string") return next;
-  const value = answers[next.field];
-  return next.map[value] ?? next.map.default ?? null;
+    const { next } = node;
+    if (!next) return null;
+    if (typeof next === "string") return next;
+    const value = answers[next.field];
+    return next.map[value] ?? next.map.default ?? null;
 }

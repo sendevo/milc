@@ -9,40 +9,38 @@ import { useAuth } from "./contexts/AuthContext";
 import './index.css';
 
 const GuestRoute = ({ children }) => {
-  const { currentUser, loading } = useAuth();
-  if (loading) return null;
-  if (currentUser && !currentUser.isAnonymous) return <Navigate to="/app" replace />;
-  return children;
+    const { currentUser, loading } = useAuth();
+    if (loading) return null;
+    if (currentUser && !currentUser.isAnonymous) return <Navigate to="/app" replace />;
+    return children;
 };
 
 const App = () => {
-  return (
-    <div className="app-container">
-      <BrowserRouter>
-        <Routes>
-            <Route path="/" element={<Welcome />} />
-            <Route path="/login" element={<GuestRoute><Login /></GuestRoute>} />
-            <Route path="/register" element={<GuestRoute><Register /></GuestRoute>} />
-            <Route
-              path="/app"
-              element={
-                <ProtectedRoute>
-                  <MainMenu />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/survey/:nodeId"
-              element={
-                <ProtectedRoute>
-                  <SurveyPage />
-                </ProtectedRoute>
-              }
-            />
-        </Routes>
-      </BrowserRouter>
-    </div>
-  );
+    return (
+        <div className="app-container">
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Welcome />} />
+                <Route path="/login" element={<GuestRoute><Login /></GuestRoute>} />
+                <Route path="/register" element={<GuestRoute><Register /></GuestRoute>} />
+                <Route
+                    path="/app"
+                    element={
+                        <ProtectedRoute>
+                        <MainMenu />
+                        </ProtectedRoute>
+                    }/>
+                <Route
+                    path="/survey/:nodeId"
+                    element={
+                        <ProtectedRoute>
+                        <SurveyPage />
+                        </ProtectedRoute>
+                    }/>
+            </Routes>
+            </BrowserRouter>
+        </div>
+    );
 };
 
 export default App;

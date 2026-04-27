@@ -1,85 +1,85 @@
 {
-  "before-milking-start.title": {
-    "en": "Before Milking",
-    "es": "Antes del Ordeño"
-  },
-  "before-milking-start.udder_clean.label": {
-    "en": "Are the udders clean and dry?",
-    "es": "¿Las ubres están limpias y secas?"
-  },
+    "before-milking-start.title": {
+        "en": "Before Milking",
+        "es": "Antes del Ordeño"
+    },
+    "before-milking-start.udder_clean.label": {
+        "en": "Are the udders clean and dry?",
+        "es": "¿Las ubres están limpias y secas?"
+    },
 
-  "before-milking-cleaning.title": {
-    "en": "Udder Cleaning",
-    "es": "Limpieza de Ubres"
-  },
-  "before-milking-cleaning.cleaning_reminder.message": {
-    "en": "Clean each teat with an individual damp cloth and dry thoroughly before proceeding.",
-    "es": "Limpie cada pezón con un paño húmedo individual y séquelo bien antes de continuar."
-  },
-  "before-milking-cleaning.cleaned_now.label": {
-    "en": "Have you cleaned and dried the udders?",
-    "es": "¿Ha limpiado y secado las ubres?"
-  },
+    "before-milking-cleaning.title": {
+        "en": "Udder Cleaning",
+        "es": "Limpieza de Ubres"
+    },
+    "before-milking-cleaning.cleaning_reminder.message": {
+        "en": "Clean each teat with an individual damp cloth and dry thoroughly before proceeding.",
+        "es": "Limpie cada pezón con un paño húmedo individual y séquelo bien antes de continuar."
+    },
+    "before-milking-cleaning.cleaned_now.label": {
+        "en": "Have you cleaned and dried the udders?",
+        "es": "¿Ha limpiado y secado las ubres?"
+    },
 
-  "before-milking-vet-advice.title": {
-    "en": "Veterinary Advice",
-    "es": "Consejo Veterinario"
-  },
-  "before-milking-vet-advice.vet_alert.message": {
-    "en": "The animal may require veterinary attention. Do not proceed with milking and contact your vet.",
-    "es": "El animal puede requerir atención veterinaria. No continúe con el ordeño y contacte a su veterinario."
-  },
+    "before-milking-vet-advice.title": {
+        "en": "Veterinary Advice",
+        "es": "Consejo Veterinario"
+    },
+    "before-milking-vet-advice.vet_alert.message": {
+        "en": "The animal may require veterinary attention. Do not proceed with milking and contact your vet.",
+        "es": "El animal puede requerir atención veterinaria. No continúe con el ordeño y contacte a su veterinario."
+    },
 
-  "before-milking-pre-dip.title": {
-    "en": "Pre-Dip",
-    "es": "Pre-sellado"
-  },
-  "before-milking-pre-dip.pre_dip_done.label": {
-    "en": "Did you apply pre-dip disinfectant?",
-    "es": "¿Aplicó desinfectante de pre-sellado?"
-  },
+    "before-milking-pre-dip.title": {
+        "en": "Pre-Dip",
+        "es": "Pre-sellado"
+    },
+    "before-milking-pre-dip.pre_dip_done.label": {
+        "en": "Did you apply pre-dip disinfectant?",
+        "es": "¿Aplicó desinfectante de pre-sellado?"
+    },
 
-  "before-milking-pre-dip-reminder.title": {
-    "en": "Pre-Dip Reminder",
-    "es": "Recordatorio de Pre-sellado"
-  },
-  "before-milking-pre-dip-reminder.pre_dip_info.message": {
-    "en": "Pre-dipping reduces teat bacteria by up to 50%. Apply disinfectant, wait 30 seconds, then dry. It is strongly recommended.",
-    "es": "El pre-sellado reduce las bacterias en los pezones hasta un 50%. Aplique el desinfectante, espere 30 segundos y seque. Es muy recomendable."
-  },
+    "before-milking-pre-dip-reminder.title": {
+        "en": "Pre-Dip Reminder",
+        "es": "Recordatorio de Pre-sellado"
+    },
+    "before-milking-pre-dip-reminder.pre_dip_info.message": {
+        "en": "Pre-dipping reduces teat bacteria by up to 50%. Apply disinfectant, wait 30 seconds, then dry. It is strongly recommended.",
+        "es": "El pre-sellado reduce las bacterias en los pezones hasta un 50%. Aplique el desinfectante, espere 30 segundos y seque. Es muy recomendable."
+    },
 
-  "before-milking-method.title": {
-    "en": "Milking Method",
-    "es": "Método de Ordeño"
-  },
-  "before-milking-method.milking_method.label": {
-    "en": "How will you milk today?",
-    "es": "¿Cómo va a ordeñar hoy?"
-  },
-  "before-milking-method.milking_method.option.manual": {
-    "en": "Manual",
-    "es": "Manual"
-  },
-  "before-milking-method.milking_method.option.machine": {
-    "en": "Machine",
-    "es": "Con máquina"
-  },
+    "before-milking-method.title": {
+        "en": "Milking Method",
+        "es": "Método de Ordeño"
+    },
+    "before-milking-method.milking_method.label": {
+        "en": "How will you milk today?",
+        "es": "¿Cómo va a ordeñar hoy?"
+    },
+    "before-milking-method.milking_method.option.manual": {
+        "en": "Manual",
+        "es": "Manual"
+    },
+    "before-milking-method.milking_method.option.machine": {
+        "en": "Machine",
+        "es": "Con máquina"
+    },
 
-  "before-milking-manual-tips.title": {
-    "en": "Manual Milking",
-    "es": "Ordeño Manual"
-  },
-  "before-milking-manual-tips.manual_tips.message": {
-    "en": "Wash and dry your hands. Use a smooth, rhythmic motion. Ready to start.",
-    "es": "Lávese y séquese las manos. Use un movimiento suave y rítmico. Listo para comenzar."
-  },
+    "before-milking-manual-tips.title": {
+        "en": "Manual Milking",
+        "es": "Ordeño Manual"
+    },
+    "before-milking-manual-tips.manual_tips.message": {
+        "en": "Wash and dry your hands. Use a smooth, rhythmic motion. Ready to start.",
+        "es": "Lávese y séquese las manos. Use un movimiento suave y rítmico. Listo para comenzar."
+    },
 
-  "before-milking-machine-tips.title": {
-    "en": "Machine Milking",
-    "es": "Ordeño con Máquina"
-  },
-  "before-milking-machine-tips.machine_tips.message": {
-    "en": "Verify that the milking machine is sanitized and vacuum pressure is within range. Ready to start.",
-    "es": "Verifique que la máquina de ordeño esté sanitizada y que la presión de vacío esté dentro del rango correcto. Listo para comenzar."
-  }
+    "before-milking-machine-tips.title": {
+        "en": "Machine Milking",
+        "es": "Ordeño con Máquina"
+    },
+    "before-milking-machine-tips.machine_tips.message": {
+        "en": "Verify that the milking machine is sanitized and vacuum pressure is within range. Ready to start.",
+        "es": "Verifique que la máquina de ordeño esté sanitizada y que la presión de vacío esté dentro del rango correcto. Listo para comenzar."
+    }
 }
