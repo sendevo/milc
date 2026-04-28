@@ -15,11 +15,12 @@ export const menuCircleStyles = {
         maxWidth: 76,
         lineHeight: 1.3,
         fontSize: 12,
-        color: "#444",
+        color: "text.primary",
     },
-    icon: {
+    icon: (isDark) => ({
         width: 40,
         height: 40,
         objectFit: "contain",
-    },
+        filter: isDark ? "invert(1)" : "none",
+    }),
 };

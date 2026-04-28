@@ -7,6 +7,7 @@ import Register from "./pages/Register";
 import MainMenu from "./pages/MainMenu";
 import SurveyPage from "./pages/SurveyPage";
 import Config from "./pages/Config";
+import Info from "./pages/Info";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useAuth } from "./contexts/AuthContext";
 import { useSettings } from "./contexts/SettingsContext";
@@ -52,6 +53,13 @@ const App = () => {
                     element={
                         <ProtectedRoute>
                         <Config />
+                        </ProtectedRoute>
+                    }/>
+                <Route
+                    path="/info"
+                    element={
+                        <ProtectedRoute>
+                        <Info />
                         </ProtectedRoute>
                     }/>
             </Routes>

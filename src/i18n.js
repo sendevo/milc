@@ -1,7 +1,7 @@
 import i18n from "i18next";
-import {
-    initReactI18next
-} from "react-i18next";
+import { initReactI18next } from "react-i18next";
+
+const APP_VERSION = import.meta.env.APP_VERSION;
 
 const resources = {
     en: {
@@ -82,6 +82,31 @@ const resources = {
                 light: "Light",
                 dark: "Dark",
             },
+            info: {
+                title: "About MILC",
+                version: "Application version",
+                appName: "MILC " + APP_VERSION,
+                author: "Author",
+                developer: "Development",
+                description: "App description",
+                descriptionP1: "MILC is a utility application for tablets, smartphones, and PCs that serves to....",
+                descriptionP2: "The information generated from data input and the calculations performed is compiled into reports that can be exported in spreadsheet or PDF format.",
+                descriptionP3: "Once installed, using MILC does not require signal availability or network access. These services are only necessary if you wish to share the generated information.",
+                contact: "Contact information",
+                sources: "Information source",
+                sourcesText: "The equations were developed and validated by experts from INTA Agricultura Familiar CIPAF. Please refer to the \"Terms and Conditions\" and \"Responsibilities\" sections for more information.",
+                terms: "Terms and conditions",
+                termsAccept: "Acceptance of the terms and conditions",
+                termsP1: "By accessing or using MILC services, the user accepts the terms and conditions set forth below.",
+                termsP2: "The texts, images, and other information appearing on this site and their arrangement belong to the National Institute of Agricultural Technology (INTA Agricultura Familiar CIPAF), unless otherwise indicated. INTA Agricultura Familiar CIPAF authorizes users to make copies, print, and distribute the information contained on this site, subject to the following conditions:",
+                termsIt1: "The use, printing, and reproduction of the information available on this site must be for personal, non-commercial purposes, unless expressly authorized by INTA Agricultura Familiar CIPAF. Modification of such information is not permitted, and users must cite the original source in all copies made.",
+                termsIt2: "Unless expressly authorized by INTA Agricultura Familiar CIPAF, the emblem and/or logo of both the app and INTA Agricultura Familiar CIPAF must not be removed from any page or graphic element in which they appear, nor may they be used on external pages or graphic elements. Likewise, none of these elements may be modified without authorization.",
+                termsIt3: "Links must not be created that result in displaying a page or image from this site without proper authorization.",
+                termsChanges: "Changes to the terms and conditions",
+                termsChangesP1: "INTA Agricultura Familiar CIPAF reserves the right to change or suspend all or part of the services provided at any time, with prior notice. If, after being notified of changes to the terms and conditions, the user continues to use these services, it means they accept and agree to the modified terms and conditions.",
+                responsibilities: "Responsibilities",
+                responsibilitiesP1: "INTA Agricultura Familiar CIPAF shall not be responsible for any damages that may result from the use, or inability to use, the information available on this site. INTA Agricultura Familiar CIPAF shall not be responsible for any decision made by the user after using the application's utilities. The opinions, analyses, and/or information contained on the site are provided solely to assist users in making their own decisions and cannot be considered the only necessary information. Therefore, users understand and accept that any decisions they make or fail to make are entirely at their own judgment and risk. INTA Agricultura Familiar CIPAF makes no representations or warranties regarding the content of the site, including merchantability permissions, nor any guarantee of the accuracy, adequacy, or completeness of the information and materials, and shall not be liable for any errors or omissions therein. It is the user's responsibility to verify any information detailed on this site. Links to other organizations contained on these pages are for informational purposes only, and INTA Agricultura Familiar CIPAF assumes no responsibility for their validity or content. INTA Agricultura Familiar CIPAF assumes no responsibility for any damages that users may suffer due to malicious or intrusive use of this server, especially with regard to the alteration, addition, or falsification of the information contained therein, or the introduction of viruses, trojans, etc., as well as offensive or illegal graphic content. INTA Agricultura Familiar CIPAF does not collect or store any sensitive user data and only accesses device information and settings authorized and/or enabled by the user."
+            },
         },
     },
     es: {
@@ -161,6 +186,31 @@ const resources = {
                 theme: "Apariencia",
                 light: "Claro",
                 dark: "Oscuro",
+            },
+            info: {
+                title: "Acerca de MILC",
+                version: "Versión de la aplicación",
+                appName: "MILC " + APP_VERSION,
+                author: "Autor",
+                developer: "Desarrollo",
+                description: "Descripción de la app",
+                descriptionP1: "MILC es una aplicación utilitaria para tablets, smartphones y PCs que sirve para....",
+                descriptionP2: "La información generada a partir del ingreso de los datos y los cálculos realizados se compila en reportes que se pueden exportar en formato de planillas o PDF.",
+                descriptionP3: "Una vez instalada, la utilización de MILC no requiere disponibilidad de señal ni acceso a la red. Estos servicios sólo son necesarios si se desea compartir la información generada.",
+                contact: "Datos de contacto",
+                sources: "Fuente de información",
+                sourcesText: "Las ecuaciones fueron desarrolladas y validadas por expertos de INTA Agricultura Familiar CIPAF. Consulte la sección de \"Términos y Condiciones\" y \"Responsabilidades\" para obtener más información.",
+                terms: "Términos y condiciones",
+                termsAccept: "Aceptación de los términos y condiciones",
+                termsP1: "Al acceder o utilizar los servicios de MILC, el usuario acepta los términos y condiciones establecidos a continuación.",
+                termsP2: "Los textos, las imágenes y demás información que aparece en este sitio y su disposición, pertenecen al Instituto Nacional de Tecnología Agropecuaria (INTA Agricultura Familiar CIPAF), salvo que se indique lo contrario. INTA Agricultura Familiar CIPAF autoriza a los usuarios a realizar copias, impresiones y distribuir la información contenida en este sitio, sujeta a las siguientes condiciones:",
+                termsIt1: "El uso, impresión, y reproducción de la información disponible en este sitio deberá estar sujeta a fines personales, no comerciales, salvo expresa autorización de INTA Agricultura Familiar CIPAF. La modificación de dicha información no está permitida, y es obligatorio para el usuario citar la fuente original en todas las copias que efectúe.",
+                termsIt2: "Salvo expresa autorización de INTA Agricultura Familiar CIPAF, el emblema y/o el logo tanto de la app como del INTA Agricultura Familiar CIPAF no deberán ser removidos de ninguna página o elemento gráfico propio en que figuren, ni podrán ser utilizados en páginas o elementos gráficos ajenos. De igual manera, no deberán ser modificados, sin autorización ninguno de esos elementos.",
+                termsIt3: "No se deberán establecer enlaces cuyo resultado sea la exhibición de una página o imagen de este sitio a menos de contar con la autorización correspondiente.",
+                termsChanges: "Cambios en los términos y condiciones",
+                termsChangesP1: "INTA Agricultura Familiar CIPAF se reserva los derechos de cambiar o suspender la totalidad o parte de los servicios prestados en cualquier momento, previa notificación. Si luego de notificados los cambios en los términos y condiciones, el usuario continúa utilizando dichos servicios, significa que acepta y está de acuerdo en los términos y condiciones modificados.",
+                responsibilities: "Responsabilidades",
+                responsibilitiesP1: "INTA Agricultura Familiar CIPAF no será responsable de los perjuicios que pudieran ocasionar el uso, o la imposibilidad de uso, de la información disponible en este sitio. INTA Agricultura Familiar CIPAF no será responsable de ninguna decisión que el usuario tome luego de la ejecución de las utilidades de la aplicación. Las opiniones, análisis y/o información contenidas en el sitio, son provistas a los usuarios con el único fin de colaborar con los mismos a tomar sus propias decisiones y no pueden ser consideradas como única información necesaria. De este modo, el usuario de dicha información, entiende y acepta que, las decisiones que el mismo pudiere adoptar o dejar de adoptar corren enteramente bajo su propio juicio y riesgo. INTA Agricultura Familiar CIPAF no efectúa ninguna aseveración o garantía en relación al contenido del sitio, incluyendo permisos de comercialización, o garantía alguna sobre la exactitud, adecuación o integridad de la información y los materiales, y no será responsable por errores u omisiones en los mismos. Es responsabilidad del usuario verificar cualquier información detallada en este sitio. Los enlaces hacia otras organizaciones que se hallen contenidos en estas páginas, cumplen una función meramente informativa y INTA Agricultura Familiar CIPAF no asume, por consiguiente, responsabilidad alguna en cuanto a su validez o contenido. INTA Agricultura Familiar CIPAF no asume responsabilidad alguna, con relación a los daños que pudieren sufrir los usuarios debido al uso maligno o intrusivo de este servidor, especialmente en cuanto se refiere a la alteración, agregado o falsificación de la información contenida en el mismo, o a la introducción de virus, troyanos, etc., así como de un contenido gráfico ofensivo o ilegal. INTA Agricultura Familiar CIPAF no recaba, ni almacena ningún dato sensible de sus usuarios y sólo accede a la información y configuración del dispositivo autorizados y/o habilitado por el usuario."
             },
         },
     },

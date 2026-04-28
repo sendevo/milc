@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { Box, Typography } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 import ViewContainer from "../components/ViewContainer";
 import MenuCircle from "../components/MenuCircle";
 import { mainMenuStyles as styles } from "../theme/MainMenu.styles";
@@ -34,6 +35,10 @@ const MainMenu = () => {
     const { t } = useTranslation();
     const { logout, currentUser } = useAuth();
     const navigate = useNavigate();
+    const theme = useTheme();
+    const isDark = theme.palette.mode === "dark";
+    const tealBorder = isDark ? "#2dc5a2" : "#1a8090";
+    const greyBorder = isDark ? "#aaaaaa" : "#757575";
 
     const handleLogout = async () => {
         await logout();
@@ -93,7 +98,7 @@ const MainMenu = () => {
                                 key={item.label}
                                 icon={item.icon}
                                 label={item.label}
-                                borderColor="#1a8090"
+                                borderColor={tealBorder}
                                 onClick={item.onClick} />
                         ))}
                     </ButtonsContainer>
@@ -115,7 +120,7 @@ const MainMenu = () => {
                                 key={item.label}
                                 icon={item.icon}
                                 label={item.label}
-                                borderColor="#757575" />
+                                borderColor={greyBorder} />
                         ))}
                     </ButtonsContainer>
                 </Box>
@@ -136,7 +141,7 @@ const MainMenu = () => {
                                 key={item.label}
                                 icon={item.icon}
                                 label={item.label}
-                                borderColor="#757575"
+                                borderColor={greyBorder}
                                 onClick={item.onClick} />
                         ))}
                     </ButtonsContainer>
