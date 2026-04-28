@@ -3,7 +3,8 @@ export const viewContainerStyles = {
         display: "flex",
         flexDirection: "column",
         minHeight: "100vh",
-        bgcolor: "#ffffff",
+        bgcolor: "background.default",
+        color: "text.primary",
     },
     header: {
         width: "100%",

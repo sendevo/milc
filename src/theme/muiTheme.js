@@ -1,7 +1,8 @@
 import { createTheme } from "@mui/material";
 
-const theme = createTheme({
+const createAppTheme = (mode = "light") => createTheme({
     palette: {
+        mode,
         primary: {
             main: "#1a8898",
             dark: "#1a5f70",
@@ -9,8 +10,8 @@ const theme = createTheme({
             contrastText: "#ffffff",
         },
         background: {
-            default: "#ffffff",
-            paper: "#ffffff",
+            default: mode === "dark" ? "#121212" : "#ffffff",
+            paper: mode === "dark" ? "#1e1e1e" : "#ffffff",
         },
     },
     typography: {
@@ -34,15 +35,15 @@ const theme = createTheme({
                 variant: "outlined",
             },
             styleOverrides: {
-                root: {
+                root: ({ theme }) => ({
                     "& .MuiOutlinedInput-root": {
-                        backgroundColor: "#ffffff",
+                        backgroundColor: theme.palette.background.paper,
                         borderRadius: 4,
                     },
-                },
+                }),
             },
         },
     },
 });
 
-export default theme;
+export default createAppTheme;

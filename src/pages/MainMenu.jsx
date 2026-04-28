@@ -61,7 +61,7 @@ const MainMenu = () => {
 
     const accountActionItems = [
         { icon: user, label: t("mainMenu.myProfile") },
-        { icon: config, label: t("mainMenu.settings") },
+        { icon: config, label: t("mainMenu.settings"), onClick: () => navigate("/config") },
         { 
             icon: info, 
             label: t("mainMenu.info"),

@@ -1,11 +1,16 @@
+import { useMemo } from "react";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Welcome from "./pages/Welcome";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import MainMenu from "./pages/MainMenu";
 import SurveyPage from "./pages/SurveyPage";
+import Config from "./pages/Config";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useAuth } from "./contexts/AuthContext";
+import { useSettings } from "./contexts/SettingsContext";
+import createAppTheme from "./theme";
 import './index.css';
 
 const GuestRoute = ({ children }) => {
@@ -16,7 +21,12 @@ const GuestRoute = ({ children }) => {
 };
 
 const App = () => {
+    const { themeMode } = useSettings();
+    const theme = useMemo(() => createAppTheme(themeMode), [themeMode]);
+
     return (
+        <ThemeProvider theme={theme}>
+        <CssBaseline />
         <div className="app-container">
         <BrowserRouter>
             <Routes>
@@ -37,9 +47,17 @@ const App = () => {
                         <SurveyPage />
                         </ProtectedRoute>
                     }/>
+                <Route
+                    path="/config"
+                    element={
+                        <ProtectedRoute>
+                        <Config />
+                        </ProtectedRoute>
+                    }/>
             </Routes>
             </BrowserRouter>
         </div>
+        </ThemeProvider>
     );
 };
 
