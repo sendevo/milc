@@ -1,0 +1,55 @@
+{
+    "before-milking-start": {
+        "id": "before-milking-start",
+        "title": "before-milking-start.title",
+        "subtitle": "before-milking-start.subtitle",
+        "showDate": true,
+        "icon": "shroom.png",
+        "fields": [{
+            "id": "udder_clean",
+            "type": "select",
+            "options": [
+                { "value": "yes", "label": "yes" },
+                { "value": "no", "label": "no" },
+                { "value": "dont_know", "label": "dont_know" }
+            ]
+        }],
+        "next": {
+            "field": "udder_clean",
+            "map": {
+                "yes": "before-milking-start-animal-count",
+                "no": "before-milking-start-animal-count",
+                "dont_know": "before-milking-start-parlor-tip"
+            }
+        }
+    },
+
+    "before-milking-start-parlor-tip": {
+        "id": "before-milking-start-parlor-tip",
+        "title": "before-milking-start-parlor-tip.title",
+        "fields": [{
+            "id": "my_images",
+            "type": "image_list",
+            "images": [
+                { "src": "parlor_1.png" },
+                { "src": "milk_tanks.png" }
+            ]
+        }],
+        "next": null
+    },
+
+    "before-milking-start-animal-count": {
+        "id": "before-milking-start-animal-count",
+        "title": "before-milking-start-animal-count.title",
+        "subtitle": "before-milking-start-animal-count.animal_count.label",
+        "fields": [{
+            "id": "animal_count",
+            "type": "number_input",
+            "label": "before-milking-start-animal-count.animal_count.label",
+            "default": 1,
+            "min": 1,
+            "step": 1
+        }],
+        "next": null
+    }
+}

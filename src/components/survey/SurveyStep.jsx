@@ -8,18 +8,38 @@ import AlertBlock from "./AlertBlock";
 import NumberInput from "./NumberInput";
 import ImageList from "./ImageList";
 import MonthPicker from "./MonthPicker";
-import { t } from "../../survey/tree";
+import { t } from "../../model";
 import { surveyStepStyles as styles } from "../../theme/SurveyStep.styles";
 
 /**
- * Renders a single survey node.
  *
+ * Survey step — each key is a node ID.
+ *
+ * All human-readable text is stored in labels.json and referenced here by key.
+ * Key convention:
+ *   "<nodeId>.title"                         → node title
+ *   "<nodeId>.subtitle"                      → node subtitle (optional)
+ *   "<nodeId>.<fieldId>.label"               → yes_no or select question text
+ *   "<nodeId>.<fieldId>.message"             → alert body text
+ *   "<nodeId>.<fieldId>.option.<optionValue>"→ select option label
+ *
+ * Node shape:
+ * {
+ *   id:       string,
+ *   title:    string,          // key into labels.json
+ *   subtitle: string,          // key into labels.json (optional)
+ *   fields:   Field[],
+ *   next:     null | "node-id" | { field, map }
+ * }
+ *
+ * Field shape (type discriminated union):
+ *   { id, type: "select",  label, options: [{ value, label }] }  ← labels are keys
+ *   { id, type: "alert",   severity, message }                   ← message is a key
  * Auto-advance rule: if the node has exactly one input field and it is a
  * yes_no, tapping Yes/No immediately calls onSubmit — no extra button needed.
- * In all other cases a "Siguiente / Finalizar" button is shown.
+ * In all other cases a continue/finish button is shown.
  *
  * Props:
- *   node     — a node object from src/survey/tree.js
  *   onSubmit — (answers: object) => void  called when the step is complete
  *   onBack   — () => void                 optional back navigation handler
  */

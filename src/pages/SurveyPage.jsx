@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
-import nodes from "../survey/tree";
-import { resolveNext } from "../survey/engine";
+import nodes from "../survey/nodes.json";
+import { resolveNext } from "../model";
 import SurveyStep from "../components/survey/SurveyStep";
 
 /**
