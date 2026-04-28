@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MILC Survey Editor</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div id="app">
+    <header>
+        <h1>MILC Survey Editor</h1>
+        <div class="header-actions">
+            <button id="btn-import">⬆ Import JSON</button>
+            <button id="btn-export-nodes" class="btn-primary">⬇ Export nodes.json</button>
+            <button id="btn-export-labels" class="btn-primary">⬇ Export labels.json</button>
+        </div>
+        <input type="file" id="file-import" accept=".json" style="display:none" multiple />
+    </header>
+
+    <div id="main">
+        <!-- Left panel: node list -->
+        <aside id="node-list-panel">
+            <div class="panel-header">
+                <span>Nodes</span>
+                <button id="btn-add-node" title="Add node">＋</button>
+            </div>
+            <ul id="node-list"></ul>
+        </aside>
+
+        <!-- Center panel: node editor -->
+        <section id="editor-panel">
+            <div id="editor-placeholder">← Select or create a node</div>
+            <div id="editor-form" style="display:none">
+
+                <div class="form-group">
+                    <label>Node ID</label>
+                    <input type="text" id="field-id" placeholder="e.g. before-milking-start" />
+                </div>
+
+                <div class="form-group">
+                    <label>Title label key</label>
+                    <input type="text" id="field-title" placeholder="e.g. before-milking-start.title" />
+                </div>
+
+                <div class="form-group">
+                    <label>Subtitle label key <small>(optional)</small></label>
+                    <input type="text" id="field-subtitle" />
+                </div>
+
+                <div class="form-group checkbox-group">
+                    <label><input type="checkbox" id="field-showDate" /> Show date</label>
+                </div>
+
+                <div class="form-group">
+                    <label>Icon filename <small>(optional)</small></label>
+                    <input type="text" id="field-icon" placeholder="e.g. shroom.png" />
+                </div>
+
+                <!-- Fields -->
+                <div class="section-header">
+                    <span>Fields</span>
+                    <div class="field-type-btns">
+                        <button class="btn-add-field" data-type="select">＋ Select</button>
+                        <button class="btn-add-field" data-type="number_input">＋ Number</button>
+                        <button class="btn-add-field" data-type="image_list">＋ Images</button>
+                        <button class="btn-add-field" data-type="alert">＋ Alert</button>
+                        <button class="btn-add-field" data-type="month_picker">＋ Month picker</button>
+                    </div>
+                </div>
+                <div id="fields-container"></div>
+
+                <!-- Next navigation -->
+                <div class="section-header">
+                    <span>Next</span>
+                </div>
+                <div id="next-container">
+                    <div class="form-group">
+                        <label>Type</label>
+                        <select id="next-type">
+                            <option value="null">None (terminal)</option>
+                            <option value="direct">Direct → node</option>
+                            <option value="field">Field map</option>
+                        </select>
+                    </div>
+                    <div id="next-direct" style="display:none" class="form-group">
+                        <label>Target node ID</label>
+                        <input type="text" id="next-direct-target" />
+                    </div>
+                    <div id="next-field-map" style="display:none">
+                        <div class="form-group">
+                            <label>Field ID</label>
+                            <input type="text" id="next-field-id" />
+                        </div>
+                        <div id="next-map-rows"></div>
+                        <button id="btn-add-map-row" class="btn-sm">＋ Add mapping</button>
+                    </div>
+                </div>
+
+                <div class="editor-actions">
+                    <button id="btn-save-node" class="btn-primary">Save node</button>
+                    <button id="btn-delete-node" class="btn-danger">Delete node</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Right panel: label editor -->
+        <aside id="label-panel">
+            <div class="panel-header">
+                <span>Labels</span>
+                <button id="btn-add-label" title="Add label">＋</button>
+            </div>
+            <div id="label-search-wrap">
+                <input type="text" id="label-search" placeholder="Search labels…" />
+            </div>
+            <ul id="label-list"></ul>
+        </aside>
+    </div>
+</div>
+
+<!-- Label edit modal -->
+<div id="modal-overlay" style="display:none">
+    <div id="modal">
+        <h3 id="modal-title">Edit label</h3>
+        <div class="form-group">
+            <label>Key</label>
+            <input type="text" id="modal-key" />
+        </div>
+        <div class="form-group">
+            <label>English (en)</label>
+            <input type="text" id="modal-en" />
+        </div>
+        <div class="form-group">
+            <label>Español (es)</label>
+            <input type="text" id="modal-es" />
+        </div>
+        <div class="modal-actions">
+            <button id="modal-save" class="btn-primary">Save</button>
+            <button id="modal-cancel">Cancel</button>
+            <button id="modal-delete" class="btn-danger">Delete</button>
+        </div>
+    </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
