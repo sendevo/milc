@@ -6,10 +6,18 @@ let selectedNodeId = null;
 // ─── Init ─────────────────────────────────────────────────────────────────────
 
 document.addEventListener('DOMContentLoaded', () => {
+    applyTheme(localStorage.getItem('milc_theme') || 'dark');
     loadFromStorage();
     renderNodeList();
     bindStaticEvents();
 });
+
+function applyTheme(theme) {
+    document.documentElement.dataset.theme = theme;
+    const btn = document.getElementById('btn-theme');
+    if (btn) btn.textContent = theme === 'dark' ? '🌙' : '☀️';
+    localStorage.setItem('milc_theme', theme);
+}
 
 function loadFromStorage() {
     try {
@@ -553,6 +561,11 @@ function bindStaticEvents() {
     });
 
     document.getElementById('btn-export-nodes').addEventListener('click', () => downloadJSON('nodes.json', nodes));
+
+    document.getElementById('btn-theme').addEventListener('click', () => {
+        const current = document.documentElement.dataset.theme || 'dark';
+        applyTheme(current === 'dark' ? 'light' : 'dark');
+    });
 
     document.getElementById('btn-import').addEventListener('click', () => {
         document.getElementById('file-import').click();
