@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import nodes from "../survey/nodes.json";
+import { useSurveyNodes } from "../hooks/useSurveyNodes";
 import { resolveNext } from "../model";
 import SurveyStep from "../components/survey/SurveyStep";
 
@@ -14,6 +14,7 @@ import SurveyStep from "../components/survey/SurveyStep";
 const SurveyPage = () => {
     const { nodeId } = useParams();
     const navigate = useNavigate();
+    const nodes = useSurveyNodes();
 
     const node = nodes[nodeId];
 
