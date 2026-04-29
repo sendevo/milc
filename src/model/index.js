@@ -5,9 +5,9 @@
  * common tasks related to the survey model, such as resolving labels and
  * determining the next node in the survey flow.
  *
- * The `t` function is a simple localization helper that looks up label keys
- * in the `labels.json` file based on the active language. It falls back to
- * English and then to the key itself if no translation is found.
+ * The `t` function is a simple localization helper that resolves a bilingual
+ * text object `{ en, es }` to the string for the active language, falling back
+ * to English if the current language is unavailable.
  *
  * The `resolveNext` function takes a survey node and the current answers, and
  * determines the ID of the next node in the survey flow based on the node's
@@ -22,13 +22,14 @@
      * Returns the next node ID string, or null if the branch is finished.
  */
 
-import labels from "../survey/labels.json";
 import i18n from "../i18n";
 
-export const t = (key) => {
-    const lang = i18n.language ?.slice(0, 2) ?? "es";
-    const entry = labels[key];
-    return entry ?.[lang] ?? entry ?.en ?? key;
+export const t = (text) => {
+    const lang = i18n.language?.slice(0, 2) ?? "es";
+    if (text && typeof text === "object") {
+        return text[lang] ?? text.en ?? "";
+    }
+    return text ?? "";
 };
 
 export const resolveNext = (node, answers) => {

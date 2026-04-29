@@ -46,9 +46,7 @@ src/
 │   ├── SurveyPage.jsx   # Route handler for /survey/:nodeId
 │   └── Welcome.jsx
 ├── survey/
-│   ├── engine.js        # resolveNext() — conditional branching logic
-│   ├── labels.json      # All survey UI strings keyed by node/field
-│   └── tree.js          # Survey node definitions + label resolver
+│   └── nodes.json       # Survey node definitions with inline bilingual text
 ├── firebase.js
 ├── i18n.js              # i18next setup (en + es)
 └── theme.js             # MUI theme
@@ -104,26 +102,36 @@ firebase deploy --only hosting
 
 ## Survey System
 
-Survey content is defined in `src/survey/tree.js`. Each **node** has:
+Survey content is defined in `src/survey/nodes.json`. Each **node** has:
 
 - `id` — unique string identifier
-- `title` — key into `labels.json`
-- `fields` — array of `yes_no`, `select`, or `alert` field descriptors
+- `title` — bilingual text object `{ "en": "...", "es": "..." }`
+- `subtitle` — bilingual text object (optional)
+- `fields` — array of `select`, `number_input`, `image_list`, `alert`, or `month_picker` field descriptors
 - `next` — `null` (terminal), a node ID string (unconditional), or `{ field, map }` (conditional branching)
 
-All human-readable text lives in `src/survey/labels.json`, keyed as `"<nodeId>.<fieldId>.label"`. The `t()` helper in `tree.js` resolves keys using the active i18next language with English as fallback.
+All human-readable text lives inline in `nodes.json` as `{ "en": "...", "es": "..." }` objects on every text field. The `t()` helper in `src/model/index.js` resolves them using the active i18next language with English as fallback.
 
 ## Adding a New Survey Node
 
-1. Add label entries to `src/survey/labels.json`:
+1. Add the node definition to `src/survey/nodes.json` with inline bilingual text:
    ```json
-   "my-node.title": { "es": "Mi pregunta", "en": "My question" },
-   "my-node.my_field.label": { "es": "¿Algo?", "en": "Something?" }
+   "my-node": {
+     "id": "my-node",
+     "title": { "en": "My question", "es": "Mi pregunta" },
+     "fields": [{
+       "id": "my_field",
+       "type": "select",
+       "options": [
+         { "value": "yes", "label": { "en": "Yes", "es": "Sí" } }
+       ]
+     }],
+     "next": null
+   }
    ```
-2. Add the node definition to the `nodes` object in `src/survey/tree.js`.
-3. Link it from another node's `next` field.
+2. Link it from another node's `next` field.
 
 ## Internationalisation
 
-UI strings (buttons, labels common to all pages) are in `src/i18n.js`. Survey-specific strings are in `src/survey/labels.json`. Both support `es` and `en`.
+UI strings (buttons, labels common to all pages) are in `src/i18n.js`. Survey-specific strings are embedded directly in `src/survey/nodes.json`. Both support `es` and `en`.
 

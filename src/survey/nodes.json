@@ -1,17 +1,17 @@
 {
     "before-milking-start": {
         "id": "before-milking-start",
-        "title": "before-milking-start.title",
-        "subtitle": "before-milking-start.subtitle",
+        "title": { "en": "Before Milking", "es": "Antes de ordeñar" },
+        "subtitle": { "en": "Have you cleaned the space?", "es": "¿Limpiaste la sala?" },
         "showDate": true,
         "icon": "shroom.png",
         "fields": [{
             "id": "udder_clean",
             "type": "select",
             "options": [
-                { "value": "yes", "label": "yes" },
-                { "value": "no", "label": "no" },
-                { "value": "dont_know", "label": "dont_know" }
+                { "value": "yes", "label": { "en": "Yes", "es": "Sí" } },
+                { "value": "no", "label": { "en": "No", "es": "No" } },
+                { "value": "dont_know", "label": { "en": "Don't know", "es": "No sé" } }
             ]
         }],
         "next": {
@@ -26,7 +26,7 @@
 
     "before-milking-start-parlor-tip": {
         "id": "before-milking-start-parlor-tip",
-        "title": "before-milking-start-parlor-tip.title",
+        "title": { "en": "Before Milking", "es": "Antes de ordeñar" },
         "fields": [{
             "id": "my_images",
             "type": "image_list",
@@ -40,12 +40,12 @@
 
     "before-milking-start-animal-count": {
         "id": "before-milking-start-animal-count",
-        "title": "before-milking-start-animal-count.title",
-        "subtitle": "before-milking-start-animal-count.animal_count.label",
+        "title": { "en": "Animal Count", "es": "Conteo de animales" },
+        "subtitle": { "en": "Number of animals being milked", "es": "Cantidad de animales en ordeñe" },
         "fields": [{
             "id": "animal_count",
             "type": "number_input",
-            "label": "before-milking-start-animal-count.animal_count.label",
+            "label": { "en": "Number of animals being milked", "es": "Cantidad de animales en ordeñe" },
             "default": 1,
             "min": 1,
             "step": 1

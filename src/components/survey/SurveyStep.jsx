@@ -15,26 +15,27 @@ import { surveyStepStyles as styles } from "../../theme/SurveyStep.styles";
  *
  * Survey step — each key is a node ID.
  *
- * All human-readable text is stored in labels.json and referenced here by key.
+ * All human-readable text is stored inline in nodes.json as bilingual objects
+ * `{ en: "...", es: "..." }`. The `t()` helper resolves them to the active language.
  * Key convention:
- *   "<nodeId>.title"                         → node title
- *   "<nodeId>.subtitle"                      → node subtitle (optional)
- *   "<nodeId>.<fieldId>.label"               → yes_no or select question text
- *   "<nodeId>.<fieldId>.message"             → alert body text
- *   "<nodeId>.<fieldId>.option.<optionValue>"→ select option label
+ *   title:    { en, es }                     → node title
+ *   subtitle: { en, es }                     → node subtitle (optional)
+ *   field.label:  { en, es }                 → select / number_input label
+ *   field.message: { en, es }                → alert body text
+ *   option.label:  { en, es }                → select option label
  *
  * Node shape:
  * {
  *   id:       string,
- *   title:    string,          // key into labels.json
- *   subtitle: string,          // key into labels.json (optional)
+ *   title:    { en: string, es: string },
+ *   subtitle: { en: string, es: string },    // optional
  *   fields:   Field[],
  *   next:     null | "node-id" | { field, map }
  * }
  *
  * Field shape (type discriminated union):
- *   { id, type: "select",  label, options: [{ value, label }] }  ← labels are keys
- *   { id, type: "alert",   severity, message }                   ← message is a key
+ *   { id, type: "select",  label, options: [{ value, label: { en, es } }] }
+ *   { id, type: "alert",   severity, message: { en, es } }
  * Auto-advance rule: if the node has exactly one input field and it is a
  * yes_no, tapping Yes/No immediately calls onSubmit — no extra button needed.
  * In all other cases a continue/finish button is shown.

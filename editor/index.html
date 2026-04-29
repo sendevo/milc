@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Editor for MILC survey nodes" />
+    <meta name="author" content="Sendevo Software" />
     <title>MILC Survey Editor</title>
     <link rel="stylesheet" href="style.css" />
 </head>
@@ -14,7 +16,6 @@
         <div class="header-actions">
             <button id="btn-import">⬆ Import JSON</button>
             <button id="btn-export-nodes" class="btn-primary">⬇ Export nodes.json</button>
-            <button id="btn-export-labels" class="btn-primary">⬇ Export labels.json</button>
         </div>
         <input type="file" id="file-import" accept=".json" style="display:none" multiple />
     </header>
@@ -40,13 +41,15 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Title label key</label>
-                    <input type="text" id="field-title" placeholder="e.g. before-milking-start.title" />
+                    <label>Title</label>
+                    <input type="text" id="field-title-en" placeholder="English" />
+                    <input type="text" id="field-title-es" placeholder="Español" />
                 </div>
 
                 <div class="form-group">
-                    <label>Subtitle label key <small>(optional)</small></label>
-                    <input type="text" id="field-subtitle" />
+                    <label>Subtitle <small>(optional)</small></label>
+                    <input type="text" id="field-subtitle-en" placeholder="English" />
+                    <input type="text" id="field-subtitle-es" placeholder="Español" />
                 </div>
 
                 <div class="form-group checkbox-group">
@@ -105,41 +108,6 @@
             </div>
         </section>
 
-        <!-- Right panel: label editor -->
-        <aside id="label-panel">
-            <div class="panel-header">
-                <span>Labels</span>
-                <button id="btn-add-label" title="Add label">＋</button>
-            </div>
-            <div id="label-search-wrap">
-                <input type="text" id="label-search" placeholder="Search labels…" />
-            </div>
-            <ul id="label-list"></ul>
-        </aside>
-    </div>
-</div>
-
-<!-- Label edit modal -->
-<div id="modal-overlay" style="display:none">
-    <div id="modal">
-        <h3 id="modal-title">Edit label</h3>
-        <div class="form-group">
-            <label>Key</label>
-            <input type="text" id="modal-key" />
-        </div>
-        <div class="form-group">
-            <label>English (en)</label>
-            <input type="text" id="modal-en" />
-        </div>
-        <div class="form-group">
-            <label>Español (es)</label>
-            <input type="text" id="modal-es" />
-        </div>
-        <div class="modal-actions">
-            <button id="modal-save" class="btn-primary">Save</button>
-            <button id="modal-cancel">Cancel</button>
-            <button id="modal-delete" class="btn-danger">Delete</button>
-        </div>
     </div>
 </div>
 

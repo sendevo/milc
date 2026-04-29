@@ -1,7 +1,6 @@
 // ─── State ───────────────────────────────────────────────────────────────────
 
 let nodes = {};   // { [id]: nodeObject }
-let labels = {};  // { [key]: { en, es } }
 let selectedNodeId = null;
 
 // ─── Init ─────────────────────────────────────────────────────────────────────
@@ -9,22 +8,18 @@ let selectedNodeId = null;
 document.addEventListener('DOMContentLoaded', () => {
     loadFromStorage();
     renderNodeList();
-    renderLabelList();
     bindStaticEvents();
 });
 
 function loadFromStorage() {
     try {
         const n = localStorage.getItem('milc_nodes');
-        const l = localStorage.getItem('milc_labels');
         if (n) nodes = JSON.parse(n);
-        if (l) labels = JSON.parse(l);
     } catch (_) {}
 }
 
 function saveToStorage() {
     localStorage.setItem('milc_nodes', JSON.stringify(nodes));
-    localStorage.setItem('milc_labels', JSON.stringify(labels));
 }
 
 // ─── Node list ────────────────────────────────────────────────────────────────
@@ -56,8 +51,10 @@ function loadNodeIntoForm(node) {
     form.style.display = 'block';
 
     document.getElementById('field-id').value = node.id || '';
-    document.getElementById('field-title').value = node.title || '';
-    document.getElementById('field-subtitle').value = node.subtitle || '';
+    document.getElementById('field-title-en').value = node.title?.en || '';
+    document.getElementById('field-title-es').value = node.title?.es || '';
+    document.getElementById('field-subtitle-en').value = node.subtitle?.en || '';
+    document.getElementById('field-subtitle-es').value = node.subtitle?.es || '';
     document.getElementById('field-showDate').checked = !!node.showDate;
     document.getElementById('field-icon').value = node.icon || '';
 
@@ -67,12 +64,44 @@ function loadNodeIntoForm(node) {
 
 function clearForm() {
     document.getElementById('field-id').value = '';
-    document.getElementById('field-title').value = '';
-    document.getElementById('field-subtitle').value = '';
+    document.getElementById('field-title-en').value = '';
+    document.getElementById('field-title-es').value = '';
+    document.getElementById('field-subtitle-en').value = '';
+    document.getElementById('field-subtitle-es').value = '';
     document.getElementById('field-showDate').checked = false;
     document.getElementById('field-icon').value = '';
     renderFields([]);
     renderNext(null);
+}
+
+// ─── Bilingual input helper ───────────────────────────────────────────────────
+
+function bilingualInputGroup(val, placeholder) {
+    const wrap = document.createElement('div');
+    wrap.className = 'bilingual-input';
+
+    const enInput = document.createElement('input');
+    enInput.type = 'text';
+    enInput.value = val?.en || '';
+    enInput.placeholder = `${placeholder || 'text'} (en)`;
+    enInput.dataset.lang = 'en';
+
+    const esInput = document.createElement('input');
+    esInput.type = 'text';
+    esInput.value = val?.es || '';
+    esInput.placeholder = `${placeholder || 'text'} (es)`;
+    esInput.dataset.lang = 'es';
+
+    wrap.appendChild(enInput);
+    wrap.appendChild(esInput);
+    return wrap;
+}
+
+function getBilingual(el) {
+    if (!el) return null;
+    const en = el.querySelector('[data-lang="en"]')?.value.trim() || '';
+    const es = el.querySelector('[data-lang="es"]')?.value.trim() || '';
+    return (en || es) ? { en, es } : null;
 }
 
 // ─── Fields ───────────────────────────────────────────────────────────────────
@@ -166,10 +195,6 @@ function numberInput(val, placeholder) {
 function buildSelectExtras(field) {
     const wrap = document.createElement('div');
 
-    const labelInput = textInput(field.label, 'label key (optional)');
-    wrap.appendChild(makeRow('Label key', labelInput));
-    labelInput.dataset.role = 'label';
-
     const optionsTitle = document.createElement('div');
     optionsTitle.className = 'sub-section-title';
     optionsTitle.textContent = 'Options';
@@ -187,7 +212,7 @@ function buildSelectExtras(field) {
     addBtn.textContent = '＋ Add option';
     addBtn.className = 'btn-sm';
     addBtn.addEventListener('click', () => {
-        optList.appendChild(buildOptionRow('', ''));
+        optList.appendChild(buildOptionRow('', null));
     });
     wrap.appendChild(addBtn);
 
@@ -200,8 +225,9 @@ function buildOptionRow(value, label) {
 
     const vInput = textInput(value, 'value');
     vInput.dataset.role = 'opt-value';
-    const lInput = textInput(label, 'label key');
-    lInput.dataset.role = 'opt-label';
+
+    const lWrap = bilingualInputGroup(label, 'label');
+    lWrap.dataset.role = 'opt-label';
 
     const del = document.createElement('button');
     del.textContent = '✕';
@@ -209,7 +235,7 @@ function buildOptionRow(value, label) {
     del.addEventListener('click', () => row.remove());
 
     row.appendChild(vInput);
-    row.appendChild(lInput);
+    row.appendChild(lWrap);
     row.appendChild(del);
     return row;
 }
@@ -217,9 +243,9 @@ function buildOptionRow(value, label) {
 function buildNumberExtras(field) {
     const wrap = document.createElement('div');
 
-    const labelInput = textInput(field.label, 'label key');
-    labelInput.dataset.role = 'label';
-    wrap.appendChild(makeRow('Label key', labelInput));
+    const labelWrap = bilingualInputGroup(field.label, 'label');
+    labelWrap.dataset.role = 'label';
+    wrap.appendChild(makeRow('Label', labelWrap));
 
     const defInput = numberInput(field.default, '1');
     defInput.dataset.role = 'default';
@@ -280,9 +306,10 @@ function buildImageRow(src) {
 
 function buildAlertExtras(field) {
     const wrap = document.createElement('div');
-    const labelInput = textInput(field.label, 'label key');
-    labelInput.dataset.role = 'label';
-    wrap.appendChild(makeRow('Label key', labelInput));
+
+    const messageWrap = bilingualInputGroup(field.message, 'message');
+    messageWrap.dataset.role = 'message';
+    wrap.appendChild(makeRow('Message', messageWrap));
 
     const severityInput = textInput(field.severity, 'info | warning | error');
     severityInput.dataset.role = 'severity';
@@ -306,18 +333,19 @@ function getFieldsFromDOM() {
         const field = { id, type };
 
         if (type === 'select') {
-            const labelEl = extras.querySelector('[data-role="label"]');
-            if (labelEl && labelEl.value.trim()) field.label = labelEl.value.trim();
             const optRows = extras.querySelectorAll('.option-row');
             field.options = [];
             optRows.forEach(row => {
                 const v = row.querySelector('[data-role="opt-value"]').value.trim();
-                const l = row.querySelector('[data-role="opt-label"]').value.trim();
-                if (v) field.options.push({ value: v, label: l });
+                const lWrap = row.querySelector('[data-role="opt-label"]');
+                const l = getBilingual(lWrap);
+                if (v) field.options.push({ value: v, label: l || { en: '', es: '' } });
             });
         } else if (type === 'number_input') {
+            const labelEl = extras.querySelector('[data-role="label"]');
+            const lbl = getBilingual(labelEl);
+            if (lbl) field.label = lbl;
             const get = (role) => extras.querySelector(`[data-role="${role}"]`)?.value.trim();
-            if (get('label')) field.label = get('label');
             const def = parseFloat(get('default'));
             if (!isNaN(def)) field.default = def;
             const min = parseFloat(get('min'));
@@ -334,8 +362,10 @@ function getFieldsFromDOM() {
                 if (src) field.images.push({ src });
             });
         } else if (type === 'alert') {
+            const messageEl = extras.querySelector('[data-role="message"]');
+            const msg = getBilingual(messageEl);
+            if (msg) field.message = msg;
             const get = (role) => extras.querySelector(`[data-role="${role}"]`)?.value.trim();
-            if (get('label')) field.label = get('label');
             if (get('severity')) field.severity = get('severity');
         }
 
@@ -424,13 +454,17 @@ function saveNode() {
 
     const node = {
         id,
-        title: document.getElementById('field-title').value.trim(),
+        title: {
+            en: document.getElementById('field-title-en').value.trim(),
+            es: document.getElementById('field-title-es').value.trim(),
+        },
         fields: getFieldsFromDOM(),
         next: getNextFromDOM(),
     };
 
-    const subtitle = document.getElementById('field-subtitle').value.trim();
-    if (subtitle) node.subtitle = subtitle;
+    const subtitleEn = document.getElementById('field-subtitle-en').value.trim();
+    const subtitleEs = document.getElementById('field-subtitle-es').value.trim();
+    if (subtitleEn || subtitleEs) node.subtitle = { en: subtitleEn, es: subtitleEs };
 
     if (document.getElementById('field-showDate').checked) node.showDate = true;
 
@@ -459,71 +493,6 @@ function deleteNode() {
     document.getElementById('editor-placeholder').style.display = 'block';
 }
 
-// ─── Labels ───────────────────────────────────────────────────────────────────
-
-function renderLabelList(filter = '') {
-    const ul = document.getElementById('label-list');
-    ul.innerHTML = '';
-    const q = filter.toLowerCase();
-    Object.entries(labels)
-        .filter(([k, v]) => !q || k.toLowerCase().includes(q) || (v.en || '').toLowerCase().includes(q) || (v.es || '').toLowerCase().includes(q))
-        .forEach(([key, val]) => {
-            const li = document.createElement('li');
-            const keySpan = document.createElement('span');
-            keySpan.className = 'label-key';
-            keySpan.textContent = key;
-            const valSpan = document.createElement('span');
-            valSpan.className = 'label-val';
-            valSpan.textContent = `${val.en || ''} / ${val.es || ''}`;
-            li.appendChild(keySpan);
-            li.appendChild(valSpan);
-            li.addEventListener('click', () => openLabelModal(key));
-            ul.appendChild(li);
-        });
-}
-
-let editingLabelKey = null;
-
-function openLabelModal(key) {
-    editingLabelKey = key || null;
-    document.getElementById('modal-title').textContent = key ? 'Edit label' : 'New label';
-    document.getElementById('modal-key').value = key || '';
-    document.getElementById('modal-en').value = key ? (labels[key]?.en || '') : '';
-    document.getElementById('modal-es').value = key ? (labels[key]?.es || '') : '';
-    document.getElementById('modal-delete').style.display = key ? 'inline-block' : 'none';
-    document.getElementById('modal-overlay').style.display = 'flex';
-    document.getElementById('modal-key').focus();
-}
-
-function closeModal() {
-    document.getElementById('modal-overlay').style.display = 'none';
-    editingLabelKey = null;
-}
-
-function saveLabel() {
-    const key = document.getElementById('modal-key').value.trim();
-    if (!key) { alert('Key is required'); return; }
-    if (editingLabelKey && editingLabelKey !== key) {
-        delete labels[editingLabelKey];
-    }
-    labels[key] = {
-        en: document.getElementById('modal-en').value,
-        es: document.getElementById('modal-es').value,
-    };
-    saveToStorage();
-    closeModal();
-    renderLabelList(document.getElementById('label-search').value);
-}
-
-function deleteLabel() {
-    if (!editingLabelKey) return;
-    if (!confirm(`Delete label "${editingLabelKey}"?`)) return;
-    delete labels[editingLabelKey];
-    saveToStorage();
-    closeModal();
-    renderLabelList(document.getElementById('label-search').value);
-}
-
 // ─── Export ───────────────────────────────────────────────────────────────────
 
 function downloadJSON(filename, data) {
@@ -542,23 +511,9 @@ function importFiles(files) {
         const reader = new FileReader();
         reader.onload = (e) => {
             try {
-                const data = JSON.parse(e.target.result);
-                if (file.name.includes('nodes')) {
-                    nodes = data;
-                } else if (file.name.includes('labels')) {
-                    labels = data;
-                } else {
-                    // Guess by structure: if values have en/es it's labels
-                    const firstVal = Object.values(data)[0];
-                    if (firstVal && typeof firstVal === 'object' && ('en' in firstVal || 'es' in firstVal)) {
-                        labels = data;
-                    } else {
-                        nodes = data;
-                    }
-                }
+                nodes = JSON.parse(e.target.result);
                 saveToStorage();
                 renderNodeList();
-                renderLabelList();
             } catch (err) {
                 alert(`Failed to parse ${file.name}: ${err.message}`);
             }
@@ -598,7 +553,6 @@ function bindStaticEvents() {
     });
 
     document.getElementById('btn-export-nodes').addEventListener('click', () => downloadJSON('nodes.json', nodes));
-    document.getElementById('btn-export-labels').addEventListener('click', () => downloadJSON('labels.json', labels));
 
     document.getElementById('btn-import').addEventListener('click', () => {
         document.getElementById('file-import').click();
@@ -606,23 +560,5 @@ function bindStaticEvents() {
     document.getElementById('file-import').addEventListener('change', (e) => {
         importFiles(e.target.files);
         e.target.value = '';
-    });
-
-    document.getElementById('btn-add-label').addEventListener('click', () => openLabelModal(null));
-
-    document.getElementById('label-search').addEventListener('input', (e) => {
-        renderLabelList(e.target.value);
-    });
-
-    document.getElementById('modal-save').addEventListener('click', saveLabel);
-    document.getElementById('modal-cancel').addEventListener('click', closeModal);
-    document.getElementById('modal-delete').addEventListener('click', deleteLabel);
-
-    document.getElementById('modal-overlay').addEventListener('click', (e) => {
-        if (e.target === document.getElementById('modal-overlay')) closeModal();
-    });
-
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeModal();
     });
 }

@@ -248,6 +248,15 @@ select:focus { border-color: var(--accent); }
 
 .option-row input { flex: 1; }
 
+.bilingual-input {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+}
+
+.bilingual-input input { width: 100%; }
+
 .hint { font-size: 12px; color: var(--text-muted); font-style: italic; }
 
 /* ── Editor actions ── */
