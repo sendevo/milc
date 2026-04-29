@@ -359,3 +359,81 @@ button:hover { opacity: 0.85; }
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+/* ── Firebase status button ── */
+.btn-firebase {
+    border: 1px solid var(--border);
+    font-size: 12px;
+    padding: 5px 11px;
+    border-radius: var(--radius);
+    transition: opacity 0.15s, border-color 0.15s, color 0.15s;
+}
+.btn-firebase:hover { opacity: 0.85; }
+.btn-firebase.status-connected  { border-color: var(--accent2); color: var(--accent2); }
+.btn-firebase.status-disconnected { color: var(--text-muted); }
+
+/* ── Firebase config modal ── */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+.modal-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 28px 22px;
+    width: 440px;
+    max-width: 95vw;
+}
+
+.modal-box h2 {
+    margin-bottom: 6px;
+    color: var(--accent2);
+    font-size: 16px;
+}
+
+.modal-hint {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 18px;
+}
+
+.modal-actions { display: flex; gap: 8px; margin-top: 20px; }
+
+.modal-error {
+    margin-top: 10px;
+    font-size: 12px;
+    color: var(--danger);
+}
+
+/* ── Auth banner ── */
+#auth-banner {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+#auth-banner input {
+    padding: 6px 10px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+    font-size: 13px;
+    width: 180px;
+}
+
+.auth-error {
+    font-size: 12px;
+    color: var(--danger);
+}

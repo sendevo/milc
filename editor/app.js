@@ -1,15 +1,151 @@
+import { initializeApp, getApps, deleteApp } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js';
+import { getDatabase, ref, onValue, set, remove } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js';
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
+
 // ─── State ───────────────────────────────────────────────────────────────────
 
 let nodes = {};   // { [id]: nodeObject }
 let selectedNodeId = null;
 
+// ─── Firebase ─────────────────────────────────────────────────────────────────
+
+const FB_CONFIG_KEY = 'milc_firebase_config';
+let fbDb = null;
+let fbAuth = null;
+let fbUser = null;
+let fbUnsubscribe = null;
+let fbAuthUnsubscribe = null;
+
+function loadFbConfig() {
+    try {
+        const raw = localStorage.getItem(FB_CONFIG_KEY);
+        return raw ? JSON.parse(raw) : null;
+    } catch { return null; }
+}
+
+function saveFbConfig(config) {
+    localStorage.setItem(FB_CONFIG_KEY, JSON.stringify(config));
+}
+
+function clearFbConfig() {
+    localStorage.removeItem(FB_CONFIG_KEY);
+}
+
+function updateFirebaseStatusUI() {
+    const statusBtn = document.getElementById('btn-firebase-status');
+    const pushBtn   = document.getElementById('btn-push-firebase');
+    const authBanner = document.getElementById('auth-banner');
+    const appEl     = document.getElementById('app');
+    if (!statusBtn) return;
+    if (fbDb) {
+        if (fbUser) {
+            statusBtn.textContent = `🔥 ${fbUser.email} ✕`;
+            statusBtn.title = 'Click to sign out';
+        } else {
+            statusBtn.textContent = '🔥 Firebase: Sign in required';
+            statusBtn.title = 'Configure Firebase sync';
+        }
+        statusBtn.classList.add('status-connected');
+        statusBtn.classList.remove('status-disconnected');
+        if (pushBtn) pushBtn.style.display = fbUser ? 'inline-block' : 'none';
+        if (authBanner) authBanner.style.display = fbUser ? 'none' : 'flex';
+        if (appEl) appEl.style.display = fbUser ? 'flex' : 'none';
+    } else {
+        statusBtn.textContent = '🔥 Not connected';
+        statusBtn.title = 'Configure Firebase sync';
+        statusBtn.classList.remove('status-connected');
+        statusBtn.classList.add('status-disconnected');
+        if (pushBtn) pushBtn.style.display = 'none';
+        if (authBanner) authBanner.style.display = 'none';
+        if (appEl) appEl.style.display = 'flex';
+    }
+}
+
+async function connectFirebase(config) {
+    disconnectFirebase();
+    // Clean up any existing default app to avoid duplicate-app errors
+    for (const app of getApps()) await deleteApp(app);
+
+    const app = initializeApp(config);
+    fbDb = getDatabase(app);
+    fbAuth = getAuth(app);
+
+    fbAuthUnsubscribe = onAuthStateChanged(fbAuth, (user) => {
+        fbUser = user;
+        updateFirebaseStatusUI();
+        if (user) subscribeToSurvey();
+        else unsubscribeFromSurvey();
+    });
+
+    updateFirebaseStatusUI();
+}
+
+function subscribeToSurvey() {
+    if (!fbDb || fbUnsubscribe) return;
+    const surveyRef = ref(fbDb, 'survey');
+    fbUnsubscribe = onValue(surveyRef, (snapshot) => {
+        const data = snapshot.val();
+        if (data && typeof data === 'object') {
+            nodes = data;
+            saveToStorage();
+            renderNodeList();
+            if (selectedNodeId && nodes[selectedNodeId]) {
+                loadNodeIntoForm(nodes[selectedNodeId]);
+            } else if (selectedNodeId && !nodes[selectedNodeId]) {
+                selectedNodeId = null;
+                document.getElementById('editor-form').style.display = 'none';
+                document.getElementById('editor-placeholder').style.display = 'block';
+            }
+        }
+    });
+}
+
+function unsubscribeFromSurvey() {
+    if (fbUnsubscribe) { fbUnsubscribe(); fbUnsubscribe = null; }
+}
+
+function disconnectFirebase() {
+    unsubscribeFromSurvey();
+    if (fbAuthUnsubscribe) { fbAuthUnsubscribe(); fbAuthUnsubscribe = null; }
+    if (fbAuth && fbUser) signOut(fbAuth).catch(() => {});
+    fbDb = null; fbAuth = null; fbUser = null;
+    updateFirebaseStatusUI();
+}
+
+function fbSet(id, node) {
+    if (!fbDb || !fbUser) return;
+    set(ref(fbDb, `survey/${id}`), node).catch(err => console.error('Firebase write failed:', err));
+}
+
+function fbRemove(id) {
+    if (!fbDb || !fbUser) return;
+    remove(ref(fbDb, `survey/${id}`)).catch(err => console.error('Firebase remove failed:', err));
+}
+
+function fbPushAll() {
+    if (!fbDb || !fbUser) return;
+    set(ref(fbDb, 'survey'), nodes).catch(err => console.error('Firebase push-all failed:', err));
+}
+
 // ─── Init ─────────────────────────────────────────────────────────────────────
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     applyTheme(localStorage.getItem('milc_theme') || 'dark');
     loadFromStorage();
     renderNodeList();
     bindStaticEvents();
+
+    const savedConfig = loadFbConfig();
+    if (savedConfig) {
+        try {
+            await connectFirebase(savedConfig);
+        } catch (err) {
+            console.warn('Auto-connect to Firebase failed:', err);
+            updateFirebaseStatusUI();
+        }
+    } else {
+        updateFirebaseStatusUI();
+    }
 });
 
 function applyTheme(theme) {
@@ -487,15 +623,18 @@ function saveNode() {
     nodes[id] = node;
     selectedNodeId = id;
     saveToStorage();
+    fbSet(id, node);
     renderNodeList();
 }
 
 function deleteNode() {
     if (!selectedNodeId) return;
     if (!confirm(`Delete node "${selectedNodeId}"?`)) return;
-    delete nodes[selectedNodeId];
+    const removedId = selectedNodeId;
+    delete nodes[removedId];
     selectedNodeId = null;
     saveToStorage();
+    fbRemove(removedId);
     renderNodeList();
     document.getElementById('editor-form').style.display = 'none';
     document.getElementById('editor-placeholder').style.display = 'block';
@@ -521,6 +660,7 @@ function importFiles(files) {
             try {
                 nodes = JSON.parse(e.target.result);
                 saveToStorage();
+                fbPushAll();
                 renderNodeList();
             } catch (err) {
                 alert(`Failed to parse ${file.name}: ${err.message}`);
@@ -573,5 +713,90 @@ function bindStaticEvents() {
     document.getElementById('file-import').addEventListener('change', (e) => {
         importFiles(e.target.files);
         e.target.value = '';
+    });
+
+    // ─── Firebase modal ───────────────────────────────────────────────────────
+
+    const modal = document.getElementById('modal-firebase');
+
+    function openFirebaseModal() {
+        const cfg = loadFbConfig() || {};
+        document.getElementById('fb-api-key').value       = cfg.apiKey       || '';
+        document.getElementById('fb-auth-domain').value   = cfg.authDomain   || '';
+        document.getElementById('fb-project-id').value    = cfg.projectId    || '';
+        document.getElementById('fb-database-url').value  = cfg.databaseURL  || '';
+        document.getElementById('fb-modal-error').style.display = 'none';
+        document.getElementById('fb-modal-disconnect').style.display = fbDb ? 'inline-block' : 'none';
+        modal.style.display = 'flex';
+    }
+
+    function closeFirebaseModal() {
+        modal.style.display = 'none';
+    }
+
+    document.getElementById('btn-firebase-status').addEventListener('click', () => {
+        // If connected and signed in, sign out; otherwise open config modal
+        if (fbDb && fbUser) {
+            if (confirm(`Sign out from Firebase (${fbUser.email})?`)) {
+                signOut(fbAuth).catch(console.error);
+            }
+        } else {
+            openFirebaseModal();
+        }
+    });
+    document.getElementById('fb-modal-cancel').addEventListener('click', closeFirebaseModal);
+    modal.addEventListener('click', (e) => { if (e.target === modal) closeFirebaseModal(); });
+
+    // Auth banner sign-in
+    async function handleSignIn() {
+        const email    = document.getElementById('auth-email').value.trim();
+        const password = document.getElementById('auth-password').value;
+        const errEl    = document.getElementById('auth-banner-error');
+        if (!email || !password) { errEl.textContent = 'Enter email and password.'; return; }
+        try {
+            errEl.textContent = '';
+            await signInWithEmailAndPassword(fbAuth, email, password);
+        } catch (err) {
+            errEl.textContent = err.message;
+        }
+    }
+    document.getElementById('btn-auth-signin').addEventListener('click', handleSignIn);
+    document.getElementById('auth-password').addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') handleSignIn();
+    });
+
+    document.getElementById('fb-modal-connect').addEventListener('click', async () => {
+        const config = {
+            apiKey:      document.getElementById('fb-api-key').value.trim(),
+            authDomain:  document.getElementById('fb-auth-domain').value.trim(),
+            projectId:   document.getElementById('fb-project-id').value.trim(),
+            databaseURL: document.getElementById('fb-database-url').value.trim(),
+        };
+        if (!config.apiKey || !config.databaseURL) {
+            const errEl = document.getElementById('fb-modal-error');
+            errEl.textContent = 'API Key and Database URL are required.';
+            errEl.style.display = 'block';
+            return;
+        }
+        try {
+            await connectFirebase(config);
+            saveFbConfig(config);
+            closeFirebaseModal();
+        } catch (err) {
+            const errEl = document.getElementById('fb-modal-error');
+            errEl.textContent = `Connection failed: ${err.message}`;
+            errEl.style.display = 'block';
+        }
+    });
+
+    document.getElementById('fb-modal-disconnect').addEventListener('click', () => {
+        disconnectFirebase();
+        clearFbConfig();
+        closeFirebaseModal();
+    });
+
+    document.getElementById('btn-push-firebase').addEventListener('click', () => {
+        if (!fbDb) return;
+        if (confirm('Push all local nodes to Firebase? This will overwrite /survey.')) fbPushAll();
     });
 }

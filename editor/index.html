@@ -10,11 +10,22 @@
 </head>
 <body>
 
+<!-- Auth banner (shown when Firebase is connected but user is not signed in) -->
+<div id="auth-banner" style="display:none">
+    <span>Sign in to edit</span>
+    <input type="email" id="auth-email" placeholder="email" />
+    <input type="password" id="auth-password" placeholder="password" />
+    <button id="btn-auth-signin" class="btn-primary">Sign in</button>
+    <span id="auth-banner-error" class="auth-error"></span>
+</div>
+
 <div id="app">
     <header>
         <h1>MILC Survey Editor</h1>
         <div class="header-actions">
             <button id="btn-theme" title="Toggle theme">🌙</button>
+            <button id="btn-firebase-status" class="btn-firebase" title="Configure Firebase sync">🔥 Not connected</button>
+            <button id="btn-push-firebase" style="display:none" title="Push all local nodes to Firebase">⬆ Push all to Firebase</button>
             <button id="btn-import">⬆ Import JSON</button>
             <button id="btn-export-nodes" class="btn-primary">⬇ Export nodes.json</button>
         </div>
@@ -112,6 +123,36 @@
     </div>
 </div>
 
-<script src="app.js"></script>
+<!-- Firebase config modal -->
+<div id="modal-firebase" class="modal-overlay" style="display:none">
+    <div class="modal-box">
+        <h2>Firebase Configuration</h2>
+        <p class="modal-hint">Credentials are saved only in this browser's localStorage and never leave your machine.</p>
+        <div class="form-group">
+            <label>API Key</label>
+            <input type="text" id="fb-api-key" placeholder="AIza..." />
+        </div>
+        <div class="form-group">
+            <label>Auth Domain</label>
+            <input type="text" id="fb-auth-domain" placeholder="your-project.firebaseapp.com" />
+        </div>
+        <div class="form-group">
+            <label>Project ID</label>
+            <input type="text" id="fb-project-id" placeholder="your-project" />
+        </div>
+        <div class="form-group">
+            <label>Database URL</label>
+            <input type="text" id="fb-database-url" placeholder="https://your-project-default-rtdb.firebaseio.com" />
+        </div>
+        <div class="modal-actions">
+            <button id="fb-modal-connect" class="btn-primary">Connect</button>
+            <button id="fb-modal-disconnect" class="btn-danger">Disconnect</button>
+            <button id="fb-modal-cancel">Cancel</button>
+        </div>
+        <p id="fb-modal-error" class="modal-error" style="display:none"></p>
+    </div>
+</div>
+
+<script type="module" src="app.js"></script>
 </body>
 </html>
