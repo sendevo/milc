@@ -132,6 +132,15 @@
         <h2>Firebase Configuration</h2>
         <p class="modal-hint">Credentials are saved only in this browser's localStorage and never leave your machine.</p>
         <div class="form-group">
+            <label>Load from <code>.env</code> file</label>
+            <div class="env-load-row">
+                <input type="file" id="fb-env-file" accept=".env,text/plain" style="display:none" />
+                <button id="fb-env-browse" class="btn-sm">Browse…</button>
+                <span id="fb-env-filename" class="hint">No file selected</span>
+            </div>
+        </div>
+        <hr class="modal-divider" />
+        <div class="form-group">
             <label>API Key</label>
             <input type="text" id="fb-api-key" placeholder="AIza..." />
         </div>

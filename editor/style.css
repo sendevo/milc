@@ -439,6 +439,10 @@ button:disabled { opacity: 0.35; cursor: not-allowed; }
 
 .modal-actions { display: flex; gap: 8px; margin-top: 20px; }
 
+.modal-divider { border: none; border-top: 1px solid var(--border); margin: 14px 0; }
+
+.env-load-row { display: flex; align-items: center; gap: 10px; }
+
 .modal-error {
     margin-top: 10px;
     font-size: 12px;

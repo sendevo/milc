@@ -152,7 +152,7 @@ function fbPushAll() {
 // ─── Init ─────────────────────────────────────────────────────────────────────
 
 document.addEventListener('DOMContentLoaded', async () => {
-    applyTheme(localStorage.getItem('milc_theme') || 'dark');
+    applyTheme(localStorage.getItem('milc_theme') || 'light');
     loadFromStorage();
     renderNodeList();
     bindStaticEvents();
@@ -164,9 +164,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         } catch (err) {
             console.warn('Auto-connect to Firebase failed:', err);
             updateFirebaseStatusUI();
+            openFirebaseModal();
         }
     } else {
         updateFirebaseStatusUI();
+        openFirebaseModal();
     }
 });
 
@@ -775,6 +777,26 @@ function deleteNode() {
     document.getElementById('editor-placeholder').style.display = 'block';
 }
 
+// ─── Firebase modal ──────────────────────────────────────────────────────────
+
+function openFirebaseModal() {
+    const modal = document.getElementById('modal-firebase');
+    if (!modal) return;
+    const cfg = loadFbConfig() || {};
+    document.getElementById('fb-api-key').value       = cfg.apiKey       || '';
+    document.getElementById('fb-auth-domain').value   = cfg.authDomain   || '';
+    document.getElementById('fb-project-id').value    = cfg.projectId    || '';
+    document.getElementById('fb-database-url').value  = cfg.databaseURL  || '';
+    document.getElementById('fb-modal-error').style.display = 'none';
+    document.getElementById('fb-modal-disconnect').style.display = fbDb ? 'inline-block' : 'none';
+    modal.style.display = 'flex';
+}
+
+function closeFirebaseModal() {
+    const modal = document.getElementById('modal-firebase');
+    if (modal) modal.style.display = 'none';
+}
+
 // ─── Export ───────────────────────────────────────────────────────────────────
 
 function downloadJSON(filename, data) {
@@ -864,21 +886,6 @@ function bindStaticEvents() {
 
     const modal = document.getElementById('modal-firebase');
 
-    function openFirebaseModal() {
-        const cfg = loadFbConfig() || {};
-        document.getElementById('fb-api-key').value       = cfg.apiKey       || '';
-        document.getElementById('fb-auth-domain').value   = cfg.authDomain   || '';
-        document.getElementById('fb-project-id').value    = cfg.projectId    || '';
-        document.getElementById('fb-database-url').value  = cfg.databaseURL  || '';
-        document.getElementById('fb-modal-error').style.display = 'none';
-        document.getElementById('fb-modal-disconnect').style.display = fbDb ? 'inline-block' : 'none';
-        modal.style.display = 'flex';
-    }
-
-    function closeFirebaseModal() {
-        modal.style.display = 'none';
-    }
-
     document.getElementById('btn-firebase-status').addEventListener('click', () => {
         // If connected and signed in, sign out; otherwise open config modal
         if (fbDb && fbUser) {
@@ -891,6 +898,35 @@ function bindStaticEvents() {
     });
     document.getElementById('fb-modal-cancel').addEventListener('click', closeFirebaseModal);
     modal.addEventListener('click', (e) => { if (e.target === modal) closeFirebaseModal(); });
+
+    // .env file loader
+    document.getElementById('fb-env-browse').addEventListener('click', () => {
+        document.getElementById('fb-env-file').click();
+    });
+    document.getElementById('fb-env-file').addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        document.getElementById('fb-env-filename').textContent = file.name;
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+            const vars = {};
+            ev.target.result.split(/\r?\n/).forEach(line => {
+                const m = line.match(/^([^#=\s][^=]*)=(.*)$/);
+                if (m) vars[m[1].trim()] = m[2].trim().replace(/^["']|["']$/g, '');
+            });
+            if (vars.VITE_FIREBASE_API_KEY)
+                document.getElementById('fb-api-key').value = vars.VITE_FIREBASE_API_KEY;
+            if (vars.VITE_FIREBASE_AUTH_DOMAIN)
+                document.getElementById('fb-auth-domain').value = vars.VITE_FIREBASE_AUTH_DOMAIN;
+            if (vars.VITE_FIREBASE_PROJECT_ID)
+                document.getElementById('fb-project-id').value = vars.VITE_FIREBASE_PROJECT_ID;
+            if (vars.VITE_FIREBASE_DATABASE_URL)
+                document.getElementById('fb-database-url').value = vars.VITE_FIREBASE_DATABASE_URL;
+            document.getElementById('fb-modal-error').style.display = 'none';
+        };
+        reader.readAsText(file);
+        e.target.value = '';
+    });
 
     // Auth banner sign-in
     async function handleSignIn() {
