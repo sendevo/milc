@@ -18,8 +18,6 @@ const SurveyPage = () => {
 
     const node = nodes[nodeId];
 
-    console.log(nodes);
-
     if (!node) {
         navigate("/app", { replace: true });
         return null;

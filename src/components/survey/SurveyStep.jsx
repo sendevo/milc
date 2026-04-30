@@ -8,6 +8,7 @@ import AlertBlock from "./AlertBlock";
 import NumberInput from "./NumberInput";
 import ImageList from "./ImageList";
 import MonthPicker from "./MonthPicker";
+import BottomNavigation from "./BottomNavigation";
 import { t } from "../../model";
 import { runAction } from "../../model";
 import { surveyStepStyles as styles } from "../../theme/SurveyStep.styles";
@@ -47,6 +48,7 @@ import { surveyStepStyles as styles } from "../../theme/SurveyStep.styles";
  */
 
 const inputFieldTypes = ["select", "number_input", "month_picker"];
+const selfNavigatingTypes = ["bottom_navigation"];
 
 const SurveyStep = ({ node, onSubmit, onBack }) => {
     const [answers, setAnswers] = useState({});
@@ -60,6 +62,8 @@ const SurveyStep = ({ node, onSubmit, onBack }) => {
         (inputFields[0].type === "select" || inputFields[0].type === "number_input");
 
     const isComplete = inputFields.every((f) => answers[f.id] !== undefined);
+
+    const hasBottomNav = node.fields.some((f) => selfNavigatingTypes.includes(f.type));
 
     const renderField = (field) => {
         switch (field.type) {
@@ -129,6 +133,16 @@ const SurveyStep = ({ node, onSubmit, onBack }) => {
                             label: label ? t(label) : undefined
                         }))} />
                 );
+            case "bottom_navigation":
+                return (
+                    <BottomNavigation
+                        key={field.id}
+                        buttons={(field.buttons || []).map((b) => ({
+                            label: t(b.label),
+                            target: b.target,
+                        }))}
+                        onNavigate={(target) => navigate(`/survey/${target}`)} />
+                );
             default:
                 return null;
         }
@@ -148,7 +162,7 @@ const SurveyStep = ({ node, onSubmit, onBack }) => {
             <Box sx={styles.fieldsBox}>
                 {node.fields.map(renderField)}
 
-                {!autoAdvance ? 
+                {!autoAdvance && !hasBottomNav ? 
                     <Button
                         variant="contained"
                         disabled={!isComplete}
