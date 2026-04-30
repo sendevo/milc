@@ -59,6 +59,12 @@ header h1 {
 .header-actions { display: flex; gap: 8px; }
 
 /* ── Layout ── */
+#app {
+    flex-direction: column;
+    flex: 1;
+    overflow: hidden;
+}
+
 #main {
     display: flex;
     flex: 1;

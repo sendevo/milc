@@ -5,7 +5,6 @@ import { useTheme } from "@mui/material/styles";
 import ViewContainer from "../components/ViewContainer";
 import MenuCircle from "../components/MenuCircle";
 import { mainMenuStyles as styles } from "../theme/MainMenu.styles";
-import { useAuth } from "../contexts/AuthContext";
 import blueGoat from "../assets/icons/blue_goat.png";
 import udder from "../assets/icons/udder.png";
 import milkPail from "../assets/icons/milk_pail.png";
@@ -33,17 +32,11 @@ const ButtonsContainer = ({ children }) => (
 
 const MainMenu = () => {
     const { t } = useTranslation();
-    const { logout, currentUser } = useAuth();
     const navigate = useNavigate();
     const theme = useTheme();
     const isDark = theme.palette.mode === "dark";
     const tealBorder = isDark ? "#2dc5a2" : "#1a8090";
     const greyBorder = isDark ? "#aaaaaa" : "#757575";
-
-    const handleLogout = async () => {
-        await logout();
-        navigate("/");
-    };
 
     const myDayItems = [
         {
@@ -79,12 +72,7 @@ const MainMenu = () => {
             icon: info, 
             label: t("mainMenu.info"),
             onClick: () => navigate("/info") 
-        },
-        /*
-        currentUser?.isAnonymous
-          ? { icon: newUser, label: t("mainMenu.createAccount"), onClick: () => navigate("/register") }
-          : { icon: logoutIcon, label: t("mainMenu.logout"), onClick: handleLogout },
-        */
+        }
     ];
 
     return (
