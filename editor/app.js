@@ -7,6 +7,15 @@ import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from
 let nodes = {};   // { [id]: nodeObject }
 let selectedNodeId = null;
 
+// ─── Known actions ────────────────────────────────────────────────────────────
+// Keep in sync with src/model/actions.js
+const KNOWN_ACTIONS = [
+    '',               // none
+    'log_value',
+    'save_to_storage',
+    'log_answers',
+];
+
 // ─── Firebase ─────────────────────────────────────────────────────────────────
 
 const FB_CONFIG_KEY = 'milc_firebase_config';
@@ -307,6 +316,25 @@ function buildFieldEl(field, index) {
     }
 
     wrap.appendChild(extras);
+
+    // Action selector (shared for all field types)
+    const actionSection = document.createElement('div');
+    actionSection.className = 'extra-row';
+    const actionLabel = document.createElement('label');
+    actionLabel.textContent = 'Action';
+    const actionSel = document.createElement('select');
+    actionSel.dataset.role = 'action';
+    KNOWN_ACTIONS.forEach(id => {
+        const opt = document.createElement('option');
+        opt.value = id;
+        opt.textContent = id || '(none)';
+        if (id === (field.action || '')) opt.selected = true;
+        actionSel.appendChild(opt);
+    });
+    actionSection.appendChild(actionLabel);
+    actionSection.appendChild(actionSel);
+    wrap.appendChild(actionSection);
+
     return wrap;
 }
 
@@ -475,6 +503,10 @@ function getFieldsFromDOM() {
         const extras = block.querySelector('.field-extras');
 
         const field = { id, type };
+
+        const actionEl = block.querySelector('[data-role="action"]');
+        const actionVal = actionEl?.value?.trim();
+        if (actionVal) field.action = actionVal;
 
         if (type === 'select') {
             const optRows = extras.querySelectorAll('.option-row');

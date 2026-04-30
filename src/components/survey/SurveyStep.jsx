@@ -9,6 +9,7 @@ import NumberInput from "./NumberInput";
 import ImageList from "./ImageList";
 import MonthPicker from "./MonthPicker";
 import { t } from "../../model";
+import { runAction } from "../../model";
 import { surveyStepStyles as styles } from "../../theme/SurveyStep.styles";
 
 /**
@@ -73,6 +74,7 @@ const SurveyStep = ({ node, onSubmit, onBack }) => {
                         onSelect={(value) => {
                             const newAnswers = { ...answers, [field.id]: value };
                             setAnswers(newAnswers);
+                            runAction(field.action, { fieldId: field.id, value, nodeId: node.id, answers: newAnswers });
                             if (autoAdvance) {
                                 onSubmit(newAnswers);
                             }
@@ -87,10 +89,14 @@ const SurveyStep = ({ node, onSubmit, onBack }) => {
                         min={field.min}
                         max={field.max}
                         step={field.step}
-                        onChange={(val) => setAnswers((prev) => ({ ...prev, [field.id]: val }))}
+                        onChange={(val) => {
+                            setAnswers((prev) => ({ ...prev, [field.id]: val }));
+                            runAction(field.action, { fieldId: field.id, value: val, nodeId: node.id, answers: { ...answers, [field.id]: val } });
+                        }}
                         onSave={(val) => {
                             const newAnswers = { ...answers, [field.id]: val };
                             setAnswers(newAnswers);
+                            runAction(field.action, { fieldId: field.id, value: val, nodeId: node.id, answers: newAnswers });
                             onSubmit(newAnswers);
                         }} />
                 );
@@ -103,10 +109,14 @@ const SurveyStep = ({ node, onSubmit, onBack }) => {
                     <MonthPicker
                         key={field.id}
                         value={answers[field.id] ?? []}
-                        onChange={(val) => setAnswers((prev) => ({ ...prev, [field.id]: val }))}
+                        onChange={(val) => {
+                            setAnswers((prev) => ({ ...prev, [field.id]: val }));
+                            runAction(field.action, { fieldId: field.id, value: val, nodeId: node.id, answers: { ...answers, [field.id]: val } });
+                        }}
                         onSave={(val) => {
                             const newAnswers = { ...answers, [field.id]: val };
                             setAnswers(newAnswers);
+                            runAction(field.action, { fieldId: field.id, value: val, nodeId: node.id, answers: newAnswers });
                             onSubmit(newAnswers);
                         }} />
                 );

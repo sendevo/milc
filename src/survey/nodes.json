@@ -8,6 +8,7 @@
         "fields": [{
             "id": "udder_clean",
             "type": "select",
+            "action": "log_value",
             "options": [
                 { "value": "yes", "label": { "en": "Yes", "es": "Sí" } },
                 { "value": "no", "label": { "en": "No", "es": "No" } },
@@ -45,6 +46,7 @@
         "fields": [{
             "id": "animal_count",
             "type": "number_input",
+            "action": "save_to_storage",
             "label": { "en": "Number of animals being milked", "es": "Cantidad de animales en ordeñe" },
             "default": 1,
             "min": 1,
