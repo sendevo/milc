@@ -1,14 +1,28 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { Box, FormControl, MenuItem, Select, Typography } from "@mui/material";
+import { Box, Button, Divider, FormControl, MenuItem, Select, Typography } from "@mui/material";
 import ViewContainer from "../components/ViewContainer";
 import { useSettings } from "../contexts/SettingsContext";
+import { refreshSurveyNodes } from "../hooks/useSurveyNodes";
 import { configStyles as styles } from "../theme/Config.styles";
 
 const Config = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const { language, themeMode, setLanguage, setThemeMode } = useSettings();
+    const [refreshState, setRefreshState] = useState("idle"); // "idle" | "loading" | "done"
+
+    const handleRefreshNodes = async () => {
+        setRefreshState("loading");
+        try {
+            await refreshSurveyNodes();
+            setRefreshState("done");
+            setTimeout(() => setRefreshState("idle"), 2000);
+        } catch {
+            setRefreshState("idle");
+        }
+    };
 
     return (
         <ViewContainer
@@ -38,6 +52,29 @@ const Config = () => {
                         </Select>
                     </FormControl>
                 </Box>
+
+                {import.meta.env.DEV && (
+                    <>
+                        <Divider>
+                            <Typography sx={styles.devSectionTitle}>
+                                {t("config.devSection")}
+                            </Typography>
+                        </Divider>
+                        <Box sx={styles.settingRow}>
+                            <Typography sx={styles.label}>{t("config.resetNodes")}</Typography>
+                            <Button
+                                variant="outlined"
+                                disabled={refreshState !== "idle"}
+                                onClick={handleRefreshNodes}>
+                                {refreshState === "loading"
+                                    ? t("common.loading")
+                                    : refreshState === "done"
+                                    ? t("config.resetNodesDone")
+                                    : t("config.resetNodesAction")}
+                            </Button>
+                        </Box>
+                    </>
+                )}
             </Box>
         </ViewContainer>
     );

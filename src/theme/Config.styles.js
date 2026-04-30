@@ -21,4 +21,12 @@ export const configStyles = {
     control: {
         minWidth: 150,
     },
+    devSectionTitle: {
+        fontSize: "0.75rem",
+        fontWeight: 600,
+        color: "text.secondary",
+        textTransform: "uppercase",
+        letterSpacing: "0.08em",
+        px: 1,
+    },
 };

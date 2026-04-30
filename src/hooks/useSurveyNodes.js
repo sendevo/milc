@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ref, onValue } from "firebase/database";
+import { ref, onValue, get } from "firebase/database";
 import { db } from "../firebase";
 import fallbackNodes from "../survey/nodes.json";
 
@@ -8,6 +8,7 @@ const CACHE_KEY = "milc_survey_nodes";
 function loadFromCache() {
     try {
         const raw = localStorage.getItem(CACHE_KEY);
+        console.log("Loaded survey nodes from cache:", raw ? "found" : "not found");
         return raw ? JSON.parse(raw) : null;
     } catch {
         return null;
@@ -52,4 +53,19 @@ export function useSurveyNodes() {
     }, []);
 
     return nodes;
+}
+
+/**
+ * Clears the localStorage survey-nodes cache and fetches a fresh copy from
+ * Firebase Realtime Database. Any active `useSurveyNodes` subscription will
+ * receive the update automatically via its `onValue` listener.
+ */
+export async function refreshSurveyNodes() {
+    localStorage.removeItem(CACHE_KEY);
+    const surveyRef = ref(db, "survey");
+    const snapshot = await get(surveyRef);
+    const data = snapshot.val();
+    if (data && typeof data === "object") {
+        saveToCache(data);
+    }
 }

@@ -81,6 +81,10 @@ const resources = {
                 theme: "Theme",
                 light: "Light",
                 dark: "Dark",
+                resetNodes: "Survey data",
+                resetNodesAction: "Reset & update",
+                resetNodesDone: "Updated!",
+                devSection: "Dev configs",
             },
             info: {
                 title: "About MILC",
@@ -186,6 +190,10 @@ const resources = {
                 theme: "Apariencia",
                 light: "Claro",
                 dark: "Oscuro",
+                resetNodes: "Datos de encuesta",
+                resetNodesAction: "Reiniciar y actualizar",
+                resetNodesDone: "¡Actualizado!",
+                devSection: "Dev configs",
             },
             info: {
                 title: "Acerca de MILC",
