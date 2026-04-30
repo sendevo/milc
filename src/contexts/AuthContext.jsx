@@ -9,11 +9,13 @@ import {
     EmailAuthProvider,
     linkWithCredential,
     onAuthStateChanged,
+    reauthenticateWithCredential,
     signInAnonymously,
     signInWithEmailAndPassword,
     signOut,
+    updatePassword,
 } from "firebase/auth";
-import { ref, set } from "firebase/database";
+import { ref, set, get } from "firebase/database";
 import { auth, db } from "../firebase";
 
 const AuthContext = createContext(null);
@@ -43,10 +45,24 @@ export const AuthProvider = ({ children }) => {
     const saveUserProfile = (uid, profile) =>
         set(ref(db, `users/${uid}`), profile);
 
+    const getUserProfile = async (uid) => {
+        const snapshot = await get(ref(db, `users/${uid}`));
+        return snapshot.val();
+    };
+
+    const changePassword = async (currentPassword, newPassword) => {
+        const credential = EmailAuthProvider.credential(
+            currentUser.email,
+            currentPassword
+        );
+        await reauthenticateWithCredential(currentUser, credential);
+        await updatePassword(currentUser, newPassword);
+    };
+
     const logout = () => signOut(auth);
 
     return (
-        <AuthContext.Provider value={{ currentUser, loading, login, loginAnonymously, logout, register, saveUserProfile }}>
+        <AuthContext.Provider value={{ currentUser, loading, login, loginAnonymously, logout, register, saveUserProfile, getUserProfile, changePassword }}>
             {children}
         </AuthContext.Provider>
     );

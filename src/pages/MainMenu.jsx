@@ -65,8 +65,16 @@ const MainMenu = () => {
     ];
 
     const accountActionItems = [
-        { icon: user, label: t("mainMenu.myProfile") },
-        { icon: config, label: t("mainMenu.settings"), onClick: () => navigate("/config") },
+        { 
+            icon: user, 
+            label: t("mainMenu.myProfile") ,
+            onClick: () => navigate("/profile")
+        },
+        { 
+            icon: config, 
+            label: t("mainMenu.settings"), 
+            onClick: () => navigate("/config") 
+        },
         { 
             icon: info, 
             label: t("mainMenu.info"),
