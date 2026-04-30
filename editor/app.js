@@ -6,6 +6,19 @@ import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from
 
 let nodes = {};   // { [id]: nodeObject }
 let selectedNodeId = null;
+let isDirty = false;
+
+function markDirty() {
+    isDirty = true;
+    const btn = document.getElementById('btn-save-node');
+    if (btn) btn.disabled = false;
+}
+
+function markClean() {
+    isDirty = false;
+    const btn = document.getElementById('btn-save-node');
+    if (btn) btn.disabled = true;
+}
 
 // ─── Known actions ────────────────────────────────────────────────────────────
 // Keep in sync with src/model/actions.js
@@ -200,6 +213,7 @@ function selectNode(id) {
 
 function loadNodeIntoForm(node) {
     document.getElementById('editor-placeholder').style.display = 'none';
+    document.getElementById('save-result').style.display = 'none';
     const form = document.getElementById('editor-form');
     form.style.display = 'block';
 
@@ -213,6 +227,7 @@ function loadNodeIntoForm(node) {
 
     renderFields(node.fields || []);
     renderNext(node.next);
+    markClean();
 }
 
 function clearForm() {
@@ -225,6 +240,7 @@ function clearForm() {
     document.getElementById('field-icon').value = '';
     renderFields([]);
     renderNext(null);
+    markClean();
 }
 
 // ─── Bilingual input helper ───────────────────────────────────────────────────
@@ -291,7 +307,7 @@ function buildFieldEl(field, index) {
     const delBtn = document.createElement('button');
     delBtn.textContent = '✕';
     delBtn.className = 'btn-icon btn-danger';
-    delBtn.addEventListener('click', () => { wrap.remove(); });
+    delBtn.addEventListener('click', () => { wrap.remove(); markDirty(); });
     header.appendChild(delBtn);
 
     wrap.appendChild(header);
@@ -313,6 +329,8 @@ function buildFieldEl(field, index) {
         lbl.className = 'hint';
         lbl.textContent = 'No extra options for month_picker';
         extras.appendChild(lbl);
+    } else if (field.type === 'bottom_navigation') {
+        extras.appendChild(buildBottomNavigationExtras(field));
     }
 
     wrap.appendChild(extras);
@@ -322,7 +340,9 @@ function buildFieldEl(field, index) {
     actionSection.className = 'extra-row';
     const actionLabel = document.createElement('label');
     actionLabel.textContent = 'Action';
+    actionLabel.style.marginTop = '10px';
     const actionSel = document.createElement('select');
+    actionSel.style.marginTop = '10px';
     actionSel.dataset.role = 'action';
     KNOWN_ACTIONS.forEach(id => {
         const opt = document.createElement('option');
@@ -385,6 +405,7 @@ function buildSelectExtras(field) {
     addBtn.className = 'btn-sm';
     addBtn.addEventListener('click', () => {
         optList.appendChild(buildOptionRow('', null));
+        markDirty();
     });
     wrap.appendChild(addBtn);
 
@@ -404,7 +425,7 @@ function buildOptionRow(value, label) {
     const del = document.createElement('button');
     del.textContent = '✕';
     del.className = 'btn-icon btn-danger';
-    del.addEventListener('click', () => row.remove());
+    del.addEventListener('click', () => { row.remove(); markDirty(); });
 
     row.appendChild(vInput);
     row.appendChild(lWrap);
@@ -456,7 +477,7 @@ function buildImageListExtras(field) {
     const addBtn = document.createElement('button');
     addBtn.textContent = '＋ Add image';
     addBtn.className = 'btn-sm';
-    addBtn.addEventListener('click', () => imgList.appendChild(buildImageRow('')));
+    addBtn.addEventListener('click', () => { imgList.appendChild(buildImageRow('')); markDirty(); });
     wrap.appendChild(addBtn);
 
     return wrap;
@@ -470,7 +491,7 @@ function buildImageRow(src) {
     const del = document.createElement('button');
     del.textContent = '✕';
     del.className = 'btn-icon btn-danger';
-    del.addEventListener('click', () => row.remove());
+    del.addEventListener('click', () => { row.remove(); markDirty(); });
     row.appendChild(inp);
     row.appendChild(del);
     return row;
@@ -488,6 +509,45 @@ function buildAlertExtras(field) {
     wrap.appendChild(makeRow('Severity', severityInput));
 
     return wrap;
+}
+
+function buildBottomNavigationExtras(field) {
+    const wrap = document.createElement('div');
+
+    const title = document.createElement('div');
+    title.className = 'sub-section-title';
+    title.textContent = 'Buttons (exactly 2)';
+    wrap.appendChild(title);
+
+    const btnList = document.createElement('div');
+    btnList.className = 'option-list';
+    btnList.dataset.role = 'btn-list';
+
+    (field.buttons || [{}, {}]).slice(0, 2).forEach(btn => {
+        btnList.appendChild(buildNavButtonRow(btn.label, btn.target || ''));
+    });
+    // ensure always exactly 2 rows
+    while (btnList.children.length < 2) {
+        btnList.appendChild(buildNavButtonRow(null, ''));
+    }
+
+    wrap.appendChild(btnList);
+    return wrap;
+}
+
+function buildNavButtonRow(label, target) {
+    const row = document.createElement('div');
+    row.className = 'option-row';
+
+    const lWrap = bilingualInputGroup(label, 'button label');
+    lWrap.dataset.role = 'btn-label';
+
+    const tInput = textInput(target, 'target node id');
+    tInput.dataset.role = 'btn-target';
+
+    row.appendChild(lWrap);
+    row.appendChild(tInput);
+    return row;
 }
 
 // ─── Read fields from DOM ─────────────────────────────────────────────────────
@@ -543,6 +603,15 @@ function getFieldsFromDOM() {
             if (msg) field.message = msg;
             const get = (role) => extras.querySelector(`[data-role="${role}"]`)?.value.trim();
             if (get('severity')) field.severity = get('severity');
+        } else if (type === 'bottom_navigation') {
+            const rows = extras.querySelectorAll('.option-row');
+            field.buttons = [];
+            rows.forEach(row => {
+                const lWrap = row.querySelector('[data-role="btn-label"]');
+                const target = row.querySelector('[data-role="btn-target"]')?.value.trim() || '';
+                const label = getBilingual(lWrap) || { en: '', es: '' };
+                field.buttons.push({ label, target });
+            });
         }
 
         result.push(field);
@@ -595,7 +664,7 @@ function buildMapRow(key, value) {
     const del = document.createElement('button');
     del.textContent = '✕';
     del.className = 'btn-icon btn-danger';
-    del.addEventListener('click', () => row.remove());
+    del.addEventListener('click', () => { row.remove(); markDirty(); });
 
     row.appendChild(kInput);
     row.appendChild(vInput);
@@ -624,39 +693,73 @@ function getNextFromDOM() {
 
 // ─── Save / Delete node ───────────────────────────────────────────────────────
 
+function showSaveResult(success, nodeId, errorMsg) {
+    const resultEl = document.getElementById('save-result');
+    const formEl = document.getElementById('editor-form');
+    formEl.style.display = 'none';
+    resultEl.style.display = 'block';
+
+    if (success) {
+        resultEl.innerHTML = `
+            <div class="save-result save-result--success">
+                <span class="save-result-icon">✓</span>
+                <p>Node <strong>${nodeId}</strong> saved successfully.</p>
+                <button class="btn-sm save-result-back">← Back to editing</button>
+            </div>`;
+    } else {
+        resultEl.innerHTML = `
+            <div class="save-result save-result--error">
+                <span class="save-result-icon">✕</span>
+                <p>Failed to save node: ${errorMsg}</p>
+                <button class="btn-sm save-result-back">← Back to editing</button>
+            </div>`;
+    }
+
+    resultEl.querySelector('.save-result-back').addEventListener('click', () => {
+        resultEl.style.display = 'none';
+        formEl.style.display = 'block';
+    });
+}
+
 function saveNode() {
     const id = document.getElementById('field-id').value.trim();
     if (!id) { alert('Node ID is required'); return; }
 
-    const node = {
-        id,
-        title: {
-            en: document.getElementById('field-title-en').value.trim(),
-            es: document.getElementById('field-title-es').value.trim(),
-        },
-        fields: getFieldsFromDOM(),
-        next: getNextFromDOM(),
-    };
+    try {
+        const node = {
+            id,
+            title: {
+                en: document.getElementById('field-title-en').value.trim(),
+                es: document.getElementById('field-title-es').value.trim(),
+            },
+            fields: getFieldsFromDOM(),
+            next: getNextFromDOM(),
+        };
 
-    const subtitleEn = document.getElementById('field-subtitle-en').value.trim();
-    const subtitleEs = document.getElementById('field-subtitle-es').value.trim();
-    if (subtitleEn || subtitleEs) node.subtitle = { en: subtitleEn, es: subtitleEs };
+        const subtitleEn = document.getElementById('field-subtitle-en').value.trim();
+        const subtitleEs = document.getElementById('field-subtitle-es').value.trim();
+        if (subtitleEn || subtitleEs) node.subtitle = { en: subtitleEn, es: subtitleEs };
 
-    if (document.getElementById('field-showDate').checked) node.showDate = true;
+        if (document.getElementById('field-showDate').checked) node.showDate = true;
 
-    const icon = document.getElementById('field-icon').value.trim();
-    if (icon) node.icon = icon;
+        const icon = document.getElementById('field-icon').value.trim();
+        if (icon) node.icon = icon;
 
-    // If ID changed, remove old entry
-    if (selectedNodeId && selectedNodeId !== id) {
-        delete nodes[selectedNodeId];
+        // If ID changed, remove old entry
+        if (selectedNodeId && selectedNodeId !== id) {
+            delete nodes[selectedNodeId];
+        }
+
+        nodes[id] = node;
+        selectedNodeId = id;
+        saveToStorage();
+        fbSet(id, node);
+        renderNodeList();
+        markClean();
+        showSaveResult(true, id);
+    } catch (err) {
+        showSaveResult(false, id, err.message);
     }
-
-    nodes[id] = node;
-    selectedNodeId = id;
-    saveToStorage();
-    fbSet(id, node);
-    renderNodeList();
 }
 
 function deleteNode() {
@@ -720,16 +823,26 @@ function bindStaticEvents() {
             const container = document.getElementById('fields-container');
             const existing = container.querySelectorAll('.field-block').length;
             container.appendChild(buildFieldEl({ type, id: '' }, existing));
+            markDirty();
         });
     });
 
     document.getElementById('btn-save-node').addEventListener('click', saveNode);
     document.getElementById('btn-delete-node').addEventListener('click', deleteNode);
+    document.getElementById('btn-cancel-node').addEventListener('click', () => {
+        document.getElementById('editor-form').style.display = 'none';
+        document.getElementById('save-result').style.display = 'none';
+        document.getElementById('editor-placeholder').style.display = 'block';
+    });
+
+    document.getElementById('editor-form').addEventListener('input', markDirty);
+    document.getElementById('editor-form').addEventListener('change', markDirty);
 
     document.getElementById('next-type').addEventListener('change', updateNextVisibility);
 
     document.getElementById('btn-add-map-row').addEventListener('click', () => {
         document.getElementById('next-map-rows').appendChild(buildMapRow('', ''));
+        markDirty();
     });
 
     document.getElementById('btn-export-nodes').addEventListener('click', () => downloadJSON('nodes.json', nodes));

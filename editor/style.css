@@ -137,6 +137,33 @@ aside {
     text-align: center;
 }
 
+/* ── Save result panel ── */
+.save-result {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-top: 60px;
+    padding: 32px 24px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 15px;
+}
+.save-result--success {
+    background: color-mix(in srgb, var(--accent) 15%, transparent);
+    border: 1px solid var(--accent);
+}
+.save-result--error {
+    background: color-mix(in srgb, #e53935 15%, transparent);
+    border: 1px solid #e53935;
+}
+.save-result-icon {
+    font-size: 40px;
+    line-height: 1;
+}
+.save-result p { margin: 0; }
+.save-result-back { margin-top: 8px; }
+
 /* ── Forms ── */
 .form-group {
     display: flex;
@@ -306,6 +333,7 @@ button:hover { opacity: 0.85; }
 .btn-danger { background: var(--danger); color: #fff; }
 .btn-sm { padding: 4px 10px; font-size: 12px; margin-top: 4px; }
 .btn-icon { padding: 3px 7px; font-size: 12px; flex-shrink: 0; }
+button:disabled { opacity: 0.35; cursor: not-allowed; }
 
 #btn-add-node, #btn-add-label {
     background: none;

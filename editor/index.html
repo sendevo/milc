@@ -45,6 +45,7 @@
         <!-- Center panel: node editor -->
         <section id="editor-panel">
             <div id="editor-placeholder">← Select or create a node</div>
+            <div id="save-result" style="display:none"></div>
             <div id="editor-form" style="display:none">
 
                 <div class="form-group">
@@ -82,6 +83,7 @@
                         <button class="btn-add-field" data-type="image_list">＋ Images</button>
                         <button class="btn-add-field" data-type="alert">＋ Alert</button>
                         <button class="btn-add-field" data-type="month_picker">＋ Month picker</button>
+                        <button class="btn-add-field" data-type="bottom_navigation">＋ Bottom nav</button>
                     </div>
                 </div>
                 <div id="fields-container"></div>
@@ -114,7 +116,8 @@
                 </div>
 
                 <div class="editor-actions">
-                    <button id="btn-save-node" class="btn-primary">Save node</button>
+                    <button id="btn-save-node" class="btn-primary" disabled>Save node</button>
+                    <button id="btn-cancel-node">Cancel</button>
                     <button id="btn-delete-node" class="btn-danger">Delete node</button>
                 </div>
             </div>
