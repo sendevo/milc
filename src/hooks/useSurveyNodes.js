@@ -28,9 +28,9 @@ function saveToCache(data) {
  * at the `/survey` path.
  *
  * Loading order:
- *  1. localStorage cache  — available synchronously from the previous session.
- *  2. Bundled nodes.json  — used only when there is no cache yet (first visit
- *                           or after the cache has been cleared).
+ *  1. localStorage cache  — if its timestamp >= bundled nodes.json timestamp.
+ *  2. Bundled nodes.json  — when there is no cache, or the cache is older than
+ *                           the bundled version (e.g. after an app update).
  *  3. Firebase /survey    — once the subscription fires, the returned nodes and
  *                           the localStorage cache are both updated.
  *
@@ -38,7 +38,15 @@ function saveToCache(data) {
  * functional without a network connection.
  */
 export function useSurveyNodes() {
-    const [nodes, setNodes] = useState(() => loadFromCache() ?? fallbackNodes);
+    const [nodes, setNodes] = useState(() => {
+        const cached = loadFromCache();
+        const cachedTs = cached?.timestamp ?? 0;
+        const bundledTs = fallbackNodes.timestamp ?? 0;
+        if (cached && cachedTs >= bundledTs) return cached;
+        // Bundled nodes are newer — replace stale cache immediately.
+        saveToCache(fallbackNodes);
+        return fallbackNodes;
+    });
 
     useEffect(() => {
         const surveyRef = ref(db, "survey");

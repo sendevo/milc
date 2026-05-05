@@ -20,6 +20,11 @@ function markClean() {
     if (btn) btn.disabled = true;
 }
 
+/** Sets nodes.timestamp to the current Unix second, marking this as the latest version. */
+function bumpTimestamp() {
+    nodes.timestamp = Math.floor(Date.now() / 1000);
+}
+
 // ─── Known actions ────────────────────────────────────────────────────────────
 // Keep in sync with src/model/actions.js
 const KNOWN_ACTIONS = [
@@ -754,6 +759,7 @@ function saveNode() {
 
         nodes[id] = node;
         selectedNodeId = id;
+        bumpTimestamp();
         saveToStorage();
         fbSet(id, node);
         renderNodeList();
@@ -770,6 +776,7 @@ function deleteNode() {
     const removedId = selectedNodeId;
     delete nodes[removedId];
     selectedNodeId = null;
+    bumpTimestamp();
     saveToStorage();
     fbRemove(removedId);
     renderNodeList();

@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import i18n from "../i18n";
 
 const SettingsContext = createContext(null);
@@ -13,6 +13,13 @@ export const SettingsProvider = ({ children }) => {
     const [themeMode, setThemeModeState] = useState(
         () => localStorage.getItem(STORAGE_KEY_THEME) || "light"
     );
+
+    // Apply the persisted language on first mount so i18n reflects the stored preference.
+    useEffect(() => {
+        if (language !== i18n.language) {
+            i18n.changeLanguage(language);
+        }
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     const setLanguage = (lang) => {
         i18n.changeLanguage(lang);

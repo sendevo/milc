@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Navigate } from "react-router-dom";
 import { useSurveyNodes } from "../hooks/useSurveyNodes";
 import { resolveNext } from "../model";
 import SurveyStep from "../components/survey/SurveyStep";
@@ -19,8 +19,7 @@ const SurveyPage = () => {
     const node = nodes[nodeId];
 
     if (!node) {
-        navigate("/app", { replace: true });
-        return null;
+        return <Navigate to="/app" replace />;
     }
 
     const handleSubmit = (answers) => {
