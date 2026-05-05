@@ -53,6 +53,13 @@ export function useSurveyNodes() {
         const unsubscribe = onValue(surveyRef, (snapshot) => {
             const data = snapshot.val();
             if (data && typeof data === "object") {
+                const remoteTs = data.timestamp ?? 0;
+                const bundledTs = fallbackNodes.timestamp ?? 0;
+                if (remoteTs < bundledTs) {
+                    // Remote data is older than the bundled version — ignore it
+                    // so that bug-fixes shipped in the bundle take precedence.
+                    return;
+                }
                 saveToCache(data);
                 setNodes(data);
             }
