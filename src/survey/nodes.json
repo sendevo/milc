@@ -1,5 +1,100 @@
 {
     "timestamp": 1746489600,
+    "before-milking-start": {
+        "fields": [
+            {
+                "id": "udder_clean",
+                "options": [
+                    {
+                        "label": {
+                            "en": "Yes",
+                            "es": "Sí"
+                        },
+                        "value": "yes"
+                    },
+                    {
+                        "label": {
+                            "en": "No",
+                            "es": "No"
+                        },
+                        "value": "no"
+                    },
+                    {
+                        "label": {
+                            "en": "Don't know",
+                            "es": "No sé"
+                        },
+                        "value": "dont_know"
+                    }
+                ],
+                "type": "select"
+            }
+        ],
+        "icon": "shroom.png",
+        "id": "before-milking-start",
+        "next": {
+            "field": "udder_clean",
+            "map": {
+                "dont_know": "before-milking-start-parlor-tip",
+                "no": "before-milking-start-animal-count",
+                "yes": "before-milking-start-animal-count"
+            }
+        },
+        "showDate": true,
+        "subtitle": {
+            "en": "Have you cleaned the space?",
+            "es": "¿Limpiaste la sala?"
+        },
+        "title": {
+            "en": "Before Milking",
+            "es": "Antes de ordeñar"
+        }
+    },
+    "before-milking-start-animal-count": {
+        "fields": [
+            {
+                "default": 1,
+                "id": "animal_count",
+                "label": {
+                    "en": "Number of animals being milked",
+                    "es": "Cantidad de animales en ordeñe"
+                },
+                "min": 1,
+                "step": 1,
+                "type": "number_input"
+            }
+        ],
+        "id": "before-milking-start-animal-count",
+        "subtitle": {
+            "en": "Number of animals being milked",
+            "es": "Cantidad de animales en ordeñe"
+        },
+        "title": {
+            "en": "Animal Count",
+            "es": "Conteo de animales"
+        }
+    },
+    "before-milking-start-parlor-tip": {
+        "fields": [
+            {
+                "id": "my_images",
+                "images": [
+                    {
+                        "src": "parlor_1.png"
+                    },
+                    {
+                        "src": "milk_tanks.png"
+                    }
+                ],
+                "type": "image_list"
+            }
+        ],
+        "id": "before-milking-start-parlor-tip",
+        "title": {
+            "en": "Before Milking",
+            "es": "Antes de ordeñar"
+        }
+    },
     "user-profile": {
         "fields": [
             {
