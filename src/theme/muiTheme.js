@@ -43,6 +43,32 @@ const createAppTheme = (mode = "light") => createTheme({
                 }),
             },
         },
+        MuiOutlinedInput: {
+            styleOverrides: {
+                root: ({ theme }) => ({
+                    backgroundColor: theme.palette.background.paper,
+                    "& .MuiOutlinedInput-notchedOutline": {
+                        borderColor: theme.palette.divider,
+                    },
+                    "&:hover .MuiOutlinedInput-notchedOutline": {
+                        borderColor: theme.palette.text.secondary,
+                    },
+                }),
+                input: ({ theme }) => ({
+                    color: theme.palette.text.primary,
+                }),
+            },
+        },
+        MuiSelect: {
+            styleOverrides: {
+                select: ({ theme }) => ({
+                    color: theme.palette.text.primary,
+                }),
+                icon: ({ theme }) => ({
+                    color: theme.palette.text.secondary,
+                }),
+            },
+        },
     },
 });
 

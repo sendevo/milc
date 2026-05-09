@@ -5,7 +5,13 @@ export const SelectStyles = {
         gap: 2,
     },
     button: {
-        backgroundColor: "#ffffff",
-        padding: "5px"
+        bgcolor: "background.paper",
+        color: "text.primary",
+        borderColor: "divider",
+        padding: "5px",
+        "&:hover": {
+            bgcolor: "action.hover",
+            borderColor: "primary.main",
+        },
     }
 };

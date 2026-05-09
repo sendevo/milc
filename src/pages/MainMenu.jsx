@@ -35,8 +35,7 @@ const MainMenu = () => {
     const navigate = useNavigate();
     const theme = useTheme();
     const isDark = theme.palette.mode === "dark";
-    const tealBorder = isDark ? "#2dc5a2" : "#1a8090";
-    const greyBorder = isDark ? "#aaaaaa" : "#757575";
+    const menuBorder = isDark ? "#9e9e9e" : "#1a8090";
 
     const myDayItems = [
         {
@@ -94,7 +93,7 @@ const MainMenu = () => {
                                 key={item.label}
                                 icon={item.icon}
                                 label={item.label}
-                                borderColor={tealBorder}
+                                borderColor={menuBorder}
                                 onClick={item.onClick} />
                         ))}
                     </ButtonsContainer>
@@ -116,7 +115,7 @@ const MainMenu = () => {
                                 key={item.label}
                                 icon={item.icon}
                                 label={item.label}
-                                borderColor={greyBorder} />
+                                borderColor={menuBorder} />
                         ))}
                     </ButtonsContainer>
                 </Box>
@@ -137,7 +136,7 @@ const MainMenu = () => {
                                 key={item.label}
                                 icon={item.icon}
                                 label={item.label}
-                                borderColor={greyBorder}
+                                borderColor={menuBorder}
                                 onClick={item.onClick} />
                         ))}
                     </ButtonsContainer>

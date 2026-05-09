@@ -1,6 +1,8 @@
 export const formCardStyles = {
     box: {
-        bgcolor: "#e0e0e0",
+        bgcolor: "background.paper",
+        border: "1px solid",
+        borderColor: "divider",
         borderRadius: 4,
         px: 4,
         py: 4,
@@ -11,7 +13,7 @@ export const formCardStyles = {
         gap: 2.5,
     },
     title: {
-        color: "#5a5a5a",
+        color: "text.primary",
         mb: 1,
     },
 };

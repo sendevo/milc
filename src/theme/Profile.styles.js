@@ -1,6 +1,7 @@
 export const profileStyles = {
     page: {
-        bgcolor: "#ffffff",
+        bgcolor: "background.default",
+        color: "text.primary",
     },
     sectionTitle: {
         fontWeight: 700,
