@@ -5,11 +5,21 @@ import fallbackNodes from "../survey/nodes.json";
 
 const CACHE_KEY = "milc_survey_nodes";
 
+function mergeWithFallbackNodes(data) {
+    if (!data || typeof data !== "object") {
+        return fallbackNodes;
+    }
+
+    return {
+        ...fallbackNodes,
+        ...data,
+    };
+}
+
 function loadFromCache() {
     try {
         const raw = localStorage.getItem(CACHE_KEY);
-        console.log("Loaded survey nodes from cache:", raw ? "found" : "not found");
-        return raw ? JSON.parse(raw) : null;
+        return raw ? mergeWithFallbackNodes(JSON.parse(raw)) : null;
     } catch {
         return null;
     }
@@ -17,7 +27,7 @@ function loadFromCache() {
 
 function saveToCache(data) {
     try {
-        localStorage.setItem(CACHE_KEY, JSON.stringify(data));
+        localStorage.setItem(CACHE_KEY, JSON.stringify(mergeWithFallbackNodes(data)));
     } catch {
         // storage quota exceeded or private browsing — silently skip
     }
@@ -60,8 +70,9 @@ export function useSurveyNodes() {
                     // so that bug-fixes shipped in the bundle take precedence.
                     return;
                 }
-                saveToCache(data);
-                setNodes(data);
+                const mergedNodes = mergeWithFallbackNodes(data);
+                saveToCache(mergedNodes);
+                setNodes(mergedNodes);
             }
         });
         return unsubscribe;

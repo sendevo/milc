@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useNavigate, useParams, Navigate } from "react-router-dom";
 import { useSurveyNodes } from "../hooks/useSurveyNodes";
 import { resolveNext } from "../model";
@@ -17,6 +18,17 @@ const SurveyPage = () => {
     const nodes = useSurveyNodes();
 
     const node = nodes[nodeId];
+
+    useEffect(() => {
+        if (!import.meta.env.DEV) return;
+
+        if (node) {
+            console.log("[survey] current node:", node.id, node);
+            return;
+        }
+
+        console.log("[survey] unknown node id:", nodeId);
+    }, [nodeId, node]);
 
     if (!node) {
         return <Navigate to="/app" replace />;

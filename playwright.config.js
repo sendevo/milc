@@ -4,20 +4,20 @@ export default defineConfig({
     testDir: "./e2e",
     fullyParallel: true,
     forbidOnly: !!process.env.CI,
-    retries: process.env.CI ? 2 : 0,
+    retries: 0,
     workers: process.env.CI ? 1 : undefined,
     reporter: [["html", { open: "never" }], ["list"]],
     use: {
         baseURL: "http://localhost:5173",
         trace: "on-first-retry",
         screenshot: "only-on-failure",
-        // Pre-set the app language to English for all tests
-        storageState: "./e2e/storageState.json",
     },
     projects: [
         {
             name: "chromium",
-            use: { ...devices["Desktop Chrome"] },
+            use: {
+                ...devices["Desktop Chrome"],
+            },
         },
     ],
     webServer: {
