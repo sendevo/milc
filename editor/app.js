@@ -224,7 +224,7 @@ function loadNodeIntoForm(node) {
     const form = document.getElementById('editor-form');
     form.style.display = 'block';
 
-    document.getElementById('field-id').value = node.id || '';
+    document.getElementById('field-id').value = selectedNodeId || '';
     document.getElementById('field-title-en').value = node.title?.en || '';
     document.getElementById('field-title-es').value = node.title?.es || '';
     document.getElementById('field-subtitle-en').value = node.subtitle?.en || '';
@@ -734,7 +734,6 @@ function saveNode() {
 
     try {
         const node = {
-            id,
             title: {
                 en: document.getElementById('field-title-en').value.trim(),
                 es: document.getElementById('field-title-es').value.trim(),

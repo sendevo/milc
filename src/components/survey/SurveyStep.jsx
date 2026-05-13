@@ -50,7 +50,7 @@ import { surveyStepStyles as styles } from "../../theme/SurveyStep.styles";
 const inputFieldTypes = ["select", "number_input", "month_picker"];
 const selfNavigatingTypes = ["bottom_navigation"];
 
-const SurveyStep = ({ node, onSubmit, onBack }) => {
+const SurveyStep = ({ node, nodeId, onSubmit, onBack }) => {
     const [answers, setAnswers] = useState({});
     const navigate = useNavigate();
     const { t: tUI } = useTranslation();
@@ -78,7 +78,7 @@ const SurveyStep = ({ node, onSubmit, onBack }) => {
                         onSelect={(value) => {
                             const newAnswers = { ...answers, [field.id]: value };
                             setAnswers(newAnswers);
-                            runAction(field.action, { fieldId: field.id, value, nodeId: node.id, answers: newAnswers });
+                            runAction(field.action, { fieldId: field.id, value, nodeId, answers: newAnswers });
                             if (autoAdvance) {
                                 onSubmit(newAnswers);
                             }
@@ -95,12 +95,12 @@ const SurveyStep = ({ node, onSubmit, onBack }) => {
                         step={field.step}
                         onChange={(val) => {
                             setAnswers((prev) => ({ ...prev, [field.id]: val }));
-                            runAction(field.action, { fieldId: field.id, value: val, nodeId: node.id, answers: { ...answers, [field.id]: val } });
+                            runAction(field.action, { fieldId: field.id, value: val, nodeId, answers: { ...answers, [field.id]: val } });
                         }}
                         onSave={(val) => {
                             const newAnswers = { ...answers, [field.id]: val };
                             setAnswers(newAnswers);
-                            runAction(field.action, { fieldId: field.id, value: val, nodeId: node.id, answers: newAnswers });
+                            runAction(field.action, { fieldId: field.id, value: val, nodeId, answers: newAnswers });
                             onSubmit(newAnswers);
                         }} />
                 );
@@ -115,12 +115,12 @@ const SurveyStep = ({ node, onSubmit, onBack }) => {
                         value={answers[field.id] ?? []}
                         onChange={(val) => {
                             setAnswers((prev) => ({ ...prev, [field.id]: val }));
-                            runAction(field.action, { fieldId: field.id, value: val, nodeId: node.id, answers: { ...answers, [field.id]: val } });
+                            runAction(field.action, { fieldId: field.id, value: val, nodeId, answers: { ...answers, [field.id]: val } });
                         }}
                         onSave={(val) => {
                             const newAnswers = { ...answers, [field.id]: val };
                             setAnswers(newAnswers);
-                            runAction(field.action, { fieldId: field.id, value: val, nodeId: node.id, answers: newAnswers });
+                            runAction(field.action, { fieldId: field.id, value: val, nodeId, answers: newAnswers });
                             onSubmit(newAnswers);
                         }} />
                 );

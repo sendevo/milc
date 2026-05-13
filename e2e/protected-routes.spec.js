@@ -11,7 +11,7 @@ const PROTECTED_ROUTES = [
     "/config",
     "/info",
     "/profile",
-    "/survey/before-milking-start",
+    "/survey/view-109",
 ];
 
 for (const route of PROTECTED_ROUTES) {

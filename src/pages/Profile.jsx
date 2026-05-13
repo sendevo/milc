@@ -13,7 +13,7 @@ const Profile = () => {
     const { currentUser, getUserProfile, saveUserProfile, changePassword, logout } = useAuth();
     const navigate = useNavigate();
     const nodes = useSurveyNodes();
-    const hasUserProfileSurvey = Boolean(nodes["user-profile"]);
+    const hasUserProfileSurvey = Boolean(nodes["view-217"]);
 
     const [name, setName] = useState("");
     const [place, setPlace] = useState("");
@@ -150,7 +150,7 @@ const Profile = () => {
                         <Button
                             variant="outlined"
                             fullWidth
-                            onClick={() => navigate("/survey/user-profile")}>
+                            onClick={() => navigate("/survey/view-217")}>
                             {t("profile.profileSurvey")}
                         </Button>
                     )}

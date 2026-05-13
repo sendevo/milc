@@ -41,7 +41,7 @@ const MainMenu = () => {
         {
             icon: blueGoat,
             label: t("mainMenu.beforeMilking"),
-            onClick: () => navigate("/survey/before-milking-start"),
+            onClick: () => navigate("/survey/view-109"),
         },
         { icon: udder, label: t("mainMenu.duringMilking") },
         { icon: milkPail, label: t("mainMenu.milkCare") },

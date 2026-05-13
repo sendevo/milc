@@ -12,26 +12,25 @@ import nodes from "../../survey/nodes.json";
 
 describe("resolveNext — null next", () => {
     it("returns null for a terminal node", () => {
-        const node = { id: "end", next: null };
+        const node = { next: null };
         expect(resolveNext(node, {})).toBeNull();
     });
 });
 
 describe("resolveNext — unconditional jump", () => {
     it("returns the target node id", () => {
-        const node = { id: "a", next: "b" };
+        const node = { next: "b" };
         expect(resolveNext(node, {})).toBe("b");
     });
 
     it("ignores answers when next is a string", () => {
-        const node = { id: "a", next: "c" };
+        const node = { next: "c" };
         expect(resolveNext(node, { someField: "yes" })).toBe("c");
     });
 });
 
 describe("resolveNext — field map", () => {
     const node = {
-        id: "q",
         next: {
             field: "answer",
             map: {
@@ -58,7 +57,6 @@ describe("resolveNext — field map", () => {
 
 describe("resolveNext — field map without default", () => {
     const node = {
-        id: "q",
         next: {
             field: "answer",
             map: { yes: "node-yes" },
@@ -105,37 +103,37 @@ function walkTree(nodeMap, startId, steps) {
 // ─── Traversal tests with nodes.json ─────────────────────────────────────────
 
 describe("nodes.json tree traversal", () => {
-    it("answer 'yes' → before-milking-start → before-milking-start-animal-count (terminal)", () => {
-        const path = walkTree(nodes, "before-milking-start", [{ udder_clean: "yes" }]);
+    it("answer 'yes' → view-109 → view-109-animal-count (terminal)", () => {
+        const path = walkTree(nodes, "view-109", [{ udder_clean: "yes" }]);
         expect(path).toEqual([
-            "before-milking-start",
-            "before-milking-start-animal-count",
+            "view-109",
+            "view-109-animal-count",
         ]);
     });
 
-    it("answer 'no' → before-milking-start → before-milking-start-animal-count (terminal)", () => {
-        const path = walkTree(nodes, "before-milking-start", [{ udder_clean: "no" }]);
+    it("answer 'no' → view-109 → view-109-animal-count (terminal)", () => {
+        const path = walkTree(nodes, "view-109", [{ udder_clean: "no" }]);
         expect(path).toEqual([
-            "before-milking-start",
-            "before-milking-start-animal-count",
+            "view-109",
+            "view-109-animal-count",
         ]);
     });
 
-    it("answer 'dont_know' → before-milking-start → before-milking-start-parlor-tip (terminal)", () => {
-        const path = walkTree(nodes, "before-milking-start", [{ udder_clean: "dont_know" }]);
+    it("answer 'dont_know' → view-109 → view-123 (terminal)", () => {
+        const path = walkTree(nodes, "view-109", [{ udder_clean: "dont_know" }]);
         expect(path).toEqual([
-            "before-milking-start",
-            "before-milking-start-parlor-tip",
+            "view-109",
+            "view-123",
         ]);
     });
 
-    it("before-milking-start-parlor-tip is a terminal node", () => {
-        const node = nodes["before-milking-start-parlor-tip"];
+    it("view-123 is a terminal node", () => {
+        const node = nodes["view-123"];
         expect(resolveNext(node, {})).toBeNull();
     });
 
-    it("before-milking-start-animal-count is a terminal node", () => {
-        const node = nodes["before-milking-start-animal-count"];
+    it("view-109-animal-count is a terminal node", () => {
+        const node = nodes["view-109-animal-count"];
         expect(resolveNext(node, {})).toBeNull();
     });
 });
@@ -143,18 +141,6 @@ describe("nodes.json tree traversal", () => {
 // ─── Generic tree integrity checks ───────────────────────────────────────────
 
 describe("nodes.json integrity", () => {
-    it("all nodes have a non-empty id", () => {
-        Object.values(nodes).forEach((node) => {
-            expect(node.id).toBeTruthy();
-        });
-    });
-
-    it("all node ids match their map key", () => {
-        Object.entries(nodes).forEach(([key, node]) => {
-            expect(node.id).toBe(key);
-        });
-    });
-
     it("all direct next targets exist in the node map", () => {
         Object.values(nodes).forEach((node) => {
             if (typeof node.next === "string") {
@@ -176,7 +162,7 @@ describe("nodes.json integrity", () => {
     });
 
     it("nodes with no fields array do not crash resolveNext", () => {
-        const bare = { id: "bare", fields: [], next: null };
+        const bare = { fields: [], next: null };
         expect(resolveNext(bare, {})).toBeNull();
     });
 });

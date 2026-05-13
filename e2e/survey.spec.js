@@ -7,14 +7,14 @@ import { mockFirebaseAuth, loginTestUser } from "./helpers/firebase.js";
  * The survey nodes are loaded from the bundled nodes.json fallback (no cache
  * in a fresh browser context), so these tests run without Firebase connectivity.
  *
- * Node tested: before-milking-start → select → before-milking-start-animal-count
+ * Node tested: view-109 → select → view-109-animal-count
  */
 
 test.describe("Survey — before milking flow", () => {
     test.beforeEach(async ({ page }) => {
         await mockFirebaseAuth(page);
         await loginTestUser(page);
-        await page.goto("/survey/before-milking-start");
+        await page.goto("/survey/view-109");
     });
 
     test("renders the Before Milking step title", async ({ page }) => {
@@ -33,19 +33,19 @@ test.describe("Survey — before milking flow", () => {
 
     test("selecting Yes advances to the Animal Count step", async ({ page }) => {
         await page.getByText(/^yes$/i).click();
-        await expect(page).toHaveURL(/\/survey\/before-milking-start-animal-count/);
+        await expect(page).toHaveURL(/\/survey\/view-109-animal-count/);
     });
 
     test("selecting No advances to the Animal Count step", async ({ page }) => {
         await page.getByText(/^no$/i).click();
-        await expect(page).toHaveURL(/\/survey\/before-milking-start-animal-count/);
+        await expect(page).toHaveURL(/\/survey\/view-109-animal-count/);
     });
 
     test("selecting Don't know advances to the parlor tip step", async ({
         page,
     }) => {
         await page.getByText(/don't know/i).click();
-        await expect(page).toHaveURL(/\/survey\/before-milking-start-parlor-tip/);
+        await expect(page).toHaveURL(/\/survey\/view-123/);
     });
 
     test("back button returns to the previous page", async ({ page }) => {
@@ -58,7 +58,7 @@ test.describe("Survey — Animal Count step", () => {
     test.beforeEach(async ({ page }) => {
         await mockFirebaseAuth(page);
         await loginTestUser(page);
-        await page.goto("/survey/before-milking-start-animal-count");
+        await page.goto("/survey/view-109-animal-count");
     });
 
     test("renders the Animal Count step title", async ({ page }) => {

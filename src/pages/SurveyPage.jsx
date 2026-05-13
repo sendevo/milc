@@ -23,7 +23,7 @@ const SurveyPage = () => {
         if (!import.meta.env.DEV) return;
 
         if (node) {
-            console.log("[survey] current node:", node.id);
+            console.log("[survey] current node:", nodeId);
             return;
         }
 
@@ -43,7 +43,8 @@ const SurveyPage = () => {
 
     return (
         <SurveyStep
-            key={node.id}
+            key={nodeId}
+            nodeId={nodeId}
             node={node}
             onSubmit={handleSubmit}
             onBack={() => navigate(-1)} />

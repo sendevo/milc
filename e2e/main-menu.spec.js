@@ -36,7 +36,7 @@ test.describe("Main menu", () => {
 
     test("Before Milking button navigates to the survey", async ({ page }) => {
         await page.getByText(/before milking/i).click();
-        await expect(page).toHaveURL(/\/survey\/before-milking-start/);
+        await expect(page).toHaveURL(/\/survey\/view-109/);
     });
 
     test("Settings button navigates to /config", async ({ page }) => {
