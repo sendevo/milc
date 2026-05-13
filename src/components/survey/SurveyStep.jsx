@@ -171,7 +171,7 @@ const SurveyStep = ({ node, nodeId, onSubmit, onBack }) => {
                         {node.next ? tUI("survey.next") : tUI("survey.finish")}
                     </Button>
                 : 
-                    <Fragment>
+                    !hasBottomNav || node.next ? <Fragment>
                         <Divider sx={styles.divider} />
                         <Button
                             variant="text"
@@ -180,7 +180,7 @@ const SurveyStep = ({ node, nodeId, onSubmit, onBack }) => {
                             sx={styles.backToMenuButton}>
                             {tUI("survey.backToMenu")}
                         </Button>
-                    </Fragment>
+                    </Fragment> : null
                 }
             </Box>
         </ViewContainer>

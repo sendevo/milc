@@ -237,6 +237,7 @@
         }
     },
     "view-28": {
+        "fields": [],
         "subtitle": {
             "en": "Done! You can start using the app!",
             "es": "¡Listo! Ya podés comenzar a usar la app"

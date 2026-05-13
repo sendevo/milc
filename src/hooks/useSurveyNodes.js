@@ -5,15 +5,21 @@ import fallbackNodes from "../survey/nodes.json";
 
 const CACHE_KEY = "milc_survey_nodes";
 
+function normalizeNode(node) {
+    if (!node || typeof node !== "object") return node;
+    return Array.isArray(node.fields) ? node : { ...node, fields: [] };
+}
+
 function mergeWithFallbackNodes(data) {
     if (!data || typeof data !== "object") {
         return fallbackNodes;
     }
 
-    return {
-        ...fallbackNodes,
-        ...data,
-    };
+    const merged = { ...fallbackNodes, ...data };
+    for (const key of Object.keys(merged)) {
+        merged[key] = normalizeNode(merged[key]);
+    }
+    return merged;
 }
 
 function loadFromCache() {
