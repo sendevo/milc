@@ -6,6 +6,7 @@
     <meta name="description" content="Editor for MILC survey nodes" />
     <meta name="author" content="Sendevo Software" />
     <title>MILC Survey Editor</title>
+    <link rel="icon" href="favicon.ico" />
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -26,6 +27,7 @@
             <button id="btn-theme" title="Toggle theme">🌙</button>
             <button id="btn-firebase-status" class="btn-firebase" title="Configure Firebase sync">🔥 Not connected</button>
             <button id="btn-push-firebase" style="display:none" title="Push all local nodes to Firebase">⬆ Push all to Firebase</button>
+            <button id="btn-pull-firebase" style="display:none" title="Pull all nodes from Firebase">⬇ Pull all from Firebase</button>
             <button id="btn-import">⬆ Import JSON</button>
             <button id="btn-export-nodes" class="btn-primary">⬇ Export nodes.json</button>
         </div>
@@ -123,6 +125,19 @@
             </div>
         </section>
 
+    </div>
+</div>
+
+<!-- Pull diff modal -->
+<div id="modal-pull-diff" class="modal-overlay" style="display:none">
+    <div class="modal-box modal-box--wide">
+        <h2>Pull from Firebase</h2>
+        <p class="modal-hint">Review changes before overwriting local nodes. Green = added/changed in remote, red = removed/changed locally.</p>
+        <div id="pull-diff-body" class="diff-body"></div>
+        <div class="modal-actions">
+            <button id="pull-diff-confirm" class="btn-primary">Apply</button>
+            <button id="pull-diff-cancel">Cancel</button>
+        </div>
     </div>
 </div>
 

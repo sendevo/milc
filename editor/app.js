@@ -1,5 +1,5 @@
 import { initializeApp, getApps, deleteApp } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js';
-import { getDatabase, ref, onValue, set, remove } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js';
+import { getDatabase, ref, onValue, get, set, remove } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js';
 import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
 
 // ─── State ───────────────────────────────────────────────────────────────────
@@ -75,6 +75,8 @@ function updateFirebaseStatusUI() {
         statusBtn.classList.add('status-connected');
         statusBtn.classList.remove('status-disconnected');
         if (pushBtn) pushBtn.style.display = fbUser ? 'inline-block' : 'none';
+        const pullBtn = document.getElementById('btn-pull-firebase');
+        if (pullBtn) pullBtn.style.display = fbUser ? 'inline-block' : 'none';
         if (authBanner) authBanner.style.display = fbUser ? 'none' : 'flex';
         if (appEl) appEl.style.display = fbUser ? 'flex' : 'none';
     } else {
@@ -83,6 +85,8 @@ function updateFirebaseStatusUI() {
         statusBtn.classList.remove('status-connected');
         statusBtn.classList.add('status-disconnected');
         if (pushBtn) pushBtn.style.display = 'none';
+        const pullBtn2 = document.getElementById('btn-pull-firebase');
+        if (pullBtn2) pullBtn2.style.display = 'none';
         if (authBanner) authBanner.style.display = 'none';
         if (appEl) appEl.style.display = 'flex';
     }
@@ -152,6 +156,84 @@ function fbRemove(id) {
 function fbPushAll() {
     if (!fbDb || !fbUser) return;
     set(ref(fbDb, 'survey'), nodes).catch(err => console.error('Firebase push-all failed:', err));
+}
+
+async function fbPullAll() {
+    if (!fbDb || !fbUser) return;
+    const snapshot = await get(ref(fbDb, 'survey'));
+    const remote = snapshot.val();
+    if (!remote || typeof remote !== 'object') {
+        alert('No data found at /survey in Firebase.');
+        return;
+    }
+    showPullDiff(nodes, remote);
+}
+
+function showPullDiff(local, remote) {
+    const allKeys = new Set([...Object.keys(local), ...Object.keys(remote)]);
+    // Remove meta keys like 'timestamp'
+    allKeys.delete('timestamp');
+
+    const diffBody = document.getElementById('pull-diff-body');
+    diffBody.innerHTML = '';
+
+    let changeCount = 0;
+
+    allKeys.forEach(key => {
+        const inLocal  = Object.prototype.hasOwnProperty.call(local, key);
+        const inRemote = Object.prototype.hasOwnProperty.call(remote, key);
+        const localStr  = inLocal  ? JSON.stringify(local[key],  null, 2) : null;
+        const remoteStr = inRemote ? JSON.stringify(remote[key], null, 2) : null;
+
+        if (localStr === remoteStr) return; // identical — skip
+        changeCount++;
+
+        const block = document.createElement('div');
+        block.className = 'diff-node';
+
+        const titleEl = document.createElement('div');
+        titleEl.className = 'diff-node-title';
+
+        if (!inLocal) {
+            titleEl.textContent = `+ ${key}  (added in remote)`;
+            titleEl.classList.add('diff-added');
+            remoteStr.split('\n').forEach(l => block.appendChild(diffLine(l, 'added')));
+        } else if (!inRemote) {
+            titleEl.textContent = `- ${key}  (removed in remote)`;
+            titleEl.classList.add('diff-removed');
+            localStr.split('\n').forEach(l => block.appendChild(diffLine(l, 'removed')));
+        } else {
+            titleEl.textContent = `~ ${key}  (changed)`;
+            titleEl.classList.add('diff-changed');
+            localStr.split('\n').forEach(l => block.appendChild(diffLine(l, 'removed')));
+            const sep = document.createElement('div');
+            sep.style.cssText = 'border-top:1px dashed var(--border);margin:4px 0';
+            block.appendChild(sep);
+            remoteStr.split('\n').forEach(l => block.appendChild(diffLine(l, 'added')));
+        }
+
+        block.insertBefore(titleEl, block.firstChild);
+        diffBody.appendChild(block);
+    });
+
+    if (changeCount === 0) {
+        const none = document.createElement('div');
+        none.className = 'diff-none';
+        none.textContent = 'No differences — local and remote are identical.';
+        diffBody.appendChild(none);
+    }
+
+    const modal = document.getElementById('modal-pull-diff');
+    modal.style.display = 'flex';
+    // Store remote payload for use by the confirm handler
+    modal._pendingRemote = remote;
+}
+
+function diffLine(text, type) {
+    const el = document.createElement('div');
+    el.className = `diff-line ${type}`;
+    el.textContent = text;
+    return el;
 }
 
 // ─── Init ─────────────────────────────────────────────────────────────────────
@@ -985,5 +1067,34 @@ function bindStaticEvents() {
     document.getElementById('btn-push-firebase').addEventListener('click', () => {
         if (!fbDb) return;
         if (confirm('Push all local nodes to Firebase? This will overwrite /survey.')) fbPushAll();
+    });
+
+    document.getElementById('btn-pull-firebase').addEventListener('click', () => {
+        if (!fbDb) return;
+        fbPullAll();
+    });
+
+    document.getElementById('pull-diff-confirm').addEventListener('click', () => {
+        const modal = document.getElementById('modal-pull-diff');
+        const remote = modal._pendingRemote;
+        modal.style.display = 'none';
+        modal._pendingRemote = null;
+        if (!remote) return;
+        nodes = remote;
+        saveToStorage();
+        renderNodeList();
+        if (selectedNodeId && nodes[selectedNodeId]) {
+            loadNodeIntoForm(nodes[selectedNodeId]);
+        } else if (selectedNodeId && !nodes[selectedNodeId]) {
+            selectedNodeId = null;
+            document.getElementById('editor-form').style.display = 'none';
+            document.getElementById('editor-placeholder').style.display = 'block';
+        }
+    });
+
+    document.getElementById('pull-diff-cancel').addEventListener('click', () => {
+        const modal = document.getElementById('modal-pull-diff');
+        modal.style.display = 'none';
+        modal._pendingRemote = null;
     });
 }
