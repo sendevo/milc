@@ -23,7 +23,7 @@ const SurveyPage = () => {
         if (!import.meta.env.DEV) return;
 
         if (node) {
-            console.log("[survey] current node:", node.id, node);
+            console.log("[survey] current node:", node.id);
             return;
         }
 
@@ -36,6 +36,8 @@ const SurveyPage = () => {
 
     const handleSubmit = (answers) => {
         const nextId = resolveNext(node, answers);
+        const nextNode = nextId ? nodes[nextId] : null;
+        console.log("[survey] next view:", nextId ?? "/app");
         navigate(nextId ? `/survey/${nextId}` : "/app");
     };
 

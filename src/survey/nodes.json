@@ -1,348 +1,351 @@
 {
-    "user-profile": {
-        "fields": [
-            {
-                "id": "view-217-select",
-                "options": [
-                    {
-                        "label": {
-                            "en": "Yes",
-                            "es": "Sí"
-                        },
-                        "value": "view-217-opt-yes"
-                    },
-                    {
-                        "label": {
-                            "en": "No",
-                            "es": "No"
-                        },
-                        "value": "view-217-opt-no"
-                    }
-                ],
-                "type": "select"
-            }
+  "before-milking-start": {
+    "fields": [
+      {
+        "id": "udder_clean",
+        "options": [
+          {
+            "label": {
+              "en": "Yes",
+              "es": "Sí"
+            },
+            "value": "yes"
+          },
+          {
+            "label": {
+              "en": "No",
+              "es": "No"
+            },
+            "value": "no"
+          },
+          {
+            "label": {
+              "en": "Don't know",
+              "es": "No sé"
+            },
+            "value": "dont_know"
+          }
         ],
-        "id": "user-profile",
-        "next": {
-            "field": "view-217-map",
-            "map": {
-                "view-217-opt-no": "view-218",
-                "view-217-opt-yes": "view-220"
-            }
-        },
-        "subtitle": {
-            "en": "Do you produce milk all year round?",
-            "es": "¿Producís leche todo el año?"
-        },
-        "title": {
-            "en": "My profile",
-            "es": "Mi perfil"
-        }
+        "type": "select"
+      }
+    ],
+    "id": "before-milking-start",
+    "next": {
+      "field": "udder_clean",
+      "map": {
+        "dont_know": "before-milking-start-parlor-tip",
+        "no": "before-milking-start-animal-count",
+        "yes": "before-milking-start-animal-count"
+      }
     },
-    "view-107": {
-        "fields": [
-            {
-                "id": "view-107-select",
-                "options": [
-                    {
-                        "label": {
-                            "en": "Yes",
-                            "es": "Si"
-                        },
-                        "value": "yes"
-                    },
-                    {
-                        "label": {
-                            "en": "No",
-                            "es": "No"
-                        },
-                        "value": "no"
-                    }
-                ],
-                "type": "select"
-            }
-        ],
-        "id": "view-107",
-        "next": "view-107",
-        "subtitle": {
-            "en": "Do you have a milking parlour?",
-            "es": "¿Tenés sala de ordeño?"
-        },
-        "title": {
-            "en": "My Profile",
-            "es": "Mi Perfil"
-        }
+    "subtitle": {
+      "en": "Have you cleaned the space?",
+      "es": "¿Limpiaste la sala?"
     },
-    "view-109": {
-        "fields": [
-            {
-                "id": "udder_clean",
-                "options": [
-                    {
-                        "label": {
-                            "en": "Yes",
-                            "es": "Sí"
-                        },
-                        "value": "yes"
-                    },
-                    {
-                        "label": {
-                            "en": "No",
-                            "es": "No"
-                        },
-                        "value": "no"
-                    },
-                    {
-                        "label": {
-                            "en": "Don't know",
-                            "es": "No sé"
-                        },
-                        "value": "dont_know"
-                    }
-                ],
-                "type": "select"
-            }
-        ],
-        "icon": "shroom.png",
-        "id": "view-109",
-        "next": {
-            "field": "udder_clean",
-            "map": {
-                "dont_know": "before-milking-start-parlor-tip",
-                "no": "before-milking-start-animal-count",
-                "yes": "before-milking-start-animal-count"
-            }
-        },
-        "showDate": true,
-        "subtitle": {
-            "en": "Have you cleaned the space?",
-            "es": "¿Limpiaste la sala?"
-        },
-        "title": {
-            "en": "Before Milking",
-            "es": "Antes de ordeñar"
-        }
-    },
-    "view-218": {
-        "fields": [
-            {
-                "id": "view-220-month-picker",
-                "type": "month_picker"
-            }
-        ],
-        "id": "view-218",
-        "next": "view-220",
-        "subtitle": {
-            "en": "Select production months",
-            "es": "Seleccioná los meses de producción"
-        },
-        "title": {
-            "en": "My profile",
-            "es": "Mi perfil"
-        }
-    },
-    "view-220": {
-        "fields": [
-            {
-                "default": 0,
-                "id": "view-220-number",
-                "max": 1,
-                "min": 0,
-                "type": "number_input"
-            }
-        ],
-        "id": "view-220",
-        "next": "view-24",
-        "showDate": true,
-        "subtitle": {
-            "en": "Number of dairy animals",
-            "es": "Cantidad de animales de ordeñe"
-        },
-        "title": {
-            "en": "My profile",
-            "es": "Mi perfil"
-        }
-    },
-    "view-24": {
-        "fields": [
-            {
-                "id": "milk-select",
-                "options": [
-                    {
-                        "label": {
-                            "en": "Manual",
-                            "es": "Manual"
-                        },
-                        "value": "manual"
-                    },
-                    {
-                        "label": {
-                            "en": "Mechanical",
-                            "es": "Mecánico"
-                        },
-                        "value": "mec"
-                    }
-                ],
-                "type": "select"
-            }
-        ],
-        "id": "view-24",
-        "next": {
-            "field": "view-24-map",
-            "map": {
-                "manual": "user-profile",
-                "mec": "view-107"
-            }
-        },
-        "subtitle": {
-            "en": "¿How do you milk the herd?",
-            "es": "¿Cómo realizás el ordeño?"
-        },
-        "title": {
-            "en": "My profile",
-            "es": "Mi Perfil"
-        }
-    },
-    "view-28": {
-        "id": "view-28",
-        "subtitle": {
-            "en": "Done! You can start using the app!",
-            "es": "¡Listo! Ya podés comenzar a usar la app"
-        },
-        "title": {
-            "en": "My Profile",
-            "es": "Mi Perfil"
-        }
-    },
-    "view-35": {
-        "fields": [
-            {
-                "id": "my_images",
-                "images": [
-                    {
-                        "src": "parlor_1.png"
-                    },
-                    {
-                        "src": "milk_tanks.png"
-                    }
-                ],
-                "type": "image_list"
-            }
-        ],
-        "id": "view-35",
-        "title": {
-            "en": "Before Milking",
-            "es": "Antes de ordeñar"
-        }
-    },
-    "view-36": {
-        "fields": [
-            {
-                "default": 1,
-                "id": "animal_count",
-                "label": {
-                    "en": "Number of animals being milked",
-                    "es": "Cantidad de animales en ordeñe"
-                },
-                "min": 1,
-                "step": 1,
-                "type": "number_input"
-            }
-        ],
-        "id": "view-36",
-        "subtitle": {
-            "en": "Number of animals being milked",
-            "es": "Cantidad de animales en ordeñe"
-        },
-        "title": {
-            "en": "Animal Count",
-            "es": "Conteo de animales"
-        }
-    },
-    "before-milking-start": {
-        "fields": [
-            {
-                "id": "udder_clean",
-                "options": [
-                    {
-                        "label": {
-                            "en": "Yes",
-                            "es": "Sí"
-                        },
-                        "value": "yes"
-                    },
-                    {
-                        "label": {
-                            "en": "No",
-                            "es": "No"
-                        },
-                        "value": "no"
-                    },
-                    {
-                        "label": {
-                            "en": "Don't know",
-                            "es": "No sé"
-                        },
-                        "value": "dont_know"
-                    }
-                ],
-                "type": "select"
-            }
-        ],
-        "id": "before-milking-start",
-        "next": {
-            "field": "udder_clean",
-            "map": {
-                "dont_know": "before-milking-start-parlor-tip",
-                "no": "before-milking-start-animal-count",
-                "yes": "before-milking-start-animal-count"
-            }
-        },
-        "subtitle": {
-            "en": "Have you cleaned the space?",
-            "es": "¿Limpiaste la sala?"
-        },
-        "title": {
-            "en": "Before Milking",
-            "es": "Antes de ordeñar"
-        }
-    },
-    "before-milking-start-animal-count": {
-        "fields": [
-            {
-                "default": 1,
-                "id": "animal_count",
-                "label": {
-                    "en": "Number of animals being milked",
-                    "es": "Cantidad de animales en ordeñe"
-                },
-                "min": 1,
-                "step": 1,
-                "type": "number_input"
-            }
-        ],
-        "id": "before-milking-start-animal-count",
-        "next": null,
-        "subtitle": {
-            "en": "Number of animals being milked",
-            "es": "Cantidad de animales en ordeñe"
-        },
-        "title": {
-            "en": "Animal Count",
-            "es": "Conteo de animales"
-        }
-    },
-    "before-milking-start-parlor-tip": {
-        "fields": [],
-        "id": "before-milking-start-parlor-tip",
-        "next": null,
-        "subtitle": {
-            "en": "Here's a tip for your parlor",
-            "es": "Aquí hay un consejo para tu sala"
-        },
-        "title": {
-            "en": "Parlor Tip",
-            "es": "Consejo de Sala"
-        }
+    "title": {
+      "en": "Before Milking",
+      "es": "Antes de ordeñar"
     }
+  },
+  "before-milking-start-animal-count": {
+    "fields": [
+      {
+        "default": 1,
+        "id": "animal_count",
+        "label": {
+          "en": "Number of animals being milked",
+          "es": "Cantidad de animales en ordeñe"
+        },
+        "min": 1,
+        "step": 1,
+        "type": "number_input"
+      }
+    ],
+    "id": "before-milking-start-animal-count",
+    "subtitle": {
+      "en": "Number of animals being milked",
+      "es": "Cantidad de animales en ordeñe"
+    },
+    "title": {
+      "en": "Animal Count",
+      "es": "Conteo de animales"
+    }
+  },
+  "before-milking-start-parlor-tip": {
+    "id": "before-milking-start-parlor-tip",
+    "subtitle": {
+      "en": "Here's a tip for your parlor",
+      "es": "Aquí hay un consejo para tu sala"
+    },
+    "title": {
+      "en": "Parlor Tip",
+      "es": "Consejo de Sala"
+    }
+  },
+  "user-profile": {
+    "fields": [
+      {
+        "id": "view-217-select",
+        "options": [
+          {
+            "label": {
+              "en": "Yes",
+              "es": "Sí"
+            },
+            "value": "view-217-opt-yes"
+          },
+          {
+            "label": {
+              "en": "No",
+              "es": "No"
+            },
+            "value": "view-217-opt-no"
+          }
+        ],
+        "type": "select"
+      }
+    ],
+    "id": "user-profile",
+    "next": {
+      "field": "view-217-select",
+      "map": {
+        "view-217-opt-no": "view-218",
+        "view-217-opt-yes": "view-220"
+      }
+    },
+    "subtitle": {
+      "en": "Do you produce milk all year round?",
+      "es": "¿Producís leche todo el año?"
+    },
+    "title": {
+      "en": "My profile",
+      "es": "Mi perfil"
+    }
+  },
+  "view-107": {
+    "fields": [
+      {
+        "id": "view-107-select",
+        "options": [
+          {
+            "label": {
+              "en": "Yes",
+              "es": "Si"
+            },
+            "value": "yes"
+          },
+          {
+            "label": {
+              "en": "No",
+              "es": "No"
+            },
+            "value": "no"
+          }
+        ],
+        "type": "select"
+      }
+    ],
+    "id": "view-107",
+    "next": {
+      "field": "view-107-select",
+      "map": {
+        "no": "-",
+        "yes": "-"
+      }
+    },
+    "subtitle": {
+      "en": "Do you have a milking parlour?",
+      "es": "¿Tenés sala de ordeño?"
+    },
+    "title": {
+      "en": "My Profile",
+      "es": "Mi Perfil"
+    }
+  },
+  "view-109": {
+    "fields": [
+      {
+        "id": "udder_clean",
+        "options": [
+          {
+            "label": {
+              "en": "Yes",
+              "es": "Sí"
+            },
+            "value": "yes"
+          },
+          {
+            "label": {
+              "en": "No",
+              "es": "No"
+            },
+            "value": "no"
+          },
+          {
+            "label": {
+              "en": "Don't know",
+              "es": "No sé"
+            },
+            "value": "dont_know"
+          }
+        ],
+        "type": "select"
+      }
+    ],
+    "icon": "shroom.png",
+    "id": "view-109",
+    "next": {
+      "field": "udder_clean",
+      "map": {
+        "dont_know": "before-milking-start-parlor-tip",
+        "no": "before-milking-start-animal-count",
+        "yes": "before-milking-start-animal-count"
+      }
+    },
+    "showDate": true,
+    "subtitle": {
+      "en": "Have you cleaned the space?",
+      "es": "¿Limpiaste la sala?"
+    },
+    "title": {
+      "en": "Before Milking",
+      "es": "Antes de ordeñar"
+    }
+  },
+  "view-218": {
+    "fields": [
+      {
+        "id": "view-220-month-picker",
+        "type": "month_picker"
+      }
+    ],
+    "id": "view-218",
+    "next": "view-220",
+    "subtitle": {
+      "en": "Select production months",
+      "es": "Seleccioná los meses de producción"
+    },
+    "title": {
+      "en": "My profile",
+      "es": "Mi perfil"
+    }
+  },
+  "view-220": {
+    "fields": [
+      {
+        "default": 0,
+        "id": "view-220-number",
+        "max": 1,
+        "min": 0,
+        "type": "number_input"
+      }
+    ],
+    "id": "view-220",
+    "next": "view-24",
+    "showDate": true,
+    "subtitle": {
+      "en": "Number of dairy animals",
+      "es": "Cantidad de animales de ordeñe"
+    },
+    "title": {
+      "en": "My profile",
+      "es": "Mi perfil"
+    }
+  },
+  "view-24": {
+    "fields": [
+      {
+        "id": "milk-select",
+        "options": [
+          {
+            "label": {
+              "en": "Manual",
+              "es": "Manual"
+            },
+            "value": "manual"
+          },
+          {
+            "label": {
+              "en": "Mechanical",
+              "es": "Mecánico"
+            },
+            "value": "mec"
+          }
+        ],
+        "type": "select"
+      }
+    ],
+    "id": "view-24",
+    "next": {
+      "field": "milk-select",
+      "map": {
+        "manual": "user-profile",
+        "mec": "view-107"
+      }
+    },
+    "subtitle": {
+      "en": "¿How do you milk the herd?",
+      "es": "¿Cómo realizás el ordeño?"
+    },
+    "title": {
+      "en": "My profile",
+      "es": "Mi Perfil"
+    }
+  },
+  "view-28": {
+    "id": "view-28",
+    "subtitle": {
+      "en": "Done! You can start using the app!",
+      "es": "¡Listo! Ya podés comenzar a usar la app"
+    },
+    "title": {
+      "en": "My Profile",
+      "es": "Mi Perfil"
+    }
+  },
+  "view-35": {
+    "fields": [
+      {
+        "id": "my_images",
+        "images": [
+          {
+            "src": "parlor_1.png"
+          },
+          {
+            "src": "milk_tanks.png"
+          }
+        ],
+        "type": "image_list"
+      }
+    ],
+    "id": "view-35",
+    "title": {
+      "en": "Before Milking",
+      "es": "Antes de ordeñar"
+    }
+  },
+  "view-36": {
+    "fields": [
+      {
+        "default": 1,
+        "id": "animal_count",
+        "label": {
+          "en": "Number of animals being milked",
+          "es": "Cantidad de animales en ordeñe"
+        },
+        "min": 1,
+        "step": 1,
+        "type": "number_input"
+      }
+    ],
+    "id": "view-36",
+    "subtitle": {
+      "en": "Number of animals being milked",
+      "es": "Cantidad de animales en ordeñe"
+    },
+    "title": {
+      "en": "Animal Count",
+      "es": "Conteo de animales"
+    }
+  }
 }
