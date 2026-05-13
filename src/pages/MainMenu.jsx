@@ -41,19 +41,51 @@ const MainMenu = () => {
         {
             icon: blueGoat,
             label: t("mainMenu.beforeMilking"),
-            onClick: () => navigate("/survey/view-109"),
+            onClick: () => navigate("/survey/view-109")
         },
-        { icon: udder, label: t("mainMenu.duringMilking") },
-        { icon: milkPail, label: t("mainMenu.milkCare") },
+        { 
+            icon: udder, 
+            label: t("mainMenu.duringMilking"),
+            onClick: () => navigate("/survey/view-46") 
+        },
+        { 
+            icon: milkPail, 
+            label: t("mainMenu.milkCare"),
+            onClick: () => navigate("/survey/view-129") 
+        },
     ];
 
     const moreActionItems = [
-        { icon: goatHealth, label: t("mainMenu.health") },
-        { icon: weed, label: t("mainMenu.food") },
-        { icon: cattlePen, label: t("mainMenu.facilities") },
-        { icon: barn, label: t("mainMenu.mySupplies") },
-        { icon: pest, label: t("mainMenu.pests") },
-        { icon: sheet, label: t("mainMenu.myRecords") },
+        { 
+            icon: goatHealth, 
+            label: t("mainMenu.health"),
+            onClick: () => navigate("/survey/view-177") 
+        },
+        { 
+            icon: weed, 
+            label: t("mainMenu.food"),
+            onClick: () => navigate("/survey/view-184") 
+        },
+        { 
+            icon: cattlePen, 
+            label: t("mainMenu.facilities"),
+            onClick: () => navigate("/survey/view-196") 
+        },
+        { 
+            icon: barn, 
+            label: t("mainMenu.mySupplies"),
+            onClick: () => navigate("/survey/view-206") 
+        },
+        { 
+            icon: pest, 
+            label: t("mainMenu.pests"),
+            onClick: () => navigate("/survey/view-213") 
+        },
+        { 
+            icon: sheet, 
+            label: t("mainMenu.myRecords"),
+            onClick: () => navigate("/survey/view-283") 
+        },
     ];
 
     const accountActionItems = [
