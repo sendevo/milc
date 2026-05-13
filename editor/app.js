@@ -885,6 +885,90 @@ function closeFirebaseModal() {
     if (modal) modal.style.display = 'none';
 }
 
+// ─── Graph view ───────────────────────────────────────────────────────────────
+
+function sanitizeId(id) {
+    // Mermaid node IDs must not contain hyphens as bare tokens
+    return id.replace(/[^a-zA-Z0-9_]/g, '_');
+}
+
+function buildMermaidDef(nodeMap) {
+    const lines = ['flowchart TD'];
+    const nodeKeys = Object.keys(nodeMap).filter(k => k !== 'timestamp');
+
+    // Node labels
+    nodeKeys.forEach(key => {
+        const node = nodeMap[key];
+        const title = node.title?.en || key;
+        const sid = sanitizeId(key);
+        lines.push(`    ${sid}["${title}\n<small>${key}</small>"]`);
+    });
+
+    // Edges
+    nodeKeys.forEach(key => {
+        const node = nodeMap[key];
+        const sid = sanitizeId(key);
+        if (!node.next) return;
+
+        if (typeof node.next === 'string') {
+            lines.push(`    ${sid} --> ${sanitizeId(node.next)}`);
+        } else if (node.next.map) {
+            const seen = new Set();
+            Object.entries(node.next.map).forEach(([val, target]) => {
+                if (!target || seen.has(target)) return;
+                seen.add(target);
+                lines.push(`    ${sid} -->|"${val}"| ${sanitizeId(target)}`);
+            });
+        }
+
+        // bottom_navigation buttons
+        (node.fields || []).forEach(f => {
+            if (f.type !== 'bottom_navigation') return;
+            (f.buttons || []).forEach(b => {
+                if (!b.target) return;
+                const label = b.label?.en || b.label || '';
+                lines.push(`    ${sid} -.->|"${label}"| ${sanitizeId(b.target)}`);
+            });
+        });
+    });
+
+    return lines.join('\n');
+}
+
+async function openGraphModal() {
+    const mermaid = window.__mermaid;
+    if (!mermaid) { alert('Mermaid not loaded yet, please try again.'); return; }
+
+    const def = buildMermaidDef(nodes);
+    const inner = document.getElementById('graph-inner');
+    inner.innerHTML = '';
+
+    try {
+        const id = 'milc-graph-' + Date.now();
+        const { svg } = await mermaid.render(id, def);
+        inner.innerHTML = svg;
+
+        // Wire click-to-select on every node
+        inner.querySelectorAll('.node').forEach(el => {
+            const rawId = el.id?.replace(/^flowchart-/, '').replace(/-\d+$/, '');
+            // Map sanitized id back to original key
+            const originalKey = Object.keys(nodes).find(
+                k => sanitizeId(k) === rawId
+            );
+            if (!originalKey) return;
+            el.style.cursor = 'pointer';
+            el.addEventListener('click', () => {
+                document.getElementById('modal-graph').style.display = 'none';
+                selectNode(originalKey);
+            });
+        });
+    } catch (err) {
+        inner.textContent = 'Failed to render graph: ' + err.message;
+    }
+
+    document.getElementById('modal-graph').style.display = 'flex';
+}
+
 // ─── Export ───────────────────────────────────────────────────────────────────
 
 function downloadJSON(filename, data) {
@@ -953,6 +1037,15 @@ function bindStaticEvents() {
     document.getElementById('btn-add-map-row').addEventListener('click', () => {
         document.getElementById('next-map-rows').appendChild(buildMapRow('', ''));
         markDirty();
+    });
+
+    document.getElementById('btn-graph').addEventListener('click', openGraphModal);
+    document.getElementById('btn-graph-close').addEventListener('click', () => {
+        document.getElementById('modal-graph').style.display = 'none';
+    });
+    document.getElementById('modal-graph').addEventListener('click', (e) => {
+        if (e.target === document.getElementById('modal-graph'))
+            document.getElementById('modal-graph').style.display = 'none';
     });
 
     document.getElementById('btn-export-nodes').addEventListener('click', () => downloadJSON('nodes.json', nodes));

@@ -449,6 +449,67 @@ button:disabled { opacity: 0.35; cursor: not-allowed; }
     color: var(--danger);
 }
 
+/* ── Graph modal ── */
+.modal-graph-overlay {
+    align-items: stretch;
+    justify-content: stretch;
+    padding: 20px;
+}
+
+.modal-graph-box {
+    display: flex;
+    flex-direction: column;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.modal-graph-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+}
+
+.modal-graph-title {
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--accent2);
+    margin-right: auto;
+}
+
+.graph-container {
+    flex: 1;
+    overflow: auto;
+    padding: 20px;
+    cursor: grab;
+}
+
+.graph-container:active { cursor: grabbing; }
+
+#graph-inner svg {
+    display: block;
+    max-width: none;
+}
+
+#graph-inner .node rect,
+#graph-inner .node circle,
+#graph-inner .node polygon {
+    cursor: pointer;
+    transition: filter 0.15s;
+}
+
+#graph-inner .node:hover rect,
+#graph-inner .node:hover circle,
+#graph-inner .node:hover polygon {
+    filter: brightness(1.3);
+}
+
 /* ── Pull diff modal ── */
 .modal-box--wide {
     width: 700px;

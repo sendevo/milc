@@ -1,4 +1,53 @@
 {
+    "view-100": {
+        "fields": [
+            {
+                "id": "view-100-select",
+                "options": [
+                    {
+                        "label": {
+                            "en": "Yes",
+                            "es": "Si"
+                        },
+                        "value": "yes"
+                    },
+                    {
+                        "label": {
+                            "en": "No",
+                            "es": "No"
+                        },
+                        "value": "No"
+                    },
+                    {
+                        "label": {
+                            "en": "Don't know",
+                            "es": "No se"
+                        },
+                        "value": "dont-know"
+                    }
+                ],
+                "type": "select"
+            }
+        ],
+        "icon": "udder.png",
+        "next": {
+            "field": "view-100-select",
+            "map": {
+                "dont-know": "view-38",
+                "no": "view-110",
+                "yes": "view-110"
+            }
+        },
+        "showDate": true,
+        "subtitle": {
+            "en": "Did you check udders?",
+            "es": "¿Revisaste las ubres?"
+        },
+        "title": {
+            "en": "Before milking",
+            "es": "Antes de ordeñar"
+        }
+    },
     "view-107": {
         "fields": [
             {
@@ -84,6 +133,55 @@
         },
         "title": {
             "en": "Before Milking",
+            "es": "Antes de ordeñar"
+        }
+    },
+    "view-110": {
+        "fields": [
+            {
+                "id": "view-110-select",
+                "options": [
+                    {
+                        "label": {
+                            "en": "Yes",
+                            "es": "Si"
+                        },
+                        "value": "yes"
+                    },
+                    {
+                        "label": {
+                            "en": "No",
+                            "es": "No"
+                        },
+                        "value": "no"
+                    },
+                    {
+                        "label": {
+                            "en": "Don't know",
+                            "es": "No se"
+                        },
+                        "value": "dont-know"
+                    }
+                ],
+                "type": "select"
+            }
+        ],
+        "icon": "udder.png",
+        "next": {
+            "field": "view-110-select",
+            "map": {
+                "dont-know": "view-40",
+                "no": "view-111",
+                "yes": "view-42"
+            }
+        },
+        "showDate": true,
+        "subtitle": {
+            "en": "Have you noticed any symptoms of mastitis?",
+            "es": "¿Encontraste síntomas de mastitis?"
+        },
+        "title": {
+            "en": "Before milking",
             "es": "Antes de ordeñar"
         }
     },
@@ -181,8 +279,8 @@
             {
                 "default": 0,
                 "id": "view-220-number",
-                "max": 1,
                 "min": 0,
+                "step": 1,
                 "type": "number_input"
             }
         ],
@@ -237,7 +335,6 @@
         }
     },
     "view-28": {
-        "fields": [],
         "subtitle": {
             "en": "Done! You can start using the app!",
             "es": "¡Listo! Ya podés comenzar a usar la app"
@@ -245,6 +342,18 @@
         "title": {
             "en": "My Profile",
             "es": "Mi Perfil"
+        }
+    },
+    "view-33": {
+        "icon": "warning.png",
+        "next": "view-35",
+        "subtitle": {
+            "en": "Warning<br>Weekly alert:<brz> clean the parlor",
+            "es": "Atención<br>Alerta semanal:<br>limpiá la sala"
+        },
+        "title": {
+            "en": "Before milking",
+            "es": "Antes de ordeñar"
         }
     },
     "view-35": {
@@ -284,31 +393,30 @@
                 "min": 1,
                 "step": 1,
                 "type": "number_input"
-            },
-            {
-                "buttons": [
-                    {
-                        "label": {
-                            "en": "Back",
-                            "es": "Atrás"
-                        },
-                        "target": "view-109"
-                    },
-                    {
-                        "label": {
-                            "en": "Next",
-                            "es": "Registrar"
-                        },
-                        "target": "view-100"
-                    }
-                ],
-                "id": "",
-                "type": "bottom_navigation"
             }
         ],
         "subtitle": {
             "en": "Number of animals being milked",
             "es": "Cantidad de animales en ordeñe"
+        },
+        "title": {
+            "en": "Before milking",
+            "es": "Antes de ordeñar"
+        }
+    },
+    "view-42": {
+        "fields": [
+            {
+                "default": 0,
+                "id": "view-42-input",
+                "type": "number_input"
+            }
+        ],
+        "next": "view-37",
+        "showDate": true,
+        "subtitle": {
+            "en": "How many animals were ill?",
+            "es": "¿Cuántos animales estaban mal?"
         },
         "title": {
             "en": "Before milking",

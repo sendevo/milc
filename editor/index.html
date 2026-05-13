@@ -8,6 +8,11 @@
     <title>MILC Survey Editor</title>
     <link rel="icon" href="favicon.ico" />
     <link rel="stylesheet" href="style.css" />
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: false, theme: 'dark', flowchart: { curve: 'basis' } });
+        window.__mermaid = mermaid;
+    </script>
 </head>
 <body>
 
@@ -25,6 +30,7 @@
         <h1>MILC Survey Editor</h1>
         <div class="header-actions">
             <button id="btn-theme" title="Toggle theme">🌙</button>
+            <button id="btn-graph" title="View navigation graph">🗺️ Graph</button>
             <button id="btn-firebase-status" class="btn-firebase" title="Configure Firebase sync">🔥 Not connected</button>
             <button id="btn-push-firebase" style="display:none" title="Push all local nodes to Firebase">⬆ Push all to Firebase</button>
             <button id="btn-pull-firebase" style="display:none" title="Pull all nodes from Firebase">⬇ Pull all from Firebase</button>
@@ -125,6 +131,20 @@
             </div>
         </section>
 
+    </div>
+</div>
+
+<!-- Graph modal -->
+<div id="modal-graph" class="modal-overlay modal-graph-overlay" style="display:none">
+    <div class="modal-graph-box">
+        <div class="modal-graph-header">
+            <span class="modal-graph-title">Navigation Graph</span>
+            <small class="hint">Click a node to select it in the editor</small>
+            <button id="btn-graph-close" class="btn-icon" title="Close">✕</button>
+        </div>
+        <div id="graph-container" class="graph-container">
+            <div id="graph-inner"></div>
+        </div>
     </div>
 </div>
 
