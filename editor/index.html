@@ -55,36 +55,37 @@
             <div id="editor-placeholder">← Select or create a node</div>
             <div id="save-result" style="display:none"></div>
             <div id="editor-form" style="display:none">
+                <section class="editor-block">
+                    <div class="editor-block-title">Header</div>
+                    <div class="form-group">
+                        <label>Node ID</label>
+                        <input type="text" id="field-id" placeholder="e.g. view-109" />
+                    </div>
 
-                <div class="form-group">
-                    <label>Node ID</label>
-                    <input type="text" id="field-id" placeholder="e.g. view-109" />
-                </div>
+                    <div class="form-group">
+                        <label>Title</label>
+                        <input type="text" id="field-title-en" placeholder="English" />
+                        <input type="text" id="field-title-es" placeholder="Español" />
+                    </div>
 
-                <div class="form-group">
-                    <label>Title</label>
-                    <input type="text" id="field-title-en" placeholder="English" />
-                    <input type="text" id="field-title-es" placeholder="Español" />
-                </div>
+                    <div class="form-group">
+                        <label>Subtitle <small>(optional)</small></label>
+                        <input type="text" id="field-subtitle-en" placeholder="English" />
+                        <input type="text" id="field-subtitle-es" placeholder="Español" />
+                    </div>
 
-                <div class="form-group">
-                    <label>Subtitle <small>(optional)</small></label>
-                    <input type="text" id="field-subtitle-en" placeholder="English" />
-                    <input type="text" id="field-subtitle-es" placeholder="Español" />
-                </div>
+                    <div class="form-group checkbox-group">
+                        <label><input type="checkbox" id="field-showDate" /> Show date</label>
+                    </div>
 
-                <div class="form-group checkbox-group">
-                    <label><input type="checkbox" id="field-showDate" /> Show date</label>
-                </div>
+                    <div class="form-group">
+                        <label>Icon filename <small>(optional)</small></label>
+                        <input type="text" id="field-icon" placeholder="e.g. shroom.png" />
+                    </div>
+                </section>
 
-                <div class="form-group">
-                    <label>Icon filename <small>(optional)</small></label>
-                    <input type="text" id="field-icon" placeholder="e.g. shroom.png" />
-                </div>
-
-                <!-- Fields -->
-                <div class="section-header">
-                    <span>Fields</span>
+                <section class="editor-block">
+                    <div class="editor-block-title">Fields</div>
                     <div class="field-type-btns">
                         <button class="btn-add-field" data-type="select">＋ Select</button>
                         <button class="btn-add-field" data-type="number_input">＋ Number</button>
@@ -93,35 +94,34 @@
                         <button class="btn-add-field" data-type="month_picker">＋ Month picker</button>
                         <button class="btn-add-field" data-type="bottom_navigation">＋ Bottom nav</button>
                     </div>
-                </div>
-                <div id="fields-container"></div>
+                    <div id="fields-container"></div>
+                </section>
 
-                <!-- Next navigation -->
-                <div class="section-header">
-                    <span>Next</span>
-                </div>
-                <div id="next-container">
-                    <div class="form-group">
-                        <label>Type</label>
-                        <select id="next-type">
-                            <option value="null">None (terminal)</option>
-                            <option value="direct">Direct → node</option>
-                            <option value="field">Field map</option>
-                        </select>
-                    </div>
-                    <div id="next-direct" style="display:none" class="form-group">
-                        <label>Target node ID</label>
-                        <input type="text" id="next-direct-target" />
-                    </div>
-                    <div id="next-field-map" style="display:none">
+                <section class="editor-block">
+                    <div class="editor-block-title">Navigation</div>
+                    <div id="next-container">
                         <div class="form-group">
-                            <label>Field ID (must match one of the fields above)</label>
-                            <input type="text" id="next-field-id" />
+                            <label>Type</label>
+                            <select id="next-type">
+                                <option value="null">None (terminal)</option>
+                                <option value="direct">Direct → node</option>
+                                <option value="field">Field map</option>
+                            </select>
                         </div>
-                        <div id="next-map-rows"></div>
-                        <button id="btn-add-map-row" class="btn-sm">＋ Add mapping</button>
+                        <div id="next-direct" style="display:none" class="form-group">
+                            <label>Target node ID</label>
+                            <input type="text" id="next-direct-target" />
+                        </div>
+                        <div id="next-field-map" style="display:none">
+                            <div class="form-group">
+                                <label>Field ID (must match one of the fields above)</label>
+                                <input type="text" id="next-field-id" />
+                            </div>
+                            <div id="next-map-rows"></div>
+                            <button id="btn-add-map-row" class="btn-sm">＋ Add mapping</button>
+                        </div>
                     </div>
-                </div>
+                </section>
 
                 <div class="editor-actions">
                     <button id="btn-save-node" class="btn-primary" disabled>Save node</button>
