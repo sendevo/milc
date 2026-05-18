@@ -10,8 +10,8 @@ export const configStyles = {
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        borderBottom: "1px solid",
-        borderColor: "divider",
+        //borderBottom: "1px solid",
+        //borderColor: "divider",
         pb: 2,
     },
     label: {
@@ -20,6 +20,13 @@ export const configStyles = {
     },
     control: {
         minWidth: 150,
+    },
+    devDateControlWrap: {
+        display: "flex",
+        alignItems: "center",
+        gap: 1,
+        flexWrap: "wrap",
+        justifyContent: "flex-end",
     },
     devSectionTitle: {
         fontSize: "0.75rem",

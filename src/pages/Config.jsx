@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { Box, Button, Divider, FormControl, MenuItem, Select, Typography } from "@mui/material";
+import { Box, Button, Checkbox, Divider, FormControl, FormControlLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
 import ViewContainer from "../components/ViewContainer";
 import { useSettings } from "../contexts/SettingsContext";
 import { refreshSurveyNodes } from "../hooks/useSurveyNodes";
@@ -10,8 +10,17 @@ import { configStyles as styles } from "../theme/Config.styles";
 const Config = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const { language, themeMode, setLanguage, setThemeMode } = useSettings();
+    const today = new Date().toISOString().slice(0, 10);
+    const {
+        language,
+        themeMode,
+        simulatedDate,
+        setLanguage,
+        setThemeMode,
+        setSimulatedDate,
+    } = useSettings();
     const [refreshState, setRefreshState] = useState("idle"); // "idle" | "loading" | "done"
+    const isSimulatedDateEnabled = Boolean(simulatedDate);
 
     const handleRefreshNodes = async () => {
         setRefreshState("loading");
@@ -60,6 +69,38 @@ const Config = () => {
                                 {t("config.devSection")}
                             </Typography>
                         </Divider>
+                        <Box sx={styles.settingRow}>
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={isSimulatedDateEnabled}
+                                        onChange={(e) => {
+                                            if (e.target.checked) {
+                                                setSimulatedDate(simulatedDate || today);
+                                                return;
+                                            }
+                                            setSimulatedDate("");
+                                        }}
+                                    />
+                                }
+                                label={<Typography sx={styles.label}>{t("config.enableSimulatedDate")}</Typography>}
+                            />
+                            <Box sx={styles.devDateControlWrap}>
+                                <TextField
+                                    type="date"
+                                    size="small"
+                                    disabled={!isSimulatedDateEnabled}
+                                    value={isSimulatedDateEnabled ? (simulatedDate || today) : today}
+                                    onChange={(e) => setSimulatedDate(e.target.value || today)}
+                                    slotProps={{
+                                        htmlInput: {
+                                            max: "9999-12-31",
+                                        },
+                                    }}
+                                />
+                            </Box>
+                        </Box>
+
                         <Box sx={styles.settingRow}>
                             <Typography sx={styles.label}>{t("config.resetNodes")}</Typography>
                             <Button
