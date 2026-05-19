@@ -1,8 +1,10 @@
 import { useEffect } from "react";
-import { useNavigate, useParams, Navigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { useSurveyNodes } from "../hooks/useSurveyNodes";
 import { resolveTarget } from "../model";
 import SurveyStep from "../components/survey/SurveyStep";
+import { useToast } from "../contexts/ToastContext";
 
 /**
  * Route: /survey/:nodeId
@@ -16,6 +18,8 @@ const SurveyPage = () => {
     const { nodeId } = useParams();
     const navigate = useNavigate();
     const nodes = useSurveyNodes();
+    const { showToast } = useToast();
+    const { t } = useTranslation();
 
     const node = nodes[nodeId];
 
@@ -30,14 +34,25 @@ const SurveyPage = () => {
         console.log("[survey] unknown node id:", nodeId);
     }, [nodeId, node]);
 
+    useEffect(() => {
+        if (node) return;
+        showToast(t("survey.inDevelopment"));
+        navigate("/app", { replace: true });
+    }, [navigate, node, showToast, t]);
+
     if (!node) {
-        return <Navigate to="/app" replace />;
+        return null;
     }
 
     const handleSubmit = (answers) => {
         const targetId = resolveTarget(node, answers);
         const targetNode = targetId ? nodes[targetId] : null;
         console.log("[survey] target view:", targetId ?? "/app");
+        if (targetId && !targetNode) {
+            showToast(t("survey.inDevelopment"));
+            navigate("/app");
+            return;
+        }
         navigate(targetId ? `/survey/${targetId}` : "/app");
     };
 

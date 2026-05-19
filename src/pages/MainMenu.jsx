@@ -147,7 +147,8 @@ const MainMenu = () => {
                                 key={item.label}
                                 icon={item.icon}
                                 label={item.label}
-                                borderColor={menuBorder} />
+                                borderColor={menuBorder}
+                                onClick={item.onClick} />
                         ))}
                     </ButtonsContainer>
                 </Box>
