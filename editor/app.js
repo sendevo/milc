@@ -25,6 +25,88 @@ function bumpTimestamp() {
     nodes.timestamp = Math.floor(Date.now() / 1000);
 }
 
+// ─── Icon management ──────────────────────────────────────────────────────────
+
+const ICON_FILENAMES = [
+    'barn.png',
+    'blue_goat.png',
+    'bottle.png',
+    'bubble.png',
+    'cattle_pen.png',
+    'comb.png',
+    'config.png',
+    'drop.png',
+    'filter.png',
+    'goat_health.png',
+    'hands.png',
+    'heart.png',
+    'info_help.png',
+    'jacket.png',
+    'logout.png',
+    'milk_pail.png',
+    'new_user.png',
+    'pest.png',
+    'sheet.png',
+    'shroom.png',
+    'udder.png',
+    'user.png',
+    'warning.png',
+    'watch.png',
+    'weed.png',
+    'white_goat.png',
+];
+
+function populateIconGrid() {
+    const grid = document.getElementById('icon-grid');
+    if (!grid) return;
+    
+    grid.innerHTML = '';
+    
+    ICON_FILENAMES.forEach(filename => {
+        const item = document.createElement('div');
+        item.style.cssText = 'display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; padding: 10px; border: 1px solid transparent; border-radius: 4px; transition: all 0.2s;';
+        item.onmouseover = () => item.style.backgroundColor = 'var(--input-bg)';
+        item.onmouseout = () => item.style.backgroundColor = 'transparent';
+        
+        const img = document.createElement('img');
+        img.src = `/icons/${filename}`;
+        img.style.cssText = 'width: 48px; height: 48px; object-fit: contain;';
+        img.alt = filename;
+        
+        const label = document.createElement('small');
+        label.textContent = filename;
+        label.style.cssText = 'text-align: center; word-break: break-word; font-size: 0.75rem;';
+        
+        item.appendChild(img);
+        item.appendChild(label);
+        item.addEventListener('click', () => selectIcon(filename));
+        
+        grid.appendChild(item);
+    });
+}
+
+function selectIcon(filename) {
+    document.getElementById('field-icon').value = filename;
+    updateIconPreview(filename);
+    document.getElementById('modal-icon-picker').style.display = 'none';
+    markDirty();
+}
+
+function updateIconPreview(filename) {
+    const preview = document.getElementById('icon-preview');
+    const label = document.getElementById('icon-label');
+    
+    if (!filename) {
+        preview.src = '';
+        preview.style.display = 'none';
+        label.textContent = 'No icon selected';
+    } else {
+        preview.src = `/icons/${filename}`;
+        preview.style.display = 'block';
+        label.textContent = filename;
+    }
+}
+
 // ─── Known actions ────────────────────────────────────────────────────────────
 // Keep in sync with src/model/actions.js
 const KNOWN_ACTIONS = [
@@ -240,6 +322,7 @@ function diffLine(text, type) {
 
 document.addEventListener('DOMContentLoaded', async () => {
     applyTheme(localStorage.getItem('milc_theme') || 'light');
+    populateIconGrid();
     loadFromStorage();
     renderNodeList();
     bindStaticEvents();
@@ -313,6 +396,7 @@ function loadNodeIntoForm(node) {
     document.getElementById('field-subtitle-es').value = node.subtitle?.es || '';
     document.getElementById('field-showDate').checked = !!node.showDate;
     document.getElementById('field-icon').value = node.icon || '';
+    updateIconPreview(node.icon || '');
 
     renderFields(node.fields || []);
     markClean();
@@ -326,6 +410,7 @@ function clearForm() {
     document.getElementById('field-subtitle-es').value = '';
     document.getElementById('field-showDate').checked = false;
     document.getElementById('field-icon').value = '';
+    updateIconPreview('');
     renderFields([]);
     markClean();
 }
@@ -1062,6 +1147,21 @@ function bindStaticEvents() {
     document.getElementById('modal-graph').addEventListener('click', (e) => {
         if (e.target === document.getElementById('modal-graph'))
             document.getElementById('modal-graph').style.display = 'none';
+    });
+
+    // Icon picker modal
+    document.getElementById('btn-pick-icon').addEventListener('click', () => {
+        document.getElementById('modal-icon-picker').style.display = 'flex';
+    });
+    document.getElementById('btn-icon-close').addEventListener('click', () => {
+        document.getElementById('modal-icon-picker').style.display = 'none';
+    });
+    document.getElementById('btn-icon-none').addEventListener('click', () => {
+        selectIcon('');
+    });
+    document.getElementById('modal-icon-picker').addEventListener('click', (e) => {
+        if (e.target === document.getElementById('modal-icon-picker'))
+            document.getElementById('modal-icon-picker').style.display = 'none';
     });
 
     document.getElementById('btn-export-nodes').addEventListener('click', () => downloadJSON('nodes.json', nodes));

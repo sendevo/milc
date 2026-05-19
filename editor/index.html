@@ -79,8 +79,14 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Icon filename <small>(optional)</small></label>
-                        <input type="text" id="field-icon" placeholder="e.g. shroom.png" />
+                        <label>Icon <small>(optional)</small></label>
+                        <div id="icon-picker-container" style="display: flex; gap: 10px; align-items: center;">
+                            <button id="btn-pick-icon" type="button" style="padding: 8px; cursor: pointer; border: 1px solid var(--border); border-radius: 4px; background: var(--input-bg); display: flex; align-items: center; justify-content: center; width: 60px; height: 60px;">
+                                <img id="icon-preview" style="max-width: 50px; max-height: 50px;" />
+                            </button>
+                            <span id="icon-label" style="color: var(--text-secondary);">No icon selected</span>
+                            <input type="hidden" id="field-icon" value="" />
+                        </div>
                     </div>
                 </section>
 
@@ -118,6 +124,19 @@
         </div>
         <div id="graph-container" class="graph-container">
             <div id="graph-inner"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Icon picker modal -->
+<div id="modal-icon-picker" class="modal-overlay" style="display:none">
+    <div class="modal-box">
+        <h2>Select Icon</h2>
+        <div id="icon-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 10px; margin: 20px 0;">
+        </div>
+        <div class="modal-actions">
+            <button id="btn-icon-none" class="btn-sm">None</button>
+            <button id="btn-icon-close" class="btn-sm">Cancel</button>
         </div>
     </div>
 </div>
