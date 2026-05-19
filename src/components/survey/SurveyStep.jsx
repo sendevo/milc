@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import ViewContainer from "../ViewContainer";
 import Select from "./Select";
 import AlertBlock from "./AlertBlock";
+import TextBlock from "./TextBlock";
 import NumberInput from "./NumberInput";
 import ImageList from "./ImageList";
 import MonthPicker from "./MonthPicker";
@@ -107,6 +108,10 @@ const SurveyStep = ({ node, nodeId, onSubmit, onBack }) => {
             case "alert":
                 return <AlertBlock 
                     key={field.id} 
+                    message={t(field.message)} />;
+            case "text_block":
+                return <TextBlock
+                    key={field.id}
                     message={t(field.message)} />;
             case "month_picker":
                 return (

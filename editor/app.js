@@ -496,6 +496,8 @@ function buildFieldEl(field, index) {
         extras.appendChild(buildImageListExtras(field));
     } else if (field.type === 'alert') {
         extras.appendChild(buildAlertExtras(field));
+    } else if (field.type === 'text_block') {
+        extras.appendChild(buildTextBlockExtras(field));
     } else if (field.type === 'month_picker') {
         extras.appendChild(buildMonthPickerExtras(field));
     } else if (field.type === 'bottom_navigation') {
@@ -688,6 +690,16 @@ function buildAlertExtras(field) {
     return wrap;
 }
 
+function buildTextBlockExtras(field) {
+    const wrap = document.createElement('div');
+
+    const messageWrap = bilingualInputGroup(field.message, 'message');
+    messageWrap.dataset.role = 'message';
+    wrap.appendChild(makeRow('Message', messageWrap));
+
+    return wrap;
+}
+
 function buildMonthPickerExtras(field) {
     const wrap = document.createElement('div');
 
@@ -797,6 +809,10 @@ function getFieldsFromDOM() {
             if (msg) field.message = msg;
             const get = (role) => extras.querySelector(`[data-role="${role}"]`)?.value.trim();
             if (get('severity')) field.severity = get('severity');
+        } else if (type === 'text_block') {
+            const messageEl = extras.querySelector('[data-role="message"]');
+            const msg = getBilingual(messageEl);
+            if (msg) field.message = msg;
         } else if (type === 'month_picker') {
             const get = (role) => extras.querySelector(`[data-role="${role}"]`)?.value.trim();
             const targetVal = get('field-target');
