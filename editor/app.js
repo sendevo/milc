@@ -1036,6 +1036,21 @@ function sanitizeId(id) {
 function buildMermaidDef(nodeMap) {
     const lines = ['flowchart TD'];
     const nodeKeys = Object.keys(nodeMap).filter(k => k !== 'timestamp');
+    const seenEdges = new Set();
+
+    function addEdge(fromKey, toKey, label, style = '-->') {
+        if (!fromKey || !toKey) return;
+        const edgeKey = `${fromKey}::${toKey}::${label || ''}::${style}`;
+        if (seenEdges.has(edgeKey)) return;
+        seenEdges.add(edgeKey);
+        const fromId = sanitizeId(fromKey);
+        const toId = sanitizeId(toKey);
+        if (label) {
+            lines.push(`    ${fromId} ${style}|"${label}"| ${toId}`);
+        } else {
+            lines.push(`    ${fromId} ${style} ${toId}`);
+        }
+    }
 
     // Node labels
     nodeKeys.forEach(key => {
@@ -1048,28 +1063,34 @@ function buildMermaidDef(nodeMap) {
     // Edges
     nodeKeys.forEach(key => {
         const node = nodeMap[key];
-        const sid = sanitizeId(key);
-        if (!node.next) return;
 
-        if (typeof node.next === 'string') {
-            lines.push(`    ${sid} --> ${sanitizeId(node.next)}`);
-        } else if (node.next.map) {
-            const seen = new Set();
-            Object.entries(node.next.map).forEach(([val, target]) => {
-                if (!target || seen.has(target)) return;
-                seen.add(target);
-                lines.push(`    ${sid} -->|"${val}"| ${sanitizeId(target)}`);
-            });
+        // Legacy node-level navigation support.
+        if (node.next) {
+            if (typeof node.next === 'string') {
+                addEdge(key, node.next, '', '-->');
+            } else if (node.next.map) {
+                Object.entries(node.next.map).forEach(([val, target]) => {
+                    addEdge(key, target, val, '-->');
+                });
+            }
         }
 
-        // bottom_navigation buttons
-        (node.fields || []).forEach(f => {
-            if (f.type !== 'bottom_navigation') return;
-            (f.buttons || []).forEach(b => {
-                if (!b.target) return;
-                const label = b.label?.en || b.label || '';
-                lines.push(`    ${sid} -.->|"${label}"| ${sanitizeId(b.target)}`);
-            });
+        // Current field-level navigation targets.
+        (node.fields || []).forEach(field => {
+            if (field.type === 'select') {
+                (field.options || []).forEach(option => {
+                    if (!option.target) return;
+                    addEdge(key, option.target, option.value || '', '-->');
+                });
+            } else if (field.type === 'number_input' || field.type === 'month_picker') {
+                if (field.target) addEdge(key, field.target, field.id || field.type, '-->');
+            } else if (field.type === 'bottom_navigation') {
+                (field.buttons || []).forEach(button => {
+                    if (!button.target) return;
+                    const label = button.label?.en || button.label || '';
+                    addEdge(key, button.target, label, '-.->');
+                });
+            }
         });
     });
 
