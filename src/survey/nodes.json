@@ -9,35 +9,30 @@
                             "en": "Yes",
                             "es": "Si"
                         },
-                        "value": "yes"
+                        "value": "yes",
+                        "target": "view-110"
                     },
                     {
                         "label": {
                             "en": "No",
                             "es": "No"
                         },
-                        "value": "No"
+                        "value": "No",
+                        "target": "view-110"
                     },
                     {
                         "label": {
                             "en": "Don't know",
                             "es": "No se"
                         },
-                        "value": "dont-know"
+                        "value": "dont-know",
+                        "target": "view-38"
                     }
                 ],
                 "type": "select"
             }
         ],
         "icon": "udder.png",
-        "next": {
-            "field": "view-100-select",
-            "map": {
-                "dont-know": "view-38",
-                "no": "view-110",
-                "yes": "view-110"
-            }
-        },
         "showDate": true,
         "subtitle": {
             "en": "Did you check udders?",
@@ -58,26 +53,21 @@
                             "en": "Yes",
                             "es": "Si"
                         },
-                        "value": "yes"
+                        "value": "yes",
+                        "target": "view-28"
                     },
                     {
                         "label": {
                             "en": "No",
                             "es": "No"
                         },
-                        "value": "no"
+                        "value": "no",
+                        "target": "view-28"
                     }
                 ],
                 "type": "select"
             }
         ],
-        "next": {
-            "field": "view-107-select",
-            "map": {
-                "no": "view-28",
-                "yes": "view-28"
-            }
-        },
         "subtitle": {
             "en": "Do you have a milking parlour?",
             "es": "¿Tenés sala de ordeño?"
@@ -97,35 +87,30 @@
                             "en": "Yes",
                             "es": "Sí"
                         },
-                        "value": "yes"
+                        "value": "yes",
+                        "target": "view-36"
                     },
                     {
                         "label": {
                             "en": "No",
                             "es": "No"
                         },
-                        "value": "no"
+                        "value": "no",
+                        "target": "view-36"
                     },
                     {
                         "label": {
                             "en": "Don't know",
                             "es": "No sé"
                         },
-                        "value": "dont_know"
+                        "value": "dont_know",
+                        "target": "view-35"
                     }
                 ],
                 "type": "select"
             }
         ],
         "icon": "shroom.png",
-        "next": {
-            "field": "udder_clean",
-            "map": {
-                "dont_know": "view-35",
-                "no": "view-36",
-                "yes": "view-36"
-            }
-        },
         "showDate": true,
         "subtitle": {
             "en": "Have you cleaned the space?",
@@ -146,35 +131,30 @@
                             "en": "Yes",
                             "es": "Si"
                         },
-                        "value": "yes"
+                        "value": "yes",
+                        "target": "view-42"
                     },
                     {
                         "label": {
                             "en": "No",
                             "es": "No"
                         },
-                        "value": "no"
+                        "value": "no",
+                        "target": "view-111"
                     },
                     {
                         "label": {
                             "en": "Don't know",
                             "es": "No se"
                         },
-                        "value": "dont-know"
+                        "value": "dont-know",
+                        "target": "view-38"
                     }
                 ],
                 "type": "select"
             }
         ],
         "icon": "udder.png",
-        "next": {
-            "field": "view-110-select",
-            "map": {
-                "dont-know": "view-40",
-                "no": "view-111",
-                "yes": "view-42"
-            }
-        },
         "showDate": true,
         "subtitle": {
             "en": "Have you noticed any symptoms of mastitis?",
@@ -204,7 +184,7 @@
                         "target": "view-120"
                     }
                 ],
-                "id": "",
+                "id": "view-123-bottom-nav",
                 "type": "bottom_navigation"
             }
         ],
@@ -228,26 +208,21 @@
                             "en": "Yes",
                             "es": "Sí"
                         },
-                        "value": "view-217-opt-yes"
+                        "value": "view-217-opt-yes",
+                        "target": "view-220"
                     },
                     {
                         "label": {
                             "en": "No",
                             "es": "No"
                         },
-                        "value": "view-217-opt-no"
+                        "value": "view-217-opt-no",
+                        "target": "view-218"
                     }
                 ],
                 "type": "select"
             }
         ],
-        "next": {
-            "field": "view-217-select",
-            "map": {
-                "view-217-opt-no": "view-218",
-                "view-217-opt-yes": "view-220"
-            }
-        },
         "subtitle": {
             "en": "Do you produce milk all year round?",
             "es": "¿Producís leche todo el año?"
@@ -261,10 +236,10 @@
         "fields": [
             {
                 "id": "view-220-month-picker",
-                "type": "month_picker"
+                "type": "month_picker",
+                "target": "view-220"
             }
         ],
-        "next": "view-220",
         "subtitle": {
             "en": "Select production months",
             "es": "Seleccioná los meses de producción"
@@ -281,10 +256,10 @@
                 "id": "view-220-number",
                 "min": 0,
                 "step": 1,
-                "type": "number_input"
+                "type": "number_input",
+                "target": "view-24"
             }
         ],
-        "next": "view-24",
         "showDate": true,
         "subtitle": {
             "en": "Number of dairy animals",
@@ -305,26 +280,21 @@
                             "en": "Manual",
                             "es": "Manual"
                         },
-                        "value": "manual"
+                        "value": "manual",
+                        "target": "user-profile"
                     },
                     {
                         "label": {
                             "en": "Mechanical",
                             "es": "Mecánico"
                         },
-                        "value": "mec"
+                        "value": "mec",
+                        "target": "view-107"
                     }
                 ],
                 "type": "select"
             }
         ],
-        "next": {
-            "field": "milk-select",
-            "map": {
-                "manual": "user-profile",
-                "mec": "view-107"
-            }
-        },
         "subtitle": {
             "en": "¿How do you milk the herd?",
             "es": "¿Cómo realizás el ordeño?"
@@ -346,7 +316,6 @@
     },
     "view-33": {
         "icon": "warning.png",
-        "next": "view-35",
         "subtitle": {
             "en": "Warning<br>Weekly alert:<brz> clean the parlor",
             "es": "Atención<br>Alerta semanal:<br>limpiá la sala"
@@ -392,7 +361,8 @@
                 },
                 "min": 1,
                 "step": 1,
-                "type": "number_input"
+                "type": "number_input",
+                "target": "view-100"
             }
         ],
         "subtitle": {
@@ -409,10 +379,10 @@
             {
                 "default": 0,
                 "id": "view-42-input",
-                "type": "number_input"
+                "type": "number_input",
+                "target": "view-37"
             }
         ],
-        "next": "view-37",
         "showDate": true,
         "subtitle": {
             "en": "How many animals were ill?",

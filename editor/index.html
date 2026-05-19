@@ -85,7 +85,7 @@
                 </section>
 
                 <section class="editor-block">
-                    <div class="editor-block-title">Fields</div>
+                    <div class="editor-block-title">Fields & Navigation</div>
                     <div class="field-type-btns">
                         <button class="btn-add-field" data-type="select">＋ Select</button>
                         <button class="btn-add-field" data-type="number_input">＋ Number</button>
@@ -95,32 +95,6 @@
                         <button class="btn-add-field" data-type="bottom_navigation">＋ Bottom nav</button>
                     </div>
                     <div id="fields-container"></div>
-                </section>
-
-                <section class="editor-block">
-                    <div class="editor-block-title">Navigation</div>
-                    <div id="next-container">
-                        <div class="form-group">
-                            <label>Type</label>
-                            <select id="next-type">
-                                <option value="null">None (terminal)</option>
-                                <option value="direct">Direct → node</option>
-                                <option value="field">Field map</option>
-                            </select>
-                        </div>
-                        <div id="next-direct" style="display:none" class="form-group">
-                            <label>Target node ID</label>
-                            <input type="text" id="next-direct-target" />
-                        </div>
-                        <div id="next-field-map" style="display:none">
-                            <div class="form-group">
-                                <label>Field ID (must match one of the fields above)</label>
-                                <input type="text" id="next-field-id" />
-                            </div>
-                            <div id="next-map-rows"></div>
-                            <button id="btn-add-map-row" class="btn-sm">＋ Add mapping</button>
-                        </div>
-                    </div>
                 </section>
 
                 <div class="editor-actions">

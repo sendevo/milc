@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate, useParams, Navigate } from "react-router-dom";
 import { useSurveyNodes } from "../hooks/useSurveyNodes";
-import { resolveNext } from "../model";
+import { resolveTarget } from "../model";
 import SurveyStep from "../components/survey/SurveyStep";
 
 /**
@@ -9,8 +9,8 @@ import SurveyStep from "../components/survey/SurveyStep";
  *
  * - Reads nodeId from the URL.
  * - Looks up the node in the tree.
- * - On submit, resolves the next node and navigates there.
- *   If the branch ends (next: null) or the node is unknown, returns to /app.
+ * - On submit, resolves the target node using field option targets.
+ *   If the branch ends (no target) or the node is unknown, returns to /app.
  */
 const SurveyPage = () => {
     const { nodeId } = useParams();
@@ -35,10 +35,10 @@ const SurveyPage = () => {
     }
 
     const handleSubmit = (answers) => {
-        const nextId = resolveNext(node, answers);
-        const nextNode = nextId ? nodes[nextId] : null;
-        console.log("[survey] next view:", nextId ?? "/app");
-        navigate(nextId ? `/survey/${nextId}` : "/app");
+        const targetId = resolveTarget(node, answers);
+        const targetNode = targetId ? nodes[targetId] : null;
+        console.log("[survey] target view:", targetId ?? "/app");
+        navigate(targetId ? `/survey/${targetId}` : "/app");
     };
 
     return (

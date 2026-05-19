@@ -103,19 +103,19 @@ function walkTree(nodeMap, startId, steps) {
 // ─── Traversal tests with nodes.json ─────────────────────────────────────────
 
 describe("nodes.json tree traversal", () => {
-    it("answer 'yes' → view-109 → view-109-animal-count (terminal)", () => {
+    it("answer 'yes' → view-109 → view-36 (terminal)", () => {
         const path = walkTree(nodes, "view-109", [{ udder_clean: "yes" }]);
         expect(path).toEqual([
             "view-109",
-            "view-109-animal-count",
+            "view-36",
         ]);
     });
 
-    it("answer 'no' → view-109 → view-109-animal-count (terminal)", () => {
+    it("answer 'no' → view-109 → view-36 (terminal)", () => {
         const path = walkTree(nodes, "view-109", [{ udder_clean: "no" }]);
         expect(path).toEqual([
             "view-109",
-            "view-109-animal-count",
+            "view-36",
         ]);
     });
 
@@ -132,8 +132,8 @@ describe("nodes.json tree traversal", () => {
         expect(resolveNext(node, {})).toBeNull();
     });
 
-    it("view-109-animal-count is a terminal node", () => {
-        const node = nodes["view-109-animal-count"];
+    it("view-36 is a terminal node", () => {
+        const node = nodes["view-36"];
         expect(resolveNext(node, {})).toBeNull();
     });
 });

@@ -315,7 +315,6 @@ function loadNodeIntoForm(node) {
     document.getElementById('field-icon').value = node.icon || '';
 
     renderFields(node.fields || []);
-    renderNext(node.next);
     markClean();
 }
 
@@ -328,7 +327,6 @@ function clearForm() {
     document.getElementById('field-showDate').checked = false;
     document.getElementById('field-icon').value = '';
     renderFields([]);
-    renderNext(null);
     markClean();
 }
 
@@ -414,10 +412,7 @@ function buildFieldEl(field, index) {
     } else if (field.type === 'alert') {
         extras.appendChild(buildAlertExtras(field));
     } else if (field.type === 'month_picker') {
-        const lbl = document.createElement('span');
-        lbl.className = 'hint';
-        lbl.textContent = 'No extra options for month_picker';
-        extras.appendChild(lbl);
+        extras.appendChild(buildMonthPickerExtras(field));
     } else if (field.type === 'bottom_navigation') {
         extras.appendChild(buildBottomNavigationExtras(field));
     }
@@ -485,7 +480,7 @@ function buildSelectExtras(field) {
     optList.className = 'option-list';
 
     (field.options || []).forEach(opt => {
-        optList.appendChild(buildOptionRow(opt.value, opt.label));
+        optList.appendChild(buildOptionRow(opt.value, opt.label, opt.target));
     });
     wrap.appendChild(optList);
 
@@ -493,7 +488,7 @@ function buildSelectExtras(field) {
     addBtn.textContent = '＋ Add option';
     addBtn.className = 'btn-sm';
     addBtn.addEventListener('click', () => {
-        optList.appendChild(buildOptionRow('', null));
+        optList.appendChild(buildOptionRow('', null, ''));
         markDirty();
     });
     wrap.appendChild(addBtn);
@@ -501,7 +496,7 @@ function buildSelectExtras(field) {
     return wrap;
 }
 
-function buildOptionRow(value, label) {
+function buildOptionRow(value, label, target) {
     const row = document.createElement('div');
     row.className = 'option-row';
 
@@ -511,6 +506,9 @@ function buildOptionRow(value, label) {
     const lWrap = bilingualInputGroup(label, 'label');
     lWrap.dataset.role = 'opt-label';
 
+    const tInput = textInput(target, 'target node (navigation)');
+    tInput.dataset.role = 'opt-target';
+
     const del = document.createElement('button');
     del.textContent = '✕';
     del.className = 'btn-icon btn-danger';
@@ -518,6 +516,7 @@ function buildOptionRow(value, label) {
 
     row.appendChild(vInput);
     row.appendChild(lWrap);
+    row.appendChild(tInput);
     row.appendChild(del);
     return row;
 }
@@ -544,6 +543,10 @@ function buildNumberExtras(field) {
     const stepInput = numberInput(field.step, '1');
     stepInput.dataset.role = 'step';
     wrap.appendChild(makeRow('Step', stepInput));
+
+    const targetInput = textInput(field.target, 'target node (navigation)');
+    targetInput.dataset.role = 'field-target';
+    wrap.appendChild(makeRow('Target node', targetInput));
 
     return wrap;
 }
@@ -596,6 +599,16 @@ function buildAlertExtras(field) {
     const severityInput = textInput(field.severity, 'info | warning | error');
     severityInput.dataset.role = 'severity';
     wrap.appendChild(makeRow('Severity', severityInput));
+
+    return wrap;
+}
+
+function buildMonthPickerExtras(field) {
+    const wrap = document.createElement('div');
+
+    const targetInput = textInput(field.target, 'target node (navigation)');
+    targetInput.dataset.role = 'field-target';
+    wrap.appendChild(makeRow('Target node', targetInput));
 
     return wrap;
 }
@@ -664,7 +677,12 @@ function getFieldsFromDOM() {
                 const v = row.querySelector('[data-role="opt-value"]').value.trim();
                 const lWrap = row.querySelector('[data-role="opt-label"]');
                 const l = getBilingual(lWrap);
-                if (v) field.options.push({ value: v, label: l || { en: '', es: '' } });
+                const t = row.querySelector('[data-role="opt-target"]')?.value.trim();
+                if (v) {
+                    const opt = { value: v, label: l || { en: '', es: '' } };
+                    if (t) opt.target = t;
+                    field.options.push(opt);
+                }
             });
         } else if (type === 'number_input') {
             const labelEl = extras.querySelector('[data-role="label"]');
@@ -679,6 +697,8 @@ function getFieldsFromDOM() {
             if (!isNaN(max)) field.max = max;
             const step = parseFloat(get('step'));
             if (!isNaN(step)) field.step = step;
+            const targetVal = get('field-target');
+            if (targetVal) field.target = targetVal;
         } else if (type === 'image_list') {
             const imgRows = extras.querySelectorAll('[data-role="img-src"]');
             field.images = [];
@@ -692,6 +712,10 @@ function getFieldsFromDOM() {
             if (msg) field.message = msg;
             const get = (role) => extras.querySelector(`[data-role="${role}"]`)?.value.trim();
             if (get('severity')) field.severity = get('severity');
+        } else if (type === 'month_picker') {
+            const get = (role) => extras.querySelector(`[data-role="${role}"]`)?.value.trim();
+            const targetVal = get('field-target');
+            if (targetVal) field.target = targetVal;
         } else if (type === 'bottom_navigation') {
             const rows = extras.querySelectorAll('.option-row');
             field.buttons = [];
@@ -821,7 +845,6 @@ function saveNode() {
                 es: document.getElementById('field-title-es').value.trim(),
             },
             fields: getFieldsFromDOM(),
-            next: getNextFromDOM(),
         };
 
         const subtitleEn = document.getElementById('field-subtitle-en').value.trim();
@@ -1031,13 +1054,6 @@ function bindStaticEvents() {
 
     document.getElementById('editor-form').addEventListener('input', markDirty);
     document.getElementById('editor-form').addEventListener('change', markDirty);
-
-    document.getElementById('next-type').addEventListener('change', updateNextVisibility);
-
-    document.getElementById('btn-add-map-row').addEventListener('click', () => {
-        document.getElementById('next-map-rows').appendChild(buildMapRow('', ''));
-        markDirty();
-    });
 
     document.getElementById('btn-graph').addEventListener('click', openGraphModal);
     document.getElementById('btn-graph-close').addEventListener('click', () => {

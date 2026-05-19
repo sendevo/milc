@@ -7,7 +7,7 @@ import { mockFirebaseAuth, loginTestUser } from "./helpers/firebase.js";
  * The survey nodes are loaded from the bundled nodes.json fallback (no cache
  * in a fresh browser context), so these tests run without Firebase connectivity.
  *
- * Node tested: view-109 → select → view-109-animal-count
+ * Node tested: view-109 → select → view-36
  */
 
 test.describe("Survey — before milking flow", () => {
@@ -33,12 +33,12 @@ test.describe("Survey — before milking flow", () => {
 
     test("selecting Yes advances to the Animal Count step", async ({ page }) => {
         await page.getByText(/^yes$/i).click();
-        await expect(page).toHaveURL(/\/survey\/view-109-animal-count/);
+        await expect(page).toHaveURL(/\/survey\/view-36/);
     });
 
     test("selecting No advances to the Animal Count step", async ({ page }) => {
         await page.getByText(/^no$/i).click();
-        await expect(page).toHaveURL(/\/survey\/view-109-animal-count/);
+        await expect(page).toHaveURL(/\/survey\/view-36/);
     });
 
     test("selecting Don't know advances to the parlor tip step", async ({
@@ -58,7 +58,7 @@ test.describe("Survey — Animal Count step", () => {
     test.beforeEach(async ({ page }) => {
         await mockFirebaseAuth(page);
         await loginTestUser(page);
-        await page.goto("/survey/view-109-animal-count");
+        await page.goto("/survey/view-36");
     });
 
     test("renders the Animal Count step title", async ({ page }) => {
