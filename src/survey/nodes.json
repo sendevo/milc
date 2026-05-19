@@ -1,5 +1,9 @@
 {
     "view-100": {
+        "milking-method": "manual",
+        "scenario": "PREORD-07",
+        "manual-page": "16",
+        "guide-id": "Inspección de ubres y despunte",
         "fields": [
             {
                 "id": "view-100-select",
@@ -44,6 +48,10 @@
         }
     },
     "view-105": {
+        "milking-method": "todos",
+        "scenario": "ORD-02-03",
+        "manual-page": "22, 23",
+        "guide-id": "Las personas involucradas en el tambo deben conocer y aplicar las indicaciones de salud",
         "fields": [
             {
                 "id": "view-105-alert",
@@ -60,6 +68,10 @@
         }
     },
     "view-106": {
+        "milking-method": "todos",
+        "scenario": "ORD-02-03",
+        "manual-page": "22, 23",
+        "guide-id": "Las personas involucradas en el tambo deben conocer y aplicar las indicaciones de salud",
         "fields": [
             {
                 "id": "",
@@ -82,6 +94,10 @@
         }
     },
     "view-107": {
+        "milking-method": "todos",
+        "scenario": "-",
+        "manual-page": "-",
+        "guide-id": "Seteo de app",
         "fields": [
             {
                 "id": "view-107-select",
@@ -116,6 +132,10 @@
         }
     },
     "view-109": {
+        "milking-method": "mecanico",
+        "scenario": "PREORD-02",
+        "manual-page": "11",
+        "guide-id": "Requisitos de limpieza de la sala de ordeño mecánico",
         "fields": [
             {
                 "id": "udder_clean",
@@ -160,6 +180,10 @@
         }
     },
     "view-110": {
+        "milking-method": "todos",
+        "scenario": "PREORD-07",
+        "manual-page": "16",
+        "guide-id": "Inspección de ubres y despunte",
         "fields": [
             {
                 "id": "view-110-select",
@@ -204,6 +228,10 @@
         }
     },
     "view-113": {
+        "milking-method": "todos",
+        "scenario": "ORD-02-03",
+        "manual-page": "22, 23",
+        "guide-id": "Las personas involucradas en el tambo deben conocer y aplicar las indicaciones de salud",
         "fields": [
             {
                 "id": "",
@@ -225,6 +253,10 @@
         }
     },
     "view-123": {
+        "milking-method": "manual",
+        "scenario": "PREORD-03",
+        "manual-page": "12",
+        "guide-id": "Requsitos de limpieza de corral de ordeño",
         "fields": [
             {
                 "buttons": [
@@ -258,6 +290,10 @@
         }
     },
     "view-217": {
+        "milking-method": "todos",
+        "scenario": "-",
+        "manual-page": "-",
+        "guide-id": "Seteo de app",
         "fields": [
             {
                 "id": "view-217-select",
@@ -292,6 +328,10 @@
         }
     },
     "view-218": {
+        "milking-method": "todos",
+        "scenario": "-",
+        "manual-page": "-",
+        "guide-id": "Seteo de app",
         "fields": [
             {
                 "id": "view-220-month-picker",
@@ -309,6 +349,10 @@
         }
     },
     "view-220": {
+        "milking-method": "todos",
+        "scenario": "-",
+        "manual-page": "-",
+        "guide-id": "Seteo de app",
         "fields": [
             {
                 "default": 0,
@@ -330,6 +374,10 @@
         }
     },
     "view-24": {
+        "milking-method": "todos",
+        "scenario": "-",
+        "manual-page": "-",
+        "guide-id": "Seteo de app",
         "fields": [
             {
                 "id": "milk-select",
@@ -364,6 +412,10 @@
         }
     },
     "view-28": {
+        "milking-method": "todos",
+        "scenario": "-",
+        "manual-page": "-",
+        "guide-id": "Seteo de app",
         "subtitle": {
             "en": "Done! You can start using the app!",
             "es": "¡Listo! Ya podés comenzar a usar la app"
@@ -374,6 +426,10 @@
         }
     },
     "view-33": {
+        "milking-method": "mecanico",
+        "scenario": "PREORD-02",
+        "manual-page": "11",
+        "guide-id": "Requisitos de limpieza de la sala de ordeño mecánico",
         "fields": [
             {
                 "id": "view-33-alert",
@@ -390,6 +446,10 @@
         }
     },
     "view-35": {
+        "milking-method": "mecanico",
+        "scenario": "PREORD-02",
+        "manual-page": "11",
+        "guide-id": "Requisitos de limpieza de la sala de ordeño mecánico",
         "fields": [
             {
                 "id": "my_images",
@@ -415,6 +475,10 @@
         }
     },
     "view-36": {
+        "milking-method": "todos",
+        "scenario": "PREORD-07",
+        "manual-page": "16",
+        "guide-id": "Inspección de ubres y despunte",
         "fields": [
             {
                 "default": 1,
@@ -439,6 +503,10 @@
         }
     },
     "view-42": {
+        "milking-method": "todos",
+        "scenario": "PREORD-07",
+        "manual-page": "16",
+        "guide-id": "Inspección de ubres y despunte",
         "fields": [
             {
                 "default": 0,
@@ -458,6 +526,10 @@
         }
     },
     "view-45": {
+        "milking-method": "todos",
+        "scenario": "PREORD-07",
+        "manual-page": "16",
+        "guide-id": "Inspección de ubres y despunte",
         "fields": [
             {
                 "id": "view-45-image-list",
@@ -485,6 +557,10 @@
         }
     },
     "view-46": {
+        "milking-method": "todos",
+        "scenario": "ORD-02-03",
+        "manual-page": "22, 23",
+        "guide-id": "Las personas involucradas en el tambo deben conocer y aplicar las indicaciones de salud",
         "fields": [
             {
                 "id": "view-46-select",
@@ -529,6 +605,10 @@
         }
     },
     "view-47": {
+        "milking-method": "todos",
+        "scenario": "ORD-02-03",
+        "manual-page": "22, 23",
+        "guide-id": "Las personas involucradas en el tambo deben conocer y aplicar las indicaciones de salud",
         "fields": [
             {
                 "id": "view-47-alert",
@@ -545,6 +625,10 @@
         }
     },
     "view-48": {
+        "milking-method": "todos",
+        "scenario": "ORD-02-03",
+        "manual-page": "22, 23",
+        "guide-id": "Las personas involucradas en el tambo deben conocer y aplicar las indicaciones de salud",
         "fields": [
             {
                 "id": "",
@@ -570,6 +654,10 @@
         }
     },
     "view-49": {
+        "milking-method": "todos",
+        "scenario": "ORD-02-03",
+        "manual-page": "22, 23",
+        "guide-id": "Las personas involucradas en el tambo deben conocer y aplicar las indicaciones de salud",
         "fields": [
             {
                 "id": "view-49-select",
@@ -614,6 +702,10 @@
         }
     },
     "view-50": {
+        "milking-method": "todos",
+        "scenario": "ORD-02-03",
+        "manual-page": "22, 23",
+        "guide-id": "Las personas involucradas en el tambo deben conocer y aplicar las indicaciones de salud",
         "fields": [
             {
                 "id": "view-50-select",
@@ -658,6 +750,10 @@
         }
     },
     "view-53": {
+        "milking-method": "todos",
+        "scenario": "ORD-02-03",
+        "manual-page": "22, 23",
+        "guide-id": "Las personas involucradas en el tambo deben conocer y aplicar las indicaciones de salud",
         "fields": [
             {
                 "id": "view-53-alert",

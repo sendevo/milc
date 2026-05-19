@@ -15,3 +15,6 @@ playwright-report/
 # Ignore Firebase and agents directories
 .firebase/
 .agents/
+
+# Private documentation
+docs/

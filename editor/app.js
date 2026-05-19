@@ -390,6 +390,10 @@ function loadNodeIntoForm(node) {
     form.style.display = 'block';
 
     document.getElementById('field-id').value = selectedNodeId || '';
+    document.getElementById('field-milking-method').value = node['milking-method'] || '';
+    document.getElementById('field-scenario').value = node.scenario || '';
+    document.getElementById('field-manual-page').value = node['manual-page'] || '';
+    document.getElementById('field-guide-id').value = node['guide-id'] || '';
     document.getElementById('field-title-en').value = node.title?.en || '';
     document.getElementById('field-title-es').value = node.title?.es || '';
     document.getElementById('field-subtitle-en').value = node.subtitle?.en || '';
@@ -404,6 +408,10 @@ function loadNodeIntoForm(node) {
 
 function clearForm() {
     document.getElementById('field-id').value = '';
+    document.getElementById('field-milking-method').value = '';
+    document.getElementById('field-scenario').value = '';
+    document.getElementById('field-manual-page').value = '';
+    document.getElementById('field-guide-id').value = '';
     document.getElementById('field-title-en').value = '';
     document.getElementById('field-title-es').value = '';
     document.getElementById('field-subtitle-en').value = '';
@@ -940,7 +948,16 @@ function saveNode() {
     if (!id) { alert('Node ID is required'); return; }
 
     try {
+        const milkingMethod = document.getElementById('field-milking-method').value.trim();
+        const scenario = document.getElementById('field-scenario').value.trim();
+        const manualPage = document.getElementById('field-manual-page').value.trim();
+        const guideId = document.getElementById('field-guide-id').value.trim();
+
         const node = {
+            'milking-method': milkingMethod,
+            scenario,
+            'manual-page': manualPage,
+            'guide-id': guideId,
             title: {
                 en: document.getElementById('field-title-en').value.trim(),
                 es: document.getElementById('field-title-es').value.trim(),
