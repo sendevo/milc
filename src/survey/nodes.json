@@ -9,24 +9,24 @@
                             "en": "Yes",
                             "es": "Si"
                         },
-                        "value": "yes",
-                        "target": "view-110"
+                        "target": "view-110",
+                        "value": "yes"
                     },
                     {
                         "label": {
                             "en": "No",
                             "es": "No"
                         },
-                        "value": "No",
-                        "target": "view-110"
+                        "target": "view-110",
+                        "value": "No"
                     },
                     {
                         "label": {
                             "en": "Don't know",
                             "es": "No se"
                         },
-                        "value": "dont-know",
-                        "target": "view-38"
+                        "target": "view-38",
+                        "value": "dont-know"
                     }
                 ],
                 "type": "select"
@@ -43,6 +43,44 @@
             "es": "Antes de ordeñar"
         }
     },
+    "view-105": {
+        "fields": [
+            {
+                "id": "view-105-alert",
+                "message": {
+                    "en": "no-translation",
+                    "es": "Atención<br>Revisá tu higiene"
+                },
+                "type": "alert"
+            }
+        ],
+        "title": {
+            "en": "When milking",
+            "es": "Al ordeñar"
+        }
+    },
+    "view-106": {
+        "fields": [
+            {
+                "id": "",
+                "images": [
+                    {
+                        "src": "hands2.png"
+                    }
+                ],
+                "type": "image_list"
+            }
+        ],
+        "showDate": true,
+        "subtitle": {
+            "en": "no-translation",
+            "es": "Tu higiene personal"
+        },
+        "title": {
+            "en": "When milking",
+            "es": "Al ordeñar"
+        }
+    },
     "view-107": {
         "fields": [
             {
@@ -53,16 +91,16 @@
                             "en": "Yes",
                             "es": "Si"
                         },
-                        "value": "yes",
-                        "target": "view-28"
+                        "target": "view-28",
+                        "value": "yes"
                     },
                     {
                         "label": {
                             "en": "No",
                             "es": "No"
                         },
-                        "value": "no",
-                        "target": "view-28"
+                        "target": "view-28",
+                        "value": "no"
                     }
                 ],
                 "type": "select"
@@ -87,24 +125,24 @@
                             "en": "Yes",
                             "es": "Sí"
                         },
-                        "value": "yes",
-                        "target": "view-36"
+                        "target": "view-36",
+                        "value": "yes"
                     },
                     {
                         "label": {
                             "en": "No",
                             "es": "No"
                         },
-                        "value": "no",
-                        "target": "view-36"
+                        "target": "view-36",
+                        "value": "no"
                     },
                     {
                         "label": {
                             "en": "Don't know",
                             "es": "No sé"
                         },
-                        "value": "dont_know",
-                        "target": "view-35"
+                        "target": "view-35",
+                        "value": "dont_know"
                     }
                 ],
                 "type": "select"
@@ -131,24 +169,24 @@
                             "en": "Yes",
                             "es": "Si"
                         },
-                        "value": "yes",
-                        "target": "view-42"
+                        "target": "view-42",
+                        "value": "yes"
                     },
                     {
                         "label": {
                             "en": "No",
                             "es": "No"
                         },
-                        "value": "no",
-                        "target": "view-111"
+                        "target": "view-111",
+                        "value": "no"
                     },
                     {
                         "label": {
                             "en": "Don't know",
                             "es": "No se"
                         },
-                        "value": "dont-know",
-                        "target": "view-38"
+                        "target": "view-38",
+                        "value": "dont-know"
                     }
                 ],
                 "type": "select"
@@ -159,6 +197,27 @@
         "subtitle": {
             "en": "Have you noticed any symptoms of mastitis?",
             "es": "¿Encontraste síntomas de mastitis?"
+        },
+        "title": {
+            "en": "Before milking",
+            "es": "Antes de ordeñar"
+        }
+    },
+    "view-113": {
+        "fields": [
+            {
+                "id": "",
+                "message": {
+                    "en": "Attention<br><br>Check your health status while milking",
+                    "es": "Atención<br><br>Revisá tus condiciones de salud al ordeñar"
+                },
+                "type": "alert"
+            }
+        ],
+        "icon": "warning.png",
+        "subtitle": {
+            "en": "Attention<br><br>Check your health status while milking",
+            "es": "Atención<br><br>Revisá tus condiciones de salud al ordeñar"
         },
         "title": {
             "en": "Before milking",
@@ -184,7 +243,7 @@
                         "target": "view-120"
                     }
                 ],
-                "id": "view-123-bottom-nav",
+                "id": "",
                 "type": "bottom_navigation"
             }
         ],
@@ -208,16 +267,16 @@
                             "en": "Yes",
                             "es": "Sí"
                         },
-                        "value": "view-217-opt-yes",
-                        "target": "view-220"
+                        "target": "view-220",
+                        "value": "view-217-opt-yes"
                     },
                     {
                         "label": {
                             "en": "No",
                             "es": "No"
                         },
-                        "value": "view-217-opt-no",
-                        "target": "view-218"
+                        "target": "view-218",
+                        "value": "view-217-opt-no"
                     }
                 ],
                 "type": "select"
@@ -236,8 +295,8 @@
         "fields": [
             {
                 "id": "view-220-month-picker",
-                "type": "month_picker",
-                "target": "view-220"
+                "target": "view-220",
+                "type": "month_picker"
             }
         ],
         "subtitle": {
@@ -256,8 +315,8 @@
                 "id": "view-220-number",
                 "min": 0,
                 "step": 1,
-                "type": "number_input",
-                "target": "view-24"
+                "target": "view-24",
+                "type": "number_input"
             }
         ],
         "showDate": true,
@@ -280,16 +339,16 @@
                             "en": "Manual",
                             "es": "Manual"
                         },
-                        "value": "manual",
-                        "target": "user-profile"
+                        "target": "user-profile",
+                        "value": "manual"
                     },
                     {
                         "label": {
                             "en": "Mechanical",
                             "es": "Mecánico"
                         },
-                        "value": "mec",
-                        "target": "view-107"
+                        "target": "view-107",
+                        "value": "mec"
                     }
                 ],
                 "type": "select"
@@ -315,11 +374,16 @@
         }
     },
     "view-33": {
-        "icon": "warning.png",
-        "subtitle": {
-            "en": "Warning<br>Weekly alert:<brz> clean the parlor",
-            "es": "Atención<br>Alerta semanal:<br>limpiá la sala"
-        },
+        "fields": [
+            {
+                "id": "view-33-alert",
+                "message": {
+                    "en": "Warning<br>Weekly alert:<br> clean the parlor",
+                    "es": "Atención<br>Alerta semanal:<br>limpiá la sala"
+                },
+                "type": "alert"
+            }
+        ],
         "title": {
             "en": "Before milking",
             "es": "Antes de ordeñar"
@@ -361,8 +425,8 @@
                 },
                 "min": 1,
                 "step": 1,
-                "type": "number_input",
-                "target": "view-100"
+                "target": "view-100",
+                "type": "number_input"
             }
         ],
         "subtitle": {
@@ -379,8 +443,8 @@
             {
                 "default": 0,
                 "id": "view-42-input",
-                "type": "number_input",
-                "target": "view-37"
+                "target": "view-37",
+                "type": "number_input"
             }
         ],
         "showDate": true,
@@ -391,6 +455,222 @@
         "title": {
             "en": "Before milking",
             "es": "Antes de ordeñar"
+        }
+    },
+    "view-45": {
+        "fields": [
+            {
+                "id": "view-45-image-list",
+                "images": [
+                    {
+                        "src": "hands.png"
+                    },
+                    {
+                        "src": "gauntlets.png"
+                    },
+                    {
+                        "src": "nose.png"
+                    }
+                ],
+                "type": "image_list"
+            }
+        ],
+        "subtitle": {
+            "en": "Your health in the farm",
+            "es": "Tu salud en el tambo"
+        },
+        "title": {
+            "en": "When milking",
+            "es": "Al ordeñar"
+        }
+    },
+    "view-46": {
+        "fields": [
+            {
+                "id": "view-46-select",
+                "options": [
+                    {
+                        "label": {
+                            "en": "Yes",
+                            "es": "Si"
+                        },
+                        "target": "view-49",
+                        "value": "yes"
+                    },
+                    {
+                        "label": {
+                            "en": "No",
+                            "es": "No"
+                        },
+                        "target": "view-47",
+                        "value": "no"
+                    },
+                    {
+                        "label": {
+                            "en": "Don't know",
+                            "es": "No se"
+                        },
+                        "target": "view-45",
+                        "value": "dont-know"
+                    }
+                ],
+                "type": "select"
+            }
+        ],
+        "icon": "heart.png",
+        "showDate": true,
+        "subtitle": {
+            "en": "Were you able to milk the cow?",
+            "es": "¿Estabas en condiciones de ordeñar?"
+        },
+        "title": {
+            "en": "When milking",
+            "es": "Al ordeñar"
+        }
+    },
+    "view-47": {
+        "fields": [
+            {
+                "id": "view-47-alert",
+                "message": {
+                    "en": "Attention<br>Do not milk with sympthoms",
+                    "es": "Atención<br>No ordeñes con síntomas"
+                },
+                "type": "alert"
+            }
+        ],
+        "title": {
+            "en": "When milking",
+            "es": "Al ordeñar"
+        }
+    },
+    "view-48": {
+        "fields": [
+            {
+                "id": "",
+                "images": [
+                    {
+                        "src": "clothing.png"
+                    },
+                    {
+                        "src": "boots.png"
+                    }
+                ],
+                "type": "image_list"
+            }
+        ],
+        "showDate": true,
+        "subtitle": {
+            "en": "no-translation",
+            "es": "Tu indumentaria"
+        },
+        "title": {
+            "en": "When milking",
+            "es": "Al ordeñar"
+        }
+    },
+    "view-49": {
+        "fields": [
+            {
+                "id": "view-49-select",
+                "options": [
+                    {
+                        "label": {
+                            "en": "Yes",
+                            "es": "Si"
+                        },
+                        "target": "view-50",
+                        "value": "yes"
+                    },
+                    {
+                        "label": {
+                            "en": "No",
+                            "es": "No"
+                        },
+                        "target": "view-50",
+                        "value": "no"
+                    },
+                    {
+                        "label": {
+                            "en": "Don't know",
+                            "es": "No se"
+                        },
+                        "target": "view-48",
+                        "value": "dont-know"
+                    }
+                ],
+                "type": "select"
+            }
+        ],
+        "icon": "jacket.png",
+        "showDate": true,
+        "subtitle": {
+            "en": "no-translation",
+            "es": "¿Contás con indumentaria adecuada?"
+        },
+        "title": {
+            "en": "When milking",
+            "es": "Al ordeñar"
+        }
+    },
+    "view-50": {
+        "fields": [
+            {
+                "id": "view-50-select",
+                "options": [
+                    {
+                        "label": {
+                            "en": "Yes",
+                            "es": "Si"
+                        },
+                        "target": "view-55",
+                        "value": "yes"
+                    },
+                    {
+                        "label": {
+                            "en": "No",
+                            "es": "No"
+                        },
+                        "target": "view-55",
+                        "value": "no"
+                    },
+                    {
+                        "label": {
+                            "en": "Don't know",
+                            "es": "No sé"
+                        },
+                        "target": "view-106",
+                        "value": "dont-know"
+                    }
+                ],
+                "type": "select"
+            }
+        ],
+        "icon": "hands.png",
+        "showDate": true,
+        "subtitle": {
+            "en": "no-translation",
+            "es": "¿Seguiste las indicaciones de higiene personal?"
+        },
+        "title": {
+            "en": "When milking",
+            "es": "Al ordeñar"
+        }
+    },
+    "view-53": {
+        "fields": [
+            {
+                "id": "view-53-alert",
+                "message": {
+                    "en": "no-translation",
+                    "es": "Atención<br>Revisá tu indumentaria"
+                },
+                "type": "alert"
+            }
+        ],
+        "title": {
+            "en": "When milking",
+            "es": "Al ordeñar"
         }
     }
 }

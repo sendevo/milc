@@ -2,6 +2,7 @@ import { Box, IconButton, Typography } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import DateTime from "../components/DateTime";
 import { viewContainerStyles as styles } from "../theme/ViewContainer.styles";
+import { sanitizeLimitedHtml } from "../utils/sanitizeLimitedHtml";
 
 
 const ViewContainer = ({ title, subtitle, showDate, icon, onBack, children }) => {
@@ -28,7 +29,7 @@ const ViewContainer = ({ title, subtitle, showDate, icon, onBack, children }) =>
                 <Box sx={styles.subtitleContainer}>
                     <Typography
                         sx={styles.subtitleText}>
-                        {subtitle}
+                        <span dangerouslySetInnerHTML={{ __html: sanitizeLimitedHtml(subtitle) }} />
                     </Typography>
                 </Box>
             }
