@@ -13,7 +13,7 @@ export const calendarStyles = {
         backgroundColor: "background.paper",
         borderRadius: 3,
         boxShadow: "0 8px 18px rgba(0, 0, 0, 0.08)",
-        px: 2,
+        px: { xs: 1, sm: 2 },
         py: 2,
     },
     monthHeader: {
@@ -43,19 +43,21 @@ export const calendarStyles = {
     daysGrid: {
         display: "grid",
         gridTemplateColumns: "repeat(7, 1fr)",
-        gap: 0.5,
+        gap: { xs: 0.25, sm: 0.5 },
     },
     emptyCell: {
         width: "100%",
         aspectRatio: "1 / 1",
     },
     dayCell: {
-        minWidth: 0,
+        minWidth: "unset",
         width: "100%",
         aspectRatio: "1 / 1",
+        p: 0,
         borderRadius: 1,
         color: "text.primary",
         fontWeight: 600,
+        fontSize: { xs: "0.8rem", sm: "0.95rem" },
         backgroundColor: "transparent",
         "&:hover": {
             backgroundColor: "rgba(26, 128, 144, 0.12)",

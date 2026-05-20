@@ -8,6 +8,7 @@ import MainMenu from "./pages/MainMenu";
 import SurveyPage from "./pages/SurveyPage";
 import Calendar from "./pages/Calendar";
 import MilkBarChart from "./pages/MilkBarChart";
+import ResultScales from "./pages/ResultScales";
 import Config from "./pages/Config";
 import Info from "./pages/Info";
 import Profile from "./pages/Profile";
@@ -63,6 +64,13 @@ const App = () => {
                     element={
                         <ProtectedRoute>
                         <MilkBarChart />
+                        </ProtectedRoute>
+                    }/>
+                <Route
+                    path="/resultscales"
+                    element={
+                        <ProtectedRoute>
+                        <ResultScales />
                         </ProtectedRoute>
                     }/>
                 <Route
