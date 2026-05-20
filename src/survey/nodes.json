@@ -465,106 +465,6 @@
             "es": "Mi Perfil"
         }
     },
-    "view-281": {
-        "fields": [
-            {
-                "id": "view-281-text-block",
-                "message": {
-                    "en": "Danger index low",
-                    "es": "Índice de peligro bajo"
-                },
-                "type": "text_block"
-            }
-        ],
-        "guide-id": "Registros",
-        "manual-page": "0",
-        "milking-method": "",
-        "scenario": "",
-        "showDate": true,
-        "subtitle": {
-            "en": "Excellent!",
-            "es": "¡Excelente!"
-        },
-        "title": {
-            "en": "My logs",
-            "es": "Mis registros"
-        }
-    },
-    "view-282": {
-        "fields": [
-            {
-                "id": "view-282-text-block",
-                "message": {
-                    "en": "Danger index medium",
-                    "es": "Índice de peligro medio<br>Revisá el corral"
-                },
-                "type": "text_block"
-            }
-        ],
-        "guide-id": "Registros",
-        "manual-page": "0",
-        "milking-method": "",
-        "scenario": "",
-        "showDate": true,
-        "subtitle": {
-            "en": "Very good!",
-            "es": "¡Muy bien!"
-        },
-        "title": {
-            "en": "My logs",
-            "es": "Mis registros"
-        }
-    },
-    "view-285": {
-        "fields": [
-            {
-                "id": "view-285-text-block",
-                "message": {
-                    "en": "",
-                    "es": "<b>Índice de peligro alto</b><br>Exigí certificados sanitarios<br>Descartá animales con mastitis"
-                },
-                "type": "text_block"
-            }
-        ],
-        "guide-id": "Registros",
-        "manual-page": "0",
-        "milking-method": "",
-        "scenario": "",
-        "showDate": true,
-        "subtitle": {
-            "en": "Regular",
-            "es": "Regular"
-        },
-        "title": {
-            "en": "My logs",
-            "es": "Mis registros"
-        }
-    },
-    "view-286": {
-        "fields": [
-            {
-                "id": "view-286-text-block",
-                "message": {
-                    "en": "",
-                    "es": "<b>Índice de peligro muy alto</b><br>Filtrá la leche procesada<br>Rotulá los envases<br>Limpiá las máquinas"
-                },
-                "type": "text_block"
-            }
-        ],
-        "guide-id": "Registros",
-        "manual-page": "0",
-        "milking-method": "",
-        "scenario": "",
-        "showDate": true,
-        "subtitle": {
-            "en": "Should be improved",
-            "es": "Hay que mejorar"
-        },
-        "title": {
-            "en": "My logs",
-            "es": "Mis registros"
-        }
-    },
     "view-33": {
         "fields": [
             {
@@ -1227,6 +1127,106 @@
         "title": {
             "en": "Before milking",
             "es": "Antes de ordeñar"
+        }
+    },
+    "view-result-bad": {
+        "fields": [
+            {
+                "id": "view-286-text-block",
+                "message": {
+                    "en": "",
+                    "es": "<b>Índice de peligro muy alto</b><br>Filtrá la leche procesada<br>Rotulá los envases<br>Limpiá las máquinas"
+                },
+                "type": "text_block"
+            }
+        ],
+        "guide-id": "Registros",
+        "manual-page": "0",
+        "milking-method": "",
+        "scenario": "",
+        "showDate": true,
+        "subtitle": {
+            "en": "Should be improved",
+            "es": "Hay que mejorar"
+        },
+        "title": {
+            "en": "My logs",
+            "es": "Mis registros"
+        }
+    },
+    "view-result-excellent": {
+        "fields": [
+            {
+                "id": "view-281-text-block",
+                "message": {
+                    "en": "Danger index low",
+                    "es": "Índice de peligro bajo"
+                },
+                "type": "text_block"
+            }
+        ],
+        "guide-id": "Registros",
+        "manual-page": "0",
+        "milking-method": "",
+        "scenario": "",
+        "showDate": true,
+        "subtitle": {
+            "en": "Excellent!",
+            "es": "¡Excelente!"
+        },
+        "title": {
+            "en": "My logs",
+            "es": "Mis registros"
+        }
+    },
+    "view-result-good": {
+        "fields": [
+            {
+                "id": "view-282-text-block",
+                "message": {
+                    "en": "Danger index medium",
+                    "es": "Índice de peligro medio<br>Revisá el corral"
+                },
+                "type": "text_block"
+            }
+        ],
+        "guide-id": "Registros",
+        "manual-page": "0",
+        "milking-method": "",
+        "scenario": "",
+        "showDate": true,
+        "subtitle": {
+            "en": "Very good!",
+            "es": "¡Muy bien!"
+        },
+        "title": {
+            "en": "My logs",
+            "es": "Mis registros"
+        }
+    },
+    "view-result-regular": {
+        "fields": [
+            {
+                "id": "view-285-text-block",
+                "message": {
+                    "en": "",
+                    "es": "<b>Índice de peligro alto</b><br>Exigí certificados sanitarios<br>Descartá animales con mastitis"
+                },
+                "type": "text_block"
+            }
+        ],
+        "guide-id": "Registros",
+        "manual-page": "0",
+        "milking-method": "",
+        "scenario": "",
+        "showDate": true,
+        "subtitle": {
+            "en": "Regular",
+            "es": "Regular"
+        },
+        "title": {
+            "en": "My logs",
+            "es": "Mis registros"
         }
     }
 }

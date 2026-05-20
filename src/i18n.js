@@ -75,6 +75,10 @@ const resources = {
                 back: "Back",
                 next: "Next",
             },
+            resultScales: {
+                title: "My logs",
+                back: "Back",
+            },
             common: {
                 loading: "Loading...",
             },
@@ -224,6 +228,10 @@ const resources = {
                 invalidRange: "Rango de fechas invalido.",
                 back: "Atras",
                 next: "Siguiente",
+            },
+            resultScales: {
+                title: "Mis registros",
+                back: "Atras",
             },
             common: {
                 loading: "Cargando...",
