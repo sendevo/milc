@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Box, IconButton, Typography } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import DateTime from "../components/DateTime";
@@ -6,6 +7,12 @@ import { sanitizeLimitedHtml } from "../utils/sanitizeLimitedHtml";
 
 
 const ViewContainer = ({ title, subtitle, showDate, icon, onBack, children }) => {
+    useEffect(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+        const appContainer = document.querySelector(".app-container");
+        if (appContainer) appContainer.scrollTop = 0;
+    }, []);
+
     return (
         <Box
             sx={styles.container}>

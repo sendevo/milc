@@ -14,7 +14,9 @@ export const viewContainerStyles = {
         borderBottomRightRadius: 32,
         py: 4,
         px: 3,
-        position: "relative",
+        position: "sticky",
+        top: 0,
+        zIndex: 10,
         textAlign: "center",
     },
     title: {
