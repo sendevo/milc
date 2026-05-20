@@ -84,7 +84,7 @@ const MainMenu = () => {
         { 
             icon: sheet, 
             label: t("mainMenu.myRecords"),
-            onClick: () => navigate("/survey/view-283") 
+            onClick: () => navigate("/calendar") 
         },
     ];
 

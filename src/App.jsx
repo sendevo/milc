@@ -6,6 +6,8 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import MainMenu from "./pages/MainMenu";
 import SurveyPage from "./pages/SurveyPage";
+import Calendar from "./pages/Calendar";
+import MilkBarChart from "./pages/MilkBarChart";
 import Config from "./pages/Config";
 import Info from "./pages/Info";
 import Profile from "./pages/Profile";
@@ -47,6 +49,20 @@ const App = () => {
                     element={
                         <ProtectedRoute>
                         <SurveyPage />
+                        </ProtectedRoute>
+                    }/>
+                <Route
+                    path="/calendar"
+                    element={
+                        <ProtectedRoute>
+                        <Calendar />
+                        </ProtectedRoute>
+                    }/>
+                <Route
+                    path="/milkbarchart"
+                    element={
+                        <ProtectedRoute>
+                        <MilkBarChart />
                         </ProtectedRoute>
                     }/>
                 <Route

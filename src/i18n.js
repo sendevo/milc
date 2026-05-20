@@ -52,6 +52,15 @@ const resources = {
                 info: "Information & Help",
                 createAccount: "Create Account",
             },
+            calendar: {
+                title: "My Records",
+                subtitle: "Select the period",
+                fromDate: "From",
+                toDate: "To",
+                invalidRange: "The end date must be equal to or after the start date.",
+                back: "Back",
+                next: "Next",
+            },
             common: {
                 loading: "Loading...",
             },
@@ -178,6 +187,15 @@ const resources = {
                 logout: "Cerrar sesión",
                 info: "Información y ayuda",
                 createAccount: "Crear cuenta",
+            },
+            calendar: {
+                title: "Mis registros",
+                subtitle: "Seleccioná el periodo",
+                fromDate: "Desde",
+                toDate: "Hasta",
+                invalidRange: "La fecha hasta debe ser igual o posterior a la fecha desde.",
+                back: "Atrás",
+                next: "Siguiente",
             },
             common: {
                 loading: "Cargando...",
