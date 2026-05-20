@@ -1006,6 +1006,51 @@ function deleteNode() {
     document.getElementById('editor-placeholder').style.display = 'block';
 }
 
+function suggestDuplicateId(sourceId) {
+    const base = `${sourceId}-copy`;
+    if (!Object.prototype.hasOwnProperty.call(nodes, base)) return base;
+
+    let n = 2;
+    while (Object.prototype.hasOwnProperty.call(nodes, `${base}-${n}`)) {
+        n += 1;
+    }
+    return `${base}-${n}`;
+}
+
+function duplicateNode() {
+    if (!selectedNodeId || !nodes[selectedNodeId]) {
+        alert('Select a node to duplicate first.');
+        return;
+    }
+
+    const sourceId = selectedNodeId;
+    const defaultId = suggestDuplicateId(sourceId);
+    const newId = prompt('New ID for duplicated node:', defaultId);
+    if (newId === null) return;
+
+    const cleanId = newId.trim();
+    if (!cleanId) {
+        alert('Node ID is required.');
+        return;
+    }
+
+    if (Object.prototype.hasOwnProperty.call(nodes, cleanId)) {
+        alert(`Node "${cleanId}" already exists.`);
+        return;
+    }
+
+    const clone = JSON.parse(JSON.stringify(nodes[sourceId]));
+    nodes[cleanId] = clone;
+    selectedNodeId = cleanId;
+
+    bumpTimestamp();
+    saveToStorage();
+    fbSet(cleanId, clone);
+    renderNodeList();
+    loadNodeIntoForm(clone);
+    markClean();
+}
+
 // ─── Firebase modal ──────────────────────────────────────────────────────────
 
 function openFirebaseModal() {
@@ -1184,6 +1229,7 @@ function bindStaticEvents() {
     });
 
     document.getElementById('btn-save-node').addEventListener('click', saveNode);
+    document.getElementById('btn-duplicate-node').addEventListener('click', duplicateNode);
     document.getElementById('btn-delete-node').addEventListener('click', deleteNode);
     document.getElementById('btn-cancel-node').addEventListener('click', () => {
         document.getElementById('editor-form').style.display = 'none';
