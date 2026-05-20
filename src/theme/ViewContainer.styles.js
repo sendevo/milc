@@ -25,6 +25,7 @@ export const viewContainerStyles = {
     subtitleContainer: {
         display: "flex",
         justifyContent: "center",
+        textAlign: "center",
         boxShadow: "2px 2px 10px gray",
         borderColor: "text.secondary",
         background: "linear-gradient(90deg, #1a8090 0%, #2dc5a2 100%)",

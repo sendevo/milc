@@ -61,6 +61,16 @@ const resources = {
                 back: "Back",
                 next: "Next",
             },
+            milkBarChart: {
+                title: "My logs",
+                subtitle: "Processed milk liters",
+                average: "Average:",
+                litersMonth: "liters/month", 
+                litersAnimal: "Liters/animal:",
+                period: "Period",
+                invalidRange: "Invalid date range.",
+                back: "Back",
+            },
             common: {
                 loading: "Loading...",
             },
@@ -196,6 +206,16 @@ const resources = {
                 invalidRange: "La fecha hasta debe ser igual o posterior a la fecha desde.",
                 back: "Atrás",
                 next: "Siguiente",
+            },
+            milkBarChart: {
+                title: "Mis registros",
+                subtitle: "Litros de leche procesados",
+                average: "Promedio:",
+                litersMonth: "litros/mes", 
+                litersAnimal: "Litros/animal:",
+                period: "Periodo",
+                invalidRange: "Rango de fechas invalido.",
+                back: "Atras",
             },
             common: {
                 loading: "Cargando...",

@@ -1,0 +1,73 @@
+export const milkBarChartStyles = {
+    page: {
+        display: "flex",
+        flexDirection: "column",
+        flex: 1,
+        minHeight: "100%",
+        pb: 3,
+        gap: 2,
+    },
+    rangeText: {
+        textAlign: "center",
+        fontWeight: 600,
+        color: "text.primary",
+    },
+    errorText: {
+        textAlign: "center",
+        color: "error.main",
+        fontWeight: 600,
+    },
+    chartCard: {
+        width: "100%",
+        maxWidth: 560,
+        alignSelf: "center",
+        backgroundColor: "background.paper",
+        borderRadius: 3,
+        boxShadow: "0 8px 18px rgba(0, 0, 0, 0.08)",
+        p: 2,
+        overflowX: "auto",
+    },
+    chartArea: {
+        minHeight: 260,
+        minWidth: "max-content",
+        display: "flex",
+        alignItems: "flex-end",
+        gap: 1,
+        borderBottom: "1px solid",
+        borderColor: "divider",
+        pb: 1,
+    },
+    barItem: {
+        width: 28,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: 0.5,
+    },
+    barValue: {
+        fontSize: "0.7rem",
+        color: "text.secondary",
+        fontWeight: 700,
+    },
+    barTrack: {
+        width: "100%",
+        height: 180,
+        display: "flex",
+        alignItems: "flex-end",
+    },
+    barFill: {
+        width: "100%",
+        borderRadius: "6px 6px 2px 2px",
+        background: "linear-gradient(180deg, #2dc5a2 0%, #1a8090 100%)",
+    },
+    barLabel: {
+        fontSize: "0.7rem",
+        color: "text.secondary",
+    },
+    bottomActions: {
+        width: "100%",
+        maxWidth: 560,
+        alignSelf: "center",
+        mt: "auto",
+    },
+};
