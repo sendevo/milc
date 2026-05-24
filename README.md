@@ -263,7 +263,24 @@ The answers collected here drive which nodes are shown throughout the app (`milk
 
 ```
 src/
-[TODO: Complete]
+  main.jsx                  # React entry point
+  App.jsx                   # Top-level routing and app shell
+  firebase.js               # Firebase app/auth/database initialization
+  i18n.js                   # i18next resources and configuration
+  index.css                 # Global styles
+  theme.js                  # Theme bootstrap/helpers
+  assets/                   # Static app assets (audio, icons, images)
+  components/               # Reusable UI building blocks
+    survey/                 # Survey-specific field renderers
+  contexts/                 # React context providers (auth, settings, toast)
+  hooks/                    # Custom hooks (for example survey node loading)
+  model/                    # Domain actions/model logic + unit tests
+  pages/                    # Route-level screens (login, register, survey, etc.)
+  survey/
+    nodes.json              # Navigation graph and survey content
+  theme/                    # Component/page style modules + MUI theme
+    survey/                 # Style modules for survey field components
+  utils/                    # Cross-cutting utilities (e.g. HTML sanitizing)
 ```
 
 ## Getting Started
@@ -364,7 +381,21 @@ Open `editor/index.html` in a browser (no build step required). The editor conne
 to Firebase using credentials you supply via the UI (or by dropping in your `.env`
 file). Features:
 
-[TODO: Complete]
+- Create, edit, duplicate, and delete survey nodes by ID
+- Edit all supported field types (`select`, `number_input`, `alert`, `image_list`, `text_block`, `month_picker`, `bottom_navigation`)
+- Bilingual content editing (`en`/`es`) for titles, subtitles, messages, labels, and button text
+- Icon picker with live preview using built-in icon assets from `editor/icons/`
+- Local persistence in `localStorage` (`milc_nodes`) for offline editing
+- JSON export/import for full `nodes` payload (`nodes.json`)
+- Mermaid graph visualization of node navigation with click-to-focus on a node
+- Firebase Realtime Database sync (`/survey`) with:
+  - sign-in gating for write/pull operations
+  - push-all local changes
+  - pull with a visual diff modal before applying remote changes
+- Firebase config helpers:
+  - save/restore Firebase config in `localStorage`
+  - optional `.env` parser to auto-fill Firebase connection fields
+- Light/dark theme toggle persisted in `localStorage`
 
 
 ## Internationalisation

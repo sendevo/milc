@@ -37,6 +37,10 @@
         "manual-page": "16",
         "milking-method": "manual",
         "scenario": "PREORD-07",
+        "severity": 0,
+        "periodicity": "",
+        "category": "",
+        "score-answer": "",
         "showDate": true,
         "subtitle": {
             "en": "Did you check udders?",
@@ -62,6 +66,10 @@
         "manual-page": "22, 23",
         "milking-method": "todos",
         "scenario": "ORD-02-03",
+        "severity": 0,
+        "periodicity": "",
+        "category": "",
+        "score-answer": "",
         "title": {
             "en": "When milking",
             "es": "Al ordeñar"
@@ -83,6 +91,10 @@
         "manual-page": "22, 23",
         "milking-method": "todos",
         "scenario": "ORD-02-03",
+        "severity": 0,
+        "periodicity": "",
+        "category": "",
+        "score-answer": "",
         "showDate": true,
         "subtitle": {
             "en": "no-translation",
@@ -122,6 +134,10 @@
         "manual-page": "-",
         "milking-method": "todos",
         "scenario": "-",
+        "severity": 0,
+        "periodicity": "",
+        "category": "",
+        "score-answer": "",
         "subtitle": {
             "en": "Do you have a milking parlour?",
             "es": "¿Tenés sala de ordeño?"
@@ -169,6 +185,10 @@
         "manual-page": "11",
         "milking-method": "mecanico",
         "scenario": "PREORD-02",
+        "severity": 0,
+        "periodicity": "",
+        "category": "",
+        "score-answer": "",
         "showDate": true,
         "subtitle": {
             "en": "Have you cleaned the space?",
@@ -217,6 +237,10 @@
         "manual-page": "16",
         "milking-method": "todos",
         "scenario": "PREORD-07",
+        "severity": 0,
+        "periodicity": "",
+        "category": "",
+        "score-answer": "",
         "showDate": true,
         "subtitle": {
             "en": "Have you noticed any symptoms of mastitis?",
@@ -242,6 +266,10 @@
         "manual-page": "16",
         "milking-method": "todos",
         "scenario": "PREORD-07",
+        "severity": 0,
+        "periodicity": "",
+        "category": "",
+        "score-answer": "",
         "title": {
             "en": "Before milking",
             "es": "Antes de ordeñar"
@@ -262,6 +290,10 @@
         "manual-page": "27",
         "milking-method": "mecanico",
         "scenario": "ORD-07",
+        "severity": 0,
+        "periodicity": "",
+        "category": "",
+        "score-answer": "",
         "title": {
             "en": "When milking",
             "es": "Al ordeñar"
@@ -283,6 +315,10 @@
         "manual-page": "22, 23",
         "milking-method": "todos",
         "scenario": "ORD-02-03",
+        "severity": 0,
+        "periodicity": "",
+        "category": "",
+        "score-answer": "",
         "subtitle": {
             "en": "Attention<br><br>Check your health status while milking",
             "es": "Atención<br><br>Revisá tus condiciones de salud al ordeñar"
@@ -319,6 +355,10 @@
         "manual-page": "12",
         "milking-method": "manual",
         "scenario": "PREORD-03",
+        "severity": 0,
+        "periodicity": "",
+        "category": "",
+        "score-answer": "",
         "showDate": true,
         "subtitle": {
             "en": "Checkout the parlor",
@@ -358,6 +398,10 @@
         "manual-page": "-",
         "milking-method": "todos",
         "scenario": "-",
+        "severity": 0,
+        "periodicity": "",
+        "category": "",
+        "score-answer": "",
         "subtitle": {
             "en": "Do you produce milk all year round?",
             "es": "¿Producís leche todo el año?"
@@ -379,6 +423,10 @@
         "manual-page": "-",
         "milking-method": "todos",
         "scenario": "-",
+        "severity": 0,
+        "periodicity": "",
+        "category": "",
+        "score-answer": "",
         "subtitle": {
             "en": "Select production months",
             "es": "Seleccioná los meses de producción"
@@ -403,6 +451,10 @@
         "manual-page": "-",
         "milking-method": "todos",
         "scenario": "-",
+        "severity": 0,
+        "periodicity": "",
+        "category": "",
+        "score-answer": "",
         "showDate": true,
         "subtitle": {
             "en": "Number of dairy animals",
@@ -442,6 +494,10 @@
         "manual-page": "-",
         "milking-method": "todos",
         "scenario": "-",
+        "severity": 0,
+        "periodicity": "",
+        "category": "",
+        "score-answer": "",
         "subtitle": {
             "en": "¿How do you milk the herd?",
             "es": "¿Cómo realizás el ordeño?"
@@ -456,6 +512,10 @@
         "manual-page": "-",
         "milking-method": "todos",
         "scenario": "-",
+        "severity": 0,
+        "periodicity": "",
+        "category": "",
+        "score-answer": "",
         "subtitle": {
             "en": "Done! You can start using the app!",
             "es": "¡Listo! Ya podés comenzar a usar la app"
@@ -480,6 +540,10 @@
         "manual-page": "11",
         "milking-method": "mecanico",
         "scenario": "PREORD-02",
+        "severity": 0,
+        "periodicity": "",
+        "category": "",
+        "score-answer": "",
         "title": {
             "en": "Before milking",
             "es": "Antes de ordeñar"
@@ -504,6 +568,10 @@
         "manual-page": "11",
         "milking-method": "mecanico",
         "scenario": "PREORD-02",
+        "severity": 0,
+        "periodicity": "",
+        "category": "",
+        "score-answer": "",
         "showDate": true,
         "subtitle": {
             "en": "Check parlor",
@@ -533,6 +601,10 @@
         "manual-page": "16",
         "milking-method": "todos",
         "scenario": "PREORD-07",
+        "severity": 0,
+        "periodicity": "",
+        "category": "",
+        "score-answer": "",
         "subtitle": {
             "en": "Number of animals being milked",
             "es": "Cantidad de animales en ordeñe"
@@ -557,6 +629,10 @@
         "manual-page": "16",
         "milking-method": "todos",
         "scenario": "PREORD-07",
+        "severity": 0,
+        "periodicity": "",
+        "category": "",
+        "score-answer": "",
         "title": {
             "en": "Before milking",
             "es": "Antes de ordeñar"
@@ -578,6 +654,10 @@
         "manual-page": "16",
         "milking-method": "todos",
         "scenario": "PREORD-07",
+        "severity": 0,
+        "periodicity": "",
+        "category": "",
+        "score-answer": "",
         "showDate": true,
         "subtitle": {
             "en": "Check udders",
@@ -604,6 +684,10 @@
         "manual-page": "16",
         "milking-method": "todos",
         "scenario": "PREORD-07",
+        "severity": 0,
+        "periodicity": "",
+        "category": "",
+        "score-answer": "",
         "showDate": true,
         "subtitle": {
             "en": "no-translation",
@@ -627,6 +711,10 @@
         "manual-page": "16",
         "milking-method": "todos",
         "scenario": "PREORD-07",
+        "severity": 0,
+        "periodicity": "",
+        "category": "",
+        "score-answer": "",
         "showDate": true,
         "subtitle": {
             "en": "How many animals were ill?",
@@ -659,6 +747,10 @@
         "manual-page": "16",
         "milking-method": "todos",
         "scenario": "PREORD-07",
+        "severity": 0,
+        "periodicity": "",
+        "category": "",
+        "score-answer": "",
         "subtitle": {
             "en": "Your health in the farm",
             "es": "Tu salud en el tambo"
@@ -706,6 +798,10 @@
         "manual-page": "22, 23",
         "milking-method": "todos",
         "scenario": "ORD-02-03",
+        "severity": 0,
+        "periodicity": "",
+        "category": "",
+        "score-answer": "",
         "showDate": true,
         "subtitle": {
             "en": "Were you able to milk the cow?",
@@ -731,6 +827,10 @@
         "manual-page": "22, 23",
         "milking-method": "todos",
         "scenario": "ORD-02-03",
+        "severity": 0,
+        "periodicity": "",
+        "category": "",
+        "score-answer": "",
         "title": {
             "en": "When milking",
             "es": "Al ordeñar"
@@ -755,6 +855,10 @@
         "manual-page": "22, 23",
         "milking-method": "todos",
         "scenario": "ORD-02-03",
+        "severity": 0,
+        "periodicity": "",
+        "category": "",
+        "score-answer": "",
         "showDate": true,
         "subtitle": {
             "en": "no-translation",
@@ -803,6 +907,10 @@
         "manual-page": "22, 23",
         "milking-method": "todos",
         "scenario": "ORD-02-03",
+        "severity": 0,
+        "periodicity": "",
+        "category": "",
+        "score-answer": "",
         "showDate": true,
         "subtitle": {
             "en": "no-translation",
@@ -851,6 +959,10 @@
         "manual-page": "22, 23",
         "milking-method": "todos",
         "scenario": "ORD-02-03",
+        "severity": 0,
+        "periodicity": "",
+        "category": "",
+        "score-answer": "",
         "showDate": true,
         "subtitle": {
             "en": "no-translation",
@@ -899,6 +1011,10 @@
         "manual-page": "27",
         "milking-method": "mecanico",
         "scenario": "ORD-07",
+        "severity": 0,
+        "periodicity": "",
+        "category": "",
+        "score-answer": "",
         "showDate": true,
         "subtitle": {
             "en": "no-translation",
@@ -924,6 +1040,10 @@
         "manual-page": "22, 23",
         "milking-method": "todos",
         "scenario": "ORD-02-03",
+        "severity": 0,
+        "periodicity": "",
+        "category": "",
+        "score-answer": "",
         "title": {
             "en": "When milking",
             "es": "Al ordeñar"
@@ -943,6 +1063,10 @@
         "manual-page": "27",
         "milking-method": "mecanico",
         "scenario": "ORD-07",
+        "severity": 0,
+        "periodicity": "",
+        "category": "",
+        "score-answer": "",
         "showDate": true,
         "subtitle": {
             "en": "Liters of milk per day",
@@ -969,6 +1093,10 @@
         "manual-page": "27",
         "milking-method": "mecanico",
         "scenario": "ORD-07",
+        "severity": 0,
+        "periodicity": "",
+        "category": "",
+        "score-answer": "",
         "showDate": true,
         "subtitle": {
             "en": "no-translation",
@@ -995,6 +1123,10 @@
         "manual-page": "27",
         "milking-method": "mecanico",
         "scenario": "ORD-07",
+        "severity": 0,
+        "periodicity": "",
+        "category": "",
+        "score-answer": "",
         "showDate": true,
         "subtitle": {
             "en": "no-translation",
@@ -1021,6 +1153,10 @@
         "manual-page": "27",
         "milking-method": "mecanico",
         "scenario": "ORD-07",
+        "severity": 0,
+        "periodicity": "",
+        "category": "",
+        "score-answer": "",
         "showDate": true,
         "subtitle": {
             "en": "no-translation",
@@ -1047,6 +1183,10 @@
         "manual-page": "27",
         "milking-method": "mecanico",
         "scenario": "ORD-07",
+        "severity": 0,
+        "periodicity": "",
+        "category": "",
+        "score-answer": "",
         "showDate": true,
         "subtitle": {
             "en": "no-translation",
@@ -1073,6 +1213,10 @@
         "manual-page": "27",
         "milking-method": "mecanico",
         "scenario": "ORD-07",
+        "severity": 0,
+        "periodicity": "",
+        "category": "",
+        "score-answer": "",
         "showDate": true,
         "subtitle": {
             "en": "no-translation",
@@ -1099,6 +1243,10 @@
         "manual-page": "27",
         "milking-method": "mecanico",
         "scenario": "ORD-07",
+        "severity": 0,
+        "periodicity": "",
+        "category": "",
+        "score-answer": "",
         "showDate": true,
         "subtitle": {
             "en": "no-translation",
@@ -1124,6 +1272,10 @@
         "manual-page": "16",
         "milking-method": "todos",
         "scenario": "PREORD-07",
+        "severity": 0,
+        "periodicity": "",
+        "category": "",
+        "score-answer": "",
         "title": {
             "en": "Before milking",
             "es": "Antes de ordeñar"
@@ -1144,6 +1296,10 @@
         "manual-page": "0",
         "milking-method": "",
         "scenario": "",
+        "severity": 0,
+        "periodicity": "",
+        "category": "",
+        "score-answer": "",
         "showDate": true,
         "subtitle": {
             "en": "Should be improved",
@@ -1169,6 +1325,10 @@
         "manual-page": "0",
         "milking-method": "",
         "scenario": "",
+        "severity": 0,
+        "periodicity": "",
+        "category": "",
+        "score-answer": "",
         "showDate": true,
         "subtitle": {
             "en": "Excellent!",
@@ -1194,6 +1354,10 @@
         "manual-page": "0",
         "milking-method": "",
         "scenario": "",
+        "severity": 0,
+        "periodicity": "",
+        "category": "",
+        "score-answer": "",
         "showDate": true,
         "subtitle": {
             "en": "Very good!",
@@ -1219,6 +1383,10 @@
         "manual-page": "0",
         "milking-method": "",
         "scenario": "",
+        "severity": 0,
+        "periodicity": "",
+        "category": "",
+        "score-answer": "",
         "showDate": true,
         "subtitle": {
             "en": "Regular",

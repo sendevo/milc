@@ -394,6 +394,10 @@ function loadNodeIntoForm(node) {
     document.getElementById('field-scenario').value = node.scenario || '';
     document.getElementById('field-manual-page').value = node['manual-page'] || '';
     document.getElementById('field-guide-id').value = node['guide-id'] || '';
+    document.getElementById('field-severity').value = node.severity || '0';
+    document.getElementById('field-periodicity').value = node.periodicity || '';
+    document.getElementById('field-category').value = node.category || '';
+    document.getElementById('field-score-answer').value = node['score-answer'] || '';
     document.getElementById('field-title-en').value = node.title?.en || '';
     document.getElementById('field-title-es').value = node.title?.es || '';
     document.getElementById('field-subtitle-en').value = node.subtitle?.en || '';
@@ -412,6 +416,10 @@ function clearForm() {
     document.getElementById('field-scenario').value = '';
     document.getElementById('field-manual-page').value = '';
     document.getElementById('field-guide-id').value = '';
+    document.getElementById('field-severity').value = '0';
+    document.getElementById('field-periodicity').value = '';
+    document.getElementById('field-category').value = '';
+    document.getElementById('field-score-answer').value = '';
     document.getElementById('field-title-en').value = '';
     document.getElementById('field-title-es').value = '';
     document.getElementById('field-subtitle-en').value = '';
@@ -952,12 +960,20 @@ function saveNode() {
         const scenario = document.getElementById('field-scenario').value.trim();
         const manualPage = document.getElementById('field-manual-page').value.trim();
         const guideId = document.getElementById('field-guide-id').value.trim();
+        const severity = parseInt(document.getElementById('field-severity').value) || 0;
+        const periodicity = document.getElementById('field-periodicity').value.trim();
+        const category = document.getElementById('field-category').value.trim();
+        const scoreAnswer = document.getElementById('field-score-answer').value.trim();
 
         const node = {
             'milking-method': milkingMethod,
             scenario,
             'manual-page': manualPage,
             'guide-id': guideId,
+            severity,
+            periodicity,
+            category,
+            'score-answer': scoreAnswer,
             title: {
                 en: document.getElementById('field-title-en').value.trim(),
                 es: document.getElementById('field-title-es').value.trim(),

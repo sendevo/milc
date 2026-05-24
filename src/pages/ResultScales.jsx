@@ -7,6 +7,10 @@ import blueGoat from "../assets/icons/blue_goat.png";
 import udder from "../assets/icons/udder.png";
 import milkPail from "../assets/icons/milk_pail.png";
 import goatHealth from "../assets/icons/goat_health.png";
+import weed from "../assets/icons/weed.png";
+import cattlePen from "../assets/icons/cattle_pen.png";
+import barn from "../assets/icons/barn.png";
+import pest from "../assets/icons/pest.png";
 import checkTrue from "../assets/icons/check_true.png";
 import checkFalse from "../assets/icons/check_false.png";
 
@@ -26,6 +30,10 @@ const ResultScales = () => {
         { icon: udder, label: t("mainMenu.duringMilking"), rating: 3 },
         { icon: milkPail, label: t("mainMenu.milkCare"), rating: 1 },
         { icon: goatHealth, label: t("mainMenu.health"), rating: 2 },
+        { icon: weed, label: t("mainMenu.food"), rating: 4 },
+        { icon: cattlePen, label: t("mainMenu.facilities"), rating: 3 },
+        { icon: barn, label: t("mainMenu.mySupplies"), rating: 2 },
+        { icon: pest, label: t("mainMenu.pests"), rating: 1 },
     ];
 
     const handleAspectClick = (rating) => {
