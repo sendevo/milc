@@ -1,5 +1,6 @@
 {
     "view-100": {
+        "category": "",
         "fields": [
             {
                 "id": "view-100-select",
@@ -36,11 +37,10 @@
         "icon": "udder.png",
         "manual-page": "16",
         "milking-method": "manual",
-        "scenario": "PREORD-07",
-        "severity": 0,
         "periodicity": "",
-        "category": "",
+        "scenario": "PREORD-07",
         "score-answer": "",
+        "severity": 0,
         "showDate": true,
         "subtitle": {
             "en": "Did you check udders?",
@@ -52,6 +52,7 @@
         }
     },
     "view-105": {
+        "category": "",
         "fields": [
             {
                 "id": "view-105-alert",
@@ -65,17 +66,17 @@
         "guide-id": "Las personas involucradas en el tambo deben conocer y aplicar las indicaciones de salud",
         "manual-page": "22, 23",
         "milking-method": "todos",
-        "scenario": "ORD-02-03",
-        "severity": 0,
         "periodicity": "",
-        "category": "",
+        "scenario": "ORD-02-03",
         "score-answer": "",
+        "severity": 0,
         "title": {
             "en": "When milking",
             "es": "Al ordeñar"
         }
     },
     "view-106": {
+        "category": "",
         "fields": [
             {
                 "id": "",
@@ -90,11 +91,10 @@
         "guide-id": "Las personas involucradas en el tambo deben conocer y aplicar las indicaciones de salud",
         "manual-page": "22, 23",
         "milking-method": "todos",
-        "scenario": "ORD-02-03",
-        "severity": 0,
         "periodicity": "",
-        "category": "",
+        "scenario": "ORD-02-03",
         "score-answer": "",
+        "severity": 0,
         "showDate": true,
         "subtitle": {
             "en": "no-translation",
@@ -106,6 +106,7 @@
         }
     },
     "view-107": {
+        "category": "",
         "fields": [
             {
                 "id": "view-107-select",
@@ -133,15 +134,14 @@
         "guide-id": "Seteo de app",
         "manual-page": "-",
         "milking-method": "todos",
+        "periodicity": "",
         "scenario": "APP-SETUP",
+        "score-answer": "",
         "setup-field-name": {
             "en": "Has milking parlour",
             "es": "Tiene sala de ordeño"
         },
         "severity": 0,
-        "periodicity": "",
-        "category": "",
-        "score-answer": "",
         "subtitle": {
             "en": "Do you have a milking parlour?",
             "es": "¿Tenés sala de ordeño?"
@@ -152,6 +152,7 @@
         }
     },
     "view-109": {
+        "category": "",
         "fields": [
             {
                 "id": "udder_clean",
@@ -188,11 +189,10 @@
         "icon": "shroom.png",
         "manual-page": "11",
         "milking-method": "mecanico",
-        "scenario": "PREORD-02",
-        "severity": 0,
         "periodicity": "",
-        "category": "",
-        "score-answer": "",
+        "scenario": "PREORD-02",
+        "score-answer": "yes",
+        "severity": 3,
         "showDate": true,
         "subtitle": {
             "en": "Have you cleaned the space?",
@@ -204,6 +204,7 @@
         }
     },
     "view-110": {
+        "category": "",
         "fields": [
             {
                 "id": "view-110-select",
@@ -240,11 +241,10 @@
         "icon": "udder.png",
         "manual-page": "16",
         "milking-method": "todos",
-        "scenario": "PREORD-07",
-        "severity": 0,
         "periodicity": "",
-        "category": "",
+        "scenario": "PREORD-07",
         "score-answer": "",
+        "severity": 0,
         "showDate": true,
         "subtitle": {
             "en": "Have you noticed any symptoms of mastitis?",
@@ -256,6 +256,7 @@
         }
     },
     "view-111": {
+        "category": "",
         "fields": [
             {
                 "id": "view-111-alert",
@@ -269,17 +270,17 @@
         "guide-id": "Inspección de ubres y despunte",
         "manual-page": "16",
         "milking-method": "todos",
-        "scenario": "PREORD-07",
-        "severity": 0,
         "periodicity": "",
-        "category": "",
+        "scenario": "PREORD-07",
         "score-answer": "",
+        "severity": 0,
         "title": {
             "en": "Before milking",
             "es": "Antes de ordeñar"
         }
     },
     "view-112": {
+        "category": "",
         "fields": [
             {
                 "id": "view-112",
@@ -293,17 +294,17 @@
         "guide-id": "Ordeño mecánico: Lavar correctamente el equipo de ordeño",
         "manual-page": "27",
         "milking-method": "mecanico",
-        "scenario": "ORD-07",
-        "severity": 0,
         "periodicity": "",
-        "category": "",
+        "scenario": "ORD-07",
         "score-answer": "",
+        "severity": 0,
         "title": {
             "en": "When milking",
             "es": "Al ordeñar"
         }
     },
     "view-113": {
+        "category": "",
         "fields": [
             {
                 "id": "",
@@ -318,11 +319,10 @@
         "icon": "warning.png",
         "manual-page": "22, 23",
         "milking-method": "todos",
-        "scenario": "ORD-02-03",
-        "severity": 0,
         "periodicity": "",
-        "category": "",
+        "scenario": "ORD-02-03",
         "score-answer": "",
+        "severity": 0,
         "subtitle": {
             "en": "Attention<br><br>Check your health status while milking",
             "es": "Atención<br><br>Revisá tus condiciones de salud al ordeñar"
@@ -332,7 +332,33 @@
             "es": "Antes de ordeñar"
         }
     },
+    "view-115": {
+        "category": "during-milking",
+        "fields": [
+            {
+                "id": "view-115-alert",
+                "message": {
+                    "en": "Milking task registered",
+                    "es": "Completaste el ordeñe"
+                },
+                "type": "alert"
+            }
+        ],
+        "guide-id": "Odeño mecánico: lavar correctamente el equipo de ordeño",
+        "manual-page": "27",
+        "milking-method": "mecanico",
+        "periodicity": "",
+        "scenario": "PREORD-07",
+        "score-answer": "",
+        "severity": 0,
+        "showDate": true,
+        "title": {
+            "en": "Before milking",
+            "es": "Antes de ordeñar"
+        }
+    },
     "view-123": {
+        "category": "",
         "fields": [
             {
                 "buttons": [
@@ -358,11 +384,10 @@
         "guide-id": "Requsitos de limpieza de corral de ordeño",
         "manual-page": "12",
         "milking-method": "manual",
-        "scenario": "PREORD-03",
-        "severity": 0,
         "periodicity": "",
-        "category": "",
+        "scenario": "PREORD-03",
         "score-answer": "",
+        "severity": 0,
         "showDate": true,
         "subtitle": {
             "en": "Checkout the parlor",
@@ -373,7 +398,137 @@
             "es": "Antes de ordeñar"
         }
     },
+    "view-129": {
+        "category": "milk-care",
+        "fields": [
+            {
+                "id": "view-129-select",
+                "options": [
+                    {
+                        "label": {
+                            "en": "Yes",
+                            "es": "Si"
+                        },
+                        "target": "view-131",
+                        "value": "yes"
+                    },
+                    {
+                        "label": {
+                            "en": "No",
+                            "es": "No"
+                        },
+                        "target": "view-133",
+                        "value": "no"
+                    },
+                    {
+                        "label": {
+                            "en": "Don't know",
+                            "es": "No se"
+                        },
+                        "target": "view-128",
+                        "value": "dont-know"
+                    }
+                ],
+                "type": "select"
+            }
+        ],
+        "guide-id": "Filtrar la leche recién ordeñada, conservar la leche según momento de elaboración",
+        "icon": "filter.png",
+        "manual-page": "31 y 32",
+        "milking-method": "mecanico",
+        "periodicity": "daily",
+        "scenario": "ACON-01-02",
+        "score-answer": "yes",
+        "severity": 3,
+        "showDate": true,
+        "subtitle": {
+            "en": "no-translation",
+            "es": "¿Filtraste la leche?"
+        },
+        "title": {
+            "en": "no-translation",
+            "es": "Acondicionar la leche"
+        }
+    },
+    "view-130": {
+        "category": "milk-care",
+        "fields": [
+            {
+                "id": "view-129-select",
+                "options": [
+                    {
+                        "label": {
+                            "en": "Yes",
+                            "es": "Si"
+                        },
+                        "target": "view-134",
+                        "value": "yes"
+                    },
+                    {
+                        "label": {
+                            "en": "No",
+                            "es": "No"
+                        },
+                        "target": "view-132",
+                        "value": "no"
+                    },
+                    {
+                        "label": {
+                            "en": "Don't know",
+                            "es": "No se"
+                        },
+                        "target": "view-223",
+                        "value": "dont-know"
+                    }
+                ],
+                "type": "select"
+            }
+        ],
+        "guide-id": "Filtrar la leche recién ordeñada, conservar la leche según momento de elaboración",
+        "icon": "filter.png",
+        "manual-page": "31 y 32",
+        "milking-method": "mecanico",
+        "periodicity": "daily",
+        "scenario": "ACON-01-02",
+        "score-answer": "yes",
+        "severity": 3,
+        "showDate": true,
+        "subtitle": {
+            "en": "no-translation",
+            "es": "¿Rotulaste el envase?"
+        },
+        "title": {
+            "en": "no-translation",
+            "es": "Acondicionar la leche"
+        }
+    },
+    "view-134": {
+        "category": "milk-care",
+        "fields": [
+            {
+                "id": "view-115-alert",
+                "message": {
+                    "en": "no-translation",
+                    "es": "Completaste el acondicionamiento de la leche"
+                },
+                "type": "alert"
+            }
+        ],
+        "guide-id": "Filtrar la leche recién ordeñada, conservar la leche según momento de elaboración",
+        "manual-page": "31 y 32",
+        "milking-method": "mecanico",
+        "periodicity": "",
+        "scenario": "ACON-01-02",
+        "score-answer": "",
+        "severity": 0,
+        "showDate": true,
+        "title": {
+            "en": "no-translation",
+            "es": "Acondicionar la leche"
+        }
+    },
     "view-217": {
+        "category": "",
         "fields": [
             {
                 "id": "view-217-select",
@@ -401,15 +556,14 @@
         "guide-id": "Seteo de app",
         "manual-page": "-",
         "milking-method": "todos",
+        "periodicity": "",
         "scenario": "APP-SETUP",
+        "score-answer": "",
         "setup-field-name": {
             "en": "Produce all year round",
             "es": "Produce todo el año"
         },
         "severity": 0,
-        "periodicity": "",
-        "category": "",
-        "score-answer": "",
         "subtitle": {
             "en": "Do you produce milk all year round?",
             "es": "¿Producís leche todo el año?"
@@ -420,6 +574,7 @@
         }
     },
     "view-218": {
+        "category": "",
         "fields": [
             {
                 "id": "view-220-month-picker",
@@ -430,15 +585,14 @@
         "guide-id": "Seteo de app",
         "manual-page": "-",
         "milking-method": "todos",
+        "periodicity": "",
         "scenario": "APP-SETUP",
+        "score-answer": "",
         "setup-field-name": {
             "en": "Production months",
             "es": "Meses de producción"
         },
         "severity": 0,
-        "periodicity": "",
-        "category": "",
-        "score-answer": "",
         "subtitle": {
             "en": "Select production months",
             "es": "Seleccioná los meses de producción"
@@ -449,6 +603,7 @@
         }
     },
     "view-220": {
+        "category": "",
         "fields": [
             {
                 "default": 0,
@@ -462,15 +617,14 @@
         "guide-id": "Seteo de app",
         "manual-page": "-",
         "milking-method": "todos",
+        "periodicity": "",
         "scenario": "APP-SETUP",
+        "score-answer": "",
         "setup-field-name": {
             "en": "Number of animals",
             "es": "Cantidad de animales"
         },
         "severity": 0,
-        "periodicity": "",
-        "category": "",
-        "score-answer": "",
         "showDate": true,
         "subtitle": {
             "en": "Number of dairy animals",
@@ -481,7 +635,112 @@
             "es": "Mi perfil"
         }
     },
+    "view-233": {
+        "category": "before-milking",
+        "fields": [
+            {
+                "id": "view-233-select",
+                "options": [
+                    {
+                        "label": {
+                            "en": "Yes",
+                            "es": "Sí"
+                        },
+                        "target": "view-234",
+                        "value": "yes"
+                    },
+                    {
+                        "label": {
+                            "en": "No",
+                            "es": "No"
+                        },
+                        "target": "view-234",
+                        "value": "no"
+                    },
+                    {
+                        "label": {
+                            "en": "Don't know",
+                            "es": "No se"
+                        },
+                        "target": "view-240",
+                        "value": "dont-know"
+                    }
+                ],
+                "type": "select"
+            }
+        ],
+        "guide-id": "Inspección de ubres y despunte",
+        "icon": "udder.png",
+        "manual-page": "16",
+        "milking-method": "todos",
+        "periodicity": "daily",
+        "scenario": "PREORD-07",
+        "score-answer": "yes",
+        "severity": 3,
+        "showDate": true,
+        "subtitle": {
+            "en": "",
+            "es": "¿Revisaste las ubres?"
+        },
+        "title": {
+            "en": "",
+            "es": "Antes de ordeñar"
+        }
+    },
+    "view-234": {
+        "category": "before-milking",
+        "fields": [
+            {
+                "id": "view-233-select",
+                "options": [
+                    {
+                        "label": {
+                            "en": "Yes",
+                            "es": "Sí"
+                        },
+                        "target": "view-236",
+                        "value": "yes"
+                    },
+                    {
+                        "label": {
+                            "en": "No",
+                            "es": "No"
+                        },
+                        "target": "view-239",
+                        "value": "no"
+                    },
+                    {
+                        "label": {
+                            "en": "Don't know",
+                            "es": "No se"
+                        },
+                        "target": "view-241",
+                        "value": "dont-know"
+                    }
+                ],
+                "type": "select"
+            }
+        ],
+        "guide-id": "Inspección de ubres y despunte",
+        "icon": "udder.png",
+        "manual-page": "16",
+        "milking-method": "todos",
+        "periodicity": "daily",
+        "scenario": "PREORD-07",
+        "score-answer": "no",
+        "severity": 3,
+        "showDate": true,
+        "subtitle": {
+            "en": "",
+            "es": "¿Encontraste síntomas de mastitis?"
+        },
+        "title": {
+            "en": "",
+            "es": "Antes de ordeñar"
+        }
+    },
     "view-24": {
+        "category": "",
         "fields": [
             {
                 "id": "milk-select",
@@ -509,15 +768,14 @@
         "guide-id": "Seteo de app",
         "manual-page": "-",
         "milking-method": "todos",
+        "periodicity": "",
         "scenario": "APP-SETUP",
+        "score-answer": "",
         "setup-field-name": {
             "en": "Milking method",
             "es": "Método de ordeño"
         },
         "severity": 0,
-        "periodicity": "",
-        "category": "",
-        "score-answer": "",
         "subtitle": {
             "en": "¿How do you milk the herd?",
             "es": "¿Cómo realizás el ordeño?"
@@ -528,18 +786,18 @@
         }
     },
     "view-28": {
+        "category": "",
         "guide-id": "Seteo de app",
         "manual-page": "-",
         "milking-method": "todos",
+        "periodicity": "",
         "scenario": "APP-SETUP",
+        "score-answer": "",
         "setup-field-name": {
             "en": "-",
             "es": "-"
         },
         "severity": 0,
-        "periodicity": "",
-        "category": "",
-        "score-answer": "",
         "subtitle": {
             "en": "Done! You can start using the app!",
             "es": "¡Listo! Ya podés comenzar a usar la app"
@@ -550,6 +808,7 @@
         }
     },
     "view-33": {
+        "category": "",
         "fields": [
             {
                 "id": "view-33-alert",
@@ -563,17 +822,17 @@
         "guide-id": "Requisitos de limpieza de la sala de ordeño mecánico",
         "manual-page": "11",
         "milking-method": "mecanico",
-        "scenario": "PREORD-02",
-        "severity": 0,
         "periodicity": "",
-        "category": "",
+        "scenario": "PREORD-02",
         "score-answer": "",
+        "severity": 0,
         "title": {
             "en": "Before milking",
             "es": "Antes de ordeñar"
         }
     },
     "view-35": {
+        "category": "",
         "fields": [
             {
                 "id": "my_images",
@@ -591,11 +850,10 @@
         "guide-id": "Requisitos de limpieza de la sala de ordeño mecánico",
         "manual-page": "11",
         "milking-method": "mecanico",
-        "scenario": "PREORD-02",
-        "severity": 0,
         "periodicity": "",
-        "category": "",
+        "scenario": "PREORD-02",
         "score-answer": "",
+        "severity": 0,
         "showDate": true,
         "subtitle": {
             "en": "Check parlor",
@@ -607,6 +865,7 @@
         }
     },
     "view-36": {
+        "category": "",
         "fields": [
             {
                 "default": 1,
@@ -624,11 +883,10 @@
         "guide-id": "Inspección de ubres y despunte",
         "manual-page": "16",
         "milking-method": "todos",
-        "scenario": "PREORD-07",
-        "severity": 0,
         "periodicity": "",
-        "category": "",
+        "scenario": "PREORD-07",
         "score-answer": "",
+        "severity": 0,
         "subtitle": {
             "en": "Number of animals being milked",
             "es": "Cantidad de animales en ordeñe"
@@ -639,6 +897,7 @@
         }
     },
     "view-37": {
+        "category": "",
         "fields": [
             {
                 "id": "view-37-alert",
@@ -652,17 +911,17 @@
         "guide-id": "Inspección de ubres y despunte",
         "manual-page": "16",
         "milking-method": "todos",
-        "scenario": "PREORD-07",
-        "severity": 0,
         "periodicity": "",
-        "category": "",
+        "scenario": "PREORD-07",
         "score-answer": "",
+        "severity": 0,
         "title": {
             "en": "Before milking",
             "es": "Antes de ordeñar"
         }
     },
     "view-38": {
+        "category": "",
         "fields": [
             {
                 "id": "view-38-image",
@@ -677,11 +936,10 @@
         "guide-id": "Inspección de ubres y despunte",
         "manual-page": "16",
         "milking-method": "todos",
-        "scenario": "PREORD-07",
-        "severity": 0,
         "periodicity": "",
-        "category": "",
+        "scenario": "PREORD-07",
         "score-answer": "",
+        "severity": 0,
         "showDate": true,
         "subtitle": {
             "en": "Check udders",
@@ -693,6 +951,7 @@
         }
     },
     "view-40": {
+        "category": "",
         "fields": [
             {
                 "id": "view-40-image",
@@ -707,11 +966,10 @@
         "guide-id": "Inspección de ubres y despunte",
         "manual-page": "16",
         "milking-method": "todos",
-        "scenario": "PREORD-07",
-        "severity": 0,
         "periodicity": "",
-        "category": "",
+        "scenario": "PREORD-07",
         "score-answer": "",
+        "severity": 0,
         "showDate": true,
         "subtitle": {
             "en": "no-translation",
@@ -723,6 +981,7 @@
         }
     },
     "view-42": {
+        "category": "",
         "fields": [
             {
                 "default": 0,
@@ -734,11 +993,10 @@
         "guide-id": "Inspección de ubres y despunte",
         "manual-page": "16",
         "milking-method": "todos",
-        "scenario": "PREORD-07",
-        "severity": 0,
         "periodicity": "",
-        "category": "",
+        "scenario": "PREORD-07",
         "score-answer": "",
+        "severity": 0,
         "showDate": true,
         "subtitle": {
             "en": "How many animals were ill?",
@@ -750,6 +1008,7 @@
         }
     },
     "view-45": {
+        "category": "",
         "fields": [
             {
                 "id": "view-45-image-list",
@@ -770,11 +1029,10 @@
         "guide-id": "Inspección de ubres y despunte",
         "manual-page": "16",
         "milking-method": "todos",
-        "scenario": "PREORD-07",
-        "severity": 0,
         "periodicity": "",
-        "category": "",
+        "scenario": "PREORD-07",
         "score-answer": "",
+        "severity": 0,
         "subtitle": {
             "en": "Your health in the farm",
             "es": "Tu salud en el tambo"
@@ -785,6 +1043,7 @@
         }
     },
     "view-46": {
+        "category": "during-milking",
         "fields": [
             {
                 "id": "view-46-select",
@@ -821,11 +1080,10 @@
         "icon": "heart.png",
         "manual-page": "22, 23",
         "milking-method": "todos",
+        "periodicity": "daily",
         "scenario": "ORD-02-03",
-        "severity": 0,
-        "periodicity": "",
-        "category": "",
-        "score-answer": "",
+        "score-answer": "yes",
+        "severity": 3,
         "showDate": true,
         "subtitle": {
             "en": "Were you able to milk the cow?",
@@ -837,6 +1095,7 @@
         }
     },
     "view-47": {
+        "category": "",
         "fields": [
             {
                 "id": "view-47-alert",
@@ -850,17 +1109,17 @@
         "guide-id": "Las personas involucradas en el tambo deben conocer y aplicar las indicaciones de salud",
         "manual-page": "22, 23",
         "milking-method": "todos",
-        "scenario": "ORD-02-03",
-        "severity": 0,
         "periodicity": "",
-        "category": "",
+        "scenario": "ORD-02-03",
         "score-answer": "",
+        "severity": 0,
         "title": {
             "en": "When milking",
             "es": "Al ordeñar"
         }
     },
     "view-48": {
+        "category": "",
         "fields": [
             {
                 "id": "",
@@ -878,11 +1137,10 @@
         "guide-id": "Las personas involucradas en el tambo deben conocer y aplicar las indicaciones de salud",
         "manual-page": "22, 23",
         "milking-method": "todos",
-        "scenario": "ORD-02-03",
-        "severity": 0,
         "periodicity": "",
-        "category": "",
+        "scenario": "ORD-02-03",
         "score-answer": "",
+        "severity": 0,
         "showDate": true,
         "subtitle": {
             "en": "no-translation",
@@ -894,6 +1152,7 @@
         }
     },
     "view-49": {
+        "category": "during-milking",
         "fields": [
             {
                 "id": "view-49-select",
@@ -930,11 +1189,10 @@
         "icon": "jacket.png",
         "manual-page": "22, 23",
         "milking-method": "todos",
+        "periodicity": "daily",
         "scenario": "ORD-02-03",
-        "severity": 0,
-        "periodicity": "",
-        "category": "",
-        "score-answer": "",
+        "score-answer": "yes",
+        "severity": 3,
         "showDate": true,
         "subtitle": {
             "en": "no-translation",
@@ -946,6 +1204,7 @@
         }
     },
     "view-50": {
+        "category": "during-milking",
         "fields": [
             {
                 "id": "view-50-select",
@@ -982,11 +1241,10 @@
         "icon": "hands.png",
         "manual-page": "22, 23",
         "milking-method": "todos",
+        "periodicity": "daily",
         "scenario": "ORD-02-03",
-        "severity": 0,
-        "periodicity": "",
-        "category": "",
-        "score-answer": "",
+        "score-answer": "yes",
+        "severity": 3,
         "showDate": true,
         "subtitle": {
             "en": "no-translation",
@@ -998,6 +1256,7 @@
         }
     },
     "view-52": {
+        "category": "",
         "fields": [
             {
                 "id": "view-52-select",
@@ -1034,11 +1293,10 @@
         "icon": "bubble.png",
         "manual-page": "27",
         "milking-method": "mecanico",
-        "scenario": "ORD-07",
-        "severity": 0,
         "periodicity": "",
-        "category": "",
+        "scenario": "ORD-07",
         "score-answer": "",
+        "severity": 0,
         "showDate": true,
         "subtitle": {
             "en": "no-translation",
@@ -1050,6 +1308,7 @@
         }
     },
     "view-53": {
+        "category": "",
         "fields": [
             {
                 "id": "view-53-alert",
@@ -1063,17 +1322,17 @@
         "guide-id": "Las personas involucradas en el tambo deben conocer y aplicar las indicaciones de salud",
         "manual-page": "22, 23",
         "milking-method": "todos",
-        "scenario": "ORD-02-03",
-        "severity": 0,
         "periodicity": "",
-        "category": "",
+        "scenario": "ORD-02-03",
         "score-answer": "",
+        "severity": 0,
         "title": {
             "en": "When milking",
             "es": "Al ordeñar"
         }
     },
     "view-55": {
+        "category": "",
         "fields": [
             {
                 "default": 0,
@@ -1086,11 +1345,10 @@
         "guide-id": "Ordeño mecánico: Lavar correctamente el equipo de ordeño",
         "manual-page": "27",
         "milking-method": "mecanico",
-        "scenario": "ORD-07",
-        "severity": 0,
         "periodicity": "",
-        "category": "",
+        "scenario": "ORD-07",
         "score-answer": "",
+        "severity": 0,
         "showDate": true,
         "subtitle": {
             "en": "Liters of milk per day",
@@ -1102,6 +1360,7 @@
         }
     },
     "view-56": {
+        "category": "",
         "fields": [
             {
                 "id": "view-56-text-block",
@@ -1116,11 +1375,10 @@
         "icon": "bubble.png",
         "manual-page": "27",
         "milking-method": "mecanico",
-        "scenario": "ORD-07",
-        "severity": 0,
         "periodicity": "",
-        "category": "",
+        "scenario": "ORD-07",
         "score-answer": "",
+        "severity": 0,
         "showDate": true,
         "subtitle": {
             "en": "no-translation",
@@ -1132,6 +1390,7 @@
         }
     },
     "view-57": {
+        "category": "",
         "fields": [
             {
                 "id": "view-57-text-block",
@@ -1146,11 +1405,10 @@
         "icon": "bottle.png",
         "manual-page": "27",
         "milking-method": "mecanico",
-        "scenario": "ORD-07",
-        "severity": 0,
         "periodicity": "",
-        "category": "",
+        "scenario": "ORD-07",
         "score-answer": "",
+        "severity": 0,
         "showDate": true,
         "subtitle": {
             "en": "no-translation",
@@ -1162,6 +1420,7 @@
         }
     },
     "view-58": {
+        "category": "",
         "fields": [
             {
                 "id": "view-58-text-block",
@@ -1176,11 +1435,10 @@
         "icon": "bubble.png",
         "manual-page": "27",
         "milking-method": "mecanico",
-        "scenario": "ORD-07",
-        "severity": 0,
         "periodicity": "",
-        "category": "",
+        "scenario": "ORD-07",
         "score-answer": "",
+        "severity": 0,
         "showDate": true,
         "subtitle": {
             "en": "no-translation",
@@ -1192,6 +1450,7 @@
         }
     },
     "view-59": {
+        "category": "",
         "fields": [
             {
                 "id": "view-59-text-block",
@@ -1206,11 +1465,10 @@
         "icon": "bottle.png",
         "manual-page": "27",
         "milking-method": "mecanico",
-        "scenario": "ORD-07",
-        "severity": 0,
         "periodicity": "",
-        "category": "",
+        "scenario": "ORD-07",
         "score-answer": "",
+        "severity": 0,
         "showDate": true,
         "subtitle": {
             "en": "no-translation",
@@ -1222,6 +1480,7 @@
         }
     },
     "view-60": {
+        "category": "",
         "fields": [
             {
                 "id": "view-60-text-block",
@@ -1236,11 +1495,10 @@
         "icon": "bubble.png",
         "manual-page": "27",
         "milking-method": "mecanico",
-        "scenario": "ORD-07",
-        "severity": 0,
         "periodicity": "",
-        "category": "",
+        "scenario": "ORD-07",
         "score-answer": "",
+        "severity": 0,
         "showDate": true,
         "subtitle": {
             "en": "no-translation",
@@ -1252,6 +1510,7 @@
         }
     },
     "view-61": {
+        "category": "",
         "fields": [
             {
                 "id": "view-61-text-block",
@@ -1266,11 +1525,10 @@
         "icon": "bottle.png",
         "manual-page": "27",
         "milking-method": "mecanico",
-        "scenario": "ORD-07",
-        "severity": 0,
         "periodicity": "",
-        "category": "",
+        "scenario": "ORD-07",
         "score-answer": "",
+        "severity": 0,
         "showDate": true,
         "subtitle": {
             "en": "no-translation",
@@ -1282,6 +1540,7 @@
         }
     },
     "view-85": {
+        "category": "",
         "fields": [
             {
                 "id": "view-85-alert",
@@ -1295,17 +1554,17 @@
         "guide-id": "Inspección de ubres y despunte",
         "manual-page": "16",
         "milking-method": "todos",
-        "scenario": "PREORD-07",
-        "severity": 0,
         "periodicity": "",
-        "category": "",
+        "scenario": "PREORD-07",
         "score-answer": "",
+        "severity": 0,
         "title": {
             "en": "Before milking",
             "es": "Antes de ordeñar"
         }
     },
     "view-result-bad": {
+        "category": "",
         "fields": [
             {
                 "id": "view-286-text-block",
@@ -1319,11 +1578,10 @@
         "guide-id": "Registros",
         "manual-page": "0",
         "milking-method": "",
-        "scenario": "",
-        "severity": 0,
         "periodicity": "",
-        "category": "",
+        "scenario": "",
         "score-answer": "",
+        "severity": 0,
         "showDate": true,
         "subtitle": {
             "en": "Should be improved",
@@ -1335,6 +1593,7 @@
         }
     },
     "view-result-excellent": {
+        "category": "",
         "fields": [
             {
                 "id": "view-281-text-block",
@@ -1348,11 +1607,10 @@
         "guide-id": "Registros",
         "manual-page": "0",
         "milking-method": "",
-        "scenario": "",
-        "severity": 0,
         "periodicity": "",
-        "category": "",
+        "scenario": "",
         "score-answer": "",
+        "severity": 0,
         "showDate": true,
         "subtitle": {
             "en": "Excellent!",
@@ -1364,6 +1622,7 @@
         }
     },
     "view-result-good": {
+        "category": "",
         "fields": [
             {
                 "id": "view-282-text-block",
@@ -1377,11 +1636,10 @@
         "guide-id": "Registros",
         "manual-page": "0",
         "milking-method": "",
-        "scenario": "",
-        "severity": 0,
         "periodicity": "",
-        "category": "",
+        "scenario": "",
         "score-answer": "",
+        "severity": 0,
         "showDate": true,
         "subtitle": {
             "en": "Very good!",
@@ -1393,6 +1651,7 @@
         }
     },
     "view-result-regular": {
+        "category": "",
         "fields": [
             {
                 "id": "view-285-text-block",
@@ -1406,11 +1665,10 @@
         "guide-id": "Registros",
         "manual-page": "0",
         "milking-method": "",
-        "scenario": "",
-        "severity": 0,
         "periodicity": "",
-        "category": "",
+        "scenario": "",
         "score-answer": "",
+        "severity": 0,
         "showDate": true,
         "subtitle": {
             "en": "Regular",

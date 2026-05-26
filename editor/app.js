@@ -36,6 +36,7 @@ const ICON_FILENAMES = [
     'comb.png',
     'config.png',
     'drop.png',
+    'edit.png',
     'filter.png',
     'goat_health.png',
     'hands.png',
