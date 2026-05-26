@@ -1,18 +1,20 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Box, Button, Divider, TextField, Typography } from "@mui/material";
 import { useAuth } from "../contexts/AuthContext";
 import { useSurveyNodes } from "../hooks/useSurveyNodes";
+import { useSurveyLog } from "../hooks/useSurveyLog";
 import FormCard from "../components/FormCard";
 import ViewContainer from "../components/ViewContainer";
 import { profileStyles as styles } from "../theme/Profile.styles";
 
 const Profile = () => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const { currentUser, getUserProfile, saveUserProfile, changePassword, logout } = useAuth();
     const navigate = useNavigate();
     const nodes = useSurveyNodes();
+    const { getRecordsByScenario } = useSurveyLog();
     const hasUserProfileSurvey = Boolean(nodes["view-217"]);
 
     const [name, setName] = useState("");
@@ -21,6 +23,48 @@ const Profile = () => {
     const [profileError, setProfileError] = useState("");
     const [profileSuccess, setProfileSuccess] = useState(false);
     const [profileLoading, setProfileLoading] = useState(false);
+
+    const surveyProfileFields = useMemo(() => {
+        const MONTH_KEYS = ["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"];
+        const records = getRecordsByScenario("APP-SETUP");
+        const latestByNode = {};
+        for (const rec of records) {
+            if (!latestByNode[rec.nodeId] || rec.timestamp > latestByNode[rec.nodeId].timestamp) {
+                latestByNode[rec.nodeId] = rec;
+            }
+        }
+        const lang = i18n.language?.startsWith("es") ? "es" : "en";
+        return Object.values(latestByNode)
+            .sort((a, b) => a.timestamp - b.timestamp)
+            .flatMap((rec) => {
+                const node = nodes[rec.nodeId];
+                if (!node) return [];
+                const sfn = node["setup-field-name"];
+                const label = sfn?.[lang] || sfn?.en || sfn?.es;
+                if (!label || label === "-") return [];
+                let answerLabel = String(rec.answer);
+                for (const field of (node.fields || [])) {
+                    if (field.type === "select") {
+                        const opt = (field.options || []).find((o) => o.value === rec.answer);
+                        if (opt) {
+                            answerLabel = opt.label?.[lang] || opt.label?.en || String(rec.answer);
+                            break;
+                        }
+                    } else if (field.type === "number_input" && rec.answer !== undefined) {
+                        answerLabel = String(rec.answer);
+                        break;
+                    } else if (field.type === "month_picker" && Array.isArray(rec.answer)) {
+                        answerLabel = rec.answer
+                            .slice()
+                            .sort((a, b) => a - b)
+                            .map((m) => t(`survey.months.${MONTH_KEYS[m - 1]}`),)
+                            .join(", ");
+                        break;
+                    }
+                }
+                return [{ label, answerLabel }];
+            });
+    }, [getRecordsByScenario, nodes, i18n.language, t]);
 
     const [currentPassword, setCurrentPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
@@ -135,6 +179,25 @@ const Profile = () => {
                         required
                         fullWidth />
                 </FormCard>
+
+                {surveyProfileFields.length > 0 && (
+                    <Box sx={styles.surveyDataBox}>
+                        <Typography
+                            variant="h6"
+                            textAlign="center"
+                            fontWeight="bold"
+                            textTransform="uppercase"
+                            sx={{ color: "text.primary", mb: 1 }}>
+                            {t("profile.surveyDataSection")}
+                        </Typography>
+                        {surveyProfileFields.map(({ label, answerLabel }, i) => (
+                            <Box key={i} sx={styles.surveyDataRow}>
+                                <Typography sx={styles.surveyDataLabel}>{label}</Typography>
+                                <Typography sx={styles.surveyDataValue}>{answerLabel}</Typography>
+                            </Box>
+                        ))}
+                    </Box>
+                )}
 
                 <Box width="100%" maxWidth={380} display="flex" flexDirection="column" gap={1}>
                     <Button

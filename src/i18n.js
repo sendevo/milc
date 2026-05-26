@@ -131,6 +131,7 @@ const resources = {
                 updateSuccess: "Profile updated successfully.",
                 passwordError: "Failed to update password. Check your current password.",
                 passwordSuccess: "Password updated successfully.",
+                surveyDataSection: "Setup data",
             },
             info: {
                 title: "About MILC",
@@ -286,6 +287,7 @@ const resources = {
                 updateSuccess: "Perfil actualizado correctamente.",
                 passwordError: "No se pudo actualizar la contraseña. Verifique la contraseña actual.",
                 passwordSuccess: "Contraseña actualizada correctamente.",
+                surveyDataSection: "Datos de configuración",
             },
             info: {
                 title: "Acerca de MILC",

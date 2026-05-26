@@ -20,4 +20,34 @@ export const profileStyles = {
         borderColor: "#d32f2f",
         "&:hover": { borderColor: "#b71c1c", bgcolor: "rgba(211,47,47,0.06)" },
     },
+    surveyDataBox: {
+        bgcolor: "background.paper",
+        border: "1px solid",
+        borderColor: "divider",
+        borderRadius: 4,
+        px: 4,
+        py: 3,
+        width: "100%",
+        maxWidth: 380,
+        display: "flex",
+        flexDirection: "column",
+        gap: 1.5,
+    },
+
+    surveyDataRow: {
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        gap: 1,
+    },
+    surveyDataLabel: {
+        fontSize: "0.875rem",
+        color: "text.secondary",
+    },
+    surveyDataValue: {
+        fontSize: "0.875rem",
+        fontWeight: 500,
+        color: "text.primary",
+        textAlign: "right",
+    },
 };

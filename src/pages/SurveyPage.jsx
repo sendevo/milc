@@ -62,16 +62,21 @@ const SurveyPage = () => {
     /**
      * Extracts the relevant answer value from the submitted answers map.
      *
-     * Looks for the first `select` field whose id has an entry in `answers`.
+     * Handles select (string), number_input (number), and month_picker (number[]).
      * Returns undefined if no matching field/answer is found.
      *
      * @param {object} answers - Map of fieldId → answer value
-     * @returns {string|undefined}
+     * @returns {string|number|number[]|undefined}
      */
     const extractAnswer = (answers) => {
         if (!node.fields) return undefined;
         for (const field of node.fields) {
-            if (field.type === "select" && answers[field.id] !== undefined) {
+            if (
+                (field.type === "select" ||
+                 field.type === "number_input" ||
+                 field.type === "month_picker") &&
+                answers[field.id] !== undefined
+            ) {
                 return answers[field.id];
             }
         }
