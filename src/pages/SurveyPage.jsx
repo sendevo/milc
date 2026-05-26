@@ -12,16 +12,13 @@ import { useToast } from "../contexts/ToastContext";
  *
  * - Reads nodeId from the URL.
  * - Looks up the node in the tree.
- * - On submit, if the node is scoreable, persists the answer to the log.
+ * - On submit, if the node has a real scenario, persists the answer to the log.
  * - Resolves the target node and navigates to it.
  *   If the branch ends (no target) or the node is unknown, returns to /app.
  *
- * A node is scoreable when ALL of the following fields are present:
- *   - scenario   (not "-")
- *   - score-answer
- *   - severity
- *   - periodicity
- *   - category
+ * A node is trackable when it has a real scenario (scenario !== "-").
+ * Scoring metadata (score-answer, severity, periodicity, category) is used
+ * later by scoring.js, but should not prevent answer logging.
  *
  * The answer that gets logged is the value of the first `select` field
  * in the node that has an answer in the submitted answers map.
@@ -56,15 +53,11 @@ const SurveyPage = () => {
     }
 
     // ---------------------------------------------------------------------------
-    // Determine whether this node should be scored.
+    // Determine whether this node should be logged.
     // ---------------------------------------------------------------------------
-    const isScoreable =
+    const isTrackable =
         node.scenario &&
-        node.scenario !== "-" &&
-        node["score-answer"] &&
-        node.severity &&
-        node.periodicity &&
-        node.category;
+        node.scenario !== "-";
 
     /**
      * Extracts the relevant answer value from the submitted answers map.
@@ -89,8 +82,8 @@ const SurveyPage = () => {
     // Submit handler
     // ---------------------------------------------------------------------------
     const handleSubmit = (answers) => {
-        // 1. Persist the answer if this is a scoreable node.
-        if (isScoreable) {
+        // 1. Persist the answer if this node has a scoreable scenario code.
+        if (isTrackable) {
             const answer = extractAnswer(answers);
             if (answer !== undefined) {
                 saveAnswer(nodeId, node.scenario, answer);

@@ -133,7 +133,11 @@
         "guide-id": "Seteo de app",
         "manual-page": "-",
         "milking-method": "todos",
-        "scenario": "-",
+        "scenario": "APP-SETUP",
+        "setup-field-name": {
+            "en": "Has milking parlour",
+            "es": "Tiene sala de ordeño"
+        },
         "severity": 0,
         "periodicity": "",
         "category": "",
@@ -397,7 +401,11 @@
         "guide-id": "Seteo de app",
         "manual-page": "-",
         "milking-method": "todos",
-        "scenario": "-",
+        "scenario": "APP-SETUP",
+        "setup-field-name": {
+            "en": "Produce all year round",
+            "es": "Produce todo el año"
+        },
         "severity": 0,
         "periodicity": "",
         "category": "",
@@ -422,7 +430,11 @@
         "guide-id": "Seteo de app",
         "manual-page": "-",
         "milking-method": "todos",
-        "scenario": "-",
+        "scenario": "APP-SETUP",
+        "setup-field-name": {
+            "en": "Production months",
+            "es": "Meses de producción"
+        },
         "severity": 0,
         "periodicity": "",
         "category": "",
@@ -450,7 +462,11 @@
         "guide-id": "Seteo de app",
         "manual-page": "-",
         "milking-method": "todos",
-        "scenario": "-",
+        "scenario": "APP-SETUP",
+        "setup-field-name": {
+            "en": "Number of animals",
+            "es": "Cantidad de animales"
+        },
         "severity": 0,
         "periodicity": "",
         "category": "",
@@ -493,7 +509,11 @@
         "guide-id": "Seteo de app",
         "manual-page": "-",
         "milking-method": "todos",
-        "scenario": "-",
+        "scenario": "APP-SETUP",
+        "setup-field-name": {
+            "en": "Milking method",
+            "es": "Método de ordeño"
+        },
         "severity": 0,
         "periodicity": "",
         "category": "",
@@ -511,7 +531,11 @@
         "guide-id": "Seteo de app",
         "manual-page": "-",
         "milking-method": "todos",
-        "scenario": "-",
+        "scenario": "APP-SETUP",
+        "setup-field-name": {
+            "en": "-",
+            "es": "-"
+        },
         "severity": 0,
         "periodicity": "",
         "category": "",

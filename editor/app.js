@@ -381,6 +381,22 @@ function selectNode(id) {
     loadNodeIntoForm(nodes[id]);
 }
 
+function updateSetupFieldVisibility() {
+    const scenario = document.getElementById('field-scenario')?.value || '';
+    const group = document.getElementById('setup-field-name-group');
+    if (!group) return;
+    group.style.display = scenario === 'APP-SETUP' ? 'block' : 'none';
+}
+
+function handleScenarioChange() {
+    const scenario = document.getElementById('field-scenario')?.value || '';
+    if (scenario !== 'APP-SETUP') {
+        document.getElementById('field-setup-field-name-en').value = '';
+        document.getElementById('field-setup-field-name-es').value = '';
+    }
+    updateSetupFieldVisibility();
+}
+
 // ─── Node form ────────────────────────────────────────────────────────────────
 
 function loadNodeIntoForm(node) {
@@ -398,6 +414,8 @@ function loadNodeIntoForm(node) {
     document.getElementById('field-periodicity').value = node.periodicity || '';
     document.getElementById('field-category').value = node.category || '';
     document.getElementById('field-score-answer').value = node['score-answer'] || '';
+    document.getElementById('field-setup-field-name-en').value = node['setup-field-name']?.en || '';
+    document.getElementById('field-setup-field-name-es').value = node['setup-field-name']?.es || '';
     document.getElementById('field-title-en').value = node.title?.en || '';
     document.getElementById('field-title-es').value = node.title?.es || '';
     document.getElementById('field-subtitle-en').value = node.subtitle?.en || '';
@@ -405,6 +423,7 @@ function loadNodeIntoForm(node) {
     document.getElementById('field-showDate').checked = !!node.showDate;
     document.getElementById('field-icon').value = node.icon || '';
     updateIconPreview(node.icon || '');
+    updateSetupFieldVisibility();
 
     renderFields(node.fields || []);
     markClean();
@@ -420,6 +439,8 @@ function clearForm() {
     document.getElementById('field-periodicity').value = '';
     document.getElementById('field-category').value = '';
     document.getElementById('field-score-answer').value = '';
+    document.getElementById('field-setup-field-name-en').value = '';
+    document.getElementById('field-setup-field-name-es').value = '';
     document.getElementById('field-title-en').value = '';
     document.getElementById('field-title-es').value = '';
     document.getElementById('field-subtitle-en').value = '';
@@ -427,6 +448,7 @@ function clearForm() {
     document.getElementById('field-showDate').checked = false;
     document.getElementById('field-icon').value = '';
     updateIconPreview('');
+    updateSetupFieldVisibility();
     renderFields([]);
     markClean();
 }
@@ -964,6 +986,8 @@ function saveNode() {
         const periodicity = document.getElementById('field-periodicity').value.trim();
         const category = document.getElementById('field-category').value.trim();
         const scoreAnswer = document.getElementById('field-score-answer').value.trim();
+        const setupFieldNameEn = document.getElementById('field-setup-field-name-en').value.trim();
+        const setupFieldNameEs = document.getElementById('field-setup-field-name-es').value.trim();
 
         const node = {
             'milking-method': milkingMethod,
@@ -980,6 +1004,13 @@ function saveNode() {
             },
             fields: getFieldsFromDOM(),
         };
+
+        if (scenario === 'APP-SETUP' && (setupFieldNameEn || setupFieldNameEs)) {
+            node['setup-field-name'] = {
+                en: setupFieldNameEn,
+                es: setupFieldNameEs,
+            };
+        }
 
         const subtitleEn = document.getElementById('field-subtitle-en').value.trim();
         const subtitleEs = document.getElementById('field-subtitle-es').value.trim();
@@ -1255,6 +1286,8 @@ function bindStaticEvents() {
 
     document.getElementById('editor-form').addEventListener('input', markDirty);
     document.getElementById('editor-form').addEventListener('change', markDirty);
+    document.getElementById('field-scenario').addEventListener('change', handleScenarioChange);
+    updateSetupFieldVisibility();
 
     document.getElementById('btn-graph').addEventListener('click', openGraphModal);
     document.getElementById('btn-graph-close').addEventListener('click', () => {

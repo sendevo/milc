@@ -5,6 +5,7 @@ import { Box, Button, Checkbox, Divider, FormControl, FormControlLabel, MenuItem
 import ViewContainer from "../components/ViewContainer";
 import { useSettings } from "../contexts/SettingsContext";
 import { refreshSurveyNodes } from "../hooks/useSurveyNodes";
+import { useSurveyLog } from "../hooks/useSurveyLog";
 import { configStyles as styles } from "../theme/Config.styles";
 
 const Config = () => {
@@ -19,6 +20,7 @@ const Config = () => {
         setThemeMode,
         setSimulatedDate,
     } = useSettings();
+    const { clearLog } = useSurveyLog();
     const [refreshState, setRefreshState] = useState("idle"); // "idle" | "loading" | "done"
     const isSimulatedDateEnabled = Boolean(simulatedDate);
 
@@ -26,6 +28,8 @@ const Config = () => {
         setRefreshState("loading");
         try {
             await refreshSurveyNodes();
+            setSimulatedDate("");
+            clearLog();
             setRefreshState("done");
             setTimeout(() => setRefreshState("idle"), 2000);
         } catch {

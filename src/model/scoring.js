@@ -22,6 +22,21 @@ const MR_TABLE = {
     never:         { 1: 0.67, 2: 1.00, 3: 1.00 },
 };
 
+// Fallback metadata for known MILC scenarios.
+// Used when nodes arrive without scoring fields from Firebase/nodes.json.
+const SCENARIO_DEFAULTS = {
+    "PREORD-01": { correctAnswer: "yes", severity: 3, periodicity: "daily", category: "before-milking" },
+    "PREORD-02": { correctAnswer: "yes", severity: 3, periodicity: "daily", category: "before-milking" },
+    "PREORD-03": { correctAnswer: "yes", severity: 3, periodicity: "daily", category: "before-milking" },
+    "PREORD-04": { correctAnswer: "yes", severity: 3, periodicity: "daily", category: "before-milking" },
+    "PREORD-05": { correctAnswer: "yes", severity: 3, periodicity: "daily", category: "before-milking" },
+    "PREORD-06": { correctAnswer: "yes", severity: 3, periodicity: "daily", category: "before-milking" },
+    "PREORD-07": { correctAnswer: "yes", severity: 3, periodicity: "daily", category: "before-milking" },
+    "PREORD-08": { correctAnswer: "yes", severity: 3, periodicity: "daily", category: "before-milking" },
+    "ORD-02-03": { correctAnswer: "yes", severity: 3, periodicity: "daily", category: "during-milking" },
+    "ORD-07": { correctAnswer: "yes", severity: 3, periodicity: "daily", category: "during-milking" },
+};
+
 // ---------------------------------------------------------------------------
 // Periodicity helpers
 // ---------------------------------------------------------------------------
@@ -193,13 +208,20 @@ export const computeFullScore = (allRecords, nodes) => {
     for (const node of Object.values(nodes)) {
         const s = node.scenario;
         if (!s || s === "-" || scenarioMeta[s]) continue;
-        if (!node["score-answer"] || !node.severity || !node.periodicity) continue;
+
+        const fallback = SCENARIO_DEFAULTS[s] ?? {};
+        const correctAnswer = node["score-answer"] || fallback.correctAnswer;
+        const severity = node.severity || fallback.severity;
+        const periodicity = node.periodicity || fallback.periodicity;
+        const category = node.category || fallback.category || "uncategorized";
+
+        if (!correctAnswer || !severity || !periodicity) continue;
 
         scenarioMeta[s] = {
-            correctAnswer: node["score-answer"],
-            severity:      node.severity,
-            periodicity:   node.periodicity,
-            category:      node.category ?? "uncategorized",
+            correctAnswer,
+            severity,
+            periodicity,
+            category,
         };
     }
 
