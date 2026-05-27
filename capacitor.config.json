@@ -1,0 +1,6 @@
+{
+  "appId": "com.sendevo.milc",
+  "appName": "MILC",
+  "webDir": "dist",
+  "bundledWebRuntime": false
+}

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">MILC</string>
+    <string name="title_activity_main">MILC</string>
+    <string name="package_name">com.sendevo.milc</string>
+    <string name="custom_url_scheme">com.sendevo.milc</string>
+</resources>
