@@ -65,7 +65,7 @@ export const resolveTarget = (node, answers) => {
         if (!field || typeof field !== "object") continue;
         
         // Skip self-navigating fields (bottom_navigation, alerts)
-        if (field.type === "bottom_navigation" || field.type === "alert" || field.type === "image_list") {
+        if (field.type === "bottom_navigation" || field.type === "alert" || field.type === "image_list" || field.type === "audio_list") {
             continue;
         }
 

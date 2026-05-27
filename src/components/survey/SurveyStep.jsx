@@ -8,6 +8,7 @@ import AlertBlock from "./AlertBlock";
 import TextBlock from "./TextBlock";
 import NumberInput from "./NumberInput";
 import ImageList from "./ImageList";
+import AudioList from "./AudioList";
 import MonthPicker from "./MonthPicker";
 import BottomNavigation from "./BottomNavigation";
 import { t } from "../../model";
@@ -138,6 +139,14 @@ const SurveyStep = ({ node, nodeId, onSubmit, onBack }) => {
                         images={field.images.map(({ src, label }) => ({
                             src: new URL(`../../assets/img/${src}`, import.meta.url).href,
                             label: label ? t(label) : undefined
+                        }))} />
+                );
+            case "audio_list":
+                return (
+                    <AudioList
+                        key={field.id}
+                        audios={(field.audios || []).map(({ src }) => ({
+                            src: new URL(`../../assets/audio/${src}`, import.meta.url).href,
                         }))} />
                 );
             case "bottom_navigation":

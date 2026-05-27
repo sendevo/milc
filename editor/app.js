@@ -533,6 +533,8 @@ function buildFieldEl(field, index) {
         extras.appendChild(buildNumberExtras(field));
     } else if (field.type === 'image_list') {
         extras.appendChild(buildImageListExtras(field));
+    } else if (field.type === 'audio_list') {
+        extras.appendChild(buildAudioListExtras(field));
     } else if (field.type === 'alert') {
         extras.appendChild(buildAlertExtras(field));
     } else if (field.type === 'text_block') {
@@ -715,6 +717,44 @@ function buildImageRow(src) {
     return row;
 }
 
+function buildAudioListExtras(field) {
+    const wrap = document.createElement('div');
+    const title = document.createElement('div');
+    title.className = 'sub-section-title';
+    title.textContent = 'Audio files (filename)';
+    wrap.appendChild(title);
+
+    const audioList = document.createElement('div');
+    audioList.className = 'audio-list';
+
+    (field.audios || []).forEach(audio => {
+        audioList.appendChild(buildAudioRow(audio.src));
+    });
+    wrap.appendChild(audioList);
+
+    const addBtn = document.createElement('button');
+    addBtn.textContent = '＋ Add audio';
+    addBtn.className = 'btn-sm';
+    addBtn.addEventListener('click', () => { audioList.appendChild(buildAudioRow('')); markDirty(); });
+    wrap.appendChild(addBtn);
+
+    return wrap;
+}
+
+function buildAudioRow(src) {
+    const row = document.createElement('div');
+    row.className = 'option-row';
+    const inp = textInput(src, 'filename.mp3');
+    inp.dataset.role = 'audio-src';
+    const del = document.createElement('button');
+    del.textContent = '✕';
+    del.className = 'btn-icon btn-danger';
+    del.addEventListener('click', () => { row.remove(); markDirty(); });
+    row.appendChild(inp);
+    row.appendChild(del);
+    return row;
+}
+
 function buildAlertExtras(field) {
     const wrap = document.createElement('div');
 
@@ -841,6 +881,13 @@ function getFieldsFromDOM() {
             imgRows.forEach(inp => {
                 const src = inp.value.trim();
                 if (src) field.images.push({ src });
+            });
+        } else if (type === 'audio_list') {
+            const audioRows = extras.querySelectorAll('[data-role="audio-src"]');
+            field.audios = [];
+            audioRows.forEach(inp => {
+                const src = inp.value.trim();
+                if (src) field.audios.push({ src });
             });
         } else if (type === 'alert') {
             const messageEl = extras.querySelector('[data-role="message"]');
