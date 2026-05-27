@@ -4,6 +4,12 @@ This document describes the scoring and data model that the MILC app implements.
 
 ---
 
+<p align="center">
+  <img src="misc/screen_captures/welcome.png" alt="Welcome screen" width="30%" />
+  <img src="misc/screen_captures/login.png" alt="Login screen" width="30%" />
+  <img src="misc/screen_captures/main_menu.png" alt="Main menu screen" width="30%" />
+</p>
+
 ## Overview
 
 The app digitalizes the **MILC Guide** (*Guía Metodológica para la Inocuidad de Leche Caprina*), a methodology developed by INTA (Argentina) to help small-scale goat dairy producers assess and improve their food safety practices.
@@ -375,6 +381,56 @@ npm run cap:sync
 firebase deploy --only hosting
 ```
 
+## Data Migrations
+
+The app includes migration runners so local persisted data and Firebase user
+profiles remain compatible across published versions.
+
+### Local migrations (device storage)
+
+- Entry point: `src/main.jsx`
+- Runner: `src/migrations/localMigrations.js`
+- Storage version key: `milc_schema_version`
+- Current local schema version: `1`
+
+Startup flow:
+
+1. Initialize persistent storage bridge (`src/utils/persistentStorage.js`)
+2. Run local migrations (`runLocalMigrations()`)
+3. Render React app
+
+Current local migration behavior (`v0 -> v1`):
+
+- Reads `milc_survey_log` from persistent storage
+- Normalizes legacy answer value `dont_know` to `dont-know`
+- Ensures each survey record includes `schemaVersion: 1`
+- Rewrites malformed log payloads to a safe empty array
+
+### Cloud migrations (Realtime Database)
+
+- Runner: `src/migrations/cloudMigrations.js`
+- Trigger point: auth state listener in `src/contexts/AuthContext.jsx`
+- Scope: `users/{uid}` profile document
+
+When a user session is restored or established, the app calls
+`migrateUserProfileIfNeeded(uid)`.
+
+Current cloud migration behavior (`v0 -> v1`):
+
+- Adds/normalizes `schemaVersion` on user profile
+- Adds `createdAt` if missing
+- Updates `updatedAt` on migration
+
+All new profile writes (`saveUserProfile`) are versioned through
+`buildVersionedUserProfile()` to keep schema/timestamps consistent.
+
+### Migration design rules
+
+- Migrations are idempotent and safe to re-run
+- Version numbers increase monotonically
+- New migrations should be added as explicit `vN -> vN+1` steps
+- Keep backward-compatible reads while rollout is in progress
+
 ## Testing
 
 ### Unit tests (Vitest)
@@ -448,7 +504,8 @@ file). Features:
 UI strings (buttons, labels, error messages) are in `src/i18n.js`. Survey-specific
 strings are embedded directly in the node JSON. Both support `es` and `en`.
 
-The user's preferred language is stored in `localStorage` under `milc_language` and
+The user's preferred language is stored under the `milc_language` key in app
+persistent storage (localStorage on web, Capacitor Preferences on Android) and
 applied on app startup via `SettingsContext`.
 
 

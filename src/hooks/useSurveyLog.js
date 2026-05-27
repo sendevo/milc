@@ -23,6 +23,7 @@ import { useCallback, useEffect, useState } from "react";
 import { getJSONItem, setJSONItem } from "../utils/persistentStorage";
 
 const STORAGE_KEY = "milc_survey_log";
+const SURVEY_LOG_RECORD_SCHEMA_VERSION = 1;
 
 // ---------------------------------------------------------------------------
 // Local-date helper
@@ -116,6 +117,7 @@ export const useSurveyLog = () => {
             answer,
             date:      localDateString(),
             timestamp: Date.now(),
+            schemaVersion: SURVEY_LOG_RECORD_SCHEMA_VERSION,
         };
 
         setRecords((prev) => {
