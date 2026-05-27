@@ -19,8 +19,10 @@
  * a node field's `"action"` property in nodes.json (or the editor).
  *
  * Actions MUST NOT mutate React state — they are pure side-effects
- * (logging, localStorage writes, analytics calls, etc.).
+ * (logging, storage writes, analytics calls, etc.).
  */
+
+import { setItem } from "../utils/persistentStorage";
 
 const STORAGE_PREFIX = "milc_action_";
 
@@ -36,16 +38,17 @@ const registry = {
 
     /**
      * save_to_storage
-     * Saves the field value to localStorage under the key
+     * Saves the field value to persistent storage under the key
      * "milc_action_<nodeId>_<fieldId>".
      */
     save_to_storage: ({ fieldId, value, nodeId }) => {
         const key = `${STORAGE_PREFIX}${nodeId}_${fieldId}`;
         try {
-            localStorage.setItem(key, JSON.stringify(value));
+            const serialized = JSON.stringify(value);
+            void setItem(key, serialized);
             console.log(`[action:save_to_storage] saved "${key}" =`, value);
         } catch (err) {
-            console.warn(`[action:save_to_storage] could not write to localStorage:`, err);
+            console.warn(`[action:save_to_storage] could not write to storage:`, err);
         }
     },
 

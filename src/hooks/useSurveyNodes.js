@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { ref, onValue, get } from "firebase/database";
 import { db } from "../firebase";
 import fallbackNodes from "../survey/nodes.json";
+import { getJSONItem, removeItem, setJSONItem } from "../utils/persistentStorage";
 
 const CACHE_KEY = "milc_survey_nodes";
 
@@ -22,18 +23,14 @@ function mergeWithFallbackNodes(data) {
     return merged;
 }
 
-function loadFromCache() {
-    try {
-        const raw = localStorage.getItem(CACHE_KEY);
-        return raw ? mergeWithFallbackNodes(JSON.parse(raw)) : null;
-    } catch {
-        return null;
-    }
+async function loadFromCache() {
+    const cached = await getJSONItem(CACHE_KEY, null);
+    return cached ? mergeWithFallbackNodes(cached) : null;
 }
 
-function saveToCache(data) {
+async function saveToCache(data) {
     try {
-        localStorage.setItem(CACHE_KEY, JSON.stringify(mergeWithFallbackNodes(data)));
+        await setJSONItem(CACHE_KEY, mergeWithFallbackNodes(data));
     } catch {
         // storage quota exceeded or private browsing — silently skip
     }
@@ -44,25 +41,43 @@ function saveToCache(data) {
  * at the `/survey` path.
  *
  * Loading order:
- *  1. localStorage cache  — if its timestamp >= bundled nodes.json timestamp.
+ *  1. Persistent cache    — if its timestamp >= bundled nodes.json timestamp.
  *  2. Bundled nodes.json  — when there is no cache, or the cache is older than
  *                           the bundled version (e.g. after an app update).
  *  3. Firebase /survey    — once the subscription fires, the returned nodes and
- *                           the localStorage cache are both updated.
+ *                           the persistent cache are both updated.
  *
  * While offline, the hook keeps whatever was last cached; the app stays fully
  * functional without a network connection.
  */
 export function useSurveyNodes() {
-    const [nodes, setNodes] = useState(() => {
-        const cached = loadFromCache();
-        const cachedTs = cached?.timestamp ?? 0;
-        const bundledTs = fallbackNodes.timestamp ?? 0;
-        if (cached && cachedTs >= bundledTs) return cached;
-        // Bundled nodes are newer — replace stale cache immediately.
-        saveToCache(fallbackNodes);
-        return fallbackNodes;
-    });
+    const [nodes, setNodes] = useState(fallbackNodes);
+
+    useEffect(() => {
+        let isMounted = true;
+
+        const hydrateFromCache = async () => {
+            const cached = await loadFromCache();
+            const cachedTs = cached?.timestamp ?? 0;
+            const bundledTs = fallbackNodes.timestamp ?? 0;
+
+            if (!isMounted) return;
+
+            if (cached && cachedTs >= bundledTs) {
+                setNodes(cached);
+                return;
+            }
+
+            // Bundled nodes are newer — replace stale cache immediately.
+            await saveToCache(fallbackNodes);
+        };
+
+        hydrateFromCache();
+
+        return () => {
+            isMounted = false;
+        };
+    }, []);
 
     useEffect(() => {
         const surveyRef = ref(db, "survey");
@@ -77,7 +92,7 @@ export function useSurveyNodes() {
                     return;
                 }
                 const mergedNodes = mergeWithFallbackNodes(data);
-                saveToCache(mergedNodes);
+                void saveToCache(mergedNodes);
                 setNodes(mergedNodes);
             }
         });
@@ -88,16 +103,16 @@ export function useSurveyNodes() {
 }
 
 /**
- * Clears the localStorage survey-nodes cache and fetches a fresh copy from
+ * Clears the survey-nodes cache and fetches a fresh copy from
  * Firebase Realtime Database. Any active `useSurveyNodes` subscription will
  * receive the update automatically via its `onValue` listener.
  */
 export async function refreshSurveyNodes() {
-    localStorage.removeItem(CACHE_KEY);
+    await removeItem(CACHE_KEY);
     const surveyRef = ref(db, "survey");
     const snapshot = await get(surveyRef);
     const data = snapshot.val();
     if (data && typeof data === "object") {
-        saveToCache(data);
+        await saveToCache(data);
     }
 }

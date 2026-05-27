@@ -4,7 +4,7 @@
  * React hook that manages the persistent log of survey responses.
  *
  * Each entry in the log represents one answer to one scoreable node.
- * The log is stored in localStorage under the key "milc_survey_log".
+ * The log is stored under the key "milc_survey_log" in app persistent storage.
  *
  * Shape of a single log record:
  * {
@@ -19,7 +19,8 @@
  * See README.md for how records are used in PEC / MR calculation.
  */
 
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { getJSONItem, setJSONItem } from "../utils/persistentStorage";
 
 const STORAGE_KEY = "milc_survey_log";
 
@@ -43,20 +44,14 @@ const localDateString = () => {
 // Low-level storage helpers (not exported — use the hook instead)
 // ---------------------------------------------------------------------------
 
-const readLog = () => {
-    try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (!raw) return [];
-        const parsed = JSON.parse(raw);
-        return Array.isArray(parsed) ? parsed : [];
-    } catch {
-        return [];
-    }
+const readLog = async () => {
+    const parsed = await getJSONItem(STORAGE_KEY, []);
+    return Array.isArray(parsed) ? parsed : [];
 };
 
-const writeLog = (records) => {
+const writeLog = async (records) => {
     try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+        await setJSONItem(STORAGE_KEY, records);
     } catch (err) {
         console.error("[useSurveyLog] Failed to write log:", err);
     }
@@ -78,6 +73,25 @@ const writeLog = (records) => {
  * }}
  */
 export const useSurveyLog = () => {
+    const [records, setRecords] = useState([]);
+
+    useEffect(() => {
+        let isMounted = true;
+
+        const hydrate = async () => {
+            const persisted = await readLog();
+            if (isMounted) {
+                setRecords(persisted);
+            }
+        };
+
+        hydrate();
+
+        return () => {
+            isMounted = false;
+        };
+    }, []);
+
     /**
      * Persists one answer to the log.
      *
@@ -104,8 +118,11 @@ export const useSurveyLog = () => {
             timestamp: Date.now(),
         };
 
-        const existing = readLog();
-        writeLog([...existing, record]);
+        setRecords((prev) => {
+            const next = [...prev, record];
+            void writeLog(next);
+            return next;
+        });
     }, []);
 
     /**
@@ -114,8 +131,8 @@ export const useSurveyLog = () => {
      * @returns {Array}
      */
     const getRecords = useCallback(() => {
-        return readLog().sort((a, b) => a.timestamp - b.timestamp);
-    }, []);
+        return [...records].sort((a, b) => a.timestamp - b.timestamp);
+    }, [records]);
 
     /**
      * Returns all records for a specific scenario.
@@ -124,8 +141,8 @@ export const useSurveyLog = () => {
      * @returns {Array}
      */
     const getRecordsByScenario = useCallback((scenarioId) => {
-        return readLog().filter((r) => r.scenario === scenarioId);
-    }, []);
+        return records.filter((r) => r.scenario === scenarioId);
+    }, [records]);
 
     /**
      * Returns the number of distinct calendar days on which any
@@ -135,17 +152,18 @@ export const useSurveyLog = () => {
      * @returns {number}
      */
     const getActiveDays = useCallback(() => {
-        const records = readLog().filter(
+        const scoredRecords = records.filter(
             (r) => r.answer !== "dont-know" && r.answer !== "dont_know"
         );
-        return new Set(records.map((r) => r.date)).size;
-    }, []);
+        return new Set(scoredRecords.map((r) => r.date)).size;
+    }, [records]);
 
     /**
      * Wipes the entire log. Useful for development / profile reset.
      */
     const clearLog = useCallback(() => {
-        writeLog([]);
+        setRecords([]);
+        void writeLog([]);
     }, []);
 
     return {

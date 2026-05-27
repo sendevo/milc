@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import i18n from "../i18n";
+import { getItem, removeItem, setItem } from "../utils/persistentStorage";
 
 const SettingsContext = createContext(null);
 
@@ -8,34 +9,56 @@ const STORAGE_KEY_THEME = "milc_theme";
 const STORAGE_KEY_SIMULATED_DATE = "milc_simulated_date";
 
 export const SettingsProvider = ({ children }) => {
-    const [language, setLanguageState] = useState(
-        () => localStorage.getItem(STORAGE_KEY_LANG) || i18n.language || "es"
-    );
-    const [themeMode, setThemeModeState] = useState(
-        () => localStorage.getItem(STORAGE_KEY_THEME) || "light"
-    );
+    const [language, setLanguageState] = useState(() => i18n.language || "es");
+    const [themeMode, setThemeModeState] = useState("light");
     const [simulatedDate, setSimulatedDateState] = useState(() => {
         if (!import.meta.env.DEV) {
             return "";
         }
-        return localStorage.getItem(STORAGE_KEY_SIMULATED_DATE) || "";
+        return "";
     });
 
-    // Apply the persisted language on first mount so i18n reflects the stored preference.
     useEffect(() => {
-        if (language !== i18n.language) {
-            i18n.changeLanguage(language);
-        }
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+        let isMounted = true;
+
+        const hydrateSettings = async () => {
+            const [storedLang, storedTheme, storedDate] = await Promise.all([
+                getItem(STORAGE_KEY_LANG),
+                getItem(STORAGE_KEY_THEME),
+                import.meta.env.DEV ? getItem(STORAGE_KEY_SIMULATED_DATE) : Promise.resolve("")
+            ]);
+
+            if (!isMounted) return;
+
+            const lang = storedLang || i18n.language || "es";
+            const mode = storedTheme || "light";
+
+            setLanguageState(lang);
+            setThemeModeState(mode);
+            if (import.meta.env.DEV) {
+                setSimulatedDateState(storedDate || "");
+            }
+
+            if (lang !== i18n.language) {
+                i18n.changeLanguage(lang);
+            }
+        };
+
+        hydrateSettings();
+
+        return () => {
+            isMounted = false;
+        };
+    }, []);
 
     const setLanguage = (lang) => {
         i18n.changeLanguage(lang);
-        localStorage.setItem(STORAGE_KEY_LANG, lang);
+        void setItem(STORAGE_KEY_LANG, lang);
         setLanguageState(lang);
     };
 
     const setThemeMode = (mode) => {
-        localStorage.setItem(STORAGE_KEY_THEME, mode);
+        void setItem(STORAGE_KEY_THEME, mode);
         setThemeModeState(mode);
     };
 
@@ -44,9 +67,9 @@ export const SettingsProvider = ({ children }) => {
             return;
         }
         if (date) {
-            localStorage.setItem(STORAGE_KEY_SIMULATED_DATE, date);
+            void setItem(STORAGE_KEY_SIMULATED_DATE, date);
         } else {
-            localStorage.removeItem(STORAGE_KEY_SIMULATED_DATE);
+            void removeItem(STORAGE_KEY_SIMULATED_DATE);
         }
         setSimulatedDateState(date || "");
     };
