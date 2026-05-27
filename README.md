@@ -234,6 +234,27 @@ The answers collected here drive which nodes are shown throughout the app (`milk
 - **The `scenario` field is the join key** between a node and the scoring system. Multiple nodes can share the same `scenario` — they all contribute to the same practice's PEC. Nodes with `scenario: "-"` are informational or setup screens and are never scored.
 - **The result views** (`view-result-*`) are the final output of a full session review. They are not shown after every session but rather when the user explicitly requests their logs/results.
 
+### Milk Bar Chart Metric Considerations
+
+The `MilkBarChart` page includes a derived metric shown as liters per animal (`litersPerAnimal`). To avoid distortions when animal count changes over time, this value must be computed with **daily animal count**, not with a single latest profile value.
+
+Current implementation considerations:
+
+- Milk amount per day comes from the latest answer of node `view-55` for that date.
+- Animal count per day comes from node `view-220` using latest-per-date resolution.
+- Animal count is treated as a step function in time: for each day in the selected range, use that day value if present; otherwise carry forward the latest known value.
+- If there is no animal record inside the range start, seed with the latest valid animal count before `fromDate`.
+- Days without a valid animal count (`<= 0` or missing historical seed) are excluded from liters-per-animal averaging.
+
+Formula used in the chart:
+
+```
+dailyRatio(d) = milkLiters(d) / animals(d)
+litersPerAnimal = average(dailyRatio(d) for valid days d in [fromDate, toDate])
+```
+
+This prevents a late update (for example, 10 to 10000 animals) from retroactively collapsing the metric for previous days/months.
+
 
 ## Features
 

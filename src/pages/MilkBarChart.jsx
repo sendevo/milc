@@ -68,6 +68,62 @@ const buildLatestMilkByDate = (records, startDate, endDate) => {
     return valuesByDate;
 };
 
+const buildEffectiveAnimalsByDate = (records, startDate, endDate) => {
+    if (!startDate || !endDate || startDate > endDate) return {};
+
+    const fromIso = formatAsIsoDate(startDate);
+    const toIso = formatAsIsoDate(endDate);
+    const latestByDate = {};
+    let latestBeforeStart = null;
+
+    for (const record of records) {
+        if (record.nodeId !== "view-220") continue;
+        if (!record.date || record.date > toIso) continue;
+
+        const value = Number(record.answer);
+        if (!Number.isFinite(value) || value <= 0) continue;
+
+        const timestamp = Number(record.timestamp) || 0;
+        if (record.date < fromIso) {
+            if (
+                !latestBeforeStart ||
+                record.date > latestBeforeStart.date ||
+                (record.date === latestBeforeStart.date && timestamp >= latestBeforeStart.timestamp)
+            ) {
+                latestBeforeStart = { date: record.date, value, timestamp };
+            }
+            continue;
+        }
+
+        const previous = latestByDate[record.date];
+        if (!previous || timestamp >= previous.timestamp) {
+            latestByDate[record.date] = { value, timestamp };
+        }
+    }
+
+    const valuesByDate = {};
+    let latestKnownAnimals = latestBeforeStart?.value ?? null;
+    const cursor = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+    const finalDate = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate());
+
+    while (cursor <= finalDate) {
+        const isoDate = formatAsIsoDate(cursor);
+        const entry = latestByDate[isoDate];
+
+        if (entry) {
+            latestKnownAnimals = entry.value;
+        }
+
+        if (Number.isFinite(latestKnownAnimals) && latestKnownAnimals > 0) {
+            valuesByDate[isoDate] = latestKnownAnimals;
+        }
+
+        cursor.setDate(cursor.getDate() + 1);
+    }
+
+    return valuesByDate;
+};
+
 const buildSeries = (startDate, endDate, language, valuesByDate) => {
     if (!startDate || !endDate || startDate > endDate) return [];
 
@@ -143,6 +199,10 @@ const MilkBarChart = () => {
         () => buildLatestMilkByDate(records, from, to),
         [records, from, to],
     );
+    const animalsByDate = useMemo(
+        () => buildEffectiveAnimalsByDate(records, from, to),
+        [records, from, to],
+    );
     const series = useMemo(
         () => buildSeries(from, to, i18n.language, milkValuesByDate),
         [from, to, i18n.language, milkValuesByDate],
@@ -160,20 +220,30 @@ const MilkBarChart = () => {
         if (!totalDaysInRange) return 0;
         return Number((totalLiters / totalDaysInRange).toFixed(1));
     }, [totalLiters, totalDaysInRange]);
-    const latestAnimalsRecord = useMemo(() => {
-        const animalRecords = records.filter((record) => record.nodeId === "view-220");
-        if (!animalRecords.length) return null;
-        return animalRecords.reduce((latest, current) => {
-            return (Number(current.timestamp) || 0) > (Number(latest.timestamp) || 0)
-                ? current
-                : latest;
-        });
-    }, [records]);
-    const animalsCount = Number(latestAnimalsRecord?.answer);
     const litersPerAnimal = useMemo(() => {
-        if (!Number.isFinite(animalsCount) || animalsCount <= 0) return 0;
-        return Number((averageLitersPerDay / animalsCount).toFixed(2));
-    }, [averageLitersPerDay, animalsCount]);
+        if (!from || !to || from > to) return 0;
+
+        const cursor = new Date(from.getFullYear(), from.getMonth(), from.getDate());
+        const finalDate = new Date(to.getFullYear(), to.getMonth(), to.getDate());
+        let totalDailyLitersPerAnimal = 0;
+        let daysWithAnimals = 0;
+
+        while (cursor <= finalDate) {
+            const isoDate = formatAsIsoDate(cursor);
+            const milkValue = Number(milkValuesByDate[isoDate] ?? 0);
+            const animalsCount = Number(animalsByDate[isoDate]);
+
+            if (Number.isFinite(animalsCount) && animalsCount > 0) {
+                totalDailyLitersPerAnimal += milkValue / animalsCount;
+                daysWithAnimals += 1;
+            }
+
+            cursor.setDate(cursor.getDate() + 1);
+        }
+
+        if (!daysWithAnimals) return 0;
+        return Number((totalDailyLitersPerAnimal / daysWithAnimals).toFixed(2));
+    }, [from, to, milkValuesByDate, animalsByDate]);
 
     useEffect(() => {
         if (isRangeValid) return;
