@@ -835,6 +835,15 @@
         "category": "",
         "fields": [
             {
+                "audios": [
+                    {
+                        "src": "AUDIO1.mp3"
+                    }
+                ],
+                "id": "view-35-audio",
+                "type": "audio_list"
+            },
+            {
                 "id": "my_images",
                 "images": [
                     {
@@ -845,15 +854,6 @@
                     }
                 ],
                 "type": "image_list"
-            },
-            {
-                "audios": [
-                    {
-                        "src": "AUDIO1.mp3"
-                    }
-                ],
-                "id": "view-35-audio",
-                "type": "audio_list"
             }
         ],
         "guide-id": "Requisitos de limpieza de la sala de ordeño mecánico",

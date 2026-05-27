@@ -519,7 +519,19 @@ function buildFieldEl(field, index) {
     delBtn.textContent = '✕';
     delBtn.className = 'btn-icon btn-danger';
     delBtn.addEventListener('click', () => { wrap.remove(); markDirty(); });
+    const upBtn = document.createElement('button');
+    upBtn.textContent = '↑';
+    upBtn.className = 'btn-icon';
+    upBtn.title = 'Move up';
+    upBtn.addEventListener('click', () => moveFieldBlock(wrap, -1));
+    const downBtn = document.createElement('button');
+    downBtn.textContent = '↓';
+    downBtn.className = 'btn-icon';
+    downBtn.title = 'Move down';
+    downBtn.addEventListener('click', () => moveFieldBlock(wrap, 1));
     header.appendChild(delBtn);
+    header.appendChild(upBtn);
+    header.appendChild(downBtn);
 
     wrap.appendChild(header);
 
@@ -568,6 +580,25 @@ function buildFieldEl(field, index) {
     wrap.appendChild(actionSection);
 
     return wrap;
+}
+
+function moveFieldBlock(blockEl, direction) {
+    const container = document.getElementById('fields-container');
+    const blocks = Array.from(container.querySelectorAll('.field-block'));
+    const currentIndex = blocks.indexOf(blockEl);
+    if (currentIndex < 0) return;
+
+    const targetIndex = currentIndex + direction;
+    if (targetIndex < 0 || targetIndex >= blocks.length) return;
+
+    const target = blocks[targetIndex];
+    if (direction < 0) {
+        container.insertBefore(blockEl, target);
+    } else {
+        container.insertBefore(target, blockEl);
+    }
+
+    markDirty();
 }
 
 function makeRow(labelText, inputEl) {
