@@ -33,6 +33,7 @@ const App = () => {
         <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className="app-container">
+        <div className="app">
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Welcome />} />
@@ -96,6 +97,7 @@ const App = () => {
                     }/>
             </Routes>
             </BrowserRouter>
+        </div>
         </div>
         </ThemeProvider>
     );
