@@ -65,6 +65,8 @@ const SurveyStep = ({ node, nodeId, onSubmit, onBack }) => {
     const isComplete = inputFields.every((f) => answers[f.id] !== undefined);
 
     const hasBottomNav = node.fields.some((f) => selfNavigatingTypes.includes(f.type));
+    const contentFields = node.fields.filter((f) => !selfNavigatingTypes.includes(f.type));
+    const bottomNavFields = node.fields.filter((f) => selfNavigatingTypes.includes(f.type));
 
     const renderField = (field) => {
         switch (field.type) {
@@ -165,28 +167,32 @@ const SurveyStep = ({ node, nodeId, onSubmit, onBack }) => {
             showDate={true}
             onBack={onBack}>
             <Box sx={styles.fieldsBox}>
-                {node.fields.map(renderField)}
+                {contentFields.map(renderField)}
 
-                {!autoAdvance && !hasBottomNav ? 
-                    <Button
-                        variant="contained"
-                        disabled={!isComplete}
-                        onClick={() => onSubmit(answers)}
-                        sx={styles.submitButton}>
-                        {node.next ? tUI("survey.next") : tUI("survey.finish")}
-                    </Button>
-                : 
-                    !hasBottomNav || node.next ? <Fragment>
-                        <Divider sx={styles.divider} />
+                <Box sx={styles.bottomArea}>
+                    {bottomNavFields.map(renderField)}
+
+                    {!autoAdvance && !hasBottomNav ? 
                         <Button
-                            variant="text"
-                            color="inherit"
-                            onClick={() => navigate("/app")}
-                            sx={styles.backToMenuButton}>
-                            {tUI("survey.backToMenu")}
+                            variant="contained"
+                            disabled={!isComplete}
+                            onClick={() => onSubmit(answers)}
+                            sx={styles.submitButton}>
+                            {node.next ? tUI("survey.next") : tUI("survey.finish")}
                         </Button>
-                    </Fragment> : null
-                }
+                    : 
+                        !hasBottomNav || node.next ? <Fragment>
+                            <Divider sx={styles.divider} />
+                            <Button
+                                variant="text"
+                                color="inherit"
+                                onClick={() => navigate("/app")}
+                                sx={styles.backToMenuButton}>
+                                {tUI("survey.backToMenu")}
+                            </Button>
+                        </Fragment> : null
+                    }
+                </Box>
             </Box>
         </ViewContainer>
     );
