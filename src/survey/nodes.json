@@ -61,7 +61,7 @@
             {
                 "id": "view-105-alert",
                 "message": {
-                    "en": "no-translation",
+                    "en": "Attention<br>Check your hygiene",
                     "es": "Atención<br>Revisá tu higiene"
                 },
                 "type": "alert"
@@ -109,7 +109,7 @@
         "severity": 0,
         "showDate": true,
         "subtitle": {
-            "en": "no-translation",
+            "en": "Your personal hygiene",
             "es": "Tu higiene personal"
         },
         "title": {
@@ -281,7 +281,7 @@
             {
                 "id": "view-111-alert",
                 "message": {
-                    "en": "no-translation",
+                    "en": "Done!<br>Start milking",
                     "es": "¡Listo!<br>Comenzá a ordeñar"
                 },
                 "type": "alert"
@@ -395,7 +395,7 @@
             {
                 "id": "view-120-alert",
                 "message": {
-                    "en": "no-translation",
+                    "en": "<b>Attention</b><br>Weekly alert:<br>Clean the pen",
                     "es": "<b>Atención</b><br>Alerta semanal:<br>Limpiá el corral"
                 },
                 "type": "alert"
@@ -626,11 +626,11 @@
         "severity": 3,
         "showDate": true,
         "subtitle": {
-            "en": "no-translation",
+            "en": "Did you filter the milk?",
             "es": "¿Filtraste la leche?"
         },
         "title": {
-            "en": "no-translation",
+            "en": "Milk conditioning",
             "es": "Acondicionar la leche"
         }
     },
@@ -678,11 +678,11 @@
         "severity": 3,
         "showDate": true,
         "subtitle": {
-            "en": "no-translation",
+            "en": "Did you label the container?",
             "es": "¿Rotulaste el envase?"
         },
         "title": {
-            "en": "no-translation",
+            "en": "Milk conditioning",
             "es": "Acondicionar la leche"
         }
     },
@@ -692,7 +692,7 @@
             {
                 "id": "view-132-alert",
                 "message": {
-                    "en": "no-translation",
+                    "en": "Always label the container with its date",
                     "es": "Rotulá siempre el envase con su fecha"
                 },
                 "type": "alert"
@@ -731,7 +731,7 @@
         "severity": 0,
         "showDate": true,
         "title": {
-            "en": "no-translation",
+            "en": "Milk conditioning",
             "es": "Acondicionar la leche"
         }
     },
@@ -741,7 +741,7 @@
             {
                 "id": "view-115-alert",
                 "message": {
-                    "en": "no-translation",
+                    "en": "You completed milk conditioning",
                     "es": "Completaste el acondicionamiento de la leche"
                 },
                 "type": "alert"
@@ -756,7 +756,7 @@
         "severity": 0,
         "showDate": true,
         "title": {
-            "en": "no-translation",
+            "en": "Milk conditioning",
             "es": "Acondicionar la leche"
         }
     },
@@ -893,7 +893,7 @@
         "severity": 0,
         "showDate": true,
         "subtitle": {
-            "en": "no-translation",
+            "en": "Management of goats with mastitis",
             "es": "Manejo de cabras con mastitis"
         },
         "title": {
@@ -949,7 +949,7 @@
         "severity": 3,
         "showDate": true,
         "subtitle": {
-            "en": "no-translation",
+            "en": "In blood testing, did any animal test positive?",
             "es": "En el sangrado, ¿algún animal dio positivo?"
         },
         "title": {
@@ -1297,7 +1297,7 @@
             {
                 "id": "view-194-alert",
                 "message": {
-                    "en": "no-translation",
+                    "en": "<b>Attention</b><br>Perform blood testing for brucellosis control",
                     "es": "<b>Atención</b><br>Realizá el sangrado para control de brucelosis"
                 },
                 "severity": "warning",
@@ -1326,7 +1326,7 @@
             {
                 "id": "view-193-alert",
                 "message": {
-                    "en": "no-translation",
+                    "en": "<b>Attention</b><br>Require a brucellosis-free certificate",
                     "es": "<b>Atención</b><br>Exigí el certificado libre de brucelosis"
                 },
                 "severity": "warning",
@@ -1355,7 +1355,7 @@
             {
                 "id": "view-194-alert",
                 "message": {
-                    "en": "no-translation",
+                    "en": "<b>Attention</b><br>Remove positive animals",
                     "es": "<b>Atención</b><br>Descartá los animales positivos"
                 },
                 "severity": "warning",
@@ -1520,11 +1520,11 @@
         "severity": 0,
         "showDate": true,
         "subtitle": {
-            "en": "no-translation",
+            "en": "Label the container",
             "es": "Rotular el envase"
         },
         "title": {
-            "en": "no-translation",
+            "en": "Milk conditioning",
             "es": "Acondicionar la leche"
         }
     },
@@ -1572,11 +1572,11 @@
         "severity": 3,
         "showDate": true,
         "subtitle": {
-            "en": "",
+            "en": "Did you check the udders?",
             "es": "¿Revisaste las ubres?"
         },
         "title": {
-            "en": "",
+            "en": "Before milking",
             "es": "Antes de ordeñar"
         }
     },
@@ -1624,11 +1624,11 @@
         "severity": 3,
         "showDate": true,
         "subtitle": {
-            "en": "",
+            "en": "Did you find symptoms of mastitis?",
             "es": "¿Encontraste síntomas de mastitis?"
         },
         "title": {
-            "en": "",
+            "en": "Before milking",
             "es": "Antes de ordeñar"
         }
     },
@@ -1704,7 +1704,7 @@
             {
                 "id": "view-237-alert",
                 "message": {
-                    "en": "no-translation",
+                    "en": "<b>Attention</b><br>Milk those animals at the end and discard their milk",
                     "es": "<b>Atención</b><br>Ordeñá esos animales al final y descartá su leche"
                 },
                 "type": "alert"
@@ -1850,7 +1850,7 @@
         "severity": 0,
         "showDate": true,
         "subtitle": {
-            "en": "no-translation",
+            "en": "Strip the teats",
             "es": "Despuntá las ubres"
         },
         "title": {
@@ -1906,7 +1906,7 @@
         "severity": 3,
         "showDate": true,
         "subtitle": {
-            "en": "no-translation",
+            "en": "Were you fit to milk?",
             "es": "¿Estabas en condiciones de ordeñar?"
         },
         "title": {
@@ -1962,7 +1962,7 @@
         "severity": 3,
         "showDate": true,
         "subtitle": {
-            "en": "no-translation",
+            "en": "Do you have appropriate clothing?",
             "es": "¿Contás con indumentaria adecuada?"
         },
         "title": {
@@ -2018,7 +2018,7 @@
         "severity": 3,
         "showDate": true,
         "subtitle": {
-            "en": "no-translation",
+            "en": "Did you follow personal hygiene guidelines?",
             "es": "¿Seguiste las indicaciones de higiene personal?"
         },
         "title": {
@@ -2177,7 +2177,7 @@
             {
                 "id": "view-254-alert",
                 "message": {
-                    "en": "no-translation",
+                    "en": "<b>Attention</b><br>Wash utensils every time you milk",
                     "es": "<b>Atención</b><br>Lavá los utensilios cada vez que ordeñes"
                 },
                 "severity": "warning",
@@ -2206,7 +2206,7 @@
             {
                 "id": "view-255-alert",
                 "message": {
-                    "en": "no-translation",
+                    "en": "Done!<br>You completed the brucellosis record",
                     "es": "¡Listo!<br>Completaste el registro para brucelosis"
                 },
                 "severity": "info",
@@ -2235,7 +2235,7 @@
             {
                 "id": "view-256-alert",
                 "message": {
-                    "en": "no-translation",
+                    "en": "Done!<br>You completed the mastitis record",
                     "es": "¡Listo!<br>Completaste el registro para mastitis"
                 },
                 "severity": "info",
@@ -2559,7 +2559,7 @@
             {
                 "id": "view-37-alert",
                 "message": {
-                    "en": "no-translation",
+                    "en": "Attention<br>Milk those animals at the end and discard their milk",
                     "es": "Atención<br>Ordeñá esos animales al final y descartá su leche"
                 },
                 "type": "alert"
@@ -2641,7 +2641,7 @@
         "severity": 0,
         "showDate": true,
         "subtitle": {
-            "en": "no-translation",
+            "en": "Strip the teats",
             "es": "Despuntá las ubres"
         },
         "title": {
@@ -2828,7 +2828,7 @@
         "severity": 0,
         "showDate": true,
         "subtitle": {
-            "en": "no-translation",
+            "en": "Your clothing",
             "es": "Tu indumentaria"
         },
         "title": {
@@ -2880,7 +2880,7 @@
         "severity": 3,
         "showDate": true,
         "subtitle": {
-            "en": "no-translation",
+            "en": "Do you have appropriate clothing?",
             "es": "¿Contás con indumentaria adecuada?"
         },
         "title": {
@@ -2932,7 +2932,7 @@
         "severity": 3,
         "showDate": true,
         "subtitle": {
-            "en": "no-translation",
+            "en": "Did you follow personal hygiene guidelines?",
             "es": "¿Seguiste las indicaciones de higiene personal?"
         },
         "title": {
@@ -2988,7 +2988,7 @@
         "severity": 0,
         "showDate": true,
         "subtitle": {
-            "en": "no-translation",
+            "en": "Did you complete full equipment cleaning?",
             "es": "¿Hiciste la limpieza completa del equipo?"
         },
         "title": {
@@ -3002,7 +3002,7 @@
             {
                 "id": "view-53-alert",
                 "message": {
-                    "en": "no-translation",
+                    "en": "Attention<br>Check your clothing",
                     "es": "Atención<br>Revisá tu indumentaria"
                 },
                 "type": "alert"
@@ -3062,7 +3062,7 @@
             {
                 "id": "view-56-text-block",
                 "message": {
-                    "en": "",
+                    "en": "With warm water (35-45°C) until it runs clear",
                     "es": "Con agua tibia (35-45°C) hasta que salga clara"
                 },
                 "type": "text_block"
@@ -3082,7 +3082,7 @@
         "severity": 0,
         "showDate": true,
         "subtitle": {
-            "en": "no-translation",
+            "en": "First rinse",
             "es": "Primer enjuague"
         },
         "title": {
@@ -3096,7 +3096,7 @@
             {
                 "id": "view-57-text-block",
                 "message": {
-                    "en": "",
+                    "en": "Hot water (60-70°C).<br>Recirculate water according to manufacturer instructions",
                     "es": "Agua caliente (60-70°C).<br> Recircular el agua según instrucciones del fabricante"
                 },
                 "type": "text_block"
@@ -3116,7 +3116,7 @@
         "severity": 0,
         "showDate": true,
         "subtitle": {
-            "en": "no-translation",
+            "en": "Use alkaline detergent",
             "es": "Uso de detergente alcalino"
         },
         "title": {
@@ -3130,7 +3130,7 @@
             {
                 "id": "view-58-text-block",
                 "message": {
-                    "en": "",
+                    "en": "Clean water at room temperature.<br>Until the water runs clear.",
                     "es": "Agua limpia a temperatura ambiente.<br>Hasta que el agua salga clara."
                 },
                 "type": "text_block"
@@ -3150,7 +3150,7 @@
         "severity": 0,
         "showDate": true,
         "subtitle": {
-            "en": "no-translation",
+            "en": "Rinse",
             "es": "Enjuagar"
         },
         "title": {
@@ -3164,7 +3164,7 @@
             {
                 "id": "view-59-text-block",
                 "message": {
-                    "en": "",
+                    "en": "Hot water (60-75°C) according to the frequency indicated for the farm.<br>Recirculate for the time specified by the manufacturer.",
                     "es": "Agua caliente (60-75°C) según frecuencia indicada para establecimiento.<br>Recircular el tiempo que indica el fabricante."
                 },
                 "type": "text_block"
@@ -3184,7 +3184,7 @@
         "severity": 0,
         "showDate": true,
         "subtitle": {
-            "en": "no-translation",
+            "en": "Use acid detergent",
             "es": "Uso de detergente ácido"
         },
         "title": {
@@ -3198,7 +3198,7 @@
             {
                 "id": "view-60-text-block",
                 "message": {
-                    "en": "",
+                    "en": "Clean water at room temperature.<br>Until the water runs clear.<br>Do not recirculate.",
                     "es": "Agua limpia a temperatura ambiente.<br>>Hasta que el agua salga clara.<br>No recircular."
                 },
                 "type": "text_block"
@@ -3218,7 +3218,7 @@
         "severity": 0,
         "showDate": true,
         "subtitle": {
-            "en": "no-translation",
+            "en": "Rinse",
             "es": "Enjuagar"
         },
         "title": {
@@ -3232,7 +3232,7 @@
             {
                 "id": "view-61-text-block",
                 "message": {
-                    "en": "",
+                    "en": "Use chlorine (bleach) or another sanitizer diluted in clean water",
                     "es": "Usar cloro (lavandina) u otro sanitizante diluido en agua limpia"
                 },
                 "type": "text_block"
@@ -3252,7 +3252,7 @@
         "severity": 0,
         "showDate": true,
         "subtitle": {
-            "en": "no-translation",
+            "en": "Disinfect",
             "es": "Desinfectar"
         },
         "title": {
@@ -3341,7 +3341,7 @@
         "severity": 3,
         "showDate": true,
         "subtitle": {
-            "en": "no-translation",
+            "en": "Did you complete full cleaning of utensils and accessories?",
             "es": "¿Hiciste la limpieza completa de utensilios y accesorios?"
         },
         "title": {
@@ -3355,7 +3355,7 @@
             {
                 "id": "view-65-text-block",
                 "message": {
-                    "en": "no-translation",
+                    "en": "Utensils and accessories with clean, warm water (35-45°C).",
                     "es": "Utensilios y accesorios con agua limpia y tibia (35-45°C)."
                 },
                 "type": "text_block"
@@ -3389,7 +3389,7 @@
             {
                 "id": "view-66-text-block",
                 "message": {
-                    "en": "no-translation",
+                    "en": "Hot water (60-70°C).",
                     "es": "Agua caliente (60-70°C)."
                 },
                 "type": "text_block"
@@ -3409,7 +3409,7 @@
         "severity": 0,
         "showDate": true,
         "subtitle": {
-            "en": "no-translation",
+            "en": "Use detergent and brush",
             "es": "Uso de detergente y cepillo"
         },
         "title": {
@@ -3423,7 +3423,7 @@
             {
                 "id": "view-67-text-block",
                 "message": {
-                    "en": "no-translation",
+                    "en": "With clean, warm water<br>Make sure the water runs clear and no detergent residue remains to the touch.",
                     "es": "Con agua limpia y tibia<br>Observar que el agua salga clara o al tacto no queden restos de detergentes."
                 },
                 "type": "text_block"
@@ -3457,7 +3457,7 @@
             {
                 "id": "view-68-text-block",
                 "message": {
-                    "en": "no-translation",
+                    "en": "Use chlorine (bleach) or another sanitizer diluted in clean water.",
                     "es": "Usar cloro (lavandina) u otro sanitizante diluido en agua limpia."
                 },
                 "type": "text_block"
@@ -3491,7 +3491,7 @@
             {
                 "id": "view-69-text-block",
                 "message": {
-                    "en": "no-translation",
+                    "en": "Let it dry in a clean, dry, insect-free place.",
                     "es": "Dejar secar en lugar limpio, seco y sin insectos."
                 },
                 "type": "text_block"
@@ -3554,7 +3554,7 @@
             {
                 "id": "view-85-alert",
                 "message": {
-                    "en": "no-translation",
+                    "en": "Attention<br>Mastitis risk<br>Check and strip the teats",
                     "es": "Atención<br>Riesgo de mastitis<br>Revisá y despuntá las ubres"
                 },
                 "type": "alert"
@@ -3582,7 +3582,7 @@
             {
                 "id": "view-286-text-block",
                 "message": {
-                    "en": "",
+                    "en": "<b>Very high hazard index</b><br>Filter processed milk<br>Label containers<br>Clean machines",
                     "es": "<b>Índice de peligro muy alto</b><br>Filtrá la leche procesada<br>Rotulá los envases<br>Limpiá las máquinas"
                 },
                 "type": "text_block"
@@ -3669,7 +3669,7 @@
             {
                 "id": "view-285-text-block",
                 "message": {
-                    "en": "",
+                    "en": "<b>High hazard index</b><br>Require health certificates<br>Remove animals with mastitis",
                     "es": "<b>Índice de peligro alto</b><br>Exigí certificados sanitarios<br>Descartá animales con mastitis"
                 },
                 "type": "text_block"
@@ -3693,7 +3693,7 @@
         }
     },
     "view-206": {
-        "category": "facilities",
+        "category": "supplies",
         "fields": [
             {
                 "id": "view-206-select",
@@ -3749,7 +3749,7 @@
         }
     },
     "view-207": {
-        "category": "facilities",
+        "category": "supplies",
         "fields": [
             {
                 "audios": [
@@ -3798,7 +3798,7 @@
         }
     },
     "view-208": {
-        "category": "facilities",
+        "category": "supplies",
         "fields": [
             {
                 "id": "view-208-select",
@@ -3854,7 +3854,7 @@
         }
     },
     "view-209": {
-        "category": "facilities",
+        "category": "supplies",
         "fields": [
             {
                 "audios": [
@@ -3897,7 +3897,7 @@
         }
     },
     "view-265": {
-        "category": "facilities",
+        "category": "supplies",
         "fields": [
             {
                 "id": "view-265-alert",
@@ -3926,7 +3926,7 @@
         }
     },
     "view-266": {
-        "category": "facilities",
+        "category": "supplies",
         "fields": [
             {
                 "id": "view-266-alert",
@@ -3955,7 +3955,7 @@
         }
     },
     "view-267": {
-        "category": "facilities",
+        "category": "supplies",
         "fields": [
             {
                 "id": "view-267-alert",
@@ -3984,7 +3984,7 @@
         }
     },
     "view-268": {
-        "category": "facilities",
+        "category": "supplies",
         "fields": [
             {
                 "id": "view-268-alert",
@@ -4030,6 +4030,367 @@
         "title": {
             "en": "My supplies",
             "es": "Mis insumos"
+        }
+    },
+    "view-196": {
+        "category": "facilities",
+        "fields": [
+            {
+                "id": "view-196-select",
+                "options": [
+                    {
+                        "label": {
+                            "en": "Yes",
+                            "es": "Si"
+                        },
+                        "target": "view-200",
+                        "value": "yes"
+                    },
+                    {
+                        "label": {
+                            "en": "No",
+                            "es": "No"
+                        },
+                        "target": "view-200",
+                        "value": "no"
+                    },
+                    {
+                        "label": {
+                            "en": "Don't know",
+                            "es": "No se"
+                        },
+                        "target": "view-198",
+                        "value": "dont-know"
+                    }
+                ],
+                "type": "select"
+            }
+        ],
+        "guide-id": "Instalaciones",
+        "icon": "cattle_pen.png",
+        "manual-page": "",
+        "milking-method": "",
+        "modified": {
+            "at": "2026-05-28T16:00:00.000Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "semester",
+        "scenario": "",
+        "score-answer": "yes",
+        "severity": 3,
+        "showDate": true,
+        "subtitle": {
+            "en": "Do you have a waiting pen?",
+            "es": "¿Contás con corral de espera?"
+        },
+        "title": {
+            "en": "Facilities",
+            "es": "Instalaciones"
+        }
+    },
+    "view-198": {
+        "category": "facilities",
+        "fields": [
+            {
+                "audios": [
+                    {
+                        "src": "AUDIO16.mp3"
+                    }
+                ],
+                "id": "view-198-audio",
+                "type": "audio_list"
+            },
+            {
+                "id": "view-198-images",
+                "images": [
+                    {
+                        "src": "facilities.png"
+                    },
+                    {
+                        "src": "goats.png"
+                    }
+                ],
+                "type": "image_list"
+            }
+        ],
+        "guide-id": "Instalaciones",
+        "manual-page": "",
+        "milking-method": "",
+        "modified": {
+            "at": "2026-05-28T16:00:00.000Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "",
+        "scenario": "",
+        "score-answer": "",
+        "severity": 0,
+        "showDate": true,
+        "subtitle": {
+            "en": "Waiting pen",
+            "es": "Corral de espera"
+        },
+        "title": {
+            "en": "Facilities",
+            "es": "Instalaciones"
+        }
+    },
+    "view-199": {
+        "category": "facilities",
+        "fields": [
+            {
+                "id": "view-199-alert",
+                "message": {
+                    "en": "<b>Attention</b><br>Check your facilities conditions",
+                    "es": "<b>Atención</b><br>Revisá las condiciones de tus instalaciones"
+                },
+                "severity": "warning",
+                "type": "alert"
+            }
+        ],
+        "guide-id": "Instalaciones",
+        "manual-page": "",
+        "milking-method": "",
+        "modified": {
+            "at": "2026-05-28T16:00:00.000Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "",
+        "scenario": "",
+        "score-answer": "",
+        "severity": 0,
+        "title": {
+            "en": "Facilities",
+            "es": "Instalaciones"
+        }
+    },
+    "view-200": {
+        "category": "facilities",
+        "fields": [
+            {
+                "id": "view-200-select",
+                "options": [
+                    {
+                        "label": {
+                            "en": "Yes",
+                            "es": "Si"
+                        },
+                        "target": "view-200",
+                        "value": "yes"
+                    },
+                    {
+                        "label": {
+                            "en": "No",
+                            "es": "No"
+                        },
+                        "target": "view-200",
+                        "value": "no"
+                    },
+                    {
+                        "label": {
+                            "en": "Don't know",
+                            "es": "No se"
+                        },
+                        "target": "view-198",
+                        "value": "dont-know"
+                    }
+                ],
+                "type": "select"
+            }
+        ],
+        "guide-id": "Instalaciones",
+        "icon": "cattle_pen.png",
+        "manual-page": "",
+        "milking-method": "",
+        "modified": {
+            "at": "2026-05-28T16:00:00.000Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "semester",
+        "scenario": "",
+        "score-answer": "yes",
+        "severity": 3,
+        "showDate": true,
+        "subtitle": {
+            "en": "Do you have a milking room?",
+            "es": "¿Contás con sala de ordeñe?"
+        },
+        "title": {
+            "en": "Facilities",
+            "es": "Instalaciones"
+        }
+    },
+    "view-201": {
+        "category": "facilities",
+        "fields": [
+            {
+                "audios": [
+                    {
+                        "src": "AUDIO17.mp3"
+                    }
+                ],
+                "id": "view-201-audio",
+                "type": "audio_list"
+            },
+            {
+                "id": "view-201-images",
+                "images": [
+                    {
+                        "src": "eating_goats.png"
+                    },
+                    {
+                        "src": "milk_tanks.png"
+                    }
+                ],
+                "type": "image_list"
+            }
+        ],
+        "guide-id": "Instalaciones",
+        "manual-page": "",
+        "milking-method": "",
+        "modified": {
+            "at": "2026-05-28T16:00:00.000Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "",
+        "scenario": "",
+        "score-answer": "",
+        "severity": 0,
+        "showDate": true,
+        "subtitle": {
+            "en": "Milking room",
+            "es": "Sala de ordeño"
+        },
+        "title": {
+            "en": "Facilities",
+            "es": "Instalaciones"
+        }
+    },
+    "view-202": {
+        "category": "facilities",
+        "fields": [
+            {
+                "id": "view-202-select",
+                "options": [
+                    {
+                        "label": {
+                            "en": "Yes",
+                            "es": "Si"
+                        },
+                        "target": "view-263",
+                        "value": "yes"
+                    },
+                    {
+                        "label": {
+                            "en": "No",
+                            "es": "No"
+                        },
+                        "target": "view-263",
+                        "value": "no"
+                    },
+                    {
+                        "label": {
+                            "en": "Don't know",
+                            "es": "No se"
+                        },
+                        "target": "view-1203",
+                        "value": "dont-know"
+                    }
+                ],
+                "type": "select"
+            }
+        ],
+        "guide-id": "Instalaciones",
+        "icon": "cattle_pen.png",
+        "manual-page": "",
+        "milking-method": "",
+        "modified": {
+            "at": "2026-05-28T16:00:00.000Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "semester",
+        "scenario": "",
+        "score-answer": "yes",
+        "severity": 3,
+        "showDate": true,
+        "subtitle": {
+            "en": "Do you have a room for milk conditioning?",
+            "es": "¿Contás con sala para acondicionamiento de la leche?"
+        },
+        "title": {
+            "en": "Facilities",
+            "es": "Instalaciones"
+        }
+    },
+    "view-203": {
+        "category": "facilities",
+        "fields": [
+            {
+                "audios": [
+                    {
+                        "src": "AUDIO18.mp3"
+                    }
+                ],
+                "id": "view-203-audio",
+                "type": "audio_list"
+            },
+            {
+                "id": "view-203-image",
+                "images": [
+                    {
+                        "src": "tank.png"
+                    }
+                ],
+                "type": "image_list"
+            }
+        ],
+        "guide-id": "Instalaciones",
+        "manual-page": "",
+        "milking-method": "",
+        "modified": {
+            "at": "2026-05-28T16:00:00.000Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "",
+        "scenario": "",
+        "score-answer": "",
+        "severity": 0,
+        "showDate": true,
+        "subtitle": {
+            "en": "Milk conditioning room",
+            "es": "Sala para acondicionar la leche"
+        },
+        "title": {
+            "en": "Facilities",
+            "es": "Instalaciones"
+        }
+    },
+    "view-263": {
+        "category": "facilities",
+        "fields": [
+            {
+                "id": "view-263-alert",
+                "message": {
+                    "en": "Done!<br>You completed your facilities status",
+                    "es": "¡Listo!<br>Completaste el estado de tus instalaciones"
+                },
+                "severity": "info",
+                "type": "alert"
+            }
+        ],
+        "guide-id": "Instalaciones",
+        "manual-page": "",
+        "milking-method": "",
+        "modified": {
+            "at": "2026-05-28T16:00:00.000Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "",
+        "scenario": "",
+        "score-answer": "",
+        "severity": 0,
+        "title": {
+            "en": "Facilities",
+            "es": "Instalaciones"
         }
     }
 }
