@@ -6,6 +6,12 @@ import { resolveTarget } from "../model";
 import { useSurveyLog } from "../hooks/useSurveyLog";
 import SurveyStep from "../components/survey/SurveyStep";
 import { useToast } from "../contexts/ToastContext";
+import { useAuth } from "../contexts/AuthContext";
+import {
+    buildTelemetryEvent,
+    enqueueTelemetryEvent,
+    flushTelemetryQueue,
+} from "../telemetry/telemetryQueue";
 
 /**
  * Route: /survey/:nodeId
@@ -28,8 +34,9 @@ const SurveyPage = () => {
     const navigate = useNavigate();
     const nodes = useSurveyNodes();
     const { showToast } = useToast();
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const { saveAnswer } = useSurveyLog();
+    const { currentUser } = useAuth();
 
     const node = nodes[nodeId];
 
@@ -87,10 +94,11 @@ const SurveyPage = () => {
     // Submit handler
     // ---------------------------------------------------------------------------
     const handleSubmit = (answers) => {
+        const answer = extractAnswer(answers);
+
         // 1. Persist the answer if this node has a scoreable scenario code.
-        if (isTrackable) {
-            const answer = extractAnswer(answers);
-            if (answer !== undefined) {
+        if (answer !== undefined) {
+            if (isTrackable) {
                 saveAnswer(nodeId, node.scenario, answer);
 
                 if (import.meta.env.DEV) {
@@ -101,6 +109,37 @@ const SurveyPage = () => {
                     });
                 }
             }
+
+            const normalizedAnswer = typeof answer === "string"
+                ? answer.trim().toLowerCase()
+                : answer;
+
+            const scoreAnswer = typeof node["score-answer"] === "string"
+                ? node["score-answer"].trim().toLowerCase()
+                : null;
+
+            const isCorrect = scoreAnswer
+                ? normalizedAnswer === scoreAnswer
+                : null;
+
+            const telemetryEvent = buildTelemetryEvent({
+                uid: currentUser?.uid,
+                nodeId,
+                scenario: node.scenario,
+                category: node.category,
+                answer,
+                isCorrect,
+                severity: node.severity,
+                periodicity: node.periodicity,
+                language: i18n.language,
+                appVersion: import.meta.env.VITE_APP_VERSION,
+            });
+
+            void enqueueTelemetryEvent(telemetryEvent)
+                .then(() => flushTelemetryQueue())
+                .catch(() => {
+                    // Telemetry failures are non-blocking for survey flow.
+                });
         }
 
         // 2. Navigate to the next node (unchanged from original logic).
