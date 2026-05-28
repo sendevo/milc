@@ -2,9 +2,12 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { Box, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
+import { useMemo } from "react";
 import ViewContainer from "../components/ViewContainer";
 import MenuCircle from "../components/MenuCircle";
 import { mainMenuStyles as styles } from "../theme/MainMenu.styles";
+import { useSurveyLog } from "../hooks/useSurveyLog";
+import { useSurveyNodes } from "../hooks/useSurveyNodes";
 import blueGoat from "../assets/icons/blue_goat.png";
 import udder from "../assets/icons/udder.png";
 import milkPail from "../assets/icons/milk_pail.png";
@@ -34,14 +37,34 @@ const MainMenu = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const theme = useTheme();
+    const nodes = useSurveyNodes();
+    const { getRecordsByScenario } = useSurveyLog();
     const isDark = theme.palette.mode === "dark";
     const menuBorder = isDark ? "#9e9e9e" : "#1a8090";
+
+    const beforeMilkingRoute = useMemo(() => {
+        const milkingMethodNodeId = Object.keys(nodes).find((nodeId) =>
+            (nodes[nodeId]?.fields || []).some((field) => field?.id === "milk-select")
+        );
+
+        if (!milkingMethodNodeId) {
+            return "/survey/view-109";
+        }
+
+        const latestMethodAnswer = getRecordsByScenario("APP-SETUP")
+            .filter((record) => record.nodeId === milkingMethodNodeId)
+            .sort((a, b) => b.timestamp - a.timestamp)[0]?.answer;
+
+        return latestMethodAnswer === "manual"
+            ? "/survey/view-124"
+            : "/survey/view-109";
+    }, [getRecordsByScenario, nodes]);
 
     const myDayItems = [
         {
             icon: blueGoat,
             label: t("mainMenu.beforeMilking"),
-            onClick: () => navigate("/survey/view-109")
+            onClick: () => navigate(beforeMilkingRoute)
         },
         { 
             icon: udder, 
