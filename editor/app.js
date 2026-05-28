@@ -145,7 +145,7 @@ function clearFbConfig() {
 
 function updateFirebaseStatusUI() {
     const statusBtn = document.getElementById('btn-firebase-status');
-    const pushBtn   = document.getElementById('btn-push-firebase');
+    //const pushBtn   = document.getElementById('btn-push-firebase');
     const authBanner = document.getElementById('auth-banner');
     const appEl     = document.getElementById('app');
     if (!statusBtn) return;
@@ -159,9 +159,9 @@ function updateFirebaseStatusUI() {
         }
         statusBtn.classList.add('status-connected');
         statusBtn.classList.remove('status-disconnected');
-        if (pushBtn) pushBtn.style.display = fbUser ? 'inline-block' : 'none';
-        const pullBtn = document.getElementById('btn-pull-firebase');
-        if (pullBtn) pullBtn.style.display = fbUser ? 'inline-block' : 'none';
+        //if (pushBtn) pushBtn.style.display = fbUser ? 'inline-block' : 'none';
+        //const pullBtn = document.getElementById('btn-pull-firebase');
+        //if (pullBtn) pullBtn.style.display = fbUser ? 'inline-block' : 'none';
         if (authBanner) authBanner.style.display = fbUser ? 'none' : 'flex';
         if (appEl) appEl.style.display = fbUser ? 'flex' : 'none';
     } else {
@@ -169,9 +169,9 @@ function updateFirebaseStatusUI() {
         statusBtn.title = 'Configure Firebase sync';
         statusBtn.classList.remove('status-connected');
         statusBtn.classList.add('status-disconnected');
-        if (pushBtn) pushBtn.style.display = 'none';
-        const pullBtn2 = document.getElementById('btn-pull-firebase');
-        if (pullBtn2) pullBtn2.style.display = 'none';
+        //if (pushBtn) pushBtn.style.display = 'none';
+        //const pullBtn2 = document.getElementById('btn-pull-firebase');
+        //if (pullBtn2) pullBtn2.style.display = 'none';
         if (authBanner) authBanner.style.display = 'none';
         if (appEl) appEl.style.display = 'flex';
     }
@@ -1559,6 +1559,7 @@ function bindStaticEvents() {
         closeFirebaseModal();
     });
 
+    /*
     document.getElementById('btn-push-firebase').addEventListener('click', () => {
         if (!fbDb) return;
         if (confirm('Push all local nodes to Firebase? This will overwrite /survey.')) fbPushAll();
@@ -1568,6 +1569,7 @@ function bindStaticEvents() {
         if (!fbDb) return;
         fbPullAll();
     });
+    */
 
     document.getElementById('pull-diff-confirm').addEventListener('click', () => {
         const modal = document.getElementById('modal-pull-diff');
