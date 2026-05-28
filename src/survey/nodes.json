@@ -1031,6 +1031,204 @@
             "es": "Sanidad"
         }
     },
+    "view-184": {
+        "category": "food",
+        "fields": [
+            {
+                "id": "",
+                "options": [
+                    {
+                        "label": {
+                            "en": "Yes",
+                            "es": "Si"
+                        },
+                        "target": "view-258",
+                        "value": "yes"
+                    },
+                    {
+                        "label": {
+                            "en": "No",
+                            "es": "No"
+                        },
+                        "target": "view-188",
+                        "value": "no"
+                    }
+                ],
+                "type": "select"
+            }
+        ],
+        "guide-id": "Alimentación",
+        "icon": "weed.png",
+        "manual-page": "",
+        "milking-method": "",
+        "modified": {
+            "at": "2026-05-28T13:39:11.483Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "",
+        "scenario": "",
+        "score-answer": "",
+        "severity": 0,
+        "showDate": true,
+        "subtitle": {
+            "en": "Do you buy supplementary food?",
+            "es": "¿Comprás alimento para suplementar?"
+        },
+        "title": {
+            "en": "Feed",
+            "es": "Alimentación"
+        }
+    },
+    "view-185": {
+        "category": "food",
+        "fields": [
+            {
+                "id": "",
+                "options": [
+                    {
+                        "label": {
+                            "en": "Yes",
+                            "es": "Si"
+                        },
+                        "target": "view-188",
+                        "value": "yes"
+                    },
+                    {
+                        "label": {
+                            "en": "No",
+                            "es": "No"
+                        },
+                        "target": "view-261",
+                        "value": "no"
+                    },
+                    {
+                        "label": {
+                            "en": "Don't know",
+                            "es": "No se"
+                        },
+                        "target": "view-187",
+                        "value": "dont-know"
+                    }
+                ],
+                "type": "select"
+            }
+        ],
+        "guide-id": "Alimentación",
+        "icon": "weed.png",
+        "manual-page": "",
+        "milking-method": "",
+        "modified": {
+            "at": "2026-05-28T13:35:29.381Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "daily",
+        "scenario": "",
+        "score-answer": "yes",
+        "severity": 3,
+        "showDate": true,
+        "subtitle": {
+            "en": "Do you check feed quality?",
+            "es": "¿Controlás la calidad del alimento?"
+        },
+        "title": {
+            "en": "Feed",
+            "es": "Alimentación"
+        }
+    },
+    "view-187": {
+        "category": "food",
+        "fields": [
+            {
+                "audios": [
+                    {
+                        "src": "AUDIO14.mp3"
+                    }
+                ],
+                "id": "view-187-audio",
+                "type": "audio_list"
+            },
+            {
+                "id": "view-187-images",
+                "images": [
+                    {
+                        "src": "corn.png"
+                    },
+                    {
+                        "src": "bale_close.png"
+                    }
+                ],
+                "type": "image_list"
+            }
+        ],
+        "guide-id": "Alimentación",
+        "manual-page": "",
+        "milking-method": "",
+        "modified": {
+            "at": "2026-05-28T13:46:55.987Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "",
+        "scenario": "",
+        "score-answer": "",
+        "severity": 0,
+        "showDate": true,
+        "subtitle": {
+            "en": "Feed control",
+            "es": "Control de los alimentos"
+        },
+        "title": {
+            "en": "Feed",
+            "es": "Alimentación"
+        }
+    },
+    "view-188": {
+        "category": "food",
+        "fields": [
+            {
+                "id": "",
+                "options": [
+                    {
+                        "label": {
+                            "en": "Yes",
+                            "es": "Si"
+                        },
+                        "target": "view-259",
+                        "value": "yes"
+                    },
+                    {
+                        "label": {
+                            "en": "No",
+                            "es": "No"
+                        },
+                        "target": "view-260",
+                        "value": "no"
+                    }
+                ],
+                "type": "select"
+            }
+        ],
+        "guide-id": "Alimentación",
+        "icon": "weed.png",
+        "manual-page": "",
+        "milking-method": "",
+        "modified": {
+            "at": "2026-05-28T13:40:31.392Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "",
+        "scenario": "",
+        "score-answer": "",
+        "severity": 0,
+        "showDate": true,
+        "subtitle": {
+            "en": "Do you use agrochemicals in your weeds?",
+            "es": "¿Utilizás agroquímicos en tus pasturas?"
+        },
+        "title": {
+            "en": "Feed",
+            "es": "Alimentación"
+        }
+    },
     "view-189": {
         "category": "health",
         "fields": [
@@ -2058,6 +2256,169 @@
         "title": {
             "en": "Mastitis",
             "es": "Mastitis"
+        }
+    },
+    "view-258": {
+        "category": "food",
+        "fields": [
+            {
+                "default": 0,
+                "id": "",
+                "step": 0.1,
+                "target": "view-185",
+                "type": "number_input"
+            }
+        ],
+        "guide-id": "Alimentación",
+        "icon": "edit.png",
+        "manual-page": "",
+        "milking-method": "",
+        "modified": {
+            "at": "2026-05-28T13:37:40.471Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "",
+        "scenario": "",
+        "score-answer": "",
+        "severity": 0,
+        "showDate": true,
+        "subtitle": {
+            "en": "Enter the food weight in kg",
+            "es": "Ingresá los kg de alimento"
+        },
+        "title": {
+            "en": "Feed",
+            "es": "Alimentación"
+        }
+    },
+    "view-259": {
+        "category": "food",
+        "fields": [
+            {
+                "audios": [
+                    {
+                        "src": "AUDIO15.mp3"
+                    }
+                ],
+                "id": "view-259-audio",
+                "type": "audio_list"
+            },
+            {
+                "id": "view-259-images",
+                "images": [
+                    {
+                        "src": "bale.png"
+                    }
+                ],
+                "type": "image_list"
+            }
+        ],
+        "guide-id": "Alimentación",
+        "manual-page": "",
+        "milking-method": "",
+        "modified": {
+            "at": "2026-05-28T13:48:15.190Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "",
+        "scenario": "",
+        "score-answer": "",
+        "severity": 0,
+        "showDate": true,
+        "subtitle": {
+            "en": "Withholding periods for agrochemicals",
+            "es": "Períodos de carencia de agroquímicos"
+        },
+        "title": {
+            "en": "Feed",
+            "es": "Alimentación"
+        }
+    },
+    "view-260": {
+        "category": "food",
+        "fields": [
+            {
+                "id": "view-260-alert",
+                "message": {
+                    "en": "Done!<br>You completed feed log",
+                    "es": "¡Listo!<br>Completaste el regsitro de alimentación"
+                },
+                "severity": "info",
+                "type": "alert"
+            }
+        ],
+        "guide-id": "Alimentación",
+        "manual-page": "",
+        "milking-method": "",
+        "modified": {
+            "at": "2026-05-28T13:44:04.233Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "",
+        "scenario": "",
+        "score-answer": "",
+        "severity": 0,
+        "title": {
+            "en": "Feed",
+            "es": "Alimentación"
+        }
+    },
+    "view-261": {
+        "category": "food",
+        "fields": [
+            {
+                "id": "view-261-alert",
+                "message": {
+                    "en": "<b>Attention</b><br>Check feed quality",
+                    "es": "<b>Atención</b><br>Controlá la calidad de los alimentos"
+                },
+                "severity": "warning",
+                "type": "alert"
+            }
+        ],
+        "guide-id": "Alimentación",
+        "manual-page": "",
+        "milking-method": "",
+        "modified": {
+            "at": "2026-05-28T13:42:40.697Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "",
+        "scenario": "",
+        "score-answer": "",
+        "severity": 0,
+        "title": {
+            "en": "Feed",
+            "es": "Alimentación"
+        }
+    },
+    "view-262": {
+        "category": "food",
+        "fields": [
+            {
+                "id": "view-262-alert",
+                "message": {
+                    "en": "<b>Attention</b><br>Check feed quality",
+                    "es": "<b>Atención</b><br>Controlá la calidad de los alimentos"
+                },
+                "severity": "warning",
+                "type": "alert"
+            }
+        ],
+        "guide-id": "Alimentación",
+        "manual-page": "",
+        "milking-method": "",
+        "modified": {
+            "at": "2026-05-28T13:44:59.005Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "",
+        "scenario": "",
+        "score-answer": "",
+        "severity": 0,
+        "title": {
+            "en": "Feed",
+            "es": "Alimentación"
         }
     },
     "view-28": {
