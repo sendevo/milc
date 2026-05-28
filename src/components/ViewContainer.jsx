@@ -5,8 +5,7 @@ import DateTime from "../components/DateTime";
 import { viewContainerStyles as styles } from "../theme/ViewContainer.styles";
 import { sanitizeLimitedHtml } from "../utils/sanitizeLimitedHtml";
 
-
-const ViewContainer = ({ title, subtitle, showDate, icon, onBack, children }) => {
+const ViewContainer = ({ title, subtitle, showDate, icon, onBack, headerRightText, children }) => {
     useEffect(() => {
         window.scrollTo({ top: 0, left: 0, behavior: "auto" });
         const appContainer = document.querySelector(".app-container");
@@ -30,6 +29,13 @@ const ViewContainer = ({ title, subtitle, showDate, icon, onBack, children }) =>
                     sx={styles.title}>
                     {title}
                 </Typography>
+                {headerRightText && (
+                    <Typography
+                        variant="caption"
+                        sx={styles.headerRightText}>
+                        {headerRightText}
+                    </Typography>
+                )}
             </Box>
             { showDate && <DateTime sx={styles.date} /> }
             { subtitle && 

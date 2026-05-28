@@ -60,6 +60,16 @@ export const viewContainerStyles = {
         transform: "translateY(-50%)",
         color: "#ffffff",
     },
+    headerRightText: {
+        position: "absolute",
+        right: 14,
+        top: "50%",
+        transform: "translateY(-50%)",
+        color: "rgba(255, 255, 255, 0.9)",
+        fontWeight: 600,
+        letterSpacing: 0.2,
+        textTransform: "none",
+    },
     content: {
         px: 2,
         display: "flex",

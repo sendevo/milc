@@ -171,6 +171,7 @@ const SurveyStep = ({ node, nodeId, onSubmit, onBack }) => {
     return (
         <ViewContainer 
             title={t(node.title)}
+            headerRightText={import.meta.env.DEV ? nodeId : undefined}
             subtitle={node.subtitle ? t(node.subtitle) : undefined}
             icon={iconUrl}
             showDate={true}

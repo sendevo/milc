@@ -1378,6 +1378,542 @@
             "es": "Brucelosis"
         }
     },
+    "view-196": {
+        "category": "facilities",
+        "fields": [
+            {
+                "id": "view-196-select",
+                "options": [
+                    {
+                        "label": {
+                            "en": "Yes",
+                            "es": "Si"
+                        },
+                        "target": "view-200",
+                        "value": "yes"
+                    },
+                    {
+                        "label": {
+                            "en": "No",
+                            "es": "No"
+                        },
+                        "target": "view-200",
+                        "value": "no"
+                    },
+                    {
+                        "label": {
+                            "en": "Don't know",
+                            "es": "No se"
+                        },
+                        "target": "view-198",
+                        "value": "dont-know"
+                    }
+                ],
+                "type": "select"
+            }
+        ],
+        "guide-id": "Instalaciones",
+        "icon": "cattle_pen.png",
+        "manual-page": "",
+        "milking-method": "",
+        "modified": {
+            "at": "2026-05-28T16:00:00.000Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "semester",
+        "scenario": "",
+        "score-answer": "yes",
+        "severity": 3,
+        "showDate": true,
+        "subtitle": {
+            "en": "Do you have a waiting pen?",
+            "es": "¿Contás con corral de espera?"
+        },
+        "title": {
+            "en": "Facilities",
+            "es": "Instalaciones"
+        }
+    },
+    "view-198": {
+        "category": "facilities",
+        "fields": [
+            {
+                "audios": [
+                    {
+                        "src": "AUDIO16.mp3"
+                    }
+                ],
+                "id": "view-198-audio",
+                "type": "audio_list"
+            },
+            {
+                "id": "view-198-images",
+                "images": [
+                    {
+                        "src": "facilities.png"
+                    },
+                    {
+                        "src": "goats.png"
+                    }
+                ],
+                "type": "image_list"
+            }
+        ],
+        "guide-id": "Instalaciones",
+        "manual-page": "",
+        "milking-method": "",
+        "modified": {
+            "at": "2026-05-28T16:00:00.000Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "",
+        "scenario": "",
+        "score-answer": "",
+        "severity": 0,
+        "showDate": true,
+        "subtitle": {
+            "en": "Waiting pen",
+            "es": "Corral de espera"
+        },
+        "title": {
+            "en": "Facilities",
+            "es": "Instalaciones"
+        }
+    },
+    "view-199": {
+        "category": "facilities",
+        "fields": [
+            {
+                "id": "view-199-alert",
+                "message": {
+                    "en": "<b>Attention</b><br>Check your facilities conditions",
+                    "es": "<b>Atención</b><br>Revisá las condiciones de tus instalaciones"
+                },
+                "severity": "warning",
+                "type": "alert"
+            }
+        ],
+        "guide-id": "Instalaciones",
+        "manual-page": "",
+        "milking-method": "",
+        "modified": {
+            "at": "2026-05-28T16:00:00.000Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "",
+        "scenario": "",
+        "score-answer": "",
+        "severity": 0,
+        "title": {
+            "en": "Facilities",
+            "es": "Instalaciones"
+        }
+    },
+    "view-200": {
+        "category": "facilities",
+        "fields": [
+            {
+                "id": "view-200-select",
+                "options": [
+                    {
+                        "label": {
+                            "en": "Yes",
+                            "es": "Si"
+                        },
+                        "target": "view-202",
+                        "value": "yes"
+                    },
+                    {
+                        "label": {
+                            "en": "No",
+                            "es": "No"
+                        },
+                        "target": "view-202",
+                        "value": "no"
+                    },
+                    {
+                        "label": {
+                            "en": "Don't know",
+                            "es": "No se"
+                        },
+                        "target": "view-201",
+                        "value": "dont-know"
+                    }
+                ],
+                "type": "select"
+            }
+        ],
+        "guide-id": "Instalaciones",
+        "icon": "cattle_pen.png",
+        "manual-page": "",
+        "milking-method": "",
+        "modified": {
+            "at": "2026-05-28T20:22:47.275Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "semester",
+        "scenario": "",
+        "score-answer": "yes",
+        "severity": 3,
+        "showDate": true,
+        "subtitle": {
+            "en": "Do you have a milking room?",
+            "es": "¿Contás con sala de ordeñe?"
+        },
+        "title": {
+            "en": "Facilities",
+            "es": "Instalaciones"
+        }
+    },
+    "view-201": {
+        "category": "facilities",
+        "fields": [
+            {
+                "audios": [
+                    {
+                        "src": "AUDIO17.mp3"
+                    }
+                ],
+                "id": "view-201-audio",
+                "type": "audio_list"
+            },
+            {
+                "id": "view-201-images",
+                "images": [
+                    {
+                        "src": "eating_goats.png"
+                    },
+                    {
+                        "src": "milk_tanks.png"
+                    }
+                ],
+                "type": "image_list"
+            }
+        ],
+        "guide-id": "Instalaciones",
+        "manual-page": "",
+        "milking-method": "",
+        "modified": {
+            "at": "2026-05-28T16:00:00.000Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "",
+        "scenario": "",
+        "score-answer": "",
+        "severity": 0,
+        "showDate": true,
+        "subtitle": {
+            "en": "Milking room",
+            "es": "Sala de ordeño"
+        },
+        "title": {
+            "en": "Facilities",
+            "es": "Instalaciones"
+        }
+    },
+    "view-202": {
+        "category": "facilities",
+        "fields": [
+            {
+                "id": "view-202-select",
+                "options": [
+                    {
+                        "label": {
+                            "en": "Yes",
+                            "es": "Si"
+                        },
+                        "target": "view-263",
+                        "value": "yes"
+                    },
+                    {
+                        "label": {
+                            "en": "No",
+                            "es": "No"
+                        },
+                        "target": "view-263",
+                        "value": "no"
+                    },
+                    {
+                        "label": {
+                            "en": "Don't know",
+                            "es": "No se"
+                        },
+                        "target": "view-203",
+                        "value": "dont-know"
+                    }
+                ],
+                "type": "select"
+            }
+        ],
+        "guide-id": "Instalaciones",
+        "icon": "cattle_pen.png",
+        "manual-page": "",
+        "milking-method": "",
+        "modified": {
+            "at": "2026-05-28T20:22:57.183Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "semester",
+        "scenario": "",
+        "score-answer": "yes",
+        "severity": 3,
+        "showDate": true,
+        "subtitle": {
+            "en": "Do you have a room for milk conditioning?",
+            "es": "¿Contás con sala para acondicionamiento de la leche?"
+        },
+        "title": {
+            "en": "Facilities",
+            "es": "Instalaciones"
+        }
+    },
+    "view-203": {
+        "category": "facilities",
+        "fields": [
+            {
+                "audios": [
+                    {
+                        "src": "AUDIO18.mp3"
+                    }
+                ],
+                "id": "view-203-audio",
+                "type": "audio_list"
+            },
+            {
+                "id": "view-203-image",
+                "images": [
+                    {
+                        "src": "tank.png"
+                    }
+                ],
+                "type": "image_list"
+            }
+        ],
+        "guide-id": "Instalaciones",
+        "manual-page": "",
+        "milking-method": "",
+        "modified": {
+            "at": "2026-05-28T16:00:00.000Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "",
+        "scenario": "",
+        "score-answer": "",
+        "severity": 0,
+        "showDate": true,
+        "subtitle": {
+            "en": "Milk conditioning room",
+            "es": "Sala para acondicionar la leche"
+        },
+        "title": {
+            "en": "Facilities",
+            "es": "Instalaciones"
+        }
+    },
+    "view-206": {
+        "category": "supplies",
+        "fields": [
+            {
+                "id": "view-206-select",
+                "options": [
+                    {
+                        "label": {
+                            "en": "Yes",
+                            "es": "Si"
+                        },
+                        "target": "view-208",
+                        "value": "yes"
+                    },
+                    {
+                        "label": {
+                            "en": "No",
+                            "es": "No"
+                        },
+                        "target": "view-267",
+                        "value": "no"
+                    },
+                    {
+                        "label": {
+                            "en": "Don't know",
+                            "es": "No se"
+                        },
+                        "target": "view-209",
+                        "value": "dont-know"
+                    }
+                ],
+                "type": "select"
+            }
+        ],
+        "guide-id": "Insumos",
+        "icon": "barn.png",
+        "manual-page": "",
+        "milking-method": "",
+        "modified": {
+            "at": "2026-05-28T15:10:00.000Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "semester",
+        "scenario": "",
+        "score-answer": "yes",
+        "severity": 3,
+        "showDate": true,
+        "subtitle": {
+            "en": "Do you have a storage area for chemical products?",
+            "es": "¿Contas con un depósito para guardar productos químicos?"
+        },
+        "title": {
+            "en": "My supplies",
+            "es": "Mis insumos"
+        }
+    },
+    "view-207": {
+        "category": "supplies",
+        "fields": [
+            {
+                "audios": [
+                    {
+                        "src": "AUDIO20.mp3"
+                    }
+                ],
+                "id": "view-207-audio",
+                "type": "audio_list"
+            },
+            {
+                "id": "view-207-images",
+                "images": [
+                    {
+                        "src": "not_bags.png"
+                    },
+                    {
+                        "src": "not_bales.png"
+                    },
+                    {
+                        "src": "bales.png"
+                    }
+                ],
+                "type": "image_list"
+            }
+        ],
+        "guide-id": "Insumos",
+        "manual-page": "",
+        "milking-method": "",
+        "modified": {
+            "at": "2026-05-28T15:10:00.000Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "",
+        "scenario": "",
+        "score-answer": "",
+        "severity": 0,
+        "showDate": true,
+        "subtitle": {
+            "en": "Feed storage",
+            "es": "Depósito de alimentos"
+        },
+        "title": {
+            "en": "My supplies",
+            "es": "Mis insumos"
+        }
+    },
+    "view-208": {
+        "category": "supplies",
+        "fields": [
+            {
+                "id": "view-208-select",
+                "options": [
+                    {
+                        "label": {
+                            "en": "Yes",
+                            "es": "Si"
+                        },
+                        "target": "view-265",
+                        "value": "yes"
+                    },
+                    {
+                        "label": {
+                            "en": "No",
+                            "es": "No"
+                        },
+                        "target": "view-268",
+                        "value": "no"
+                    },
+                    {
+                        "label": {
+                            "en": "Don't know",
+                            "es": "No se"
+                        },
+                        "target": "view-207",
+                        "value": "dont-know"
+                    }
+                ],
+                "type": "select"
+            }
+        ],
+        "guide-id": "Insumos",
+        "icon": "barn.png",
+        "manual-page": "",
+        "milking-method": "",
+        "modified": {
+            "at": "2026-05-28T15:10:00.000Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "semester",
+        "scenario": "",
+        "score-answer": "yes",
+        "severity": 3,
+        "showDate": true,
+        "subtitle": {
+            "en": "Do you have storage for feed?",
+            "es": "¿Contás con depósito para el alimento?"
+        },
+        "title": {
+            "en": "My supplies",
+            "es": "Mis insumos"
+        }
+    },
+    "view-209": {
+        "category": "supplies",
+        "fields": [
+            {
+                "audios": [
+                    {
+                        "src": "AUDIO19.mp3"
+                    }
+                ],
+                "id": "view-209-audio",
+                "type": "audio_list"
+            },
+            {
+                "id": "view-209-image",
+                "images": [
+                    {
+                        "src": "products.png"
+                    }
+                ],
+                "type": "image_list"
+            }
+        ],
+        "guide-id": "Insumos",
+        "manual-page": "",
+        "milking-method": "",
+        "modified": {
+            "at": "2026-05-28T15:10:00.000Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "",
+        "scenario": "",
+        "score-answer": "",
+        "severity": 0,
+        "showDate": true,
+        "subtitle": {
+            "en": "Veterinary drugs and agrochemicals",
+            "es": "Drogas veterinarias y agroquímicos"
+        },
+        "title": {
+            "en": "My supplies",
+            "es": "Mis insumos"
+        }
+    },
     "view-217": {
         "category": "",
         "fields": [
@@ -2419,6 +2955,171 @@
         "title": {
             "en": "Feed",
             "es": "Alimentación"
+        }
+    },
+    "view-263": {
+        "category": "facilities",
+        "fields": [
+            {
+                "id": "view-263-alert",
+                "message": {
+                    "en": "Done!<br>You completed your facilities status",
+                    "es": "¡Listo!<br>Completaste el estado de tus instalaciones"
+                },
+                "severity": "info",
+                "type": "alert"
+            }
+        ],
+        "guide-id": "Instalaciones",
+        "manual-page": "",
+        "milking-method": "",
+        "modified": {
+            "at": "2026-05-28T16:00:00.000Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "",
+        "scenario": "",
+        "score-answer": "",
+        "severity": 0,
+        "title": {
+            "en": "Facilities",
+            "es": "Instalaciones"
+        }
+    },
+    "view-265": {
+        "category": "supplies",
+        "fields": [
+            {
+                "id": "view-265-alert",
+                "message": {
+                    "en": "Done!<br>You completed your supplies status",
+                    "es": "¡Listo!<br>Completaste el estado de tus insumos"
+                },
+                "severity": "info",
+                "type": "alert"
+            }
+        ],
+        "guide-id": "Insumos",
+        "manual-page": "",
+        "milking-method": "",
+        "modified": {
+            "at": "2026-05-28T15:10:00.000Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "",
+        "scenario": "",
+        "score-answer": "",
+        "severity": 0,
+        "title": {
+            "en": "My supplies",
+            "es": "Mis insumos"
+        }
+    },
+    "view-266": {
+        "category": "supplies",
+        "fields": [
+            {
+                "id": "view-266-alert",
+                "message": {
+                    "en": "<b>Attention</b><br>Check your supplies conditions",
+                    "es": "<b>Atención</b><br>Revisá las condiciones de tus insumos"
+                },
+                "severity": "warning",
+                "type": "alert"
+            }
+        ],
+        "guide-id": "Insumos",
+        "manual-page": "",
+        "milking-method": "",
+        "modified": {
+            "at": "2026-05-28T15:10:00.000Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "",
+        "scenario": "",
+        "score-answer": "",
+        "severity": 0,
+        "title": {
+            "en": "My supplies",
+            "es": "Mis insumos"
+        }
+    },
+    "view-267": {
+        "category": "supplies",
+        "fields": [
+            {
+                "id": "view-267-alert",
+                "message": {
+                    "en": "<b>Attention</b><br>Keep veterinary drugs and agrochemicals separated from food",
+                    "es": "<b>Atención</b><br>Mantené separadas las drogas y agroquímicos de los alimentos"
+                },
+                "severity": "warning",
+                "type": "alert"
+            }
+        ],
+        "guide-id": "Insumos",
+        "manual-page": "",
+        "milking-method": "",
+        "modified": {
+            "at": "2026-05-28T15:10:00.000Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "",
+        "scenario": "",
+        "score-answer": "",
+        "severity": 0,
+        "title": {
+            "en": "My supplies",
+            "es": "Mis insumos"
+        }
+    },
+    "view-268": {
+        "category": "supplies",
+        "fields": [
+            {
+                "id": "view-268-alert",
+                "message": {
+                    "en": "<b>Attention</b><br>Check feed storage conditions",
+                    "es": "<b>Atención</b><br>Revisá las condiciones de guardado de los alimentos"
+                },
+                "severity": "warning",
+                "type": "alert"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Back",
+                            "es": "Atrás"
+                        },
+                        "target": "view-208"
+                    },
+                    {
+                        "label": {
+                            "en": "Next",
+                            "es": "Siguiente"
+                        },
+                        "target": "view-265"
+                    }
+                ],
+                "id": "view-268-bottom-nav",
+                "type": "bottom_navigation"
+            }
+        ],
+        "guide-id": "Insumos",
+        "manual-page": "",
+        "milking-method": "",
+        "modified": {
+            "at": "2026-05-28T15:10:00.000Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "",
+        "scenario": "",
+        "score-answer": "",
+        "severity": 0,
+        "title": {
+            "en": "My supplies",
+            "es": "Mis insumos"
         }
     },
     "view-28": {
@@ -3690,707 +4391,6 @@
         "title": {
             "en": "My logs",
             "es": "Mis registros"
-        }
-    },
-    "view-206": {
-        "category": "supplies",
-        "fields": [
-            {
-                "id": "view-206-select",
-                "options": [
-                    {
-                        "label": {
-                            "en": "Yes",
-                            "es": "Si"
-                        },
-                        "target": "view-208",
-                        "value": "yes"
-                    },
-                    {
-                        "label": {
-                            "en": "No",
-                            "es": "No"
-                        },
-                        "target": "view-267",
-                        "value": "no"
-                    },
-                    {
-                        "label": {
-                            "en": "Don't know",
-                            "es": "No se"
-                        },
-                        "target": "view-209",
-                        "value": "dont-know"
-                    }
-                ],
-                "type": "select"
-            }
-        ],
-        "guide-id": "Insumos",
-        "icon": "barn.png",
-        "manual-page": "",
-        "milking-method": "",
-        "modified": {
-            "at": "2026-05-28T15:10:00.000Z",
-            "by": "matias.micheletto@uns.edu.ar"
-        },
-        "periodicity": "semester",
-        "scenario": "",
-        "score-answer": "yes",
-        "severity": 3,
-        "showDate": true,
-        "subtitle": {
-            "en": "Do you have a storage area for chemical products?",
-            "es": "¿Contas con un depósito para guardar productos químicos?"
-        },
-        "title": {
-            "en": "My supplies",
-            "es": "Mis insumos"
-        }
-    },
-    "view-207": {
-        "category": "supplies",
-        "fields": [
-            {
-                "audios": [
-                    {
-                        "src": "AUDIO20.mp3"
-                    }
-                ],
-                "id": "view-207-audio",
-                "type": "audio_list"
-            },
-            {
-                "id": "view-207-images",
-                "images": [
-                    {
-                        "src": "not_bags.png"
-                    },
-                    {
-                        "src": "not_bales.png"
-                    },
-                    {
-                        "src": "bales.png"
-                    }
-                ],
-                "type": "image_list"
-            }
-        ],
-        "guide-id": "Insumos",
-        "manual-page": "",
-        "milking-method": "",
-        "modified": {
-            "at": "2026-05-28T15:10:00.000Z",
-            "by": "matias.micheletto@uns.edu.ar"
-        },
-        "periodicity": "",
-        "scenario": "",
-        "score-answer": "",
-        "severity": 0,
-        "showDate": true,
-        "subtitle": {
-            "en": "Feed storage",
-            "es": "Depósito de alimentos"
-        },
-        "title": {
-            "en": "My supplies",
-            "es": "Mis insumos"
-        }
-    },
-    "view-208": {
-        "category": "supplies",
-        "fields": [
-            {
-                "id": "view-208-select",
-                "options": [
-                    {
-                        "label": {
-                            "en": "Yes",
-                            "es": "Si"
-                        },
-                        "target": "view-265",
-                        "value": "yes"
-                    },
-                    {
-                        "label": {
-                            "en": "No",
-                            "es": "No"
-                        },
-                        "target": "view-268",
-                        "value": "no"
-                    },
-                    {
-                        "label": {
-                            "en": "Don't know",
-                            "es": "No se"
-                        },
-                        "target": "view-207",
-                        "value": "dont-know"
-                    }
-                ],
-                "type": "select"
-            }
-        ],
-        "guide-id": "Insumos",
-        "icon": "barn.png",
-        "manual-page": "",
-        "milking-method": "",
-        "modified": {
-            "at": "2026-05-28T15:10:00.000Z",
-            "by": "matias.micheletto@uns.edu.ar"
-        },
-        "periodicity": "semester",
-        "scenario": "",
-        "score-answer": "yes",
-        "severity": 3,
-        "showDate": true,
-        "subtitle": {
-            "en": "Do you have storage for feed?",
-            "es": "¿Contás con depósito para el alimento?"
-        },
-        "title": {
-            "en": "My supplies",
-            "es": "Mis insumos"
-        }
-    },
-    "view-209": {
-        "category": "supplies",
-        "fields": [
-            {
-                "audios": [
-                    {
-                        "src": "AUDIO19.mp3"
-                    }
-                ],
-                "id": "view-209-audio",
-                "type": "audio_list"
-            },
-            {
-                "id": "view-209-image",
-                "images": [
-                    {
-                        "src": "products.png"
-                    }
-                ],
-                "type": "image_list"
-            }
-        ],
-        "guide-id": "Insumos",
-        "manual-page": "",
-        "milking-method": "",
-        "modified": {
-            "at": "2026-05-28T15:10:00.000Z",
-            "by": "matias.micheletto@uns.edu.ar"
-        },
-        "periodicity": "",
-        "scenario": "",
-        "score-answer": "",
-        "severity": 0,
-        "showDate": true,
-        "subtitle": {
-            "en": "Veterinary drugs and agrochemicals",
-            "es": "Drogas veterinarias y agroquímicos"
-        },
-        "title": {
-            "en": "My supplies",
-            "es": "Mis insumos"
-        }
-    },
-    "view-265": {
-        "category": "supplies",
-        "fields": [
-            {
-                "id": "view-265-alert",
-                "message": {
-                    "en": "Done!<br>You completed your supplies status",
-                    "es": "¡Listo!<br>Completaste el estado de tus insumos"
-                },
-                "severity": "info",
-                "type": "alert"
-            }
-        ],
-        "guide-id": "Insumos",
-        "manual-page": "",
-        "milking-method": "",
-        "modified": {
-            "at": "2026-05-28T15:10:00.000Z",
-            "by": "matias.micheletto@uns.edu.ar"
-        },
-        "periodicity": "",
-        "scenario": "",
-        "score-answer": "",
-        "severity": 0,
-        "title": {
-            "en": "My supplies",
-            "es": "Mis insumos"
-        }
-    },
-    "view-266": {
-        "category": "supplies",
-        "fields": [
-            {
-                "id": "view-266-alert",
-                "message": {
-                    "en": "<b>Attention</b><br>Check your supplies conditions",
-                    "es": "<b>Atención</b><br>Revisá las condiciones de tus insumos"
-                },
-                "severity": "warning",
-                "type": "alert"
-            }
-        ],
-        "guide-id": "Insumos",
-        "manual-page": "",
-        "milking-method": "",
-        "modified": {
-            "at": "2026-05-28T15:10:00.000Z",
-            "by": "matias.micheletto@uns.edu.ar"
-        },
-        "periodicity": "",
-        "scenario": "",
-        "score-answer": "",
-        "severity": 0,
-        "title": {
-            "en": "My supplies",
-            "es": "Mis insumos"
-        }
-    },
-    "view-267": {
-        "category": "supplies",
-        "fields": [
-            {
-                "id": "view-267-alert",
-                "message": {
-                    "en": "<b>Attention</b><br>Keep veterinary drugs and agrochemicals separated from food",
-                    "es": "<b>Atención</b><br>Mantené separadas las drogas y agroquímicos de los alimentos"
-                },
-                "severity": "warning",
-                "type": "alert"
-            }
-        ],
-        "guide-id": "Insumos",
-        "manual-page": "",
-        "milking-method": "",
-        "modified": {
-            "at": "2026-05-28T15:10:00.000Z",
-            "by": "matias.micheletto@uns.edu.ar"
-        },
-        "periodicity": "",
-        "scenario": "",
-        "score-answer": "",
-        "severity": 0,
-        "title": {
-            "en": "My supplies",
-            "es": "Mis insumos"
-        }
-    },
-    "view-268": {
-        "category": "supplies",
-        "fields": [
-            {
-                "id": "view-268-alert",
-                "message": {
-                    "en": "<b>Attention</b><br>Check feed storage conditions",
-                    "es": "<b>Atención</b><br>Revisá las condiciones de guardado de los alimentos"
-                },
-                "severity": "warning",
-                "type": "alert"
-            },
-            {
-                "buttons": [
-                    {
-                        "label": {
-                            "en": "Back",
-                            "es": "Atrás"
-                        },
-                        "target": "view-208"
-                    },
-                    {
-                        "label": {
-                            "en": "Next",
-                            "es": "Siguiente"
-                        },
-                        "target": "view-265"
-                    }
-                ],
-                "id": "view-268-bottom-nav",
-                "type": "bottom_navigation"
-            }
-        ],
-        "guide-id": "Insumos",
-        "manual-page": "",
-        "milking-method": "",
-        "modified": {
-            "at": "2026-05-28T15:10:00.000Z",
-            "by": "matias.micheletto@uns.edu.ar"
-        },
-        "periodicity": "",
-        "scenario": "",
-        "score-answer": "",
-        "severity": 0,
-        "title": {
-            "en": "My supplies",
-            "es": "Mis insumos"
-        }
-    },
-    "view-196": {
-        "category": "facilities",
-        "fields": [
-            {
-                "id": "view-196-select",
-                "options": [
-                    {
-                        "label": {
-                            "en": "Yes",
-                            "es": "Si"
-                        },
-                        "target": "view-200",
-                        "value": "yes"
-                    },
-                    {
-                        "label": {
-                            "en": "No",
-                            "es": "No"
-                        },
-                        "target": "view-200",
-                        "value": "no"
-                    },
-                    {
-                        "label": {
-                            "en": "Don't know",
-                            "es": "No se"
-                        },
-                        "target": "view-198",
-                        "value": "dont-know"
-                    }
-                ],
-                "type": "select"
-            }
-        ],
-        "guide-id": "Instalaciones",
-        "icon": "cattle_pen.png",
-        "manual-page": "",
-        "milking-method": "",
-        "modified": {
-            "at": "2026-05-28T16:00:00.000Z",
-            "by": "matias.micheletto@uns.edu.ar"
-        },
-        "periodicity": "semester",
-        "scenario": "",
-        "score-answer": "yes",
-        "severity": 3,
-        "showDate": true,
-        "subtitle": {
-            "en": "Do you have a waiting pen?",
-            "es": "¿Contás con corral de espera?"
-        },
-        "title": {
-            "en": "Facilities",
-            "es": "Instalaciones"
-        }
-    },
-    "view-198": {
-        "category": "facilities",
-        "fields": [
-            {
-                "audios": [
-                    {
-                        "src": "AUDIO16.mp3"
-                    }
-                ],
-                "id": "view-198-audio",
-                "type": "audio_list"
-            },
-            {
-                "id": "view-198-images",
-                "images": [
-                    {
-                        "src": "facilities.png"
-                    },
-                    {
-                        "src": "goats.png"
-                    }
-                ],
-                "type": "image_list"
-            }
-        ],
-        "guide-id": "Instalaciones",
-        "manual-page": "",
-        "milking-method": "",
-        "modified": {
-            "at": "2026-05-28T16:00:00.000Z",
-            "by": "matias.micheletto@uns.edu.ar"
-        },
-        "periodicity": "",
-        "scenario": "",
-        "score-answer": "",
-        "severity": 0,
-        "showDate": true,
-        "subtitle": {
-            "en": "Waiting pen",
-            "es": "Corral de espera"
-        },
-        "title": {
-            "en": "Facilities",
-            "es": "Instalaciones"
-        }
-    },
-    "view-199": {
-        "category": "facilities",
-        "fields": [
-            {
-                "id": "view-199-alert",
-                "message": {
-                    "en": "<b>Attention</b><br>Check your facilities conditions",
-                    "es": "<b>Atención</b><br>Revisá las condiciones de tus instalaciones"
-                },
-                "severity": "warning",
-                "type": "alert"
-            }
-        ],
-        "guide-id": "Instalaciones",
-        "manual-page": "",
-        "milking-method": "",
-        "modified": {
-            "at": "2026-05-28T16:00:00.000Z",
-            "by": "matias.micheletto@uns.edu.ar"
-        },
-        "periodicity": "",
-        "scenario": "",
-        "score-answer": "",
-        "severity": 0,
-        "title": {
-            "en": "Facilities",
-            "es": "Instalaciones"
-        }
-    },
-    "view-200": {
-        "category": "facilities",
-        "fields": [
-            {
-                "id": "view-200-select",
-                "options": [
-                    {
-                        "label": {
-                            "en": "Yes",
-                            "es": "Si"
-                        },
-                        "target": "view-200",
-                        "value": "yes"
-                    },
-                    {
-                        "label": {
-                            "en": "No",
-                            "es": "No"
-                        },
-                        "target": "view-200",
-                        "value": "no"
-                    },
-                    {
-                        "label": {
-                            "en": "Don't know",
-                            "es": "No se"
-                        },
-                        "target": "view-198",
-                        "value": "dont-know"
-                    }
-                ],
-                "type": "select"
-            }
-        ],
-        "guide-id": "Instalaciones",
-        "icon": "cattle_pen.png",
-        "manual-page": "",
-        "milking-method": "",
-        "modified": {
-            "at": "2026-05-28T16:00:00.000Z",
-            "by": "matias.micheletto@uns.edu.ar"
-        },
-        "periodicity": "semester",
-        "scenario": "",
-        "score-answer": "yes",
-        "severity": 3,
-        "showDate": true,
-        "subtitle": {
-            "en": "Do you have a milking room?",
-            "es": "¿Contás con sala de ordeñe?"
-        },
-        "title": {
-            "en": "Facilities",
-            "es": "Instalaciones"
-        }
-    },
-    "view-201": {
-        "category": "facilities",
-        "fields": [
-            {
-                "audios": [
-                    {
-                        "src": "AUDIO17.mp3"
-                    }
-                ],
-                "id": "view-201-audio",
-                "type": "audio_list"
-            },
-            {
-                "id": "view-201-images",
-                "images": [
-                    {
-                        "src": "eating_goats.png"
-                    },
-                    {
-                        "src": "milk_tanks.png"
-                    }
-                ],
-                "type": "image_list"
-            }
-        ],
-        "guide-id": "Instalaciones",
-        "manual-page": "",
-        "milking-method": "",
-        "modified": {
-            "at": "2026-05-28T16:00:00.000Z",
-            "by": "matias.micheletto@uns.edu.ar"
-        },
-        "periodicity": "",
-        "scenario": "",
-        "score-answer": "",
-        "severity": 0,
-        "showDate": true,
-        "subtitle": {
-            "en": "Milking room",
-            "es": "Sala de ordeño"
-        },
-        "title": {
-            "en": "Facilities",
-            "es": "Instalaciones"
-        }
-    },
-    "view-202": {
-        "category": "facilities",
-        "fields": [
-            {
-                "id": "view-202-select",
-                "options": [
-                    {
-                        "label": {
-                            "en": "Yes",
-                            "es": "Si"
-                        },
-                        "target": "view-263",
-                        "value": "yes"
-                    },
-                    {
-                        "label": {
-                            "en": "No",
-                            "es": "No"
-                        },
-                        "target": "view-263",
-                        "value": "no"
-                    },
-                    {
-                        "label": {
-                            "en": "Don't know",
-                            "es": "No se"
-                        },
-                        "target": "view-1203",
-                        "value": "dont-know"
-                    }
-                ],
-                "type": "select"
-            }
-        ],
-        "guide-id": "Instalaciones",
-        "icon": "cattle_pen.png",
-        "manual-page": "",
-        "milking-method": "",
-        "modified": {
-            "at": "2026-05-28T16:00:00.000Z",
-            "by": "matias.micheletto@uns.edu.ar"
-        },
-        "periodicity": "semester",
-        "scenario": "",
-        "score-answer": "yes",
-        "severity": 3,
-        "showDate": true,
-        "subtitle": {
-            "en": "Do you have a room for milk conditioning?",
-            "es": "¿Contás con sala para acondicionamiento de la leche?"
-        },
-        "title": {
-            "en": "Facilities",
-            "es": "Instalaciones"
-        }
-    },
-    "view-203": {
-        "category": "facilities",
-        "fields": [
-            {
-                "audios": [
-                    {
-                        "src": "AUDIO18.mp3"
-                    }
-                ],
-                "id": "view-203-audio",
-                "type": "audio_list"
-            },
-            {
-                "id": "view-203-image",
-                "images": [
-                    {
-                        "src": "tank.png"
-                    }
-                ],
-                "type": "image_list"
-            }
-        ],
-        "guide-id": "Instalaciones",
-        "manual-page": "",
-        "milking-method": "",
-        "modified": {
-            "at": "2026-05-28T16:00:00.000Z",
-            "by": "matias.micheletto@uns.edu.ar"
-        },
-        "periodicity": "",
-        "scenario": "",
-        "score-answer": "",
-        "severity": 0,
-        "showDate": true,
-        "subtitle": {
-            "en": "Milk conditioning room",
-            "es": "Sala para acondicionar la leche"
-        },
-        "title": {
-            "en": "Facilities",
-            "es": "Instalaciones"
-        }
-    },
-    "view-263": {
-        "category": "facilities",
-        "fields": [
-            {
-                "id": "view-263-alert",
-                "message": {
-                    "en": "Done!<br>You completed your facilities status",
-                    "es": "¡Listo!<br>Completaste el estado de tus instalaciones"
-                },
-                "severity": "info",
-                "type": "alert"
-            }
-        ],
-        "guide-id": "Instalaciones",
-        "manual-page": "",
-        "milking-method": "",
-        "modified": {
-            "at": "2026-05-28T16:00:00.000Z",
-            "by": "matias.micheletto@uns.edu.ar"
-        },
-        "periodicity": "",
-        "scenario": "",
-        "score-answer": "",
-        "severity": 0,
-        "title": {
-            "en": "Facilities",
-            "es": "Instalaciones"
         }
     }
 }
