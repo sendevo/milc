@@ -108,6 +108,7 @@ function updateIconPreview(filename) {
     }
 }
 
+/*
 // ─── Known actions ────────────────────────────────────────────────────────────
 // Keep in sync with src/model/actions.js
 const KNOWN_ACTIONS = [
@@ -116,6 +117,7 @@ const KNOWN_ACTIONS = [
     'save_to_storage',
     'log_answers',
 ];
+*/
 
 // ─── Firebase ─────────────────────────────────────────────────────────────────
 
@@ -361,16 +363,65 @@ function saveToStorage() {
     localStorage.setItem('milc_nodes', JSON.stringify(nodes));
 }
 
+function getCurrentEditorEmail() {
+    const authInputEmail = document.getElementById('auth-email')?.value?.trim();
+    return fbUser?.email || authInputEmail || 'unknown';
+}
+
+function buildNodeModifiedMeta() {
+    return {
+        at: new Date().toISOString(),
+        by: getCurrentEditorEmail(),
+    };
+}
+
+function formatNodeModifiedMeta(node) {
+    const modified = node?.modified;
+    if (!modified || (!modified.at && !modified.by)) return '';
+
+    let formattedDate = modified.at || '';
+    if (modified.at) {
+        const parsed = new Date(modified.at);
+        if (!Number.isNaN(parsed.getTime())) {
+            formattedDate = parsed.toLocaleString();
+        }
+    }
+
+    if (formattedDate && modified.by) {
+        return `Updated ${formattedDate} by ${modified.by}`;
+    }
+    if (formattedDate) {
+        return `Updated ${formattedDate}`;
+    }
+    return `Updated by ${modified.by}`;
+}
+
 // ─── Node list ────────────────────────────────────────────────────────────────
 
 function renderNodeList() {
     const ul = document.getElementById('node-list');
     ul.innerHTML = '';
     Object.keys(nodes).forEach(id => {
+        if (id === 'timestamp') return;
+        if (!nodes[id] || typeof nodes[id] !== 'object') return;
+
         const li = document.createElement('li');
-        li.textContent = id;
         li.dataset.id = id;
         li.className = id === selectedNodeId ? 'active' : '';
+
+        const idText = document.createElement('span');
+        idText.className = 'node-id';
+        idText.textContent = id;
+        li.appendChild(idText);
+
+        const modifiedText = formatNodeModifiedMeta(nodes[id]);
+        if (modifiedText) {
+            const meta = document.createElement('small');
+            meta.className = 'node-meta';
+            meta.textContent = modifiedText;
+            li.appendChild(meta);
+        }
+
         li.addEventListener('click', () => selectNode(id));
         ul.appendChild(li);
     });
@@ -559,6 +610,7 @@ function buildFieldEl(field, index) {
 
     wrap.appendChild(extras);
 
+    /*
     // Action selector (shared for all field types)
     const actionSection = document.createElement('div');
     actionSection.className = 'extra-row';
@@ -578,6 +630,7 @@ function buildFieldEl(field, index) {
     actionSection.appendChild(actionLabel);
     actionSection.appendChild(actionSel);
     wrap.appendChild(actionSection);
+    */
 
     return wrap;
 }
@@ -873,9 +926,11 @@ function getFieldsFromDOM() {
 
         const field = { id, type };
 
+        /*
         const actionEl = block.querySelector('[data-role="action"]');
         const actionVal = actionEl?.value?.trim();
         if (actionVal) field.action = actionVal;
+        */
 
         if (type === 'select') {
             const optRows = extras.querySelectorAll('.option-row');
@@ -1100,6 +1155,8 @@ function saveNode() {
         const icon = document.getElementById('field-icon').value.trim();
         if (icon) node.icon = icon;
 
+        node.modified = buildNodeModifiedMeta();
+
         // If ID changed, remove old entry
         if (selectedNodeId && selectedNodeId !== id) {
             delete nodes[selectedNodeId];
@@ -1166,6 +1223,7 @@ function duplicateNode() {
     }
 
     const clone = JSON.parse(JSON.stringify(nodes[sourceId]));
+    clone.modified = buildNodeModifiedMeta();
     nodes[cleanId] = clone;
     selectedNodeId = cleanId;
 
