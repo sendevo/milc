@@ -42,6 +42,10 @@ describe("expectedOccurrences", () => {
         expect(expectedOccurrences("monthly", 31)).toBe(1);
     });
 
+    it("semester: 180 days → 1 occurrence", () => {
+        expect(expectedOccurrences("semester", 180)).toBe(1);
+    });
+
     it("returns 0 for 0 days", () => {
         expect(expectedOccurrences("daily", 0)).toBe(0);
     });

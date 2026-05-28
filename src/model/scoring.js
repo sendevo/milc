@@ -45,7 +45,7 @@ const SCENARIO_DEFAULTS = {
  * Returns the number of times a practice with the given periodicity
  * should have been performed in a given number of app-use days.
  *
- * @param {"daily"|"every-other-day"|"weekly"|"biweekly"|"monthly"} periodicity
+ * @param {"daily"|"every-other-day"|"weekly"|"biweekly"|"monthly"|"semester"} periodicity
  * @param {number} totalDays - Number of distinct days the user used the app
  * @returns {number} Expected occurrences (floored to whole number, minimum 0)
  */
@@ -57,6 +57,7 @@ export const expectedOccurrences = (periodicity, totalDays) => {
         "weekly":         1 / 7,
         "biweekly":       1 / 15,
         "monthly":        1 / 30,
+        "semester":       1 / 120,
     };
     const rate = rates[periodicity] ?? 1;
     return Math.max(0, Math.floor(totalDays * rate));
@@ -90,7 +91,7 @@ export const classifyPEC = (pec) => {
  * @param {Array<{scenario: string, answer: string, date: string}>} records
  *   All log records for this scenario (pre-filtered by caller).
  * @param {string} correctAnswer - The value that counts as correct (e.g. "yes")
- * @param {"daily"|"every-other-day"|"weekly"|"biweekly"|"monthly"} periodicity
+ * @param {"daily"|"every-other-day"|"weekly"|"biweekly"|"monthly"|"semester"} periodicity
  * @returns {{ pec: number, category: string, correct: number, expected: number }}
  */
 export const computePEC = (records, correctAnswer, periodicity) => {
