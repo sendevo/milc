@@ -10,6 +10,7 @@ import NumberInput from "./NumberInput";
 import ImageList from "./ImageList";
 import AudioList from "./AudioList";
 import MonthPicker from "./MonthPicker";
+import DatePicker from "./DatePicker";
 import BottomNavigation from "./BottomNavigation";
 import { t } from "../../model";
 import { runAction } from "../../model";
@@ -49,7 +50,7 @@ import { surveyStepStyles as styles } from "../../theme/SurveyStep.styles";
  *   onBack   — () => void                 optional back navigation handler
  */
 
-const inputFieldTypes = ["select", "number_input", "month_picker"];
+const inputFieldTypes = ["select", "number_input", "month_picker", "date_picker"];
 const selfNavigatingTypes = ["bottom_navigation"];
 
 const SurveyStep = ({ node, nodeId, onSubmit, onBack }) => {
@@ -61,7 +62,11 @@ const SurveyStep = ({ node, nodeId, onSubmit, onBack }) => {
     const inputFields = node.fields.filter((f) => inputFieldTypes.includes(f.type));
 
     const autoAdvance = inputFields.length === 1 &&
-        (inputFields[0].type === "select" || inputFields[0].type === "number_input");
+        (
+            inputFields[0].type === "select" ||
+            inputFields[0].type === "number_input" ||
+            inputFields[0].type === "date_picker"
+        );
 
     const isComplete = inputFields.every((f) => answers[f.id] !== undefined);
 
@@ -111,7 +116,8 @@ const SurveyStep = ({ node, nodeId, onSubmit, onBack }) => {
             case "alert":
                 return <AlertBlock 
                     key={field.id} 
-                    message={t(field.message)} />;
+                    message={t(field.message)}
+                    severity={field.severity} />;
             case "text_block":
                 return <TextBlock
                     key={field.id}
@@ -121,6 +127,22 @@ const SurveyStep = ({ node, nodeId, onSubmit, onBack }) => {
                     <MonthPicker
                         key={field.id}
                         value={answers[field.id] ?? []}
+                        onChange={(val) => {
+                            setAnswers((prev) => ({ ...prev, [field.id]: val }));
+                            runAction(field.action, { fieldId: field.id, value: val, nodeId, answers: { ...answers, [field.id]: val } });
+                        }}
+                        onSave={(val) => {
+                            const newAnswers = { ...answers, [field.id]: val };
+                            setAnswers(newAnswers);
+                            runAction(field.action, { fieldId: field.id, value: val, nodeId, answers: newAnswers });
+                            onSubmit(newAnswers);
+                        }} />
+                );
+            case "date_picker":
+                return (
+                    <DatePicker
+                        key={field.id}
+                        value={answers[field.id] ?? ""}
                         onChange={(val) => {
                             setAnswers((prev) => ({ ...prev, [field.id]: val }));
                             runAction(field.action, { fieldId: field.id, value: val, nodeId, answers: { ...answers, [field.id]: val } });

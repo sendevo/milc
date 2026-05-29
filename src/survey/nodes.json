@@ -64,6 +64,7 @@
                     "en": "Attention<br>Check your hygiene",
                     "es": "Atención<br>Revisá tu higiene"
                 },
+                "severity": "warning",
                 "type": "alert"
             }
         ],
@@ -284,6 +285,7 @@
                     "en": "Done!<br>Start milking",
                     "es": "¡Listo!<br>Comenzá a ordeñar"
                 },
+                "severity": "info",
                 "type": "alert"
             }
         ],
@@ -312,6 +314,7 @@
                     "en": "Attention<br>Clean the equipment after milking is done",
                     "es": "Atención<br>Limpiá el equipo al terminar de ordeñar"
                 },
+                "severity": "warning",
                 "type": "alert"
             }
         ],
@@ -340,6 +343,7 @@
                     "en": "<b>Attention</b><br><br>Check your health status while milking",
                     "es": "<b>Atención</b><br><br>Revisá tus condiciones de salud al ordeñar"
                 },
+                "severity": "warning",
                 "type": "alert"
             }
         ],
@@ -373,6 +377,7 @@
                     "en": "Milking task registered",
                     "es": "Completaste el ordeñe"
                 },
+                "severity": "info",
                 "type": "alert"
             }
         ],
@@ -398,6 +403,7 @@
                     "en": "<b>Attention</b><br>Weekly alert:<br>Clean the pen",
                     "es": "<b>Atención</b><br>Alerta semanal:<br>Limpiá el corral"
                 },
+                "severity": "warning",
                 "type": "alert"
             }
         ],
@@ -759,6 +765,7 @@
                     "en": "Always label the container with its date",
                     "es": "Rotulá siempre el envase con su fecha"
                 },
+                "severity": "warning",
                 "type": "alert"
             },
             {
@@ -799,6 +806,56 @@
             "es": "Acondicionar la leche"
         }
     },
+    "view-133": {
+        "category": "milk-care",
+        "fields": [
+            {
+                "id": "view-133-alert",
+                "message": {
+                    "en": "Always strain freshly milked milk",
+                    "es": "Filtrá siempre la leche recién ordeñada"
+                },
+                "severity": "warning",
+                "type": "alert"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Back",
+                            "es": "Atrás"
+                        },
+                        "target": "view-129"
+                    },
+                    {
+                        "label": {
+                            "en": "Next",
+                            "es": "Siguiente"
+                        },
+                        "target": "view-131"
+                    }
+                ],
+                "id": "view-133-navigation",
+                "type": "bottom_navigation"
+            }
+        ],
+        "guide-id": "Filtrar la leche recién ordeñada, conservar la leche según momento de elaboración",
+        "manual-page": "31 y 32",
+        "milking-method": "mecanico",
+        "modified": {
+            "at": "2026-05-29T21:15:43.664Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "",
+        "scenario": "ACON-01-02",
+        "score-answer": "",
+        "severity": 0,
+        "showDate": true,
+        "title": {
+            "en": "Milk conditioning",
+            "es": "Acondicionar la leche"
+        }
+    },
     "view-134": {
         "category": "milk-care",
         "fields": [
@@ -808,6 +865,7 @@
                     "en": "You completed milk conditioning",
                     "es": "Completaste el acondicionamiento de la leche"
                 },
+                "severity": "info",
                 "type": "alert"
             }
         ],
@@ -837,6 +895,7 @@
                     "en": "You completed milk conditioning",
                     "es": "Completaste el acondicionamiento de la leche"
                 },
+                "severity": "info",
                 "type": "alert"
             }
         ],
@@ -2132,19 +2191,16 @@
                 "type": "audio_list"
             },
             {
-                "id": "view-223-text-block",
-                "message": {
-                    "en": "<b>Milking date</b>",
-                    "es": "<b>Fecha de ordeño</b>"
-                },
-                "type": "text_block"
+                "id": "view-223-date-picker",
+                "target": "view-130",
+                "type": "date_picker"
             }
         ],
         "guide-id": "Filtrar la leche recién ordeñada, conservar la leche según momento de elaboración",
         "manual-page": "31 y 32",
         "milking-method": "mecanico",
         "modified": {
-            "at": "2026-05-28T03:33:08.784Z",
+            "at": "2026-05-29T21:33:29.983Z",
             "by": "matias.micheletto@uns.edu.ar"
         },
         "periodicity": "",
@@ -2340,6 +2396,7 @@
                     "en": "<b>Attention</b><br>Milk those animals at the end and discard their milk",
                     "es": "<b>Atención</b><br>Ordeñá esos animales al final y descartá su leche"
                 },
+                "severity": "warning",
                 "type": "alert"
             }
         ],
@@ -2668,6 +2725,7 @@
                     "en": "<b>Attention</b><br>Check your clothing",
                     "es": "<b>Atención</b><br>Revisá tu indumentaria"
                 },
+                "severity": "warning",
                 "type": "alert"
             }
         ],
@@ -2696,6 +2754,7 @@
                     "en": "<b>Attention</b><br>Check your hygiene",
                     "es": "<b>Atención</b><br>Revisá tu higiene"
                 },
+                "severity": "warning",
                 "type": "alert"
             }
         ],
@@ -3250,6 +3309,7 @@
                     "en": "Warning<br>Weekly alert:<br> clean the parlor",
                     "es": "Atención<br>Alerta semanal:<br>limpiá la sala"
                 },
+                "severity": "warning",
                 "type": "alert"
             }
         ],
@@ -3360,6 +3420,7 @@
                     "en": "Attention<br>Milk those animals at the end and discard their milk",
                     "es": "Atención<br>Ordeñá esos animales al final y descartá su leche"
                 },
+                "severity": "warning",
                 "type": "alert"
             }
         ],
@@ -3578,6 +3639,7 @@
                     "en": "Attention<br>Do not milk with sympthoms",
                     "es": "Atención<br>No ordeñes con síntomas"
                 },
+                "severity": "warning",
                 "type": "alert"
             }
         ],
@@ -3803,6 +3865,7 @@
                     "en": "Attention<br>Check your clothing",
                     "es": "Atención<br>Revisá tu indumentaria"
                 },
+                "severity": "warning",
                 "type": "alert"
             }
         ],
@@ -4355,6 +4418,7 @@
                     "en": "Attention<br>Mastitis risk<br>Check and strip the teats",
                     "es": "Atención<br>Riesgo de mastitis<br>Revisá y despuntá las ubres"
                 },
+                "severity": "warning",
                 "type": "alert"
             }
         ],

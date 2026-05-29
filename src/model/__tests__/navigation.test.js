@@ -72,6 +72,22 @@ describe("resolveNext — field map without default", () => {
     });
 });
 
+describe("resolveNext — input field target", () => {
+    it("returns the target node for a date picker field when it has an answer", () => {
+        const node = {
+            fields: [
+                {
+                    id: "visit-date",
+                    type: "date_picker",
+                    target: "next-node",
+                },
+            ],
+        };
+
+        expect(resolveNext(node, { "visit-date": "2026-05-29" })).toBe("next-node");
+    });
+});
+
 // ─── Tree traversal helper ────────────────────────────────────────────────────
 
 /**
@@ -119,11 +135,11 @@ describe("nodes.json tree traversal", () => {
         ]);
     });
 
-    it("answer 'dont_know' → view-109 → view-123 (terminal)", () => {
+    it("answer 'dont_know' → view-109 → view-35 (terminal)", () => {
         const path = walkTree(nodes, "view-109", [{ udder_clean: "dont_know" }]);
         expect(path).toEqual([
             "view-109",
-            "view-123",
+            "view-35",
         ]);
     });
 

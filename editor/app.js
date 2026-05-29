@@ -52,6 +52,7 @@ const ICON_FILENAMES = [
     'udder.png',
     'user.png',
     'warning.png',
+    'ok_done.png',
     'watch.png',
     'weed.png',
     'white_goat.png',
@@ -594,6 +595,8 @@ function buildFieldEl(field, index) {
         extras.appendChild(buildSelectExtras(field));
     } else if (field.type === 'number_input') {
         extras.appendChild(buildNumberExtras(field));
+    } else if (field.type === 'date_picker') {
+        extras.appendChild(buildDatePickerExtras(field));
     } else if (field.type === 'image_list') {
         extras.appendChild(buildImageListExtras(field));
     } else if (field.type === 'audio_list') {
@@ -677,6 +680,22 @@ function numberInput(val, placeholder) {
     el.type = 'number';
     el.value = val !== undefined ? val : '';
     el.placeholder = placeholder || '';
+    return el;
+}
+
+function selectInput(options, value = '') {
+    const el = document.createElement('select');
+
+    options.forEach(({ value: optionValue, label }) => {
+        const option = document.createElement('option');
+        option.value = optionValue;
+        option.textContent = label;
+        if (optionValue === value) {
+            option.selected = true;
+        }
+        el.appendChild(option);
+    });
+
     return el;
 }
 
@@ -846,7 +865,12 @@ function buildAlertExtras(field) {
     messageWrap.dataset.role = 'message';
     wrap.appendChild(makeRow('Message', messageWrap));
 
-    const severityInput = textInput(field.severity, 'info | warning | error');
+    const severityInput = selectInput([
+        { value: '', label: '(none)' },
+        { value: 'info', label: 'info' },
+        { value: 'warning', label: 'warning' },
+        { value: 'error', label: 'error' },
+    ], field.severity || '');
     severityInput.dataset.role = 'severity';
     wrap.appendChild(makeRow('Severity', severityInput));
 
@@ -864,6 +888,16 @@ function buildTextBlockExtras(field) {
 }
 
 function buildMonthPickerExtras(field) {
+    const wrap = document.createElement('div');
+
+    const targetInput = textInput(field.target, 'target node (navigation)');
+    targetInput.dataset.role = 'field-target';
+    wrap.appendChild(makeRow('Target node', targetInput));
+
+    return wrap;
+}
+
+function buildDatePickerExtras(field) {
     const wrap = document.createElement('div');
 
     const targetInput = textInput(field.target, 'target node (navigation)');
@@ -986,6 +1020,10 @@ function getFieldsFromDOM() {
             const msg = getBilingual(messageEl);
             if (msg) field.message = msg;
         } else if (type === 'month_picker') {
+            const get = (role) => extras.querySelector(`[data-role="${role}"]`)?.value.trim();
+            const targetVal = get('field-target');
+            if (targetVal) field.target = targetVal;
+        } else if (type === 'date_picker') {
             const get = (role) => extras.querySelector(`[data-role="${role}"]`)?.value.trim();
             const targetVal = get('field-target');
             if (targetVal) field.target = targetVal;
@@ -1311,7 +1349,7 @@ function buildMermaidDef(nodeMap) {
                     if (!option.target) return;
                     addEdge(key, option.target, option.value || '', '-->');
                 });
-            } else if (field.type === 'number_input' || field.type === 'month_picker') {
+            } else if (field.type === 'number_input' || field.type === 'month_picker' || field.type === 'date_picker') {
                 if (field.target) addEdge(key, field.target, field.id || field.type, '-->');
             } else if (field.type === 'bottom_navigation') {
                 (field.buttons || []).forEach(button => {
