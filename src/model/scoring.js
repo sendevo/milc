@@ -35,6 +35,13 @@ const SCENARIO_DEFAULTS = {
     "PREORD-08": { correctAnswer: "yes", severity: 3, periodicity: "daily", category: "before-milking" },
     "ORD-02-03": { correctAnswer: "yes", severity: 3, periodicity: "daily", category: "during-milking" },
     "ORD-07": { correctAnswer: "yes", severity: 3, periodicity: "daily", category: "during-milking" },
+    "HEALTH-01": { correctAnswer: "no", severity: 3, periodicity: "daily", category: "health" },
+    "FEED-01": { correctAnswer: "yes", severity: 3, periodicity: "daily", category: "food" },
+    "FACIL-01": { correctAnswer: "yes", severity: 3, periodicity: "semester", category: "facilities" },
+    "FACIL-02": { correctAnswer: "yes", severity: 3, periodicity: "semester", category: "facilities" },
+    "FACIL-03": { correctAnswer: "yes", severity: 3, periodicity: "semester", category: "facilities" },
+    "SUPPLY-01": { correctAnswer: "yes", severity: 3, periodicity: "semester", category: "supplies" },
+    "SUPPLY-02": { correctAnswer: "yes", severity: 3, periodicity: "semester", category: "supplies" },
 };
 
 // ---------------------------------------------------------------------------

@@ -12,6 +12,9 @@ import {
     enqueueTelemetryEvent,
     flushTelemetryQueue,
 } from "../telemetry/telemetryQueue";
+import packageJson from "../../package.json";
+
+const APP_VERSION_FALLBACK = packageJson.version;
 
 /**
  * Route: /survey/:nodeId
@@ -132,7 +135,7 @@ const SurveyPage = () => {
                 severity: node.severity,
                 periodicity: node.periodicity,
                 language: i18n.language,
-                appVersion: import.meta.env.VITE_APP_VERSION,
+                appVersion: import.meta.env.VITE_APP_VERSION || APP_VERSION_FALLBACK,
             });
 
             void enqueueTelemetryEvent(telemetryEvent)

@@ -686,6 +686,70 @@
             "es": "Acondicionar la leche"
         }
     },
+    "view-131": {
+        "category": "milk-care",
+        "fields": [
+            {
+                "id": "view-131-select",
+                "options": [
+                    {
+                        "label": {
+                            "en": "Inmediately elaborated",
+                            "es": "Elaboré inmediatamente"
+                        },
+                        "target": "view-134",
+                        "value": "opt-1"
+                    },
+                    {
+                        "label": {
+                            "en": "Fridge/pool (0-2 hours)",
+                            "es": "Heladera/pileta (0-2 horas)"
+                        },
+                        "target": "view-130",
+                        "value": "opt-2"
+                    },
+                    {
+                        "label": {
+                            "en": "Cold tank/fridge (2-48 hours)",
+                            "es": "Tanque frío/heladera (2-48 horas)"
+                        },
+                        "target": "view-130",
+                        "value": "opt-3"
+                    },
+                    {
+                        "label": {
+                            "en": "Freezer (+48 hours)",
+                            "es": "Freezer (+48 horas)"
+                        },
+                        "target": "view-130",
+                        "value": "opt-4"
+                    }
+                ],
+                "type": "select"
+            }
+        ],
+        "guide-id": "Filtrar la leche recién ordeñada conservar la leche según momento de elaboración",
+        "icon": "watch.png",
+        "manual-page": "31 y 32",
+        "milking-method": "mecanico",
+        "modified": {
+            "at": "2026-05-29T19:13:27.564Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "",
+        "scenario": "ACON-01-02",
+        "score-answer": "",
+        "severity": 0,
+        "showDate": true,
+        "subtitle": {
+            "en": "",
+            "es": "¿Cómo conservaste la leche hoy?"
+        },
+        "title": {
+            "en": "",
+            "es": "Acondicionar la leche"
+        }
+    },
     "view-132": {
         "category": "milk-care",
         "fields": [
@@ -739,7 +803,7 @@
         "category": "milk-care",
         "fields": [
             {
-                "id": "view-115-alert",
+                "id": "view-134-alert",
                 "message": {
                     "en": "You completed milk conditioning",
                     "es": "Completaste el acondicionamiento de la leche"
@@ -750,6 +814,39 @@
         "guide-id": "Filtrar la leche recién ordeñada, conservar la leche según momento de elaboración",
         "manual-page": "31 y 32",
         "milking-method": "mecanico",
+        "modified": {
+            "at": "2026-05-29T20:40:50.090Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "",
+        "scenario": "ACON-01-02",
+        "score-answer": "",
+        "severity": 0,
+        "showDate": true,
+        "title": {
+            "en": "Milk conditioning",
+            "es": "Acondicionar la leche"
+        }
+    },
+    "view-135": {
+        "category": "milk-care",
+        "fields": [
+            {
+                "id": "view-135",
+                "message": {
+                    "en": "You completed milk conditioning",
+                    "es": "Completaste el acondicionamiento de la leche"
+                },
+                "type": "alert"
+            }
+        ],
+        "guide-id": "Filtrar la leche recién ordeñada, conservar la leche según momento de elaboración",
+        "manual-page": "31 y 32",
+        "milking-method": "mecanico",
+        "modified": {
+            "at": "2026-05-29T20:41:03.327Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
         "periodicity": "",
         "scenario": "ACON-01-02",
         "score-answer": "",
@@ -944,7 +1041,7 @@
             "by": "matias.micheletto@uns.edu.ar"
         },
         "periodicity": "daily",
-        "scenario": "",
+        "scenario": "HEALTH-01",
         "score-answer": "no",
         "severity": 3,
         "showDate": true,
@@ -1122,7 +1219,7 @@
             "by": "matias.micheletto@uns.edu.ar"
         },
         "periodicity": "daily",
-        "scenario": "",
+        "scenario": "FEED-01",
         "score-answer": "yes",
         "severity": 3,
         "showDate": true,
@@ -1421,7 +1518,7 @@
             "by": "matias.micheletto@uns.edu.ar"
         },
         "periodicity": "semester",
-        "scenario": "",
+        "scenario": "FACIL-01",
         "score-answer": "yes",
         "severity": 3,
         "showDate": true,
@@ -1552,7 +1649,7 @@
             "by": "matias.micheletto@uns.edu.ar"
         },
         "periodicity": "semester",
-        "scenario": "",
+        "scenario": "FACIL-02",
         "score-answer": "yes",
         "severity": 3,
         "showDate": true,
@@ -1654,7 +1751,7 @@
             "by": "matias.micheletto@uns.edu.ar"
         },
         "periodicity": "semester",
-        "scenario": "",
+        "scenario": "FACIL-03",
         "score-answer": "yes",
         "severity": 3,
         "showDate": true,
@@ -1753,7 +1850,7 @@
             "by": "matias.micheletto@uns.edu.ar"
         },
         "periodicity": "semester",
-        "scenario": "",
+        "scenario": "SUPPLY-01",
         "score-answer": "yes",
         "severity": 3,
         "showDate": true,
@@ -1858,7 +1955,7 @@
             "by": "matias.micheletto@uns.edu.ar"
         },
         "periodicity": "semester",
-        "scenario": "",
+        "scenario": "SUPPLY-02",
         "score-answer": "yes",
         "severity": 3,
         "showDate": true,
@@ -4275,6 +4372,262 @@
         "title": {
             "en": "Before milking",
             "es": "Antes de ordeñar"
+        }
+    },
+    "view-90": {
+        "category": "milk-care",
+        "fields": [
+            {
+                "id": "view-90-alert",
+                "message": {
+                    "en": "",
+                    "es": "Rotulá siempre el envase con su fecha"
+                },
+                "severity": "warning",
+                "type": "alert"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Back",
+                            "es": "Atrás"
+                        },
+                        "target": "app"
+                    },
+                    {
+                        "label": {
+                            "en": "Next",
+                            "es": "Siguiente"
+                        },
+                        "target": "view-135"
+                    }
+                ],
+                "id": "view-90-bottom-nav",
+                "type": "bottom_navigation"
+            }
+        ],
+        "guide-id": "Filtrar la leche recién ordeñada, conservar la leche según momento de elaboración",
+        "manual-page": "31 y 32",
+        "milking-method": "manual",
+        "modified": {
+            "at": "2026-05-29T20:35:04.724Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "",
+        "scenario": "ACON-01-02",
+        "score-answer": "",
+        "severity": 0,
+        "showDate": true,
+        "title": {
+            "en": "",
+            "es": "Acondicionar la leche"
+        }
+    },
+    "view-92": {
+        "category": "milk-care",
+        "fields": [
+            {
+                "id": "view-92-alert",
+                "message": {
+                    "en": "",
+                    "es": "Filtrá siempre la leche recién ordeñada"
+                },
+                "severity": "warning",
+                "type": "alert"
+            }
+        ],
+        "guide-id": "Filtrar la leche recién ordeñada, conservar la leche según momento de elaboración",
+        "manual-page": "31 y 32",
+        "milking-method": "manual",
+        "modified": {
+            "at": "2026-05-29T20:32:14.522Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "",
+        "scenario": "ACON-01-02",
+        "score-answer": "",
+        "severity": 0,
+        "showDate": true,
+        "title": {
+            "en": "",
+            "es": "Acondicionar la leche"
+        }
+    },
+    "view-93": {
+        "category": "milk-care",
+        "fields": [
+            {
+                "id": "view-93-select",
+                "options": [
+                    {
+                        "label": {
+                            "en": "Inmediately elaborated",
+                            "es": "Elaboré inmediatamente"
+                        },
+                        "target": "view-135",
+                        "value": "opt-1"
+                    },
+                    {
+                        "label": {
+                            "en": "Up to 2 hours: Fridge/pool",
+                            "es": "Hasta 2 horas: Heladera/pileta"
+                        },
+                        "target": "view-135",
+                        "value": "opt-2"
+                    },
+                    {
+                        "label": {
+                            "en": "Up to 48 hours: Cold tank/fridge",
+                            "es": "Hasta 48 horas: Tanque frío/heladera"
+                        },
+                        "target": "view-135",
+                        "value": "opt-3"
+                    },
+                    {
+                        "label": {
+                            "en": "Up to 7 months: Freezer",
+                            "es": "Hasta 7 meses: Freezer"
+                        },
+                        "target": "view-135",
+                        "value": "opt-4"
+                    }
+                ],
+                "type": "select"
+            }
+        ],
+        "guide-id": "Filtrar la leche recién ordeñada conservar la leche según momento de elaboración",
+        "icon": "watch.png",
+        "manual-page": "31 y 32",
+        "milking-method": "manual",
+        "modified": {
+            "at": "2026-05-29T20:32:25.718Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "",
+        "scenario": "ACON-01-02",
+        "score-answer": "",
+        "severity": 0,
+        "showDate": true,
+        "subtitle": {
+            "en": "",
+            "es": "¿Cómo conservaste la leche hoy?"
+        },
+        "title": {
+            "en": "",
+            "es": "Acondicionar la leche"
+        }
+    },
+    "view-94": {
+        "category": "milk-care",
+        "fields": [
+            {
+                "id": "view-94-select",
+                "options": [
+                    {
+                        "label": {
+                            "en": "Yes",
+                            "es": "Si"
+                        },
+                        "target": "view-93",
+                        "value": "yes"
+                    },
+                    {
+                        "label": {
+                            "en": "No",
+                            "es": "No"
+                        },
+                        "target": "view-92",
+                        "value": "no"
+                    },
+                    {
+                        "label": {
+                            "en": "Don't know",
+                            "es": "No se"
+                        },
+                        "target": "view-96",
+                        "value": "dont-know"
+                    }
+                ],
+                "type": "select"
+            }
+        ],
+        "guide-id": "Filtrar la leche recién ordeñada, conservar la leche según momento de elaboración",
+        "icon": "filter.png",
+        "manual-page": "31 y 32",
+        "milking-method": "manual",
+        "modified": {
+            "at": "2026-05-29T20:32:36.330Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "daily",
+        "scenario": "ACON-01-02",
+        "score-answer": "yes",
+        "severity": 3,
+        "showDate": true,
+        "subtitle": {
+            "en": "",
+            "es": "¿Filtraste la leche?"
+        },
+        "title": {
+            "en": "",
+            "es": "Acondicionar la leche"
+        }
+    },
+    "view-95": {
+        "category": "milk-care",
+        "fields": [
+            {
+                "id": "view-95-select",
+                "options": [
+                    {
+                        "label": {
+                            "en": "Yes",
+                            "es": "Si"
+                        },
+                        "target": "view-135",
+                        "value": "yes"
+                    },
+                    {
+                        "label": {
+                            "en": "No",
+                            "es": "No"
+                        },
+                        "target": "view-90",
+                        "value": "no"
+                    },
+                    {
+                        "label": {
+                            "en": "Don't know",
+                            "es": "No se"
+                        },
+                        "target": "view-224",
+                        "value": "dont-know"
+                    }
+                ],
+                "type": "select"
+            }
+        ],
+        "guide-id": "Filtrar la leche recién ordeñada, conservar la leche según momento de elaboración",
+        "icon": "edit.png",
+        "manual-page": "31 y 32",
+        "milking-method": "manual",
+        "modified": {
+            "at": "2026-05-29T20:32:46.444Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "daily",
+        "scenario": "ACON-01-02",
+        "score-answer": "yes",
+        "severity": 3,
+        "showDate": true,
+        "subtitle": {
+            "en": "",
+            "es": "¿Rotulaste el envase?"
+        },
+        "title": {
+            "en": "",
+            "es": "Acondicionar la leche"
         }
     },
     "view-result-bad": {

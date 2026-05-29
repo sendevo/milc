@@ -1,4 +1,4 @@
-package com.sendevo.milc;
+package com.inta.milc;
 
 import com.getcapacitor.BridgeActivity;
 

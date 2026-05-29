@@ -1,14 +1,33 @@
 {
-  "rules": {
-    "survey": {
-      ".read":  "auth != null",
-      ".write": "auth != null && auth.token.firebase.sign_in_provider != 'anonymous'"
-    },
-    "users": {
-      "$uid": {
-        ".read":  "auth != null && auth.uid === $uid",
-        ".write": "auth != null && auth.uid === $uid"
-      }
+    "rules": {
+        "survey": {
+            ".read": "auth != null",
+            ".write": "auth != null && auth.token.firebase.sign_in_provider != 'anonymous'"
+        },
+        "users": {
+            "$uid": {
+                ".read": "auth != null && auth.uid === $uid",
+                ".write": "auth != null && auth.uid === $uid",
+                "analytics": {
+                    "events": {
+                        "$day": {
+                            "$eventId": {
+                                ".validate": "
+                                newData.hasChildren(['ts', 'node', 'cat', 'ans_t', 'sync_v']) &&
+                                newData.child('ts').isNumber() &&
+                                newData.child('node').isString() &&
+                                newData.child('node').val().length <= 64 &&
+                                newData.child('cat').isString() &&
+                                newData.child('cat').val().length <= 64 &&
+                                newData.child('ans_t').isString() &&
+                                newData.child('ans_t').val().matches(/^(bool|enum|number|list)$/) &&
+                                newData.child('sync_v').isNumber()
+                                "
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
-  }
 }

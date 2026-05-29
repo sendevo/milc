@@ -180,6 +180,13 @@ The following is the reference mapping of each scenario code to its severity and
 | PREORD-08 | Ensure teats are clean before milking | S3 | Before milking | Daily |
 | ORD-02-03 | Operator health and hygiene | S3 | During milking | Daily |
 | ORD-07 | Full equipment cleaning after milking | S3 | During milking | Daily |
+| HEALTH-01 | Brucellosis blood testing check | S3 | Health | Daily |
+| FEED-01 | Feed quality control | S3 | Food | Daily |
+| FACIL-01 | Waiting pen availability | S3 | Facilities | Semester |
+| FACIL-02 | Milking room availability | S3 | Facilities | Semester |
+| FACIL-03 | Milk conditioning room availability | S3 | Facilities | Semester |
+| SUPPLY-01 | Chemical products storage area | S3 | Supplies | Semester |
+| SUPPLY-02 | Feed storage availability | S3 | Supplies | Semester |
 
 > **Note:** This table is incomplete — the full MILC guide defines ~34 scoreable scenarios across all 8 categories. The table above covers only the scenarios present in the current `nodes.json`. The full mapping should be completed as new views are added.
 
