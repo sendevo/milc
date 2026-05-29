@@ -42,23 +42,31 @@ const MainMenu = () => {
     const isDark = theme.palette.mode === "dark";
     const menuBorder = isDark ? "#9e9e9e" : "#1a8090";
 
-    const beforeMilkingRoute = useMemo(() => {
+    const latestMethodAnswer = useMemo(() => {
         const milkingMethodNodeId = Object.keys(nodes).find((nodeId) =>
             (nodes[nodeId]?.fields || []).some((field) => field?.id === "milk-select")
         );
 
         if (!milkingMethodNodeId) {
-            return "/survey/view-109";
+            return null;
         }
 
-        const latestMethodAnswer = getRecordsByScenario("APP-SETUP")
+        return getRecordsByScenario("APP-SETUP")
             .filter((record) => record.nodeId === milkingMethodNodeId)
             .sort((a, b) => b.timestamp - a.timestamp)[0]?.answer;
+    }, [getRecordsByScenario, nodes]);
 
+    const beforeMilkingRoute = useMemo(() => {
         return latestMethodAnswer === "manual"
             ? "/survey/view-124"
             : "/survey/view-109";
-    }, [getRecordsByScenario, nodes]);
+    }, [latestMethodAnswer]);
+
+    const milkCareRoute = useMemo(() => {
+        return latestMethodAnswer === "manual"
+            ? "/survey/view-94"
+            : "/survey/view-129";
+    }, [latestMethodAnswer]);
 
     const myDayItems = [
         {
@@ -74,7 +82,7 @@ const MainMenu = () => {
         { 
             icon: milkPail, 
             label: t("mainMenu.milkCare"),
-            onClick: () => navigate("/survey/view-129") 
+            onClick: () => navigate(milkCareRoute)
         },
     ];
 
