@@ -2,7 +2,6 @@ import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/12.12
 import {
 	getAuth,
 	signInWithEmailAndPassword,
-	signInAnonymously,
 	signOut,
 	onAuthStateChanged,
 } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
@@ -28,6 +27,7 @@ const els = {
 	userPill: document.getElementById("user-pill"),
 	connectionPanel: document.getElementById("connection-panel"),
 	btnReconfigure: document.getElementById("btn-reconfigure"),
+	btnSignoutHeader: document.getElementById("btn-signout-header"),
 	status: document.getElementById("status"),
 	modalFirebase: document.getElementById("modal-firebase"),
 	modalLogin: document.getElementById("modal-login"),
@@ -48,13 +48,16 @@ const els = {
 	btnLoginEnvBrowse: document.getElementById("login-env-browse"),
 	loginEnvFile: document.getElementById("login-env-file"),
 	loginEnvFilename: document.getElementById("login-env-filename"),
-	btnAnon: document.getElementById("btn-anon"),
 	btnSignout: document.getElementById("btn-signout"),
 	filterFrom: document.getElementById("filter-from"),
+	filtersSection: document.querySelector("section.filters"),
 	filterTo: document.getElementById("filter-to"),
 	filterCategory: document.getElementById("filter-category"),
 	filterPlatform: document.getElementById("filter-platform"),
 	quickRange: document.getElementById("quick-range"),
+	kpiSection: document.getElementById("kpi-grid"),
+	chartGrid: document.getElementById("chart-grid"),
+	insightGrid: document.getElementById("insight-grid"),
 	topNodesBody: document.getElementById("top-nodes-body"),
 	heatmap: document.getElementById("activity-heatmap"),
 	kpi: {
@@ -181,12 +184,30 @@ const setStatus = (message, type = "info") => {
 };
 
 const updateConnectionVisibility = () => {
-	const connected = Boolean(state.app);
+	const initialized = Boolean(state.app);
+	const authenticated = Boolean(state.user);
+	const showAnalytics = initialized && authenticated;
 	if (els.connectionPanel) {
-		els.connectionPanel.style.display = connected ? "none" : "block";
+		// Keep login controls visible until user is authenticated.
+		els.connectionPanel.style.display = authenticated ? "none" : "block";
 	}
 	if (els.btnReconfigure) {
-		els.btnReconfigure.style.display = connected ? "inline-flex" : "none";
+		// Reconfigure stays available once Firebase is initialized.
+		els.btnReconfigure.style.display = initialized ? "inline-flex" : "none";
+	}
+
+	// Hide everything below connection until Firebase is configured and user is logged in.
+	if (els.filtersSection) {
+		els.filtersSection.style.display = showAnalytics ? "block" : "none";
+	}
+	if (els.kpiSection) {
+		els.kpiSection.style.display = showAnalytics ? "grid" : "none";
+	}
+	if (els.chartGrid) {
+		els.chartGrid.style.display = showAnalytics ? "grid" : "none";
+	}
+	if (els.insightGrid) {
+		els.insightGrid.style.display = showAnalytics ? "grid" : "none";
 	}
 };
 
@@ -194,6 +215,10 @@ const setSignedInUI = (user) => {
 	if (!user) {
 		els.userPill.textContent = "Not signed in";
 		els.btnSignout.disabled = true;
+		if (els.btnSignoutHeader) {
+			els.btnSignoutHeader.disabled = true;
+			els.btnSignoutHeader.style.display = "none";
+		}
 		return;
 	}
 
@@ -201,6 +226,10 @@ const setSignedInUI = (user) => {
 		? `Anonymous user ${user.uid.slice(0, 8)}...`
 		: user.email || user.uid;
 	els.btnSignout.disabled = false;
+	if (els.btnSignoutHeader) {
+		els.btnSignoutHeader.disabled = false;
+		els.btnSignoutHeader.style.display = "inline-flex";
+	}
 };
 
 const resolveUserLabel = (uid) => {
@@ -295,6 +324,7 @@ const initFirebase = (config) => {
 	onAuthStateChanged(state.auth, (user) => {
 		state.user = user || null;
 		setSignedInUI(state.user);
+		updateConnectionVisibility();
 
 		if (state.unsubscribe) {
 			state.unsubscribe();
@@ -815,6 +845,11 @@ const setQuickRange = (rangeValue) => {
 };
 
 const bindEvents = () => {
+	const handleSignOut = async () => {
+		if (!state.auth) return;
+		await signOut(state.auth);
+	};
+
 	els.btnReconfigure.addEventListener("click", openFirebaseModal);
 
 	els.btnOpenFirebaseModal.addEventListener("click", openFirebaseModal);
@@ -928,24 +963,10 @@ const bindEvents = () => {
 		event.target.value = "";
 	});
 
-	els.btnAnon.addEventListener("click", async () => {
-		if (!state.auth) {
-			setStatus("Initialize Firebase first.", "error");
-			return;
-		}
-
-		try {
-			await signInAnonymously(state.auth);
-			setStatus("Signed in anonymously.", "success");
-		} catch (error) {
-			setStatus(`Anonymous sign-in failed: ${error.message}`, "error");
-		}
-	});
-
-	els.btnSignout.addEventListener("click", async () => {
-		if (!state.auth) return;
-		await signOut(state.auth);
-	});
+	els.btnSignout.addEventListener("click", handleSignOut);
+	if (els.btnSignoutHeader) {
+		els.btnSignoutHeader.addEventListener("click", handleSignOut);
+	}
 
 	[els.filterFrom, els.filterTo, els.filterCategory, els.filterPlatform].forEach((control) => {
 		control.addEventListener("change", () => {

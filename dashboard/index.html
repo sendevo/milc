@@ -28,6 +28,7 @@
         <div class="user-tools">
             <div class="user-pill" id="user-pill">Not signed in</div>
             <button type="button" id="btn-reconfigure" class="btn btn-compact" style="display:none">Reconfigure</button>
+            <button type="button" id="btn-signout-header" class="btn btn-compact" style="display:none" disabled>Logout</button>
         </div>
     </header>
 
@@ -41,7 +42,6 @@
         <div class="actions auth-actions">
             <button type="button" id="btn-open-firebase-modal" class="btn btn-primary">Firebase configuration</button>
             <button type="button" id="btn-open-login-modal" class="btn">Login credentials</button>
-            <button type="button" id="btn-anon" class="btn">Sign in anonymously</button>
             <button type="button" id="btn-signout" class="btn" disabled>Sign out</button>
         </div>
 
@@ -81,7 +81,7 @@
         <article class="card kpi"><h3>Most active node</h3><p id="kpi-top-node">-</p></article>
     </section>
 
-    <section class="chart-grid">
+    <section class="chart-grid" id="chart-grid">
         <article class="card chart-card wide">
             <h2>Events over time</h2>
             <canvas id="events-timeline" aria-label="Events timeline chart"></canvas>
@@ -104,7 +104,7 @@
         </article>
     </section>
 
-    <section class="insight-grid">
+    <section class="insight-grid" id="insight-grid">
         <article class="card heatmap-card">
             <h2>Activity heatmap (day x hour)</h2>
             <div id="activity-heatmap" class="heatmap"></div>
