@@ -203,6 +203,14 @@ const setSignedInUI = (user) => {
 	els.btnSignout.disabled = false;
 };
 
+const resolveUserLabel = (uid) => {
+	if (!uid || uid === "unknown") return "unknown";
+	if (state.user?.uid && uid === state.user.uid) {
+		return state.user.email || uid;
+	}
+	return uid;
+};
+
 const getFormConfig = () => {
 	const formData = new FormData(els.configForm);
 	return {
@@ -312,7 +320,7 @@ const subscribeToUserEvents = (uid) => {
 		eventsRef,
 		(snapshot) => {
 			const raw = snapshot.val() || {};
-			state.allEvents = flattenEvents(raw);
+			state.allEvents = flattenEvents(raw, uid);
 			populateFilterOptions(state.allEvents);
 			applyFiltersAndRender();
 			setStatus(`Loaded ${formatNumber(state.allEvents.length)} events for user ${uid}.`, "success");
@@ -327,7 +335,7 @@ const subscribeToUserEvents = (uid) => {
 	};
 };
 
-const normalizeEvent = (dayKey, eventId, rawEvent) => {
+const normalizeEvent = (dayKey, eventId, rawEvent, sourceUid = null) => {
 	const ts = Number(rawEvent?.ts);
 	const dateFromTs = Number.isFinite(ts) ? new Date(ts) : null;
 	const isoFromTs = dateFromTs ? toIsoDate(dateFromTs) : "";
@@ -344,6 +352,7 @@ const normalizeEvent = (dayKey, eventId, rawEvent) => {
 
 	return {
 		id: eventId,
+		pushedByUid: rawEvent?.uid || sourceUid || "unknown",
 		day,
 		date,
 		ts: Number.isFinite(ts) ? ts : null,
@@ -363,12 +372,12 @@ const normalizeEvent = (dayKey, eventId, rawEvent) => {
 	};
 };
 
-const flattenEvents = (eventsByDay) => {
+const flattenEvents = (eventsByDay, sourceUid = null) => {
 	const rows = [];
 	for (const [dayKey, entries] of Object.entries(eventsByDay || {})) {
 		if (!entries || typeof entries !== "object") continue;
 		for (const [eventId, rawEvent] of Object.entries(entries)) {
-			rows.push(normalizeEvent(dayKey, eventId, rawEvent));
+			rows.push(normalizeEvent(dayKey, eventId, rawEvent, sourceUid));
 		}
 	}
 
@@ -645,6 +654,7 @@ const renderTopNodesTable = (events) => {
 		if (!nodeMap.has(event.node)) {
 			nodeMap.set(event.node, {
 				node: event.node,
+				pushedBySet: new Set(),
 				scenario: event.scenario,
 				category: event.category,
 				count: 0,
@@ -654,6 +664,7 @@ const renderTopNodesTable = (events) => {
 		}
 
 		const row = nodeMap.get(event.node);
+		row.pushedBySet.add(event.pushedByUid || "unknown");
 		row.count += 1;
 		if (event.ok === true || event.ok === false) {
 			row.okKnown += 1;
@@ -666,16 +677,21 @@ const renderTopNodesTable = (events) => {
 		.slice(0, 12);
 
 	if (!rows.length) {
-		els.topNodesBody.innerHTML = '<tr><td colspan="5" class="muted">No data yet.</td></tr>';
+		els.topNodesBody.innerHTML = '<tr><td colspan="6" class="muted">No data yet.</td></tr>';
 		return;
 	}
 
 	els.topNodesBody.innerHTML = rows
 		.map((row) => {
 			const pct = row.okKnown ? ((row.okCount / row.okKnown) * 100).toFixed(1) : "-";
+			const users = [...row.pushedBySet].filter(Boolean);
+			const pushedBy = users.length <= 1
+				? resolveUserLabel(users[0] || "unknown")
+				: `${users.length} users`;
 			return `
 				<tr>
 					<td>${row.node}</td>
+					<td>${pushedBy}</td>
 					<td>${row.scenario || "-"}</td>
 					<td>${row.category || "uncategorized"}</td>
 					<td>${formatNumber(row.count)}</td>
