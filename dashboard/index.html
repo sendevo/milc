@@ -3,16 +3,193 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Dashboard for MILC app statistics" />
+    <meta name="description" content="MILC analytics dashboard for Realtime Database interaction events" />
     <meta name="author" content="Sendevo Software" />
     <title>MILC Dashboard</title>
-    <link rel="icon" href="favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+<div class="bg-shape bg-shape-a"></div>
+<div class="bg-shape bg-shape-b"></div>
 
+<main class="layout">
+    <header class="hero card">
+        <div>
+            <p class="eyebrow">Realtime Intelligence</p>
+            <h1>MILC Interaction Dashboard</h1>
+            <p class="lead">
+                Visualize user interaction telemetry from Firebase Realtime Database,
+                discover friction points, and track behavioral quality over time.
+            </p>
+        </div>
+        <div class="user-tools">
+            <div class="user-pill" id="user-pill">Not signed in</div>
+            <button type="button" id="btn-reconfigure" class="btn btn-compact" style="display:none">Reconfigure</button>
+        </div>
+    </header>
 
+    <section class="card auth-card" id="connection-panel">
+        <h2>Connection</h2>
+        <p class="hint">
+            Sign in with a user account. The current security rules only allow reading
+            analytics for the signed-in user.
+        </p>
 
+        <div class="actions auth-actions">
+            <button type="button" id="btn-open-firebase-modal" class="btn btn-primary">Firebase configuration</button>
+            <button type="button" id="btn-open-login-modal" class="btn">Login credentials</button>
+            <button type="button" id="btn-anon" class="btn">Sign in anonymously</button>
+            <button type="button" id="btn-signout" class="btn" disabled>Sign out</button>
+        </div>
+
+        <p id="status" class="status">Waiting for Firebase configuration.</p>
+    </section>
+
+    <section class="card filters">
+        <h2>Filters</h2>
+        <div class="filter-row">
+            <label>From<input type="date" id="filter-from" /></label>
+            <label>To<input type="date" id="filter-to" /></label>
+            <label>Category
+                <select id="filter-category">
+                    <option value="all">All categories</option>
+                </select>
+            </label>
+            <label>Platform
+                <select id="filter-platform">
+                    <option value="all">All platforms</option>
+                </select>
+            </label>
+        </div>
+        <div class="quick-range" id="quick-range">
+            <button data-range="7" class="chip">Last 7d</button>
+            <button data-range="30" class="chip">Last 30d</button>
+            <button data-range="90" class="chip">Last 90d</button>
+            <button data-range="all" class="chip active">All</button>
+        </div>
+    </section>
+
+    <section class="kpi-grid" id="kpi-grid">
+        <article class="card kpi"><h3>Total events</h3><p id="kpi-total-events">0</p></article>
+        <article class="card kpi"><h3>Active days</h3><p id="kpi-active-days">0</p></article>
+        <article class="card kpi"><h3>Avg events/day</h3><p id="kpi-avg-events-day">0</p></article>
+        <article class="card kpi"><h3>Correct answer rate</h3><p id="kpi-correct-rate">0%</p></article>
+        <article class="card kpi"><h3>Top category</h3><p id="kpi-top-category">-</p></article>
+        <article class="card kpi"><h3>Most active node</h3><p id="kpi-top-node">-</p></article>
+    </section>
+
+    <section class="chart-grid">
+        <article class="card chart-card wide">
+            <h2>Events over time</h2>
+            <canvas id="events-timeline" aria-label="Events timeline chart"></canvas>
+        </article>
+        <article class="card chart-card">
+            <h2>Category distribution</h2>
+            <canvas id="category-chart" aria-label="Category chart"></canvas>
+        </article>
+        <article class="card chart-card">
+            <h2>Answer type mix</h2>
+            <canvas id="answer-type-chart" aria-label="Answer type chart"></canvas>
+        </article>
+        <article class="card chart-card">
+            <h2>Correctness</h2>
+            <canvas id="correctness-chart" aria-label="Correctness chart"></canvas>
+        </article>
+        <article class="card chart-card">
+            <h2>Platform usage</h2>
+            <canvas id="platform-chart" aria-label="Platform chart"></canvas>
+        </article>
+    </section>
+
+    <section class="insight-grid">
+        <article class="card heatmap-card">
+            <h2>Activity heatmap (day x hour)</h2>
+            <div id="activity-heatmap" class="heatmap"></div>
+            <p class="hint">Rows are Monday to Sunday. Columns are 00-23h.</p>
+        </article>
+
+        <article class="card table-card">
+            <h2>Top nodes</h2>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Node</th>
+                        <th>Scenario</th>
+                        <th>Category</th>
+                        <th>Events</th>
+                        <th>Correct %</th>
+                    </tr>
+                    </thead>
+                    <tbody id="top-nodes-body">
+                    <tr><td colspan="5" class="muted">No data yet.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </article>
+    </section>
+</main>
+
+<div id="modal-firebase" class="modal-overlay" style="display:none">
+    <div class="modal-box">
+        <h2>Firebase Configuration</h2>
+        <p class="modal-hint">Load from a <code>.env</code> file or complete values manually. Saved only in this browser.</p>
+        <div class="form-group">
+            <label>Load from <code>.env</code> file</label>
+            <div class="env-load-row">
+                <input type="file" id="fb-env-file" accept=".env,text/plain" style="display:none" />
+                <button id="fb-env-browse" class="btn">Browse...</button>
+                <span id="fb-env-filename" class="hint">No file selected</span>
+            </div>
+        </div>
+        <hr class="modal-divider" />
+        <form id="firebase-config-form" class="grid-form">
+            <label>API Key<input id="fb-api-key" name="apiKey" required /></label>
+            <label>Auth Domain<input id="fb-auth-domain" name="authDomain" required /></label>
+            <label>Project ID<input id="fb-project-id" name="projectId" required /></label>
+            <label>Database URL<input id="fb-database-url" name="databaseURL" required /></label>
+            <label>App ID<input id="fb-app-id" name="appId" required /></label>
+            <label>Storage Bucket<input id="fb-storage-bucket" name="storageBucket" /></label>
+            <label>Messaging Sender ID<input id="fb-messaging-sender-id" name="messagingSenderId" /></label>
+        </form>
+        <div class="modal-actions">
+            <button id="fb-load-vite-env" class="btn">Load from Vite env</button>
+            <button id="fb-modal-save" class="btn btn-primary">Save & initialize</button>
+            <button id="fb-modal-cancel" class="btn">Cancel</button>
+        </div>
+        <p id="fb-modal-error" class="modal-error" style="display:none"></p>
+    </div>
+</div>
+
+<div id="modal-login" class="modal-overlay" style="display:none">
+    <div class="modal-box">
+        <h2>Login Credentials</h2>
+        <p class="modal-hint">Load credentials from <code>.env</code> or enter them manually. They stay in local browser storage.</p>
+        <div class="form-group">
+            <label>Load from <code>.env</code> file</label>
+            <div class="env-load-row">
+                <input type="file" id="login-env-file" accept=".env,text/plain" style="display:none" />
+                <button id="login-env-browse" class="btn">Browse...</button>
+                <span id="login-env-filename" class="hint">No file selected</span>
+            </div>
+        </div>
+        <hr class="modal-divider" />
+        <form id="signin-form" class="grid-form compact">
+            <label>Email<input id="login-email" name="email" type="email" autocomplete="email" /></label>
+            <label>Password<input id="login-password" name="password" type="password" autocomplete="current-password" /></label>
+        </form>
+        <div class="modal-actions">
+            <button id="login-modal-signin" class="btn btn-primary">Sign in</button>
+            <button id="login-modal-cancel" class="btn">Cancel</button>
+        </div>
+        <p id="login-modal-error" class="modal-error" style="display:none"></p>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 <script type="module" src="app.js"></script>
 </body>
 </html>
