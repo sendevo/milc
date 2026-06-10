@@ -1,5 +1,6 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
+import DairyBarChart from "./pages/DairyBarChart";
 
 const APP_VERSION = import.meta.env.APP_VERSION;
 
@@ -51,6 +52,15 @@ const resources = {
                 logout: "Logout",
                 info: "Information & Help",
                 createAccount: "Create Account",
+            },
+            logMenu: {
+                panelTitle: "My Records",
+                period: "Period",
+                view: "View",
+                myRecords: "My Records",
+                systemSafety: "System Safety",
+                dairyData: "Dairy Data",
+                downloadReport: "Download Report",
             },
             calendar: {
                 title: "My Records",
@@ -207,6 +217,15 @@ const resources = {
                 logout: "Cerrar sesión",
                 info: "Información y ayuda",
                 createAccount: "Crear cuenta",
+            },
+            logMenu: {
+                panelTitle: "Mis registros",
+                period: "Periodo",
+                view: "Ver",
+                myRecords: "Mis registros",
+                systemSafety: "Inocuidad del sistema",
+                dairyData: "Datos del tambo",
+                downloadReport: "Descargar reporte",
             },
             calendar: {
                 title: "Mis registros",

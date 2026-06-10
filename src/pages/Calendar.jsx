@@ -113,7 +113,7 @@ const Calendar = () => {
 			fromDate: formatAsIsoDate(fromDate),
 			toDate: formatAsIsoDate(toDate),
 		});
-		navigate(`/milkbarchart?${params.toString()}`);
+		navigate(`/log-menu?${params.toString()}`);
 	};
 
 	return (

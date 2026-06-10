@@ -5,9 +5,11 @@ import Welcome from "./pages/Welcome";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import MainMenu from "./pages/MainMenu";
+import LogMenu from "./pages/LogMenu";
 import SurveyPage from "./pages/SurveyPage";
 import Calendar from "./pages/Calendar";
 import MilkBarChart from "./pages/MilkBarChart";
+import DairyBarChart from "./pages/DairyBarChart";
 import ResultScales from "./pages/ResultScales";
 import Config from "./pages/Config";
 import Info from "./pages/Info";
@@ -47,6 +49,13 @@ const App = () => {
                         </ProtectedRoute>
                     }/>
                 <Route
+                    path="/log-menu"
+                    element={
+                        <ProtectedRoute>
+                        <LogMenu />
+                        </ProtectedRoute>
+                    }/>
+                <Route
                     path="/survey/:nodeId"
                     element={
                         <ProtectedRoute>
@@ -65,6 +74,13 @@ const App = () => {
                     element={
                         <ProtectedRoute>
                         <MilkBarChart />
+                        </ProtectedRoute>
+                    }/>
+                <Route 
+                    path="/dairybarchart"
+                    element={
+                        <ProtectedRoute>
+                        <DairyBarChart />
                         </ProtectedRoute>
                     }/>
                 <Route

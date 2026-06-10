@@ -4,8 +4,9 @@ import { Box, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { useMemo } from "react";
 import ViewContainer from "../components/ViewContainer";
+import MenuButtonContainer from "../components/MenuButtonContainer";
 import MenuCircle from "../components/MenuCircle";
-import { mainMenuStyles as styles } from "../theme/MainMenu.styles";
+import { menusStyles as styles } from "../theme/Menus.styles";
 import { useSurveyLog } from "../hooks/useSurveyLog";
 import { useSurveyNodes } from "../hooks/useSurveyNodes";
 import blueGoat from "../assets/icons/blue_goat.png";
@@ -21,17 +22,6 @@ import user from "../assets/icons/user.png";
 import config from "../assets/icons/config.png";
 import info from "../assets/icons/info_help.png";
 
-const ButtonsContainer = ({ children }) => (
-    <Box sx={styles.buttonsContainer}>
-        <Box
-            display="grid"
-            gridTemplateColumns="repeat(3, 1fr)"
-            gap={2}
-            justifyItems="center">
-            {children}
-        </Box>
-    </Box>
-);
 
 const MainMenu = () => {
     const { t } = useTranslation();
@@ -141,7 +131,7 @@ const MainMenu = () => {
         <ViewContainer title={t("mainMenu.panelTitle")}>
             <Box px={2} display="flex" flexDirection="column" gap={3} marginBottom={"20px"}>
                 {/* MI DÍA section */}
-                <Box>
+                <Box mt={3}>
                     <Typography
                         variant="subtitle1"
                         fontWeight="bold"
@@ -150,7 +140,7 @@ const MainMenu = () => {
                         sx={styles.sectionTitleFirst}>
                         {t("mainMenu.myDay")}
                     </Typography>
-                    <ButtonsContainer>
+                    <MenuButtonContainer>
                         {myDayItems.map((item) => (
                             <MenuCircle
                                 key={item.label}
@@ -159,7 +149,7 @@ const MainMenu = () => {
                                 borderColor={menuBorder}
                                 onClick={item.onClick} />
                         ))}
-                    </ButtonsContainer>
+                    </MenuButtonContainer>
                 </Box>
 
                 {/* MÁS ACCIONES section */}
@@ -172,7 +162,7 @@ const MainMenu = () => {
                         sx={styles.sectionTitle}>
                         {t("mainMenu.moreActions")}
                     </Typography>
-                    <ButtonsContainer>
+                    <MenuButtonContainer>
                         {moreActionItems.map((item) => (
                             <MenuCircle
                                 key={item.label}
@@ -181,7 +171,7 @@ const MainMenu = () => {
                                 borderColor={menuBorder}
                                 onClick={item.onClick} />
                         ))}
-                    </ButtonsContainer>
+                    </MenuButtonContainer>
                 </Box>
 
                 {/* MI CUENTA section */}
@@ -194,7 +184,7 @@ const MainMenu = () => {
                         sx={styles.sectionTitle}>
                         {t("mainMenu.myAccount")}
                     </Typography>
-                    <ButtonsContainer>
+                    <MenuButtonContainer>
                         {accountActionItems.map((item) => (
                             <MenuCircle
                                 key={item.label}
@@ -203,7 +193,7 @@ const MainMenu = () => {
                                 borderColor={menuBorder}
                                 onClick={item.onClick} />
                         ))}
-                    </ButtonsContainer>
+                    </MenuButtonContainer>
                 </Box>
             </Box>
         </ViewContainer>
