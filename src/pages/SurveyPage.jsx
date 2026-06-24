@@ -154,7 +154,10 @@ const SurveyPage = () => {
         }
 
         if (targetId && !targetNode) {
-            showToast(t("survey.inDevelopment"));
+            // Don't show toast if target is "home" (intentional navigation endpoint)
+            if (targetId !== "home") {
+                showToast(t("survey.inDevelopment"));
+            }
             navigate("/app");
             return;
         }

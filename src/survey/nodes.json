@@ -64,7 +64,6 @@
                     "en": "Attention<br>Check your hygiene",
                     "es": "Atención<br>Revisá tu higiene"
                 },
-                "severity": "warning",
                 "type": "alert"
             }
         ],
@@ -285,7 +284,6 @@
                     "en": "Done!<br>Start milking",
                     "es": "¡Listo!<br>Comenzá a ordeñar"
                 },
-                "severity": "info",
                 "type": "alert"
             }
         ],
@@ -314,7 +312,6 @@
                     "en": "Attention<br>Clean the equipment after milking is done",
                     "es": "Atención<br>Limpiá el equipo al terminar de ordeñar"
                 },
-                "severity": "warning",
                 "type": "alert"
             }
         ],
@@ -348,11 +345,10 @@
             }
         ],
         "guide-id": "Las personas involucradas en el tambo deben conocer y aplicar las indicaciones de salud",
-        "icon": "warning.png",
         "manual-page": "22, 23",
         "milking-method": "todos",
         "modified": {
-            "at": "2026-05-28T04:02:54.689Z",
+            "at": "2026-05-29T21:49:02.772Z",
             "by": "matias.micheletto@uns.edu.ar"
         },
         "periodicity": "",
@@ -377,7 +373,6 @@
                     "en": "Milking task registered",
                     "es": "Completaste el ordeñe"
                 },
-                "severity": "info",
                 "type": "alert"
             }
         ],
@@ -403,7 +398,6 @@
                     "en": "<b>Attention</b><br>Weekly alert:<br>Clean the pen",
                     "es": "<b>Atención</b><br>Alerta semanal:<br>Limpiá el corral"
                 },
-                "severity": "warning",
                 "type": "alert"
             }
         ],
@@ -461,7 +455,7 @@
                             "en": "Next",
                             "es": "Siguiente"
                         },
-                        "target": "app"
+                        "target": "home"
                     }
                 ],
                 "id": "view-123-bottom-nav",
@@ -765,7 +759,6 @@
                     "en": "Always label the container with its date",
                     "es": "Rotulá siempre el envase con su fecha"
                 },
-                "severity": "warning",
                 "type": "alert"
             },
             {
@@ -815,7 +808,6 @@
                     "en": "Always strain freshly milked milk",
                     "es": "Filtrá siempre la leche recién ordeñada"
                 },
-                "severity": "warning",
                 "type": "alert"
             },
             {
@@ -865,7 +857,6 @@
                     "en": "You completed milk conditioning",
                     "es": "Completaste el acondicionamiento de la leche"
                 },
-                "severity": "info",
                 "type": "alert"
             }
         ],
@@ -895,7 +886,6 @@
                     "en": "You completed milk conditioning",
                     "es": "Completaste el acondicionamiento de la leche"
                 },
-                "severity": "info",
                 "type": "alert"
             }
         ],
@@ -2396,7 +2386,6 @@
                     "en": "<b>Attention</b><br>Milk those animals at the end and discard their milk",
                     "es": "<b>Atención</b><br>Ordeñá esos animales al final y descartá su leche"
                 },
-                "severity": "warning",
                 "type": "alert"
             }
         ],
@@ -2725,7 +2714,6 @@
                     "en": "<b>Attention</b><br>Check your clothing",
                     "es": "<b>Atención</b><br>Revisá tu indumentaria"
                 },
-                "severity": "warning",
                 "type": "alert"
             }
         ],
@@ -2754,7 +2742,6 @@
                     "en": "<b>Attention</b><br>Check your hygiene",
                     "es": "<b>Atención</b><br>Revisá tu higiene"
                 },
-                "severity": "warning",
                 "type": "alert"
             }
         ],
@@ -3309,7 +3296,6 @@
                     "en": "Warning<br>Weekly alert:<br> clean the parlor",
                     "es": "Atención<br>Alerta semanal:<br>limpiá la sala"
                 },
-                "severity": "warning",
                 "type": "alert"
             }
         ],
@@ -3420,7 +3406,6 @@
                     "en": "Attention<br>Milk those animals at the end and discard their milk",
                     "es": "Atención<br>Ordeñá esos animales al final y descartá su leche"
                 },
-                "severity": "warning",
                 "type": "alert"
             }
         ],
@@ -3639,7 +3624,6 @@
                     "en": "Attention<br>Do not milk with sympthoms",
                     "es": "Atención<br>No ordeñes con síntomas"
                 },
-                "severity": "warning",
                 "type": "alert"
             }
         ],
@@ -3865,7 +3849,6 @@
                     "en": "Attention<br>Check your clothing",
                     "es": "Atención<br>Revisá tu indumentaria"
                 },
-                "severity": "warning",
                 "type": "alert"
             }
         ],
@@ -4418,7 +4401,6 @@
                     "en": "Attention<br>Mastitis risk<br>Check and strip the teats",
                     "es": "Atención<br>Riesgo de mastitis<br>Revisá y despuntá las ubres"
                 },
-                "severity": "warning",
                 "type": "alert"
             }
         ],
@@ -4457,7 +4439,7 @@
                             "en": "Back",
                             "es": "Atrás"
                         },
-                        "target": "app"
+                        "target": "home"
                     },
                     {
                         "label": {
@@ -4700,15 +4682,49 @@
             {
                 "id": "view-286-text-block",
                 "message": {
-                    "en": "<b>Very high hazard index</b><br>Filter processed milk<br>Label containers<br>Clean machines",
-                    "es": "<b>Índice de peligro muy alto</b><br>Filtrá la leche procesada<br>Rotulá los envases<br>Limpiá las máquinas"
+                    "en": "<b>Very high hazard index</b>",
+                    "es": "<b>Índice de peligro muy alto</b>"
                 },
                 "type": "text_block"
+            },
+            {
+                "id": "view-result-bad-select",
+                "options": [
+                    {
+                        "label": {
+                            "en": "Clean machines",
+                            "es": "Filtrá la leche procesada"
+                        },
+                        "target": "home",
+                        "value": "clean-machines"
+                    },
+                    {
+                        "label": {
+                            "en": "Label containers",
+                            "es": "Rotulá los envases"
+                        },
+                        "target": "home",
+                        "value": "label-containers"
+                    },
+                    {
+                        "label": {
+                            "en": "Filter processed milk",
+                            "es": "Limpiá las máquinas"
+                        },
+                        "target": "home",
+                        "value": "filter-milk"
+                    }
+                ],
+                "type": "select"
             }
         ],
         "guide-id": "Registros",
         "manual-page": "0",
         "milking-method": "",
+        "modified": {
+            "at": "2026-06-23T18:52:01.167Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
         "periodicity": "",
         "scenario": "",
         "score-answer": "",
@@ -4759,14 +4775,32 @@
                 "id": "view-282-text-block",
                 "message": {
                     "en": "Danger index medium",
-                    "es": "Índice de peligro medio<br>Revisá el corral"
+                    "es": "Índice de peligro medio"
                 },
                 "type": "text_block"
+            },
+            {
+                "id": "view-result-good-select",
+                "options": [
+                    {
+                        "label": {
+                            "en": "Check the parlor",
+                            "es": "Revisá el corral"
+                        },
+                        "target": "home",
+                        "value": "check-parlor"
+                    }
+                ],
+                "type": "select"
             }
         ],
         "guide-id": "Registros",
         "manual-page": "0",
         "milking-method": "",
+        "modified": {
+            "at": "2026-06-23T18:45:15.067Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
         "periodicity": "",
         "scenario": "",
         "score-answer": "",
@@ -4787,15 +4821,41 @@
             {
                 "id": "view-285-text-block",
                 "message": {
-                    "en": "<b>High hazard index</b><br>Require health certificates<br>Remove animals with mastitis",
-                    "es": "<b>Índice de peligro alto</b><br>Exigí certificados sanitarios<br>Descartá animales con mastitis"
+                    "en": "<b>High hazard index</b>",
+                    "es": "<b>Índice de peligro alto</b>"
                 },
                 "type": "text_block"
+            },
+            {
+                "id": "view-result-regular",
+                "options": [
+                    {
+                        "label": {
+                            "en": "Require health certificates",
+                            "es": "Exigí certificados sanitarios"
+                        },
+                        "target": "view-182",
+                        "value": "require-health"
+                    },
+                    {
+                        "label": {
+                            "en": "Remove animals with mastitis",
+                            "es": "Descartá animales con mastitis"
+                        },
+                        "target": "home",
+                        "value": "remove-with-mastitis"
+                    }
+                ],
+                "type": "select"
             }
         ],
         "guide-id": "Registros",
         "manual-page": "0",
         "milking-method": "",
+        "modified": {
+            "at": "2026-06-24T14:07:35.505Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
         "periodicity": "",
         "scenario": "",
         "score-answer": "",

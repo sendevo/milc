@@ -269,7 +269,7 @@ const MilkBarChart = () => {
                     <Button variant="outlined" fullWidth onClick={() => navigate("/calendar")}>
                         {t("milkBarChart.back")}
                     </Button>
-                    <Button variant="contained" fullWidth onClick={() => navigate("/resultscales")}>
+                    <Button variant="contained" fullWidth onClick={() => navigate(`/resultscales?${searchParams.toString()}`)}>
                         {t("milkBarChart.next")}
                     </Button>
                 </Box>

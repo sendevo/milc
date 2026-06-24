@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Box, Button, Divider, IconButton, Typography } from "@mui/material";
 import ViewContainer from "../components/ViewContainer";
 import { resultScalesStyles as styles } from "../theme/ResultScales.styles";
@@ -8,6 +8,7 @@ import { useToast } from "../contexts/ToastContext";
 import { useSurveyLog } from "../hooks/useSurveyLog";
 import { useSurveyNodes } from "../hooks/useSurveyNodes";
 import { computeFullScore } from "../model/scoring";
+import { parseIsoDate, formatAsIsoDate } from "../utils/dateTime";
 import blueGoat from "../assets/icons/blue_goat.png";
 import udder from "../assets/icons/udder.png";
 import milkPail from "../assets/icons/milk_pail.png";
@@ -32,12 +33,29 @@ const ResultScales = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const { showToast } = useToast();
+    const [searchParams] = useSearchParams();
     const { getRecords } = useSurveyLog();
     const nodes = useSurveyNodes();
 
+    const fromDate = searchParams.get("fromDate") || "";
+    const toDate = searchParams.get("toDate") || "";
+    const from = useMemo(() => parseIsoDate(fromDate), [fromDate]);
+    const to = useMemo(() => parseIsoDate(toDate), [toDate]);
+
+    const filteredRecords = useMemo(() => {
+        const allRecords = getRecords();
+        // If a valid date range is provided, filter records within that range
+        if (from && to && from <= to) {
+            const fromIso = formatAsIsoDate(from);
+            const toIso = formatAsIsoDate(to);
+            return allRecords.filter((r) => r.date >= fromIso && r.date <= toIso);
+        }
+        return allRecords;
+    }, [getRecords, from, to]);
+
     const score = useMemo(() => {
-        return computeFullScore(getRecords(), nodes);
-    }, [getRecords, nodes]);
+        return computeFullScore(filteredRecords, nodes);
+    }, [filteredRecords, nodes]);
 
     const aspects = useMemo(() => { // This is the main logic for mapping scores to the aspects shown on this page
         const base = [
@@ -127,7 +145,7 @@ const ResultScales = () => {
     return (
         <ViewContainer
             title={t("resultScales.title")}
-            onBack={() => navigate("/milkbarchart")}
+            onBack={() => navigate(`/milkbarchart${searchParams.toString() ? `?${searchParams.toString()}` : ""}`)}  
             showDate>
             <Box sx={styles.page}>
                 <Box sx={styles.rowsContainer}>
