@@ -206,8 +206,8 @@ const ResultScales = () => {
                     <Button
                         variant="outlined"
                         fullWidth
-                        onClick={() => navigate("/app")}>
-                        {t("survey.finish")}
+                        onClick={() => navigate("/log-menu?fromDate=" + fromDate + "&toDate=" + toDate)}>
+                        {t("resultScales.back")}
                     </Button>
                 </Box>
             </Box>

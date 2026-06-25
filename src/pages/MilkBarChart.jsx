@@ -2,6 +2,7 @@ import { useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Box, Button, Typography } from "@mui/material";
+import BarChart from "../components/BarChart";
 import ViewContainer from "../components/ViewContainer";
 import { useSurveyLog } from "../hooks/useSurveyLog";
 import { milkBarChartStyles as styles } from "../theme/MilkBarChart.styles";
@@ -176,7 +177,11 @@ const MilkBarChart = () => {
         () => buildSeries(from, to, i18n.language, milkValuesByDate),
         [from, to, i18n.language, milkValuesByDate],
     );
-    const maxValue = useMemo(() => Math.max(...series.map((item) => item.value), 0), [series]);
+    const chartCategories = useMemo(() => series.map((item) => item.label), [series]);
+    const chartSeries = useMemo(() => [{
+        label: t("milkBarChart.liters"),
+        data: series.map((item) => item.value),
+    }], [series, t]);
     const totalLiters = useMemo(
         () => Number(series.reduce((sum, item) => sum + item.value, 0).toFixed(1)),
         [series],
@@ -238,32 +243,13 @@ const MilkBarChart = () => {
                     {t("milkBarChart.period")}: {fromDate} - {toDate}
                 </Typography>
 
-                <Box sx={styles.chartCard}>
-                    <Typography sx={styles.chartTopUnit}>{t("milkBarChart.liters")}</Typography>
-                    <Box sx={styles.chartArea}>
-                        {series.map((item) => {
-                            const ratio = maxValue > 0 ? item.value / maxValue : 0;
-                            const barHeight = ratio <= 0 ? "0%" : `${Math.max(8, ratio * 100)}%`;
-                            return (
-                                <Box key={item.key} sx={styles.barItem}>
-                                    <Typography sx={styles.barValue}>{item.value}</Typography>
-                                    <Box sx={styles.barTrack}>
-                                        <Box
-                                            sx={{
-                                                ...styles.barFill,
-                                                height: barHeight,
-                                            }}
-                                        />
-                                    </Box>
-                                    <Typography sx={styles.barLabel}>{item.label}</Typography>
-                                </Box>
-                            );
-                        })}
-                    </Box>
-                    <Typography sx={styles.chartBottomUnit}>
-                        {isMonthlyGrouped ? t("milkBarChart.months") : t("milkBarChart.days")}
-                    </Typography>
-                </Box>
+                <BarChart
+                    categories={chartCategories}
+                    series={chartSeries}
+                    yAxisLabel={t("milkBarChart.liters")}
+                    xAxisLabel={isMonthlyGrouped ? t("milkBarChart.months") : t("milkBarChart.days")}
+                    showGrid={false}
+                />
 
                 <Box sx={styles.bottomActions}>
                     <Button variant="outlined" fullWidth onClick={() => navigate("/calendar")}>
