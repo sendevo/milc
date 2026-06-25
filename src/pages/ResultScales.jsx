@@ -4,7 +4,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { Box, Button, Divider, IconButton, Typography } from "@mui/material";
 import ViewContainer from "../components/ViewContainer";
 import { resultScalesStyles as styles } from "../theme/ResultScales.styles";
-import { useToast } from "../contexts/ToastContext";
+import { useModal } from "../contexts/ModalContext";
 import { useSurveyLog } from "../hooks/useSurveyLog";
 import { useSurveyNodes } from "../hooks/useSurveyNodes";
 import { computeFullScore } from "../model/scoring";
@@ -32,7 +32,7 @@ const normalizeCategoryKey = (value) => (value || "").toLowerCase().replace(/[-_
 const ResultScales = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const { showToast } = useToast();
+    const { openModal } = useModal();
     const [searchParams] = useSearchParams();
     const { getRecords } = useSurveyLog();
     const nodes = useSurveyNodes();
@@ -52,6 +52,15 @@ const ResultScales = () => {
         }
         return allRecords;
     }, [getRecords, from, to]);
+
+    const periodLabel = useMemo(() => {
+        if (from && to && from <= to) {
+            return `${formatAsIsoDate(from)} - ${formatAsIsoDate(to)}`;
+        }
+        if (from && !to) return formatAsIsoDate(from);
+        if (!from && to) return formatAsIsoDate(to);
+        return "-";
+    }, [from, to]);
 
     const score = useMemo(() => {
         return computeFullScore(filteredRecords, nodes);
@@ -136,7 +145,20 @@ const ResultScales = () => {
 
     const handleAspectClick = (rating, targetView) => {
         if (rating === 0) {
-            showToast(t("resultScales.notEvaluated"));
+            openModal({
+                title: t("resultScales.title"),
+                content: (
+                    <Typography>
+                        {t("resultScales.notEvaluated")}
+                    </Typography>
+                ),
+                actions: [
+                    {
+                        label: t("survey.finish"),
+                        variant: "contained",
+                    },
+                ],
+            });
             return;
         }
         if (!targetView) return;
@@ -148,6 +170,9 @@ const ResultScales = () => {
             onBack={() => navigate(`/milkbarchart${searchParams.toString() ? `?${searchParams.toString()}` : ""}`)}  
             showDate>
             <Box sx={styles.page}>
+                <Typography sx={{ alignSelf: "flex-start", mb: 1 }}>
+                    {`${t("resultScales.period")}: ${periodLabel}`}
+                </Typography>
                 <Box sx={styles.rowsContainer}>
                     {aspects.map((aspect, index) => (
                         <Box key={`${index}-${aspect.rating}`}>

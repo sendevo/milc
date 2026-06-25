@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { AuthProvider } from "./contexts/AuthContext";
+import { ModalProvider } from "./contexts/ModalContext";
 import { SettingsProvider } from "./contexts/SettingsContext";
 import { ToastProvider } from "./contexts/ToastContext";
 import "./i18n";
@@ -15,11 +16,13 @@ async function bootstrap() {
     ReactDOM.createRoot(document.getElementById("root")).render(
         <React.StrictMode>
             <SettingsProvider>
-                <ToastProvider>
-                    <AuthProvider>
-                        <App />
-                    </AuthProvider>
-                </ToastProvider>
+                <ModalProvider>
+                    <ToastProvider>
+                        <AuthProvider>
+                            <App />
+                        </AuthProvider>
+                    </ToastProvider>
+                </ModalProvider>
             </SettingsProvider>
         </React.StrictMode>
     );

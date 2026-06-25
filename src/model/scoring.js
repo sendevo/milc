@@ -109,7 +109,13 @@ export const computePEC = (records, correctAnswer, periodicity) => {
 
     // Count distinct days with any scored answer (the denominator).
     const distinctDays = new Set(scored.map((r) => r.date)).size;
-    const expected = expectedOccurrences(periodicity, distinctDays);
+    let expected = expectedOccurrences(periodicity, distinctDays);
+
+    // If there is scored evidence but expected rounds down to zero
+    // (e.g. semester checks in short ranges), mark one expected occurrence.
+    if (expected === 0 && scored.length > 0) {
+        expected = 1;
+    }
 
     if (expected === 0) {
         return { pec: 0, category: "never", correct: 0, expected: 0 };

@@ -15,7 +15,7 @@ import {
     classifyResult,
     resultViewId,
     computeFullScore,
-} from "../model/scoring";
+} from "../scoring";
 
 // ---------------------------------------------------------------------------
 // expectedOccurrences
@@ -121,6 +121,14 @@ describe("computePEC", () => {
         expect(result.pec).toBe(0);
         expect(result.category).toBe("never");
         expect(result.expected).toBe(0);
+    });
+
+    it("uses expected=1 when periodicity rounds to zero but scored data exists", () => {
+        const records = [{ scenario: "FACIL-01", answer: "yes", date: "2026-01-01" }];
+        const result = computePEC(records, "yes", "semester");
+        expect(result.expected).toBe(1);
+        expect(result.pec).toBe(1);
+        expect(result.category).toBe("always");
     });
 
     it("caps pec at 1.0 if correct > expected", () => {

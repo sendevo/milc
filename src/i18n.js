@@ -88,6 +88,7 @@ const resources = {
             resultScales: {
                 title: "My logs",
                 back: "Back",
+                period: "Period",
                 notEvaluated: "This category was not evaluated yet.",
             },
             common: {
@@ -253,6 +254,7 @@ const resources = {
             resultScales: {
                 title: "Mis registros",
                 back: "Atras",
+                period: "Periodo",
                 notEvaluated: "Esta categoria aún no fue evaluada.",
             },
             common: {
