@@ -1,6 +1,5 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-import DairyBarChart from "./pages/DairyBarChart";
 
 const APP_VERSION = import.meta.env.APP_VERSION;
 
@@ -82,6 +81,20 @@ const resources = {
                 litersAnimal: "Liters/animal:",
                 period: "Period",
                 invalidRange: "Invalid date range.",
+                back: "Back",
+                next: "Next",
+            },
+            dairyBarChart: {
+                title: "My logs",
+                subtitle: "Dairy data",
+                averageTotal: "Average total animals",
+                averageMilked: "Average animals being milked",
+                totalAnimals: "Total animals",
+                milkedAnimals: "Animals being milked",
+                count: "count",
+                days: "days",
+                months: "months",
+                period: "Period",
                 back: "Back",
                 next: "Next",
             },
@@ -248,6 +261,20 @@ const resources = {
                 litersAnimal: "Litros/animal:",
                 period: "Periodo",
                 invalidRange: "Rango de fechas invalido.",
+                back: "Atras",
+                next: "Siguiente",
+            },
+            dairyBarChart: {
+                title: "Mis registros",
+                subtitle: "Datos del tambo",
+                averageTotal: "Promedio total de animales",
+                averageMilked: "Promedio de animales en ordeñe",
+                totalAnimals: "Total animales",
+                milkedAnimals: "Animales en ordeñe",
+                count: "cantidad",
+                days: "dias",
+                months: "meses",
+                period: "Periodo",
                 back: "Atras",
                 next: "Siguiente",
             },
