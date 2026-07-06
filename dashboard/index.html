@@ -27,6 +27,15 @@
         </div>
         <div class="user-tools">
             <div class="user-pill" id="user-pill">Not signed in</div>
+            <div class="export-menu" id="export-menu" style="display:none">
+                <button type="button" id="btn-export-records" class="btn btn-compact" disabled>
+                    Download records
+                </button>
+                <div class="export-menu-panel" id="export-menu-panel" role="menu" aria-label="Download records formats">
+                    <button type="button" id="btn-export-json" class="btn btn-compact" role="menuitem" disabled>Download JSON</button>
+                    <button type="button" id="btn-export-csv" class="btn btn-compact" role="menuitem" disabled>Download CSV</button>
+                </div>
+            </div>
             <button type="button" id="btn-reconfigure" class="btn btn-compact" style="display:none">Reconfigure</button>
             <button type="button" id="btn-signout-header" class="btn btn-compact" style="display:none" disabled>Logout</button>
         </div>

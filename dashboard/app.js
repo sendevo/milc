@@ -28,6 +28,10 @@ const els = {
 	connectionPanel: document.getElementById("connection-panel"),
 	btnReconfigure: document.getElementById("btn-reconfigure"),
 	btnSignoutHeader: document.getElementById("btn-signout-header"),
+	exportMenu: document.getElementById("export-menu"),
+	btnExportRecords: document.getElementById("btn-export-records"),
+	btnExportJson: document.getElementById("btn-export-json"),
+	btnExportCsv: document.getElementById("btn-export-csv"),
 	status: document.getElementById("status"),
 	modalFirebase: document.getElementById("modal-firebase"),
 	modalLogin: document.getElementById("modal-login"),
@@ -94,6 +98,106 @@ const parseDate = (value) => {
 	const [y, m, d] = parts.map((n) => Number(n));
 	if (!Number.isFinite(y) || !Number.isFinite(m) || !Number.isFinite(d)) return null;
 	return new Date(y, m - 1, d);
+};
+
+const getExportFilenameBase = () => {
+	const stamp = new Date().toISOString().replace(/[:.]/g, "-");
+	return `milc-records-${stamp}`;
+};
+
+const downloadBlob = (content, contentType, fileName) => {
+	const blob = new Blob([content], { type: contentType });
+	const url = URL.createObjectURL(blob);
+	const anchor = document.createElement("a");
+	anchor.href = url;
+	anchor.download = fileName;
+	document.body.appendChild(anchor);
+	anchor.click();
+	anchor.remove();
+	URL.revokeObjectURL(url);
+};
+
+const closeExportMenu = () => {
+	if (!els.exportMenu) return;
+	els.exportMenu.classList.remove("open");
+	if (els.btnExportRecords) {
+		els.btnExportRecords.setAttribute("aria-expanded", "false");
+	}
+};
+
+const setExportEnabledState = () => {
+	const authenticated = Boolean(state.user);
+	const hasRecords = state.allEvents.length > 0;
+	const enabled = authenticated && hasRecords;
+
+	if (els.exportMenu) {
+		els.exportMenu.style.display = authenticated ? "block" : "none";
+	}
+
+	if (els.btnExportRecords) els.btnExportRecords.disabled = !enabled;
+	if (els.btnExportJson) els.btnExportJson.disabled = !enabled;
+	if (els.btnExportCsv) els.btnExportCsv.disabled = !enabled;
+
+	if (!enabled) {
+		closeExportMenu();
+	}
+};
+
+const eventToExportRow = (event) => ({
+	id: event.id || "",
+	pushedByUid: event.pushedByUid || "",
+	day: event.day || "",
+	ts: event.ts ?? "",
+	node: event.node || "",
+	scenario: event.scenario || "",
+	category: event.category || "",
+	answerType: event.answerType || "",
+	answer: event.answer ?? "",
+	ok: event.ok === null ? "" : event.ok,
+	severity: event.severity ?? "",
+	periodicity: event.periodicity ?? "",
+	appVersion: event.appVersion || "",
+	platform: event.platform || "",
+	language: event.language || "",
+	hour: Number.isInteger(event.hour) ? event.hour : "",
+	weekDay: Number.isInteger(event.weekDay) ? event.weekDay : "",
+});
+
+const escapeCsvValue = (value) => {
+	const raw = value == null ? "" : String(value);
+	if (/[",\n]/.test(raw)) {
+		return `"${raw.replace(/"/g, '""')}"`;
+	}
+	return raw;
+};
+
+const exportAllRecordsAsJson = () => {
+	if (!state.allEvents.length) {
+		setStatus("No records available to export.", "info");
+		return;
+	}
+
+	const rows = state.allEvents.map(eventToExportRow);
+	const content = JSON.stringify(rows, null, 2);
+	downloadBlob(content, "application/json;charset=utf-8", `${getExportFilenameBase()}.json`);
+	setStatus(`Exported ${formatNumber(rows.length)} records as JSON.`, "success");
+};
+
+const exportAllRecordsAsCsv = () => {
+	if (!state.allEvents.length) {
+		setStatus("No records available to export.", "info");
+		return;
+	}
+
+	const rows = state.allEvents.map(eventToExportRow);
+	const headers = Object.keys(rows[0]);
+	const lines = [
+		headers.join(","),
+		...rows.map((row) => headers.map((header) => escapeCsvValue(row[header])).join(",")),
+	];
+	const csvContent = lines.join("\n");
+	downloadBlob(csvContent, "text/csv;charset=utf-8", `${getExportFilenameBase()}.csv`);
+	setStatus(`Exported ${formatNumber(rows.length)} records as CSV.`, "success");
 };
 
 const saveConfig = (config) => {
@@ -209,6 +313,7 @@ const updateConnectionVisibility = () => {
 	if (els.insightGrid) {
 		els.insightGrid.style.display = showAnalytics ? "grid" : "none";
 	}
+	setExportEnabledState();
 };
 
 const setSignedInUI = (user) => {
@@ -219,6 +324,7 @@ const setSignedInUI = (user) => {
 			els.btnSignoutHeader.disabled = true;
 			els.btnSignoutHeader.style.display = "none";
 		}
+		setExportEnabledState();
 		return;
 	}
 
@@ -230,6 +336,7 @@ const setSignedInUI = (user) => {
 		els.btnSignoutHeader.disabled = false;
 		els.btnSignoutHeader.style.display = "inline-flex";
 	}
+	setExportEnabledState();
 };
 
 const resolveUserLabel = (uid) => {
@@ -794,6 +901,7 @@ const renderAll = () => {
 	const events = state.filteredEvents;
 	if (!events.length) {
 		renderEmptyState();
+		setExportEnabledState();
 		return;
 	}
 
@@ -801,6 +909,7 @@ const renderAll = () => {
 	renderCharts(events);
 	renderTopNodesTable(events);
 	renderHeatmap(events);
+	setExportEnabledState();
 };
 
 const applyFiltersAndRender = () => {
@@ -968,6 +1077,31 @@ const bindEvents = () => {
 		els.btnSignoutHeader.addEventListener("click", handleSignOut);
 	}
 
+	if (els.btnExportRecords) {
+		els.btnExportRecords.setAttribute("aria-haspopup", "menu");
+		els.btnExportRecords.setAttribute("aria-expanded", "false");
+		els.btnExportRecords.addEventListener("click", () => {
+			if (els.btnExportRecords.disabled) return;
+			const shouldOpen = !els.exportMenu.classList.contains("open");
+			els.exportMenu.classList.toggle("open", shouldOpen);
+			els.btnExportRecords.setAttribute("aria-expanded", shouldOpen ? "true" : "false");
+		});
+	}
+
+	if (els.btnExportJson) {
+		els.btnExportJson.addEventListener("click", () => {
+			exportAllRecordsAsJson();
+			closeExportMenu();
+		});
+	}
+
+	if (els.btnExportCsv) {
+		els.btnExportCsv.addEventListener("click", () => {
+			exportAllRecordsAsCsv();
+			closeExportMenu();
+		});
+	}
+
 	[els.filterFrom, els.filterTo, els.filterCategory, els.filterPlatform].forEach((control) => {
 		control.addEventListener("change", () => {
 			const active = els.quickRange.querySelector(".chip.active");
@@ -986,6 +1120,12 @@ const bindEvents = () => {
 		modal.addEventListener("click", (event) => {
 			if (event.target === modal) closeModal(modal);
 		});
+	});
+
+	document.addEventListener("click", (event) => {
+		if (!els.exportMenu?.contains(event.target)) {
+			closeExportMenu();
+		}
 	});
 };
 
