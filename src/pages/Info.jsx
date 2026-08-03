@@ -29,7 +29,7 @@ const Info = () => {
                         <AccordionDetails>
                             <h3 style={{margin:0, textAlign:"center"}}>MILC 1.0.0</h3>
                             <h3 style={{margin:0}}>Staff</h3>
-                            <Typography><b>{t('info.author')}:</b> Edurne Battista, Mariano Zetola,....</Typography>
+                            <Typography><b>{t('info.author')}:</b> Edurne Battista, Mariano Zetola</Typography>
                             <Typography><b>{t('info.developer')}:</b> <a href="https://sendevosoftware.com.ar" target="_blank" rel="noopener noreferrer">Sendevo Software</a></Typography>
                         </AccordionDetails>
                     </Accordion>
@@ -42,6 +42,7 @@ const Info = () => {
                             <Typography style={{textAlign: "justify"}}>{t('info.descriptionP1')}</Typography>
                             <Typography style={{textAlign: "justify"}}>{t('info.descriptionP2')}</Typography>
                             <Typography style={{textAlign: "justify"}}>{t('info.descriptionP3')}</Typography>
+                            <Typography style={{textAlign: "justify"}}>{t('info.descriptionP4')}</Typography>
                         </AccordionDetails>
                     </Accordion>
 
@@ -67,7 +68,9 @@ const Info = () => {
                             <Typography sx={styles.accordionSummary}>{t('info.sources')}</Typography>
                         </AccordionSummary>
                         <AccordionDetails>          
-                            <Typography style={{textAlign:"justify"}}>{t('info.sourcesText')}</Typography>
+                            <Typography style={{textAlign:"justify"}}>{t('info.sourcesP1')}</Typography>
+                            <Typography style={{textAlign:"justify"}}>{t('info.sourcesP2')}</Typography>
+                            <Typography style={{textAlign:"justify"}}>{t('info.sourcesP3')}</Typography>
                         </AccordionDetails>
                     </Accordion>
 
