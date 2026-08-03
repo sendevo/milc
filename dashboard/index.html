@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="MILC analytics dashboard for Realtime Database interaction events" />
+    <meta name="description" content="Panel de análisis MILC para eventos de interacción de Realtime Database" />
     <meta name="author" content="Sendevo Software" />
-    <title>MILC Dashboard</title>
+    <title>Panel MILC</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -18,124 +18,124 @@
 <main class="layout">
     <header class="hero card">
         <div>
-            <p class="eyebrow">Realtime Intelligence</p>
-            <h1>MILC Interaction Dashboard</h1>
+            <p class="eyebrow">Inteligencia en tiempo real</p>
+            <h1>Panel de Interacción MILC</h1>
             <p class="lead">
-                Visualize user interaction telemetry from Firebase Realtime Database,
-                discover friction points, and track behavioral quality over time.
+                Visualice la telemetría de interacción del usuario desde Firebase Realtime Database,
+                descubra puntos de fricción y rastree la calidad del comportamiento a lo largo del tiempo.
             </p>
         </div>
         <div class="user-tools">
-            <div class="user-pill" id="user-pill">Not signed in</div>
+            <div class="user-pill" id="user-pill">No ha iniciado sesión</div>
             <div class="export-menu" id="export-menu" style="display:none">
                 <button type="button" id="btn-export-records" class="btn btn-compact" disabled>
-                    Download records
+                    Descargar registros
                 </button>
-                <div class="export-menu-panel" id="export-menu-panel" role="menu" aria-label="Download records formats">
-                    <button type="button" id="btn-export-json" class="btn btn-compact" role="menuitem" disabled>Download JSON</button>
-                    <button type="button" id="btn-export-csv" class="btn btn-compact" role="menuitem" disabled>Download CSV</button>
+                <div class="export-menu-panel" id="export-menu-panel" role="menu" aria-label="Formatos de descarga de registros">
+                    <button type="button" id="btn-export-json" class="btn btn-compact" role="menuitem" disabled>Descargar JSON</button>
+                    <button type="button" id="btn-export-csv" class="btn btn-compact" role="menuitem" disabled>Descargar CSV</button>
                 </div>
             </div>
-            <button type="button" id="btn-reconfigure" class="btn btn-compact" style="display:none">Reconfigure</button>
-            <button type="button" id="btn-signout-header" class="btn btn-compact" style="display:none" disabled>Logout</button>
+            <button type="button" id="btn-reconfigure" class="btn btn-compact" style="display:none">Reconfigurar</button>
+            <button type="button" id="btn-signout-header" class="btn btn-compact" style="display:none" disabled>Cerrar sesión</button>
         </div>
     </header>
 
     <section class="card auth-card" id="connection-panel">
-        <h2>Connection</h2>
+        <h2>Conexión</h2>
         <p class="hint">
-            Sign in with a user account. The current security rules only allow reading
-            analytics for the signed-in user.
+            Inicie sesión con una cuenta de usuario. Las reglas de seguridad actuales solo permiten leer
+            análisis para el usuario que ha iniciado sesión.
         </p>
 
         <div class="actions auth-actions">
-            <button type="button" id="btn-open-firebase-modal" class="btn btn-primary">Firebase configuration</button>
-            <button type="button" id="btn-open-login-modal" class="btn">Login credentials</button>
-            <button type="button" id="btn-signout" class="btn" disabled>Sign out</button>
+            <button type="button" id="btn-open-firebase-modal" class="btn btn-primary">Configuración de Firebase</button>
+            <button type="button" id="btn-open-login-modal" class="btn">Credenciales de inicio de sesión</button>
+            <button type="button" id="btn-signout" class="btn" disabled>Cerrar sesión</button>
         </div>
 
-        <p id="status" class="status">Waiting for Firebase configuration.</p>
+        <p id="status" class="status">Esperando la configuración de Firebase.</p>
     </section>
 
     <section class="card filters">
-        <h2>Filters</h2>
+        <h2>Filtros</h2>
         <div class="filter-row">
-            <label>From<input type="date" id="filter-from" /></label>
-            <label>To<input type="date" id="filter-to" /></label>
-            <label>Category
+            <label>Desde<input type="date" id="filter-from" /></label>
+            <label>Hasta<input type="date" id="filter-to" /></label>
+            <label>Categoría
                 <select id="filter-category">
-                    <option value="all">All categories</option>
+                    <option value="all">Todas las categorías</option>
                 </select>
             </label>
-            <label>Platform
+            <label>Plataforma
                 <select id="filter-platform">
-                    <option value="all">All platforms</option>
+                    <option value="all">Todas las plataformas</option>
                 </select>
             </label>
         </div>
         <div class="quick-range" id="quick-range">
-            <button data-range="7" class="chip">Last 7d</button>
-            <button data-range="30" class="chip">Last 30d</button>
-            <button data-range="90" class="chip">Last 90d</button>
-            <button data-range="all" class="chip active">All</button>
+            <button data-range="7" class="chip">Últimos 7d</button>
+            <button data-range="30" class="chip">Últimos 30d</button>
+            <button data-range="90" class="chip">Últimos 90d</button>
+            <button data-range="all" class="chip active">Todos</button>
         </div>
     </section>
 
     <section class="kpi-grid" id="kpi-grid">
-        <article class="card kpi"><h3>Total events</h3><p id="kpi-total-events">0</p></article>
-        <article class="card kpi"><h3>Active days</h3><p id="kpi-active-days">0</p></article>
-        <article class="card kpi"><h3>Avg events/day</h3><p id="kpi-avg-events-day">0</p></article>
-        <article class="card kpi"><h3>Correct answer rate</h3><p id="kpi-correct-rate">0%</p></article>
-        <article class="card kpi"><h3>Top category</h3><p id="kpi-top-category">-</p></article>
-        <article class="card kpi"><h3>Most active node</h3><p id="kpi-top-node">-</p></article>
+        <article class="card kpi"><h3>Eventos totales</h3><p id="kpi-total-events">0</p></article>
+        <article class="card kpi"><h3>Días activos</h3><p id="kpi-active-days">0</p></article>
+        <article class="card kpi"><h3>Promedio eventos/día</h3><p id="kpi-avg-events-day">0</p></article>
+        <article class="card kpi"><h3>Tasa de respuestas correctas</h3><p id="kpi-correct-rate">0%</p></article>
+        <article class="card kpi"><h3>Categoría principal</h3><p id="kpi-top-category">-</p></article>
+        <article class="card kpi"><h3>Nodo más activo</h3><p id="kpi-top-node">-</p></article>
     </section>
 
     <section class="chart-grid" id="chart-grid">
         <article class="card chart-card wide">
-            <h2>Events over time</h2>
-            <canvas id="events-timeline" aria-label="Events timeline chart"></canvas>
+            <h2>Eventos a lo largo del tiempo</h2>
+            <canvas id="events-timeline" aria-label="Gráfico de línea de tiempo de eventos"></canvas>
         </article>
         <article class="card chart-card">
-            <h2>Category distribution</h2>
-            <canvas id="category-chart" aria-label="Category chart"></canvas>
+            <h2>Distribución por categoría</h2>
+            <canvas id="category-chart" aria-label="Gráfico de categorías"></canvas>
         </article>
         <article class="card chart-card">
-            <h2>Answer type mix</h2>
-            <canvas id="answer-type-chart" aria-label="Answer type chart"></canvas>
+            <h2>Mezcla de tipos de respuesta</h2>
+            <canvas id="answer-type-chart" aria-label="Gráfico de tipos de respuesta"></canvas>
         </article>
         <article class="card chart-card">
-            <h2>Correctness</h2>
-            <canvas id="correctness-chart" aria-label="Correctness chart"></canvas>
+            <h2>Exactitud</h2>
+            <canvas id="correctness-chart" aria-label="Gráfico de exactitud"></canvas>
         </article>
         <article class="card chart-card">
-            <h2>Platform usage</h2>
-            <canvas id="platform-chart" aria-label="Platform chart"></canvas>
+            <h2>Uso de plataforma</h2>
+            <canvas id="platform-chart" aria-label="Gráfico de plataforma"></canvas>
         </article>
     </section>
 
     <section class="insight-grid" id="insight-grid">
         <article class="card heatmap-card">
-            <h2>Activity heatmap (day x hour)</h2>
+            <h2>Mapa de calor de actividad (día x hora)</h2>
             <div id="activity-heatmap" class="heatmap"></div>
-            <p class="hint">Rows are Monday to Sunday. Columns are 00-23h.</p>
+            <p class="hint">Las filas corresponden de lunes a domingo. Las columnas son de 00 a 23h.</p>
         </article>
 
         <article class="card table-card">
-            <h2>Top nodes</h2>
+            <h2>Nodos principales</h2>
             <div class="table-wrap">
                 <table>
                     <thead>
                     <tr>
-                        <th>Node</th>
-                        <th>Pushed by</th>
-                        <th>Scenario</th>
-                        <th>Category</th>
-                        <th>Events</th>
-                        <th>Correct %</th>
+                        <th>Nodo</th>
+                        <th>Enviado por</th>
+                        <th>Escenario</th>
+                        <th>Categoría</th>
+                        <th>Eventos</th>
+                        <th>% Correcto</th>
                     </tr>
                     </thead>
                     <tbody id="top-nodes-body">
-                    <tr><td colspan="6" class="muted">No data yet.</td></tr>
+                    <tr><td colspan="6" class="muted">Aún no hay datos.</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -145,30 +145,30 @@
 
 <div id="modal-firebase" class="modal-overlay" style="display:none">
     <div class="modal-box">
-        <h2>Firebase Configuration</h2>
-        <p class="modal-hint">Load from a <code>.env</code> file or complete values manually. Saved only in this browser.</p>
+        <h2>Configuración de Firebase</h2>
+        <p class="modal-hint">Cargue desde un archivo <code>.env</code> o complete los valores manualmente. Se guarda solo en este navegador.</p>
         <div class="form-group">
-            <label>Load from <code>.env</code> file</label>
+            <label>Cargar desde archivo <code>.env</code></label>
             <div class="env-load-row">
                 <input type="file" id="fb-env-file" accept=".env,text/plain" style="display:none" />
-                <button id="fb-env-browse" class="btn">Browse...</button>
-                <span id="fb-env-filename" class="hint">No file selected</span>
+                <button id="fb-env-browse" class="btn">Examinar...</button>
+                <span id="fb-env-filename" class="hint">Ningún archivo seleccionado</span>
             </div>
         </div>
         <hr class="modal-divider" />
         <form id="firebase-config-form" class="grid-form">
-            <label>API Key<input id="fb-api-key" name="apiKey" required /></label>
-            <label>Auth Domain<input id="fb-auth-domain" name="authDomain" required /></label>
-            <label>Project ID<input id="fb-project-id" name="projectId" required /></label>
-            <label>Database URL<input id="fb-database-url" name="databaseURL" required /></label>
-            <label>App ID<input id="fb-app-id" name="appId" required /></label>
-            <label>Storage Bucket<input id="fb-storage-bucket" name="storageBucket" /></label>
-            <label>Messaging Sender ID<input id="fb-messaging-sender-id" name="messagingSenderId" /></label>
+            <label>Clave API<input id="fb-api-key" name="apiKey" required /></label>
+            <label>Dominio de autenticación<input id="fb-auth-domain" name="authDomain" required /></label>
+            <label>ID del proyecto<input id="fb-project-id" name="projectId" required /></label>
+            <label>URL de la base de datos<input id="fb-database-url" name="databaseURL" required /></label>
+            <label>ID de la aplicación<input id="fb-app-id" name="appId" required /></label>
+            <label>Bucket de almacenamiento<input id="fb-storage-bucket" name="storageBucket" /></label>
+            <label>ID del remitente de mensajes<input id="fb-messaging-sender-id" name="messagingSenderId" /></label>
         </form>
         <div class="modal-actions">
-            <button id="fb-load-vite-env" class="btn">Load from Vite env</button>
-            <button id="fb-modal-save" class="btn btn-primary">Save & initialize</button>
-            <button id="fb-modal-cancel" class="btn">Cancel</button>
+            <button id="fb-load-vite-env" class="btn">Cargar desde entorno Vite</button>
+            <button id="fb-modal-save" class="btn btn-primary">Guardar e inicializar</button>
+            <button id="fb-modal-cancel" class="btn">Cancelar</button>
         </div>
         <p id="fb-modal-error" class="modal-error" style="display:none"></p>
     </div>
@@ -176,24 +176,24 @@
 
 <div id="modal-login" class="modal-overlay" style="display:none">
     <div class="modal-box">
-        <h2>Login Credentials</h2>
-        <p class="modal-hint">Load credentials from <code>.env</code> or enter them manually. They stay in local browser storage.</p>
+        <h2>Credenciales de inicio de sesión</h2>
+        <p class="modal-hint">Cargue las credenciales desde <code>.env</code> o ingréselas manualmente. Permanecen en el almacenamiento local del navegador.</p>
         <div class="form-group">
-            <label>Load from <code>.env</code> file</label>
+            <label>Cargar desde archivo <code>.env</code></label>
             <div class="env-load-row">
                 <input type="file" id="login-env-file" accept=".env,text/plain" style="display:none" />
-                <button id="login-env-browse" class="btn">Browse...</button>
-                <span id="login-env-filename" class="hint">No file selected</span>
+                <button id="login-env-browse" class="btn">Examinar...</button>
+                <span id="login-env-filename" class="hint">Ningún archivo seleccionado</span>
             </div>
         </div>
         <hr class="modal-divider" />
         <form id="signin-form" class="grid-form compact">
-            <label>Email<input id="login-email" name="email" type="email" autocomplete="email" /></label>
-            <label>Password<input id="login-password" name="password" type="password" autocomplete="current-password" /></label>
+            <label>Correo electrónico<input id="login-email" name="email" type="email" autocomplete="email" /></label>
+            <label>Contraseña<input id="login-password" name="password" type="password" autocomplete="current-password" /></label>
         </form>
         <div class="modal-actions">
-            <button id="login-modal-signin" class="btn btn-primary">Sign in</button>
-            <button id="login-modal-cancel" class="btn">Cancel</button>
+            <button id="login-modal-signin" class="btn btn-primary">Iniciar sesión</button>
+            <button id="login-modal-cancel" class="btn">Cancelar</button>
         </div>
         <p id="login-modal-error" class="modal-error" style="display:none"></p>
     </div>
