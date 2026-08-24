@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Box, Button, Checkbox, Divider, FormControl, FormControlLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
 import ViewContainer from "../components/ViewContainer";
 import { useSettings } from "../contexts/SettingsContext";
-import { refreshSurveyNodes } from "../hooks/useSurveyNodes";
+import { useSurveyNodes, refreshSurveyNodes } from "../hooks/useSurveyNodes";
 import { useSurveyLog } from "../hooks/useSurveyLog";
 import { configStyles as styles } from "../theme/Config.styles";
 
@@ -20,9 +20,11 @@ const Config = () => {
         setThemeMode,
         setSimulatedDate,
     } = useSettings();
+    const nodes = useSurveyNodes();
     const { clearLog } = useSurveyLog();
     const [refreshState, setRefreshState] = useState("idle"); // "idle" | "loading" | "done"
     const isSimulatedDateEnabled = Boolean(simulatedDate);
+    const nodesTreeVersion = nodes?.timestamp ?? "-";
 
     const handleRefreshNodes = async () => {
         setRefreshState("loading");
@@ -73,6 +75,10 @@ const Config = () => {
                                 {t("config.devSection")}
                             </Typography>
                         </Divider>
+                        <Box sx={styles.settingRow}>
+                            <Typography sx={styles.label}>{t("config.nodesTreeVersion")}</Typography>
+                            <Typography sx={styles.label}>{String(nodesTreeVersion)}</Typography>
+                        </Box>
                         <Box sx={styles.settingRow}>
                             <FormControlLabel
                                 control={

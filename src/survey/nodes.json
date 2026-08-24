@@ -1,4 +1,5 @@
 {
+    "timestamp": 1787582954,
     "view-100": {
         "category": "before-milking",
         "fields": [
@@ -2161,7 +2162,7 @@
         "showDate": true,
         "subtitle": {
             "en": "Number of dairy animals",
-            "es": "Cantidad de animales de ordeñe"
+            "es": "Cantidad de animales del rebaño"
         },
         "title": {
             "en": "My profile",

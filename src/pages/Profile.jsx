@@ -5,6 +5,7 @@ import { Box, Button, Divider, TextField, Typography } from "@mui/material";
 import { useAuth } from "../contexts/AuthContext";
 import { useSurveyNodes } from "../hooks/useSurveyNodes";
 import { useSurveyLog } from "../hooks/useSurveyLog";
+import { useToast } from "../contexts/ToastContext";
 import FormCard from "../components/FormCard";
 import ViewContainer from "../components/ViewContainer";
 import { profileStyles as styles } from "../theme/Profile.styles";
@@ -12,6 +13,7 @@ import { profileStyles as styles } from "../theme/Profile.styles";
 const Profile = () => {
     const { t, i18n } = useTranslation();
     const { currentUser, getUserProfile, saveUserProfile, changePassword, logout } = useAuth();
+    const { showToast } = useToast();
     const navigate = useNavigate();
     const nodes = useSurveyNodes();
     const { getRecordsByScenario } = useSurveyLog();
@@ -20,8 +22,6 @@ const Profile = () => {
     const [name, setName] = useState("");
     const [place, setPlace] = useState("");
     const [healthCard, setHealthCard] = useState("");
-    const [profileError, setProfileError] = useState("");
-    const [profileSuccess, setProfileSuccess] = useState(false);
     const [profileLoading, setProfileLoading] = useState(false);
 
     const surveyProfileFields = useMemo(() => {
@@ -85,8 +85,6 @@ const Profile = () => {
 
     const handleProfileSubmit = async (e) => {
         e.preventDefault();
-        setProfileError("");
-        setProfileSuccess(false);
         setProfileLoading(true);
         try {
             await saveUserProfile(currentUser.uid, {
@@ -95,9 +93,9 @@ const Profile = () => {
                 healthCard,
                 email: currentUser.email,
             });
-            setProfileSuccess(true);
+            showToast(t("profile.updateSuccess"), "success");
         } catch {
-            setProfileError(t("profile.updateError"));
+            showToast(t("profile.updateError"), "error");
         } finally {
             setProfileLoading(false);
         }
@@ -148,12 +146,7 @@ const Profile = () => {
                     id="profile-form"
                     onSubmit={handleProfileSubmit}
                     title={t("profile.infoSection")}
-                    error={profileError}>
-                    {profileSuccess && (
-                        <Typography variant="body2" color="success.main" textAlign="center">
-                            {t("profile.updateSuccess")}
-                        </Typography>
-                    )}
+                    error="">
                     <TextField
                         placeholder={t("register.name")}
                         label={t("register.name")}

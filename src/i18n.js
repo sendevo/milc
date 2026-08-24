@@ -167,6 +167,7 @@ const resources = {
                 resetNodesAction: "Reset & update",
                 resetNodesDone: "Updated!",
                 devSection: "Dev configs",
+                nodesTreeVersion: "Nodes tree version",
             },
             profile: {
                 title: "My Profile",
@@ -376,6 +377,7 @@ const resources = {
                 resetNodesAction: "Reiniciar y actualizar",
                 resetNodesDone: "¡Actualizado!",
                 devSection: "Dev configs",
+                nodesTreeVersion: "Version del arbol de nodos",
             },
             profile: {
                 title: "Mi perfil",

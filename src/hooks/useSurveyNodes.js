@@ -5,6 +5,7 @@ import fallbackNodes from "../survey/nodes.json";
 import { getJSONItem, removeItem, setJSONItem } from "../utils/persistentStorage";
 
 const CACHE_KEY = "milc_survey_nodes";
+const IS_DEV = import.meta.env.DEV;
 
 function normalizeNode(node) {
     if (!node || typeof node !== "object") return node;
@@ -54,6 +55,11 @@ export function useSurveyNodes() {
     const [nodes, setNodes] = useState(fallbackNodes);
 
     useEffect(() => {
+        if (!IS_DEV) {
+            setNodes(fallbackNodes);
+            return;
+        }
+
         let isMounted = true;
 
         const hydrateFromCache = async () => {
@@ -80,6 +86,10 @@ export function useSurveyNodes() {
     }, []);
 
     useEffect(() => {
+        if (!IS_DEV) {
+            return undefined;
+        }
+
         const surveyRef = ref(db, "survey");
         const unsubscribe = onValue(surveyRef, (snapshot) => {
             const data = snapshot.val();
@@ -108,6 +118,10 @@ export function useSurveyNodes() {
  * receive the update automatically via its `onValue` listener.
  */
 export async function refreshSurveyNodes() {
+    if (!IS_DEV) {
+        return fallbackNodes;
+    }
+
     await removeItem(CACHE_KEY);
     const surveyRef = ref(db, "survey");
     const snapshot = await get(surveyRef);
