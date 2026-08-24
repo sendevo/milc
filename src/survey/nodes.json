@@ -1,5 +1,5 @@
 {
-    "timestamp": 1787582954,
+    "timestamp": 1787585024,
     "view-100": {
         "category": "before-milking",
         "fields": [
@@ -2417,7 +2417,7 @@
                             "en": "Manual",
                             "es": "Manual"
                         },
-                        "target": "user-profile",
+                        "target": "profile",
                         "value": "manual"
                     },
                     {

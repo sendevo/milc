@@ -16,6 +16,26 @@ import packageJson from "../../package.json";
 
 const APP_VERSION_FALLBACK = packageJson.version;
 
+const NON_NODE_TARGET_ROUTES = {
+    home: "/app",
+    profile: "/profile"
+};
+
+const resolveNonNodeTargetRoute = (targetId) => {
+    if (!targetId) return null;
+
+    if (NON_NODE_TARGET_ROUTES[targetId]) {
+        return NON_NODE_TARGET_ROUTES[targetId];
+    }
+
+    // Allow direct route targets as an escape hatch for future nodes.
+    if (targetId.startsWith("/")) {
+        return targetId;
+    }
+
+    return null;
+};
+
 /**
  * Route: /survey/:nodeId
  *
@@ -154,10 +174,13 @@ const SurveyPage = () => {
         }
 
         if (targetId && !targetNode) {
-            // Don't show toast if target is "home" (intentional navigation endpoint)
-            if (targetId !== "home") {
-                showToast(t("survey.inDevelopment"));
+            const targetRoute = resolveNonNodeTargetRoute(targetId);
+            if (targetRoute) {
+                navigate(targetRoute);
+                return;
             }
+
+            showToast(t("survey.inDevelopment"));
             navigate("/app");
             return;
         }
