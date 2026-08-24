@@ -6,21 +6,102 @@ import ViewContainer from "../components/ViewContainer";
 import MenuButtonContainer from "../components/MenuButtonContainer";
 import MenuCircle from "../components/MenuCircle";
 import { menusStyles as styles } from "../theme/Menus.styles";
+import { useAuth } from "../contexts/AuthContext";
+import { useToast } from "../contexts/ToastContext";
+import { useSurveyLog } from "../hooks/useSurveyLog";
+import { useSurveyNodes } from "../hooks/useSurveyNodes";
+import { parseIsoDate, getDaysBetweenInclusive } from "../utils/dateTime";
+import { computeReportStats, buildSafetyData, buildSetupData } from "../utils/reportData";
+import { downloadReportPdf } from "../utils/reportPdf";
 import blueGoat from "../assets/icons/blue_goat.png";
 import milkPail from "../assets/icons/milk_pail.png";
 import downloadDocument from "../assets/icons/download_document.png";
 
 
 const LogMenu = () => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const theme = useTheme();
+    const { currentUser, getUserProfile } = useAuth();
+    const { showToast } = useToast();
+    const { getRecords } = useSurveyLog();
+    const nodes = useSurveyNodes();
     const isDark = theme.palette.mode === "dark";
     const menuBorder = isDark ? "#9e9e9e" : "#1a8090";
 
     const fromDate = searchParams.get("fromDate") || "";
     const toDate = searchParams.get("toDate") || "";
+
+    const handleDownloadReport = async () => {
+        try {
+            const records = getRecords();
+            const from = parseIsoDate(fromDate);
+            const to = parseIsoDate(toDate);
+            const language = i18n.language;
+
+            const stats = computeReportStats(records, from, to, language);
+            const safetyAspects = buildSafetyData(records, nodes, from, to, t);
+            const setup = buildSetupData(nodes, records, t);
+            const profile = currentUser?.uid
+                ? await getUserProfile(currentUser.uid)
+                : null;
+
+            const dairyCategories = stats.dairyBuckets.map((item) => item.label);
+            const dairySeries = [
+                {
+                    label: t("dairyBarChart.totalAnimals"),
+                    data: stats.dairyBuckets.map((item) => item.total),
+                    color: { from: "#2dc5a2", to: "#1a8090" },
+                },
+                {
+                    label: t("dairyBarChart.milkedAnimals"),
+                    data: stats.dairyBuckets.map((item) => item.milked),
+                    color: { from: "#74b3ff", to: "#2f6ad9" },
+                },
+            ];
+
+            const milkCategories = stats.milkSeries.map((item) => item.label);
+            const milkSeries = [{
+                label: t("milkBarChart.liters"),
+                data: stats.milkSeries.map((item) => item.value),
+                color: { from: "#f6c344", to: "#d18b00" },
+            }];
+
+            const isMonthlyGrouped = Boolean(from && to && from <= to && getDaysBetweenInclusive(from, to) > 31);
+
+            await downloadReportPdf({
+                t,
+                fromDate,
+                toDate,
+                profile,
+                setup,
+                dairy: {
+                    categories: dairyCategories,
+                    series: dairySeries,
+                    xAxisLabel: isMonthlyGrouped ? t("dairyBarChart.months") : t("dairyBarChart.days"),
+                    averageTotalAnimals: stats.averageTotalAnimals,
+                    averageMilkedAnimals: stats.averageMilkedAnimals,
+                },
+                milk: {
+                    categories: milkCategories,
+                    series: milkSeries,
+                    xAxisLabel: isMonthlyGrouped ? t("milkBarChart.months") : t("milkBarChart.days"),
+                    totalLiters: stats.totalLiters,
+                    averageLitersPerDay: stats.averageLitersPerDay,
+                    litersPerAnimal: stats.litersPerAnimal,
+                },
+                dailyRows: stats.dailyRows,
+                safetyAspects,
+                fileName: `${t("report.fileName")}_${fromDate || "all"}_${toDate || "all"}.pdf`,
+            });
+
+            showToast(t("report.downloadSuccess"), "success");
+        } catch (error) {
+            console.error("[report] download failed", error);
+            showToast(t("report.downloadError"), "error");
+        }
+    };
 
     const viewItems = [
         {
@@ -39,10 +120,7 @@ const LogMenu = () => {
         { 
             icon: downloadDocument, 
             label: t("logMenu.downloadReport"),
-            onClick: () => {
-                // Placeholder for report generation logic
-                console.log("Download report");
-            }
+            onClick: handleDownloadReport,
         },
     ];
 

@@ -7,138 +7,12 @@ import ViewContainer from "../components/ViewContainer";
 import { useSurveyLog } from "../hooks/useSurveyLog";
 import { milkBarChartStyles as styles } from "../theme/MilkBarChart.styles";
 import { parseIsoDate, formatAsIsoDate, getDaysBetweenInclusive, getMonthSpanInclusive } from "../utils/dateTime";
-
-
-const buildLatestMilkByDate = (records, startDate, endDate) => {
-    if (!startDate || !endDate || startDate > endDate) return {};
-
-    const fromIso = formatAsIsoDate(startDate);
-    const toIso = formatAsIsoDate(endDate);
-    const latestByDate = {};
-
-    for (const record of records) {
-        if (record.nodeId !== "view-55") continue;
-        if (!record.date || record.date < fromIso || record.date > toIso) continue;
-
-        const value = Number(record.answer);
-        if (!Number.isFinite(value)) continue;
-
-        const timestamp = Number(record.timestamp) || 0;
-        const previous = latestByDate[record.date];
-        if (!previous || timestamp >= previous.timestamp) {
-            latestByDate[record.date] = { value, timestamp };
-        }
-    }
-
-    const valuesByDate = {};
-    for (const [date, entry] of Object.entries(latestByDate)) {
-        valuesByDate[date] = entry.value;
-    }
-
-    return valuesByDate;
-};
-
-const buildEffectiveAnimalsByDate = (records, startDate, endDate) => {
-    if (!startDate || !endDate || startDate > endDate) return {};
-
-    const fromIso = formatAsIsoDate(startDate);
-    const toIso = formatAsIsoDate(endDate);
-    const latestByDate = {};
-    let latestBeforeStart = null;
-
-    for (const record of records) {
-        if (record.nodeId !== "view-220") continue;
-        if (!record.date || record.date > toIso) continue;
-
-        const value = Number(record.answer);
-        if (!Number.isFinite(value) || value <= 0) continue;
-
-        const timestamp = Number(record.timestamp) || 0;
-        if (record.date < fromIso) {
-            if (
-                !latestBeforeStart ||
-                record.date > latestBeforeStart.date ||
-                (record.date === latestBeforeStart.date && timestamp >= latestBeforeStart.timestamp)
-            ) {
-                latestBeforeStart = { date: record.date, value, timestamp };
-            }
-            continue;
-        }
-
-        const previous = latestByDate[record.date];
-        if (!previous || timestamp >= previous.timestamp) {
-            latestByDate[record.date] = { value, timestamp };
-        }
-    }
-
-    const valuesByDate = {};
-    let latestKnownAnimals = latestBeforeStart?.value ?? null;
-    const cursor = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
-    const finalDate = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate());
-
-    while (cursor <= finalDate) {
-        const isoDate = formatAsIsoDate(cursor);
-        const entry = latestByDate[isoDate];
-
-        if (entry) {
-            latestKnownAnimals = entry.value;
-        }
-
-        if (Number.isFinite(latestKnownAnimals) && latestKnownAnimals > 0) {
-            valuesByDate[isoDate] = latestKnownAnimals;
-        }
-
-        cursor.setDate(cursor.getDate() + 1);
-    }
-
-    return valuesByDate;
-};
-
-const buildSeries = (startDate, endDate, language, valuesByDate) => {
-    if (!startDate || !endDate || startDate > endDate) return [];
-
-    const days = [];
-    const totalDays = getDaysBetweenInclusive(startDate, endDate);
-    const shouldGroupByMonth = totalDays > 31;
-    const cursor = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
-    const finalDate = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate());
-    const monthFormatter = new Intl.DateTimeFormat(language || "es", {
-        month: "short",
-        year: "2-digit",
-    });
-
-    while (cursor <= finalDate) {
-        const year = cursor.getFullYear();
-        const month = cursor.getMonth();
-        const day = cursor.getDate();
-        const isoDate = formatAsIsoDate(cursor);
-        const value = Number(valuesByDate[isoDate] ?? 0);
-
-        if (!shouldGroupByMonth) {
-            days.push({
-                key: `${year}-${month + 1}-${day}`,
-                label: String(day).padStart(2, "0"),
-                value,
-            });
-        } else {
-            const monthKey = `${year}-${month + 1}`;
-            const existing = days[days.length - 1];
-            if (existing && existing.key === monthKey) {
-                existing.value = Number((existing.value + value).toFixed(1));
-            } else {
-                days.push({
-                    key: monthKey,
-                    label: monthFormatter.format(cursor),
-                    value,
-                });
-            }
-        }
-
-        cursor.setDate(cursor.getDate() + 1);
-    }
-
-    return days;
-};
+import {
+    buildLatestMilkByDate,
+    buildEffectiveAnimalsByDate,
+    buildSeries,
+    computeLitersPerAnimal,
+} from "../utils/reportData";
 
 const MilkBarChart = () => {
     const { t, i18n } = useTranslation();
@@ -195,28 +69,7 @@ const MilkBarChart = () => {
         return Number((totalLiters / totalDaysInRange).toFixed(1));
     }, [totalLiters, totalDaysInRange]);
     const litersPerAnimal = useMemo(() => {
-        if (!from || !to || from > to) return 0;
-
-        const cursor = new Date(from.getFullYear(), from.getMonth(), from.getDate());
-        const finalDate = new Date(to.getFullYear(), to.getMonth(), to.getDate());
-        let totalDailyLitersPerAnimal = 0;
-        let daysWithAnimals = 0;
-
-        while (cursor <= finalDate) {
-            const isoDate = formatAsIsoDate(cursor);
-            const milkValue = Number(milkValuesByDate[isoDate] ?? 0);
-            const animalsCount = Number(animalsByDate[isoDate]);
-
-            if (Number.isFinite(animalsCount) && animalsCount > 0) {
-                totalDailyLitersPerAnimal += milkValue / animalsCount;
-                daysWithAnimals += 1;
-            }
-
-            cursor.setDate(cursor.getDate() + 1);
-        }
-
-        if (!daysWithAnimals) return 0;
-        return Number((totalDailyLitersPerAnimal / daysWithAnimals).toFixed(2));
+        return computeLitersPerAnimal(from, to, milkValuesByDate, animalsByDate);
     }, [from, to, milkValuesByDate, animalsByDate]);
 
     useEffect(() => {

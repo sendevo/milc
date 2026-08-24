@@ -8,26 +8,10 @@ import { useModal } from "../contexts/ModalContext";
 import { useSurveyLog } from "../hooks/useSurveyLog";
 import { useSurveyNodes } from "../hooks/useSurveyNodes";
 import { computeFullScore } from "../model/scoring";
+import { buildScoredAspects } from "../model/aspects";
 import { parseIsoDate, formatAsIsoDate } from "../utils/dateTime";
-import blueGoat from "../assets/icons/blue_goat.png";
-import udder from "../assets/icons/udder.png";
-import milkPail from "../assets/icons/milk_pail.png";
-import goatHealth from "../assets/icons/goat_health.png";
-import weed from "../assets/icons/weed.png";
-import cattlePen from "../assets/icons/cattle_pen.png";
-import barn from "../assets/icons/barn.png";
-import pest from "../assets/icons/pest.png";
 import checkTrue from "../assets/icons/check_true.png";
 import checkFalse from "../assets/icons/check_false.png";
-
-const CHECKS_BY_RATING = {
-    excellent: 4,
-    "very-good": 3,
-    regular: 2,
-    "needs-improvement": 1,
-};
-
-const normalizeCategoryKey = (value) => (value || "").toLowerCase().replace(/[-_\s]/g, "");
 
 const ResultScales = () => {
     const { t } = useTranslation();
@@ -66,81 +50,8 @@ const ResultScales = () => {
         return computeFullScore(filteredRecords, nodes);
     }, [filteredRecords, nodes]);
 
-    const aspects = useMemo(() => { // This is the main logic for mapping scores to the aspects shown on this page
-        const base = [
-            {
-                icon: blueGoat,
-                label: t("mainMenu.beforeMilking"),
-                categoryKeys: ["before-milking", "before_milking", "beforeMilking"],
-                fallbackRating: 0,
-            },
-            {
-                icon: udder,
-                label: t("mainMenu.duringMilking"),
-                categoryKeys: ["during-milking", "during_milking", "duringMilking"],
-                fallbackRating: 0,
-            },
-            {
-                icon: milkPail,
-                label: t("mainMenu.milkCare"),
-                categoryKeys: ["milk-care", "milk_care", "milkCare"],
-                fallbackRating: 0,
-            },
-            {
-                icon: goatHealth,
-                label: t("mainMenu.health"),
-                categoryKeys: ["health"],
-                fallbackRating: 0,
-            },
-            {
-                icon: weed,
-                label: t("mainMenu.food"),
-                categoryKeys: ["food", "feed"],
-                fallbackRating: 0,
-            },
-            {
-                icon: cattlePen,
-                label: t("mainMenu.facilities"),
-                categoryKeys: ["facilities"],
-                fallbackRating: 0,
-            },
-            {
-                icon: barn,
-                label: t("mainMenu.mySupplies"),
-                categoryKeys: ["supplies", "my-supplies", "my_supplies", "insumos"],
-                fallbackRating: 0,
-            },
-            {
-                icon: pest,
-                label: t("mainMenu.pests"),
-                categoryKeys: ["pests"],
-                fallbackRating: 0,
-            },
-        ];
-
-        return base.map((aspect) => {
-            const categoryKeySet = new Set(aspect.categoryKeys.map(normalizeCategoryKey));
-            const matchedCategory = aspect.categoryKeys.find((key) => score.byCategory[key]);
-            const categoryData = matchedCategory ? score.byCategory[matchedCategory] : null;
-            const hasEvaluatedData = Object.values(score.byScenario).some((scenarioScore) => {
-                const scenarioCategory = normalizeCategoryKey(scenarioScore.category);
-                return categoryKeySet.has(scenarioCategory) && scenarioScore.expected > 0;
-            });
-
-            const rating = hasEvaluatedData && categoryData
-                ? (CHECKS_BY_RATING[categoryData.rating] ?? 1)
-                : aspect.fallbackRating;
-            const targetView = hasEvaluatedData && categoryData
-                ? categoryData.resultViewId
-                : null;
-
-            return {
-                icon: aspect.icon,
-                label: aspect.label,
-                rating,
-                targetView,
-            };
-        });
+    const aspects = useMemo(() => {
+        return buildScoredAspects(score, t);
     }, [score.byCategory, score.byScenario, t]);
 
     const handleAspectClick = (rating, targetView) => {

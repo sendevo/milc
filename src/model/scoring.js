@@ -216,6 +216,7 @@ export const resultViewId = (rating) => {
  *     byCategory: { [category]: { avgMR, rating, resultViewId } },
  *   }
  */
+
 export const computeFullScore = (allRecords, nodes) => {
     // Build a map of scenario → node metadata (first node wins for dedup).
     const scenarioMeta = {};
