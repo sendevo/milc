@@ -12,6 +12,11 @@ import ViewContainer from "../components/ViewContainer";
 import { infoStyles as styles } from "../theme/Info.styles";
 import logoInta from '../assets/logo_inta.png';
 
+
+const versionValue = import.meta.env.VITE_APP_VERSION || '1.0.0';
+const versionCode = import.meta.env.VITE_APP_VERSION_CODE || '1';
+const buildDate = import.meta.env.VITE_APP_BUILD_DATE || new Date("2026-07-13").toISOString().split('T')[0];
+
 const Info = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
@@ -27,7 +32,7 @@ const Info = () => {
                             <Typography sx={styles.accordionSummary}>{t('info.version')}</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
-                            <h3 style={{margin:0, textAlign:"center"}}>MILC 1.0.0</h3>
+                            <h3 style={{margin:0, textAlign:"center"}}>MILC v{versionValue}</h3>
                             <h3 style={{margin:0}}>Staff</h3>
                             <Typography><b>{t('info.author')}:</b> Edurne Battista, Mariano Zetola</Typography>
                             <Typography><b>{t('info.developer')}:</b> <a href="https://sendevosoftware.com.ar" target="_blank" rel="noopener noreferrer">Sendevo Software</a></Typography>

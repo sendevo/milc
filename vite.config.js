@@ -2,7 +2,28 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { VitePWA } from "vite-plugin-pwa";
 
+const pkg = JSON.parse(
+  readFileSync(new URL("./package.json", import.meta.url), "utf-8")
+);
+
+function versionToCode(version) {
+  const [major = "0", minor = "0", patch = "0"] = String(version)
+    .split("-")[0]
+    .split(".");
+  return String(Number(major) * 10000 + Number(minor) * 100 + Number(patch));
+}
+
+const appVersion = pkg.version || "1.0.0";
+const appVersionCode = pkg.versionCode || versionToCode(appVersion);
+
 export default defineConfig({
+  define: {
+    "import.meta.env.VITE_APP_VERSION": JSON.stringify(appVersion),
+    "import.meta.env.VITE_APP_VERSION_CODE": JSON.stringify(appVersionCode),
+    "import.meta.env.VITE_APP_BUILD_DATE": JSON.stringify(
+      new Date().toISOString().split("T")[0]
+    ),
+  },
   test: {
     globals: true,
     environment: "node",
