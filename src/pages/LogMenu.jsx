@@ -13,9 +13,11 @@ import { useSurveyNodes } from "../hooks/useSurveyNodes";
 import { parseIsoDate, getDaysBetweenInclusive } from "../utils/dateTime";
 import { computeReportStats, buildSafetyData, buildSetupData } from "../utils/reportData";
 import { downloadReportPdf } from "../utils/reportPdf";
+import { downloadDailyRowsXlsx } from "../utils/reportXlsx";
 import blueGoat from "../assets/icons/blue_goat.png";
 import milkPail from "../assets/icons/milk_pail.png";
-import downloadDocument from "../assets/icons/download_document.png";
+import downloadDocumentPDF from "../assets/icons/download_document_pdf.png";
+import downloadDocumentXLS from "../assets/icons/download_document_xlsx.png";
 
 
 const LogMenu = () => {
@@ -33,7 +35,7 @@ const LogMenu = () => {
     const fromDate = searchParams.get("fromDate") || "";
     const toDate = searchParams.get("toDate") || "";
 
-    const handleDownloadReport = async () => {
+    const handleDownloadReportPDF = async () => {
         try {
             const records = getRecords();
             const from = parseIsoDate(fromDate);
@@ -103,6 +105,30 @@ const LogMenu = () => {
         }
     };
 
+    const handleDownloadReportXLSX = async () => {
+        try {
+            const records = getRecords();
+            const from = parseIsoDate(fromDate);
+            const to = parseIsoDate(toDate);
+            const language = i18n.language;
+
+            const stats = computeReportStats(records, from, to, language);
+
+            downloadDailyRowsXlsx({
+                t,
+                dailyRows: stats.dailyRows,
+                fromDate,
+                toDate,
+                fileName: `${t("report.fileName")}_${fromDate || "all"}_${toDate || "all"}.xlsx`,
+            });
+
+            showToast(t("report.downloadSuccess"), "success");
+        } catch (error) {
+            console.error("[report] xlsx download failed", error);
+            showToast(t("report.downloadError"), "error");
+        }
+    };
+
     const viewItems = [
         {
             icon: milkPail,
@@ -118,10 +144,15 @@ const LogMenu = () => {
 
     const reportItems = [
         { 
-            icon: downloadDocument, 
-            label: t("logMenu.downloadReport"),
-            onClick: handleDownloadReport,
+            icon: downloadDocumentPDF, 
+            label: t("logMenu.downloadReportPDF"),
+            onClick: handleDownloadReportPDF,
         },
+        { 
+            icon: downloadDocumentXLS, 
+            label: t("logMenu.downloadReportXLSX"),
+            onClick: handleDownloadReportXLSX,
+        }
     ];
 
     return (

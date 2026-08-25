@@ -214,7 +214,38 @@ export const downloadReportPdf = async ({
     });
     y = drawChartImage(doc, y, milkChartImage, t("report.processedMilkChartTitle"), headerImageData);
 
-    y = ensureSpace(doc, y + 2, 20, headerImageData);
+    y = ensureSpace(doc, y + 2, 30, headerImageData);
+
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(13);
+    doc.text(t("report.safetyAssessment"), PAGE_MARGIN_X, y);
+    y += 6;
+
+    doc.setFontSize(11);
+    for (const aspect of safetyAspects) {
+        y = ensureSpace(doc, y, 18, headerImageData);
+
+        doc.setFont("helvetica", "bold");
+        doc.text(aspect.label, PAGE_MARGIN_X, y);
+        y += 5;
+
+        const checks = Array.from({ length: 4 }, (_, index) => (index < aspect.rating ? "[x]" : "[ ]")).join(" ");
+        doc.setFont("helvetica", "normal");
+        doc.text(`${t("report.scale")}: ${checks}`, PAGE_MARGIN_X + 2, y);
+        y += 5;
+
+        const split = doc.splitTextToSize(aspect.detailMessage || t("resultScales.notEvaluated"), 176);
+        doc.text(split, PAGE_MARGIN_X + 2, y);
+        y += split.length * 4.5 + 3;
+    }
+
+    // Daily table goes on its own page at the end of the document.
+    y = addPageWithHeader(doc, headerImageData);
+
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(13);
+    doc.text(t("report.dailyTableTitle"), PAGE_MARGIN_X, y);
+    y += 6;
 
     autoTable(doc, {
         startY: y,
@@ -244,32 +275,6 @@ export const downloadReportPdf = async ({
             drawHeader(doc, headerImageData);
         },
     });
-
-    y = (doc.lastAutoTable?.finalY || y) + 8;
-    y = ensureSpace(doc, y, 30, headerImageData);
-
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(13);
-    doc.text(t("report.safetyAssessment"), PAGE_MARGIN_X, y);
-    y += 6;
-
-    doc.setFontSize(11);
-    for (const aspect of safetyAspects) {
-        y = ensureSpace(doc, y, 18, headerImageData);
-
-        doc.setFont("helvetica", "bold");
-        doc.text(aspect.label, PAGE_MARGIN_X, y);
-        y += 5;
-
-        const checks = Array.from({ length: 4 }, (_, index) => (index < aspect.rating ? "[x]" : "[ ]")).join(" ");
-        doc.setFont("helvetica", "normal");
-        doc.text(`${t("report.scale")}: ${checks}`, PAGE_MARGIN_X + 2, y);
-        y += 5;
-
-        const split = doc.splitTextToSize(aspect.detailMessage || t("resultScales.notEvaluated"), 176);
-        doc.text(split, PAGE_MARGIN_X + 2, y);
-        y += split.length * 4.5 + 3;
-    }
 
     doc.save(fileName);
 };
