@@ -33,6 +33,7 @@ const BarChart = ({
     showGrid = false,
     showValues = true,
     showLegend,
+    minCategoryWidth = 52,
 }) => {
     const theme = useTheme();
 
@@ -84,6 +85,10 @@ const BarChart = ({
         ? showLegend
         : normalizedSeries.length > 1;
 
+    const chartMinWidth = useMemo(() => {
+        return Math.max(320, resolvedCategories.length * minCategoryWidth);
+    }, [resolvedCategories.length, minCategoryWidth]);
+
     return (
         <Box sx={styles.chartCard}>
             {yAxisLabel ? (
@@ -106,7 +111,12 @@ const BarChart = ({
                 </Box>
             ) : null}
 
-            <Box sx={styles.chartArea}>
+            <Box sx={styles.chartScrollArea}>
+                <Box
+                    sx={{
+                        ...styles.chartArea,
+                        minWidth: `max(100%, ${chartMinWidth}px)`,
+                    }}>
                 {showGrid ? (
                     <Box sx={styles.gridLayer}>
                         {[0.25, 0.5, 0.75, 1].map((step) => (
@@ -122,7 +132,13 @@ const BarChart = ({
                 ) : null}
 
                 {resolvedCategories.map((label, categoryIndex) => (
-                    <Box key={`${label}-${categoryIndex}`} sx={styles.barItem}>
+                    <Box
+                        key={`${label}-${categoryIndex}`}
+                        sx={{
+                            ...styles.barItem,
+                            width: minCategoryWidth,
+                            minWidth: minCategoryWidth,
+                        }}>
                         {showValues ? (
                             <Typography sx={styles.barValue}>
                                 {normalizedSeries.map((entry) => entry.values[categoryIndex]).join(" / ")}
@@ -148,6 +164,7 @@ const BarChart = ({
                         <Typography sx={styles.barLabel}>{label}</Typography>
                     </Box>
                 ))}
+                </Box>
             </Box>
 
             {xAxisLabel ? (

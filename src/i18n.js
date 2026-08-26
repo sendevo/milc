@@ -144,6 +144,11 @@ const resources = {
                 yes: "Yes",
                 no: "No",
                 save: "Save",
+                validation: {
+                    generic: "Please review your input.",
+                    milkedAnimalsExceedTotal: "Animals being milked cannot exceed total animals.",
+                    sickAnimalsExceedMilked: "Sick animals cannot exceed animals being milked.",
+                },
                 months: {
                     jan: "Jan", feb: "Feb", mar: "Mar", apr: "Apr",
                     may: "May", jun: "Jun", jul: "Jul", aug: "Aug",
@@ -357,6 +362,11 @@ const resources = {
                 yes: "Sí",
                 no: "No",
                 save: "Registrar",
+                validation: {
+                    generic: "Revisá los datos ingresados.",
+                    milkedAnimalsExceedTotal: "La cantidad de animales en ordeñe no puede ser mayor que la cantidad total de animales.",
+                    sickAnimalsExceedMilked: "La cantidad de animales enfermos no puede ser mayor que la cantidad de animales en ordeñe.",
+                },
                 months: {
                     jan: "Ene", feb: "Feb", mar: "Mar", apr: "Abr",
                     may: "May", jun: "Jun", jul: "Jul", aug: "Ago",

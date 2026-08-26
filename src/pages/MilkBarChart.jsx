@@ -102,6 +102,7 @@ const MilkBarChart = () => {
                     yAxisLabel={t("milkBarChart.liters")}
                     xAxisLabel={isMonthlyGrouped ? t("milkBarChart.months") : t("milkBarChart.days")}
                     showGrid={false}
+                    minCategoryWidth={84}
                 />
 
                 <Box sx={styles.bottomActions}>

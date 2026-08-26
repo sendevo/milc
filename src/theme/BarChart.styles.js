@@ -16,8 +16,13 @@ export const barChartStyles = {
         mb: 1,
         textTransform: "lowercase",
     },
-    chartArea: {
+    chartScrollArea: {
         width: "100%",
+        overflowX: "auto",
+        overflowY: "hidden",
+    },
+    chartArea: {
+        width: "fit-content",
         minHeight: 260,
         display: "flex",
         alignItems: "flex-end",
@@ -26,7 +31,6 @@ export const barChartStyles = {
         borderColor: "divider",
         pb: 1,
         position: "relative",
-        overflowX: "auto",
     },
     gridLayer: {
         position: "absolute",
@@ -45,8 +49,7 @@ export const barChartStyles = {
         borderColor: "divider",
     },
     barItem: {
-        flex: 1,
-        minWidth: 0,
+        flex: "0 0 auto",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",

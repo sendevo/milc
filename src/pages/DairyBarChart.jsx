@@ -108,6 +108,7 @@ const DairyBarChart = () => {
                     yAxisLabel={t("dairyBarChart.count")}
                     xAxisLabel={isMonthlyGrouped ? t("dairyBarChart.months") : t("dairyBarChart.days")}
                     showGrid={false}
+                    minCategoryWidth={84}
                 />
 
                 <Box sx={styles.bottomActions}>

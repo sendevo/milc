@@ -7,6 +7,7 @@ import { useSurveyLog } from "../hooks/useSurveyLog";
 import SurveyStep from "../components/survey/SurveyStep";
 import { useToast } from "../contexts/ToastContext";
 import { useAuth } from "../contexts/AuthContext";
+import { validateSurveySubmission } from "../model/validation";
 import {
     buildTelemetryEvent,
     enqueueTelemetryEvent,
@@ -58,7 +59,7 @@ const SurveyPage = () => {
     const nodes = useSurveyNodes();
     const { showToast } = useToast();
     const { t, i18n } = useTranslation();
-    const { saveAnswer } = useSurveyLog();
+    const { saveAnswer, getRecords } = useSurveyLog();
     const { currentUser } = useAuth();
 
     const node = nodes[nodeId];
@@ -117,6 +118,18 @@ const SurveyPage = () => {
     // Submit handler
     // ---------------------------------------------------------------------------
     const handleSubmit = (answers) => {
+        const validationResult = validateSurveySubmission({
+            nodeId,
+            answers,
+            records: getRecords(),
+            t,
+        });
+
+        if (!validationResult.isValid) {
+            showToast(validationResult.message, validationResult.severity);
+            return;
+        }
+
         const answer = extractAnswer(answers);
 
         // 1. Persist the answer if this node has a scoreable scenario code.
