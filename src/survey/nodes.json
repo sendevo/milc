@@ -88,6 +88,15 @@
         "category": "during-milking",
         "fields": [
             {
+                "audios": [
+                    {
+                        "src": "AUDIO6.mp3"
+                    }
+                ],
+                "id": "view-106-audio",
+                "type": "audio_list"
+            },
+            {
                 "id": "",
                 "images": [
                     {
@@ -95,6 +104,19 @@
                     }
                 ],
                 "type": "image_list"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Back",
+                            "es": "Atrás"
+                        },
+                        "target": "view-50"
+                    }
+                ],
+                "id": "view-106-bottom-nav",
+                "type": "bottom_navigation"
             }
         ],
         "guide-id": "Las personas involucradas en el tambo deben conocer y aplicar las indicaciones de salud",
@@ -314,6 +336,26 @@
                     "es": "Atención<br>Limpiá el equipo al terminar de ordeñar"
                 },
                 "type": "alert"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Back",
+                            "es": "Atrás"
+                        },
+                        "target": "view-52"
+                    },
+                    {
+                        "label": {
+                            "en": "Next",
+                            "es": "Siguiente"
+                        },
+                        "target": "view-115"
+                    }
+                ],
+                "id": "view-112-navigation",
+                "type": "bottom_navigation"
             }
         ],
         "guide-id": "Ordeño mecánico: Lavar correctamente el equipo de ordeño",
@@ -450,13 +492,6 @@
                             "es": "Atrás"
                         },
                         "target": "view-124"
-                    },
-                    {
-                        "label": {
-                            "en": "Next",
-                            "es": "Siguiente"
-                        },
-                        "target": "home"
                     }
                 ],
                 "id": "view-123-bottom-nav",
@@ -2417,7 +2452,7 @@
                             "en": "Manual",
                             "es": "Manual"
                         },
-                        "target": "profile",
+                        "target": "view-28",
                         "value": "manual"
                     },
                     {
@@ -3339,6 +3374,19 @@
                     }
                 ],
                 "type": "image_list"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Finish",
+                            "es": "Finalizar"
+                        },
+                        "target": "view-109"
+                    }
+                ],
+                "id": "view-35-bottom-nav",
+                "type": "bottom_navigation"
             }
         ],
         "guide-id": "Requisitos de limpieza de la sala de ordeño mecánico",
@@ -3408,6 +3456,19 @@
                     "es": "Atención<br>Ordeñá esos animales al final y descartá su leche"
                 },
                 "type": "alert"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Ok",
+                            "es": "Aceptar"
+                        },
+                        "target": "view-111"
+                    }
+                ],
+                "id": "view-37-bottom-nav",
+                "type": "bottom_navigation"
             }
         ],
         "guide-id": "Inspección de ubres y despunte",
@@ -3437,6 +3498,19 @@
                     }
                 ],
                 "type": "image_list"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Finish",
+                            "es": "Finalizar"
+                        },
+                        "target": "view-100"
+                    }
+                ],
+                "id": "view-38-bottom-nav",
+                "type": "bottom_navigation"
             }
         ],
         "guide-id": "Inspección de ubres y despunte",
@@ -3471,6 +3545,19 @@
                     }
                 ],
                 "type": "image_list"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Back",
+                            "es": "Atrás"
+                        },
+                        "target": "view-110"
+                    }
+                ],
+                "id": "view-40-bottom-nav",
+                "type": "bottom_navigation"
             }
         ],
         "guide-id": "Inspección de ubres y despunte",
@@ -3529,6 +3616,15 @@
         "category": "during-milking",
         "fields": [
             {
+                "audios": [
+                    {
+                        "src": "AUDIO4-2.mp3"
+                    }
+                ],
+                "id": "view-45-audio",
+                "type": "audio_list"
+            },
+            {
                 "id": "view-45-image-list",
                 "images": [
                     {
@@ -3542,6 +3638,19 @@
                     }
                 ],
                 "type": "image_list"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Back",
+                            "es": "Atrás"
+                        },
+                        "target": "view-46"
+                    }
+                ],
+                "id": "view-45-bottom-nav",
+                "type": "bottom_navigation"
             }
         ],
         "guide-id": "Inspección de ubres y despunte",
@@ -3626,6 +3735,19 @@
                     "es": "Atención<br>No ordeñes con síntomas"
                 },
                 "type": "alert"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Ok",
+                            "es": "Aceptar"
+                        },
+                        "target": "view-49"
+                    }
+                ],
+                "id": "view-47-bottom-nav",
+                "type": "bottom_navigation"
             }
         ],
         "guide-id": "Las personas involucradas en el tambo deben conocer y aplicar las indicaciones de salud",
@@ -3658,6 +3780,19 @@
                     }
                 ],
                 "type": "image_list"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Back",
+                            "es": "Atrás"
+                        },
+                        "target": "view-49"
+                    }
+                ],
+                "id": "view-48-bottom-nav",
+                "type": "bottom_navigation"
             }
         ],
         "guide-id": "Las personas involucradas en el tambo deben conocer y aplicar las indicaciones de salud",
@@ -3804,7 +3939,7 @@
                             "en": "No",
                             "es": "No"
                         },
-                        "target": "-",
+                        "target": "vew-112",
                         "value": "no"
                     },
                     {
@@ -3911,6 +4046,26 @@
                     "es": "Con agua tibia (35-45°C) hasta que salga clara"
                 },
                 "type": "text_block"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Back",
+                            "es": "Atrás"
+                        },
+                        "target": "view-52"
+                    },
+                    {
+                        "label": {
+                            "en": "Next",
+                            "es": "Siguiente"
+                        },
+                        "target": "view-57"
+                    }
+                ],
+                "id": "view-56-navigation",
+                "type": "bottom_navigation"
             }
         ],
         "guide-id": "Ordeño mecánico: Lavar correctamente el equipo de ordeño",
@@ -3945,6 +4100,26 @@
                     "es": "Agua caliente (60-70°C).<br> Recircular el agua según instrucciones del fabricante"
                 },
                 "type": "text_block"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Back",
+                            "es": "Atrás"
+                        },
+                        "target": "view-56"
+                    },
+                    {
+                        "label": {
+                            "en": "Next",
+                            "es": "Siguiente"
+                        },
+                        "target": "view-158"
+                    }
+                ],
+                "id": "view-57-navigation",
+                "type": "bottom_navigation"
             }
         ],
         "guide-id": "Ordeño mecánico: Lavar correctamente el equipo de ordeño",
@@ -3979,6 +4154,26 @@
                     "es": "Agua limpia a temperatura ambiente.<br>Hasta que el agua salga clara."
                 },
                 "type": "text_block"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Back",
+                            "es": "Atrás"
+                        },
+                        "target": "view-57"
+                    },
+                    {
+                        "label": {
+                            "en": "Next",
+                            "es": "Siguiente"
+                        },
+                        "target": "view-59"
+                    }
+                ],
+                "id": "view-58-navigation",
+                "type": "bottom_navigation"
             }
         ],
         "guide-id": "Ordeño mecánico: Lavar correctamente el equipo de ordeño",
@@ -4013,6 +4208,26 @@
                     "es": "Agua caliente (60-75°C) según frecuencia indicada para establecimiento.<br>Recircular el tiempo que indica el fabricante."
                 },
                 "type": "text_block"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Back",
+                            "es": "Atrás"
+                        },
+                        "target": "view-58"
+                    },
+                    {
+                        "label": {
+                            "en": "Next",
+                            "es": "Siguiente"
+                        },
+                        "target": "view-60"
+                    }
+                ],
+                "id": "view-59-navigation",
+                "type": "bottom_navigation"
             }
         ],
         "guide-id": "Ordeño mecánico: Lavar correctamente el equipo de ordeño",
@@ -4047,6 +4262,26 @@
                     "es": "Agua limpia a temperatura ambiente.<br>>Hasta que el agua salga clara.<br>No recircular."
                 },
                 "type": "text_block"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Back",
+                            "es": "Atrás"
+                        },
+                        "target": "view-59"
+                    },
+                    {
+                        "label": {
+                            "en": "Next",
+                            "es": "Siguiente"
+                        },
+                        "target": "view-61"
+                    }
+                ],
+                "id": "view-60-navigation",
+                "type": "bottom_navigation"
             }
         ],
         "guide-id": "Ordeño mecánico: Lavar correctamente el equipo de ordeño",
@@ -4081,6 +4316,26 @@
                     "es": "Usar cloro (lavandina) u otro sanitizante diluido en agua limpia"
                 },
                 "type": "text_block"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Back",
+                            "es": "Atrás"
+                        },
+                        "target": "view-60"
+                    },
+                    {
+                        "label": {
+                            "en": "Next",
+                            "es": "Siguiente"
+                        },
+                        "target": "view-52"
+                    }
+                ],
+                "id": "view-61-navigation",
+                "type": "bottom_navigation"
             }
         ],
         "guide-id": "Ordeño mecánico: Lavar correctamente el equipo de ordeño",

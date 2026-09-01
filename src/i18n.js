@@ -51,6 +51,10 @@ const resources = {
                 logout: "Logout",
                 info: "Information & Help",
                 createAccount: "Create Account",
+                dailyAlreadyCompletedTitle: "Daily section already completed",
+                dailyAlreadyCompletedMessage: "You already entered data for this section today. Do you want to modify it?",
+                dailyAlreadyCompletedEdit: "Modify data",
+                dailyAlreadyCompletedCancel: "Cancel",
             },
             logMenu: {
                 panelTitle: "My Records",
@@ -269,6 +273,10 @@ const resources = {
                 logout: "Cerrar sesión",
                 info: "Información y ayuda",
                 createAccount: "Crear cuenta",
+                dailyAlreadyCompletedTitle: "Sección diaria ya registrada",
+                dailyAlreadyCompletedMessage: "Ya ingresaste datos para esta sección hoy. ¿Querés modificarlos?",
+                dailyAlreadyCompletedEdit: "Modificar datos",
+                dailyAlreadyCompletedCancel: "Cancelar",
             },
             logMenu: {
                 panelTitle: "Mis registros",

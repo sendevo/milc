@@ -30,7 +30,7 @@ const Register = () => {
         try {
             const { user } = await register(email, password);
             await saveUserProfile(user.uid, { name, place, healthCard, email });
-            navigate("/app");
+            navigate("/home");
         } catch {
             setError(t("register.error"));
         } finally {

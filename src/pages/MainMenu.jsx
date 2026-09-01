@@ -9,6 +9,9 @@ import MenuCircle from "../components/MenuCircle";
 import { menusStyles as styles } from "../theme/Menus.styles";
 import { useSurveyLog } from "../hooks/useSurveyLog";
 import { useSurveyNodes } from "../hooks/useSurveyNodes";
+import { useModal } from "../contexts/ModalContext";
+import { useSettings } from "../contexts/SettingsContext";
+import { formatAsIsoDate } from "../utils/dateTime";
 import blueGoat from "../assets/icons/blue_goat.png";
 import udder from "../assets/icons/udder.png";
 import milkPail from "../assets/icons/milk_pail.png";
@@ -27,8 +30,10 @@ const MainMenu = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const theme = useTheme();
+    const { openModal } = useModal();
+    const { getCurrentDateTime } = useSettings();
     const nodes = useSurveyNodes();
-    const { getRecordsByScenario } = useSurveyLog();
+    const { getRecordsByScenario, hasRecordForDateAndScenarios } = useSurveyLog();
     const isDark = theme.palette.mode === "dark";
     const menuBorder = isDark ? "#9e9e9e" : "#1a8090";
 
@@ -58,21 +63,74 @@ const MainMenu = () => {
             : "/survey/view-129";
     }, [latestMethodAnswer]);
 
+    const dailyScenariosByCategory = useMemo(() => {
+        const byCategory = {};
+
+        for (const node of Object.values(nodes)) {
+            if (node?.periodicity !== "daily") continue;
+            if (!node?.category || !node?.scenario || node.scenario === "-") continue;
+
+            if (!byCategory[node.category]) {
+                byCategory[node.category] = new Set();
+            }
+            byCategory[node.category].add(node.scenario);
+        }
+
+        return byCategory;
+    }, [nodes]);
+
+    const todayIso = useMemo(() => {
+        return formatAsIsoDate(getCurrentDateTime());
+    }, [getCurrentDateTime]);
+
+    const handleDailySectionAccess = ({ category, route }) => {
+        const scenarios = Array.from(dailyScenariosByCategory[category] || []);
+        const hasTodayRecord = hasRecordForDateAndScenarios(todayIso, scenarios);
+
+        if (!hasTodayRecord) {
+            navigate(route);
+            return;
+        }
+
+        openModal({
+            title: t("mainMenu.dailyAlreadyCompletedTitle"),
+            content: (
+                <Typography>
+                    {t("mainMenu.dailyAlreadyCompletedMessage")}
+                </Typography>
+            ),
+            actions: [
+                {
+                    label: t("mainMenu.dailyAlreadyCompletedCancel"),
+                    variant: "text",
+                },
+                {
+                    label: t("mainMenu.dailyAlreadyCompletedEdit"),
+                    variant: "contained",
+                    onClick: () => navigate(route),
+                },
+            ],
+        });
+    };
+
     const myDayItems = [
         {
             icon: blueGoat,
             label: t("mainMenu.beforeMilking"),
-            onClick: () => navigate(beforeMilkingRoute)
+            category: "before-milking",
+            route: beforeMilkingRoute,
         },
         { 
             icon: udder, 
             label: t("mainMenu.duringMilking"),
-            onClick: () => navigate("/survey/view-46") 
+            category: "during-milking",
+            route: "/survey/view-46",
         },
         { 
             icon: milkPail, 
             label: t("mainMenu.milkCare"),
-            onClick: () => navigate(milkCareRoute)
+            category: "milk-care",
+            route: milkCareRoute,
         },
     ];
 
@@ -147,7 +205,7 @@ const MainMenu = () => {
                                 icon={item.icon}
                                 label={item.label}
                                 borderColor={menuBorder}
-                                onClick={item.onClick} />
+                                onClick={() => handleDailySectionAccess(item)} />
                         ))}
                     </MenuButtonContainer>
                 </Box>

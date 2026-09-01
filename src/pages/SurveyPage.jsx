@@ -7,7 +7,9 @@ import { useSurveyLog } from "../hooks/useSurveyLog";
 import SurveyStep from "../components/survey/SurveyStep";
 import { useToast } from "../contexts/ToastContext";
 import { useAuth } from "../contexts/AuthContext";
+import { useSettings } from "../contexts/SettingsContext";
 import { validateSurveySubmission } from "../model/validation";
+import { formatAsIsoDate } from "../utils/dateTime";
 import {
     buildTelemetryEvent,
     enqueueTelemetryEvent,
@@ -18,7 +20,7 @@ import packageJson from "../../package.json";
 const APP_VERSION_FALLBACK = packageJson.version;
 
 const NON_NODE_TARGET_ROUTES = {
-    home: "/app",
+    home: "/home",
     profile: "/profile"
 };
 
@@ -44,7 +46,7 @@ const resolveNonNodeTargetRoute = (targetId) => {
  * - Looks up the node in the tree.
  * - On submit, if the node has a real scenario, persists the answer to the log.
  * - Resolves the target node and navigates to it.
- *   If the branch ends (no target) or the node is unknown, returns to /app.
+ *   If the branch ends (no target) or the node is unknown, returns to /home.
  *
  * A node is trackable when it has a real scenario (scenario !== "-").
  * Scoring metadata (score-answer, severity, periodicity, category) is used
@@ -61,6 +63,7 @@ const SurveyPage = () => {
     const { t, i18n } = useTranslation();
     const { saveAnswer, getRecords } = useSurveyLog();
     const { currentUser } = useAuth();
+    const { getCurrentDateTime } = useSettings();
 
     const node = nodes[nodeId];
 
@@ -76,7 +79,7 @@ const SurveyPage = () => {
     useEffect(() => {
         if (node) return;
         showToast(t("survey.inDevelopment"));
-        navigate("/app", { replace: true });
+        navigate("/home", { replace: true });
     }, [navigate, node, showToast, t]);
 
     if (!node) {
@@ -135,7 +138,9 @@ const SurveyPage = () => {
         // 1. Persist the answer if this node has a scoreable scenario code.
         if (answer !== undefined) {
             if (isTrackable) {
-                saveAnswer(nodeId, node.scenario, answer);
+                saveAnswer(nodeId, node.scenario, answer, {
+                    date: formatAsIsoDate(getCurrentDateTime()),
+                });
 
                 if (import.meta.env.DEV) {
                     console.log("[survey] logged answer:", {
@@ -183,7 +188,7 @@ const SurveyPage = () => {
         const targetNode = targetId ? nodes[targetId] : null;
 
         if (import.meta.env.DEV) {
-            console.log("[survey] target view:", targetId ?? "/app");
+            console.log("[survey] target view:", targetId ?? "/home");
         }
 
         if (targetId && !targetNode) {
@@ -194,11 +199,11 @@ const SurveyPage = () => {
             }
 
             showToast(t("survey.inDevelopment"));
-            navigate("/app");
+            navigate("/home");
             return;
         }
 
-        navigate(targetId ? `/survey/${targetId}` : "/app");
+        navigate(targetId ? `/survey/${targetId}` : "/home");
     };
 
     return (

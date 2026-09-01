@@ -120,7 +120,7 @@ const Calendar = () => {
 		<ViewContainer
 			title={t("calendar.title")}
 			subtitle={t("calendar.subtitle")}
-			onBack={() => navigate("/app")}
+			onBack={() => navigate("/home")}
 			showDate>
 			<Box sx={styles.page}>
 				<Box sx={styles.calendarCard}>
@@ -178,7 +178,7 @@ const Calendar = () => {
 					<Button
 						variant="outlined"
 						fullWidth
-						onClick={() => navigate("/app")}>
+						onClick={() => navigate("/home")}>
 						{t("calendar.back")}
 					</Button>
 					<Button

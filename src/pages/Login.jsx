@@ -38,7 +38,7 @@ const Login = () => {
         handleCaptchaClose();
         try {
             await loginAnonymously();
-            navigate("/app");
+            navigate("/home");
         } catch (err) {
             setError(err.message);
         }
@@ -50,7 +50,7 @@ const Login = () => {
         setLoading(true);
         try {
             await login(email, password);
-            navigate("/app");
+            navigate("/home");
         } catch {
             setError(t("login.error"));
         } finally {

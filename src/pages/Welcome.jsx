@@ -11,7 +11,7 @@ const Welcome = () => {
     const navigate = useNavigate();
 
     const handleStart = () => {
-        navigate(currentUser ? "/app" : "/login");
+        navigate(currentUser ? "/home" : "/login");
     };
 
     return (

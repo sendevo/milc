@@ -42,7 +42,7 @@ const Config = () => {
     return (
         <ViewContainer
             title={t("config.title")}
-            onBack={() => navigate("/app")}>
+            onBack={() => navigate("/home")}>
             <Box sx={styles.container}>
                 <Box sx={styles.settingRow}>
                     <Typography sx={styles.label}>{t("config.language")}</Typography>

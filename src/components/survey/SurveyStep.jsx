@@ -52,6 +52,10 @@ import { surveyStepStyles as styles } from "../../theme/SurveyStep.styles";
 
 const inputFieldTypes = ["select", "number_input", "month_picker", "date_picker"];
 const selfNavigatingTypes = ["bottom_navigation"];
+const NON_NODE_TARGET_ROUTES = {
+    home: "/home",
+    profile: "/profile",
+};
 
 const SurveyStep = ({ node, nodeId, onSubmit, onBack }) => {
     const [answers, setAnswers] = useState({});
@@ -73,6 +77,17 @@ const SurveyStep = ({ node, nodeId, onSubmit, onBack }) => {
     const hasBottomNav = node.fields.some((f) => selfNavigatingTypes.includes(f.type));
     const contentFields = node.fields.filter((f) => !selfNavigatingTypes.includes(f.type));
     const bottomNavFields = node.fields.filter((f) => selfNavigatingTypes.includes(f.type));
+
+    const resolveNavigationTarget = (target) => {
+        if (!target) return null;
+        if (NON_NODE_TARGET_ROUTES[target]) {
+            return NON_NODE_TARGET_ROUTES[target];
+        }
+        if (target.startsWith("/")) {
+            return target;
+        }
+        return `/survey/${target}`;
+    };
 
     const renderField = (field) => {
         switch (field.type) {
@@ -179,7 +194,11 @@ const SurveyStep = ({ node, nodeId, onSubmit, onBack }) => {
                             label: t(b.label),
                             target: b.target,
                         }))}
-                        onNavigate={(target) => navigate(`/survey/${target}`)} />
+                        onNavigate={(target) => {
+                            const resolved = resolveNavigationTarget(target);
+                            if (!resolved) return;
+                            navigate(resolved);
+                        }} />
                 );
             default:
                 return null;
@@ -218,7 +237,7 @@ const SurveyStep = ({ node, nodeId, onSubmit, onBack }) => {
                             <Button
                                 variant="text"
                                 color="inherit"
-                                onClick={() => navigate("/app")}
+                                onClick={() => navigate("/home")}
                                 sx={styles.backToMenuButton}>
                                 {tUI("survey.backToMenu")}
                             </Button>

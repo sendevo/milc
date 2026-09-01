@@ -23,7 +23,7 @@ import './index.css';
 const GuestRoute = ({ children }) => {
     const { currentUser, loading } = useAuth();
     if (loading) return null;
-    if (currentUser && !currentUser.isAnonymous) return <Navigate to="/app" replace />;
+    if (currentUser && !currentUser.isAnonymous) return <Navigate to="/home" replace />;
     return children;
 };
 
@@ -42,12 +42,13 @@ const App = () => {
                 <Route path="/login" element={<GuestRoute><Login /></GuestRoute>} />
                 <Route path="/register" element={<GuestRoute><Register /></GuestRoute>} />
                 <Route
-                    path="/app"
+                    path="/home"
                     element={
                         <ProtectedRoute>
                         <MainMenu />
                         </ProtectedRoute>
                     }/>
+                <Route path="/app" element={<Navigate to="/home" replace />} />
                 <Route
                     path="/log-menu"
                     element={

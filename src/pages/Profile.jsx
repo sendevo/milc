@@ -130,7 +130,7 @@ const Profile = () => {
     return (
         <ViewContainer
             title={t("profile.title")}
-            onBack={() => navigate("/app")}>
+            onBack={() => navigate("/home")}>
             <Box
                 display="flex"
                 flexDirection="column"

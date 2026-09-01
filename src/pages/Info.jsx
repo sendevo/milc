@@ -24,7 +24,7 @@ const Info = () => {
     return (
         <ViewContainer
             title={t("info.title")}
-            onBack={() => navigate("/app")}>
+            onBack={() => navigate("/home")}>
             <Grid container direction="column" sx={{mt: 1}}>
                 <Grid item>
                     <Accordion sx={styles.accordion}>

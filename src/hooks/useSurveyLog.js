@@ -24,6 +24,7 @@ import { getJSONItem, setJSONItem } from "../utils/persistentStorage";
 
 const STORAGE_KEY = "milc_survey_log";
 const SURVEY_LOG_RECORD_SCHEMA_VERSION = 1;
+const ISO_DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 
 // ---------------------------------------------------------------------------
 // Local-date helper
@@ -39,6 +40,13 @@ const localDateString = () => {
     const mm   = String(d.getMonth() + 1).padStart(2, "0");
     const dd   = String(d.getDate()).padStart(2, "0");
     return `${yyyy}-${mm}-${dd}`;
+};
+
+const resolveEffectiveDate = (date) => {
+    if (typeof date === "string" && ISO_DATE_RE.test(date)) {
+        return date;
+    }
+    return localDateString();
 };
 
 // ---------------------------------------------------------------------------
@@ -66,11 +74,12 @@ const writeLog = async (records) => {
  * Provides read and write access to the persistent survey log.
  *
  * @returns {{
- *   saveAnswer:    (nodeId: string, scenario: string, answer: string) => void,
+ *   saveAnswer:    (nodeId: string, scenario: string, answer: string, options?: { date?: string }) => void,
  *   getRecords:    () => Array,
  *   clearLog:      () => void,
  *   getRecordsByScenario: (scenarioId: string) => Array,
  *   getActiveDays:  () => number,
+ *   hasRecordForDateAndScenarios: (date: string, scenarios: string[]) => boolean,
  * }}
  */
 export const useSurveyLog = () => {
@@ -104,9 +113,12 @@ export const useSurveyLog = () => {
      * @param {string} nodeId   - The view id (e.g. "view-100")
      * @param {string} scenario - The scenario id (e.g. "PREORD-07")
      * @param {string} answer   - The raw answer value (e.g. "yes", "no", "dont-know")
+     * @param {{ date?: string }} [options] - Optional save options.
      */
-    const saveAnswer = useCallback((nodeId, scenario, answer) => {
+    const saveAnswer = useCallback((nodeId, scenario, answer, options = {}) => {
         if (!nodeId || !scenario || scenario === "-") return;
+
+        const effectiveDate = resolveEffectiveDate(options.date);
 
         const record = {
             id:        typeof crypto !== "undefined" && crypto.randomUUID
@@ -115,13 +127,17 @@ export const useSurveyLog = () => {
             nodeId,
             scenario,
             answer,
-            date:      localDateString(),
+            date:      effectiveDate,
             timestamp: Date.now(),
             schemaVersion: SURVEY_LOG_RECORD_SCHEMA_VERSION,
         };
 
         setRecords((prev) => {
-            const next = [...prev, record];
+            // Strict overwrite policy: keep only one record per scenario per day.
+            const next = [
+                ...prev.filter((r) => !(r.scenario === scenario && r.date === effectiveDate)),
+                record,
+            ];
             void writeLog(next);
             return next;
         });
@@ -161,6 +177,25 @@ export const useSurveyLog = () => {
     }, [records]);
 
     /**
+     * Returns true if any record exists for the given date and any scenario
+     * within the provided scenario list.
+     *
+     * @param {string} date
+     * @param {string[]} scenarios
+     * @returns {boolean}
+     */
+    const hasRecordForDateAndScenarios = useCallback((date, scenarios = []) => {
+        if (!ISO_DATE_RE.test(date) || !Array.isArray(scenarios) || scenarios.length === 0) {
+            return false;
+        }
+
+        const scenarioSet = new Set(scenarios.filter(Boolean));
+        if (scenarioSet.size === 0) return false;
+
+        return records.some((r) => r.date === date && scenarioSet.has(r.scenario));
+    }, [records]);
+
+    /**
      * Wipes the entire log. Useful for development / profile reset.
      */
     const clearLog = useCallback(() => {
@@ -173,6 +208,7 @@ export const useSurveyLog = () => {
         getRecords,
         getRecordsByScenario,
         getActiveDays,
+        hasRecordForDateAndScenarios,
         clearLog,
     };
 };
