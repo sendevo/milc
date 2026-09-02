@@ -96,7 +96,7 @@ PEC is then mapped to a categorical label:
 
 ### 3. Risk Magnitude (MR)
 
-MR is calculated continuously from the numeric PEC value and the severity level of the practice:
+The implementation does not use a fixed cross-table by PEC category. Instead, MR is calculated directly from the numeric PEC value and severity:
 
 $$
 MR = \frac{severity \times (1 - PEC)}{3}
