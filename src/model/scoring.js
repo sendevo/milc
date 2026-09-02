@@ -10,18 +10,6 @@
  * See README.md for a full description of the scoring methodology.
  */
 
-// ---------------------------------------------------------------------------
-// MR lookup table
-// Rows: PEC category. Columns: severity level (1, 2, 3).
-// ---------------------------------------------------------------------------
-
-const MR_TABLE = {
-    always:        { 1: 0.00, 2: 0.00, 3: 0.00 },
-    almostAlways:  { 1: 0.01, 2: 0.10, 3: 0.37 },
-    sometimes:     { 1: 0.37, 2: 0.77, 3: 0.90 },
-    never:         { 1: 0.67, 2: 1.00, 3: 1.00 },
-};
-
 // Fallback metadata for known MILC scenarios.
 // Used when nodes arrive without scoring fields from Firebase/nodes.json.
 const SCENARIO_DEFAULTS = {
@@ -107,13 +95,26 @@ export const computePEC = (records, correctAnswer, periodicity) => {
         (r) => r.answer !== "dont-know" && r.answer !== "dont_know"
     );
 
-    // Count distinct days with any scored answer (the denominator).
-    const distinctDays = new Set(scored.map((r) => r.date)).size;
+    // The MILC methodology defines the observation window as app-use days, not
+    // real calendar time. We therefore count distinct scored days for the
+    // denominator, and we collapse multiple same-day records to one effective
+    // observation so duplicate entries cannot inflate the numerator.
+    const perDay = new Map();
+    for (const record of scored) {
+        const date = record.date;
+        const current = perDay.get(date);
+        if (!current || (record.timestamp ?? 0) >= (current.timestamp ?? 0)) {
+            perDay.set(date, record);
+        }
+    }
+
+    const effectiveScored = Array.from(perDay.values());
+    const distinctDays = effectiveScored.length;
     let expected = expectedOccurrences(periodicity, distinctDays);
 
     // If there is scored evidence but expected rounds down to zero
     // (e.g. semester checks in short ranges), mark one expected occurrence.
-    if (expected === 0 && scored.length > 0) {
+    if (expected === 0 && effectiveScored.length > 0) {
         expected = 1;
     }
 
@@ -121,7 +122,7 @@ export const computePEC = (records, correctAnswer, periodicity) => {
         return { pec: 0, category: "never", correct: 0, expected: 0 };
     }
 
-    const correct = scored.filter((r) => r.answer === correctAnswer).length;
+    const correct = effectiveScored.filter((r) => r.answer === correctAnswer).length;
     const pec = Math.min(correct / expected, 1); // cap at 1.0
 
     return {
@@ -137,14 +138,27 @@ export const computePEC = (records, correctAnswer, periodicity) => {
 // ---------------------------------------------------------------------------
 
 /**
- * Looks up the MR value from the cross-table of PEC category × severity.
+ * Computes MR from the raw PEC value and consequence severity.
  *
- * @param {"always"|"almostAlways"|"sometimes"|"never"} pecCategory
+ * MILC 2024 defines the risk magnitude as:
+ * MR = severity * (1 - PEC) / 3
+ *
+ * PEC is normalized to the [0, 1] range and severity is expected to be 1, 2,
+ * or 3. This keeps MR in the [0, 1] range while preserving the guide's
+ * boundaries: S1 max ≈ 0.33, S2 max ≈ 0.67, S3 max = 1.00.
+ *
+ * @param {number} pec
  * @param {1|2|3} severity
  * @returns {number} MR value between 0 and 1
  */
-export const computeMR = (pecCategory, severity) => {
-    return MR_TABLE[pecCategory]?.[severity] ?? 1.0;
+export const computeMR = (pec, severity) => {
+    const safePec = Number.isFinite(pec) ? Math.min(1, Math.max(0, pec)) : 0;
+    const safeSeverity = Number.isFinite(severity)
+        ? Math.min(3, Math.max(1, severity))
+        : 1;
+
+    const mr = (safeSeverity * (1 - safePec)) / 3;
+    return Math.min(1, Math.max(0, mr));
 };
 
 // ---------------------------------------------------------------------------
@@ -249,7 +263,7 @@ export const computeFullScore = (allRecords, nodes) => {
             meta.correctAnswer,
             meta.periodicity
         );
-        const mr = computeMR(pecCategory, meta.severity);
+        const mr = computeMR(pec, meta.severity);
 
         byScenario[scenarioId] = {
             pec,

@@ -116,6 +116,20 @@ describe("computePEC", () => {
         expect(result.category).toBe("always");
     });
 
+    it("counts at most one scored occurrence per day", () => {
+        const records = [
+            { scenario: "PREORD-07", answer: "yes", date: "2026-01-01", timestamp: 1 },
+            { scenario: "PREORD-07", answer: "no",  date: "2026-01-01", timestamp: 2 },
+            { scenario: "PREORD-07", answer: "yes", date: "2026-01-02", timestamp: 3 },
+        ];
+
+        const result = computePEC(records, "yes", "daily");
+        expect(result.correct).toBe(1);
+        expect(result.expected).toBe(2);
+        expect(result.pec).toBe(0.5);
+        expect(result.category).toBe("sometimes");
+    });
+
     it("returns never if no records", () => {
         const result = computePEC([], "yes", "daily");
         expect(result.pec).toBe(0);
@@ -148,13 +162,16 @@ describe("computePEC", () => {
 // ---------------------------------------------------------------------------
 
 describe("computeMR", () => {
-    it("always + S3 → 0.00", () => expect(computeMR("always", 3)).toBe(0.00));
-    it("almostAlways + S3 → 0.37", () => expect(computeMR("almostAlways", 3)).toBe(0.37));
-    it("sometimes + S2 → 0.77", () => expect(computeMR("sometimes", 2)).toBe(0.77));
-    it("never + S1 → 0.67", () => expect(computeMR("never", 1)).toBe(0.67));
-    it("never + S2 → 1.00", () => expect(computeMR("never", 2)).toBe(1.00));
-    it("never + S3 → 1.00", () => expect(computeMR("never", 3)).toBe(1.00));
-    it("unknown category → defaults to 1.0", () => expect(computeMR("unknown", 3)).toBe(1.0));
+    it("PEC=1.0 + S3 → 0.00", () => expect(computeMR(1.0, 3)).toBe(0.00));
+    it("PEC=0.9 + S3 → 0.10", () => expect(computeMR(0.9, 3)).toBeCloseTo(0.10));
+    it("PEC=0.5 + S2 → 0.33", () => expect(computeMR(0.5, 2)).toBeCloseTo(0.3333333333));
+    it("PEC=0.0 + S1 → 0.33", () => expect(computeMR(0.0, 1)).toBeCloseTo(0.3333333333));
+    it("PEC=0.0 + S2 → 0.67", () => expect(computeMR(0.0, 2)).toBeCloseTo(0.6666666667));
+    it("PEC=0.0 + S3 → 1.00", () => expect(computeMR(0.0, 3)).toBe(1.00));
+    it("clamps to 0..1 range", () => {
+        expect(computeMR(-0.2, 3)).toBe(1.0);
+        expect(computeMR(1.2, 3)).toBe(0.0);
+    });
 });
 
 // ---------------------------------------------------------------------------
@@ -238,7 +255,7 @@ describe("computeFullScore", () => {
         { scenario: "PREORD-07", answer: "yes", date: "2026-01-01", timestamp: 1 },
         { scenario: "PREORD-07", answer: "yes", date: "2026-01-02", timestamp: 2 },
         { scenario: "PREORD-07", answer: "yes", date: "2026-01-03", timestamp: 3 },
-        // PREORD-02: answered yes 1 of 3 days → sometimes → MR 0.90
+        // PREORD-02: answered yes 1 of 3 days → sometimes → MR 0.67
         { scenario: "PREORD-02", answer: "yes", date: "2026-01-01", timestamp: 4 },
         { scenario: "PREORD-02", answer: "no",  date: "2026-01-02", timestamp: 5 },
         { scenario: "PREORD-02", answer: "no",  date: "2026-01-03", timestamp: 6 },
@@ -249,14 +266,14 @@ describe("computeFullScore", () => {
         expect(byScenario["PREORD-07"].mr).toBe(0.00);
         expect(byScenario["PREORD-07"].pecCategory).toBe("always");
         expect(byScenario["PREORD-02"].pecCategory).toBe("sometimes");
-        expect(byScenario["PREORD-02"].mr).toBe(0.90);
+        expect(byScenario["PREORD-02"].mr).toBeCloseTo(0.6666666667);
     });
 
     it("computes byCategory with averaged MR", () => {
         const { byCategory } = computeFullScore(records, nodes);
         const cat = byCategory["before-milking"];
-        // avg of 0.00 and 0.90 = 0.45 → very-good
-        expect(cat.avgMR).toBeCloseTo(0.45);
+        // avg of 0.00 and 0.67 = 0.33 → very-good
+        expect(cat.avgMR).toBeCloseTo(0.3333333333);
         expect(cat.rating).toBe("very-good");
         expect(cat.resultViewId).toBe("view-result-good");
     });
