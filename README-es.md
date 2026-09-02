@@ -27,7 +27,7 @@ Y después se combina ese nivel de PEC con la severidad para obtener la Magnitud
 
 La figura original muestra precisamente las 12 combinaciones posibles de 4 niveles de PEC x 3 niveles de severidad:
 
-![Fig 1 Guía](docs/PEC.png)
+![Fig 1 Guía](PEC.png)
 
 ### 2. Implementación
 
