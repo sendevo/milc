@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import ErrorBoundary from './components/ErrorBoundary';
 import Welcome from "./pages/Welcome";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -35,86 +36,89 @@ const App = () => {
         <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className="app-container">
-        <div className="app">
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<Welcome />} />
-                <Route path="/login" element={<GuestRoute><Login /></GuestRoute>} />
-                <Route path="/register" element={<GuestRoute><Register /></GuestRoute>} />
-                <Route
-                    path="/home"
-                    element={
-                        <ProtectedRoute>
-                        <MainMenu />
-                        </ProtectedRoute>
-                    }/>
-                <Route path="/app" element={<Navigate to="/home" replace />} />
-                <Route
-                    path="/log-menu"
-                    element={
-                        <ProtectedRoute>
-                        <LogMenu />
-                        </ProtectedRoute>
-                    }/>
-                <Route
-                    path="/survey/:nodeId"
-                    element={
-                        <ProtectedRoute>
-                        <SurveyPage />
-                        </ProtectedRoute>
-                    }/>
-                <Route
-                    path="/calendar"
-                    element={
-                        <ProtectedRoute>
-                        <Calendar />
-                        </ProtectedRoute>
-                    }/>
-                <Route
-                    path="/milkbarchart"
-                    element={
-                        <ProtectedRoute>
-                        <MilkBarChart />
-                        </ProtectedRoute>
-                    }/>
-                <Route 
-                    path="/dairybarchart"
-                    element={
-                        <ProtectedRoute>
-                        <DairyBarChart />
-                        </ProtectedRoute>
-                    }/>
-                <Route
-                    path="/resultscales"
-                    element={
-                        <ProtectedRoute>
-                        <ResultScales />
-                        </ProtectedRoute>
-                    }/>
-                <Route
-                    path="/config"
-                    element={
-                        <ProtectedRoute>
-                        <Config />
-                        </ProtectedRoute>
-                    }/>
-                <Route
-                    path="/info"
-                    element={
-                        <ProtectedRoute>
-                        <Info />
-                        </ProtectedRoute>
-                    }/>
-                <Route
-                    path="/profile"
-                    element={
-                        <ProtectedRoute>
-                        <Profile />
-                        </ProtectedRoute>
-                    }/>
-            </Routes>
-            </BrowserRouter>
-        </div>
+            <div className="app">
+                <BrowserRouter>
+                    <ErrorBoundary>
+                        <Routes>
+                            <Route path="/" element={<Welcome />} />
+                            <Route path="/login" element={<GuestRoute><Login /></GuestRoute>} />
+                            <Route path="/register" element={<GuestRoute><Register /></GuestRoute>} />
+                            <Route
+                                path="/home"
+                                element={
+                                    <ProtectedRoute>
+                                    <MainMenu />
+                                    </ProtectedRoute>
+                                }/>
+                            <Route path="/app" element={<Navigate to="/home" replace />} />
+                            <Route path="/error" element={<Error />} />
+                            <Route
+                                path="/log-menu"
+                                element={
+                                    <ProtectedRoute>
+                                    <LogMenu />
+                                    </ProtectedRoute>
+                                }/>
+                            <Route
+                                path="/survey/:nodeId"
+                                element={
+                                    <ProtectedRoute>
+                                    <SurveyPage />
+                                    </ProtectedRoute>
+                                }/>
+                            <Route
+                                path="/calendar"
+                                element={
+                                    <ProtectedRoute>
+                                    <Calendar />
+                                    </ProtectedRoute>
+                                }/>
+                            <Route
+                                path="/milkbarchart"
+                                element={
+                                    <ProtectedRoute>
+                                    <MilkBarChart />
+                                    </ProtectedRoute>
+                                }/>
+                            <Route 
+                                path="/dairybarchart"
+                                element={
+                                    <ProtectedRoute>
+                                    <DairyBarChart />
+                                    </ProtectedRoute>
+                                }/>
+                            <Route
+                                path="/resultscales"
+                                element={
+                                    <ProtectedRoute>
+                                    <ResultScales />
+                                    </ProtectedRoute>
+                                }/>
+                            <Route
+                                path="/config"
+                                element={
+                                    <ProtectedRoute>
+                                    <Config />
+                                    </ProtectedRoute>
+                                }/>
+                            <Route
+                                path="/info"
+                                element={
+                                    <ProtectedRoute>
+                                    <Info />
+                                    </ProtectedRoute>
+                                }/>
+                            <Route
+                                path="/profile"
+                                element={
+                                    <ProtectedRoute>
+                                    <Profile />
+                                    </ProtectedRoute>
+                                }/>
+                        </Routes>
+                    </ErrorBoundary>
+                </BrowserRouter>
+            </div>
         </div>
         </ThemeProvider>
     );

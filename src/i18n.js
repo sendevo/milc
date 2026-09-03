@@ -56,6 +56,13 @@ const resources = {
                 dailyAlreadyCompletedEdit: "Modify data",
                 dailyAlreadyCompletedCancel: "Cancel",
             },
+            error: {
+                title: "Critical Error Occurred",
+                message1: "The application has detected a critical error and cannot continue running. Our team is working to resolve it.",
+                message2: "Please try again by restarting the application or send a report to help us find the problem.",
+                sendReport: "Send Report",
+                reset: "Reset Application"
+            },
             logMenu: {
                 panelTitle: "My Records",
                 period: "Period",
@@ -288,6 +295,13 @@ const resources = {
                 dailyAlreadyCompletedMessage: "Ya ingresaste datos para esta sección hoy. ¿Querés modificarlos?",
                 dailyAlreadyCompletedEdit: "Modificar datos",
                 dailyAlreadyCompletedCancel: "Cancelar",
+            },
+            error: {
+                title: "Ocurrió un error crítico"  ,
+                message1: "La aplicación ha detectado un error crítico y no puede continuar ejecutándose. Nuestro equipo está trabajando para resolverlo.",
+                message2: "Vuelva a intentarlo nuevamente reuniciando la aplicación o envíe un reporte para ayudarnos a encontrar el problema.",
+                sendReport: "Enviar reporte",
+                reset: "Reiniciar aplicación"
             },
             logMenu: {
                 panelTitle: "Mis registros",
