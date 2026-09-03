@@ -975,7 +975,7 @@
                             "en": "New animals",
                             "es": "Nuevos animales"
                         },
-                        "target": "view-190",
+                        "target": "view-add-animals",
                         "value": "new"
                     },
                     {
@@ -983,15 +983,15 @@
                             "en": "Removed animals",
                             "es": "Retiro de animales"
                         },
-                        "target": "view-290",
-                        "value": "dead"
+                        "target": "view-remove-animals",
+                        "value": "remove"
                     },
                     {
                         "label": {
                             "en": "Dead animals",
                             "es": "Animales muertos"
                         },
-                        "target": "view-178",
+                        "target": "view-dead-animals",
                         "value": "dead"
                     },                    
                     {
@@ -1028,11 +1028,11 @@
             "es": "Sanidad"
         }
     },
-    "view-178": {
+    "view-dead-animals": {
         "category": "health",
         "fields": [
             {
-                "id": "view-178-number",
+                "id": "view-dead-animals-number",
                 "target": "view-177",
                 "type": "number_input"
             }
@@ -1059,11 +1059,11 @@
             "es": "Muertes"
         }
     },
-    "view-290": {
+    "view-remove-animals": {
         "category": "health",
         "fields": [
             {
-                "id": "view-290-number",
+                "id": "view-remove-animals-number",
                 "target": "view-177",
                 "type": "number_input"
             }
@@ -1495,11 +1495,11 @@
             "es": "Mastitis"
         }
     },
-    "view-190": {
+    "view-add-animals": {
         "category": "health",
         "fields": [
             {
-                "id": "view-190-number",
+                "id": "view-add-animals-number",
                 "target": "view-193",
                 "type": "number_input"
             }

@@ -187,8 +187,8 @@ export async function mockFirebaseAuth(page) {
  */
 export async function loginTestUser(page) {
     await page.goto("/login");
-    await page.getByPlaceholder("Email").fill(TEST_USER.email);
-    await page.getByPlaceholder("Password").fill(TEST_USER.password);
-    await page.getByRole("button", { name: "Login" }).click();
-    await page.waitForURL("**/app");
+    await page.locator('input[type="email"]').first().fill(TEST_USER.email);
+    await page.locator('input[type="password"]').first().fill(TEST_USER.password);
+    await page.locator('button[type="submit"][form="login-form"]').first().click();
+    await page.waitForURL(/\/(home|app)$/);
 }

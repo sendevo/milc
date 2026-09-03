@@ -1,9 +1,10 @@
 import { formatAsIsoDate } from "./dateTime";
 import {
     HERD_INVENTORY_NODE_TYPES,
-    HERD_INVENTORY_STORAGE_KEY,
-    ISO_DATE_RE,
+    HERD_INVENTORY_STORAGE_KEY
 } from "../constants/constants";
+import { toFiniteNumber } from "./index";
+import { isValidIsoDate } from "./dateTime";
 
 export { HERD_INVENTORY_NODE_TYPES, HERD_INVENTORY_STORAGE_KEY };
 
@@ -24,13 +25,6 @@ const compareEvents = (left, right) => {
 
     return left.kind === "snapshot" ? -1 : 1;
 };
-
-const toFiniteNumber = (value) => {
-    const parsed = Number(value);
-    return Number.isFinite(parsed) ? parsed : null;
-};
-
-const isValidIsoDate = (value) => typeof value === "string" && ISO_DATE_RE.test(value);
 
 const buildSnapshotEvents = (surveyRecords = []) => {
     return surveyRecords

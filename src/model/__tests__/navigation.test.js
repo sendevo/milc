@@ -173,4 +173,34 @@ describe("nodes.json integrity", () => {
         const bare = { fields: [], next: null };
         expect(resolveNext(bare, {})).toBeNull();
     });
+
+    it("select fields do not contain duplicate option values", () => {
+        Object.entries(nodes).forEach(([nodeId, node]) => {
+            if (!Array.isArray(node?.fields)) return;
+
+            node.fields.forEach((field, fieldIndex) => {
+                if (field?.type !== "select" || !Array.isArray(field.options)) return;
+
+                const seen = new Set();
+                const duplicates = [];
+
+                field.options.forEach((option) => {
+                    const optionValue = option?.value;
+                    if (optionValue === undefined || optionValue === null) return;
+
+                    const key = String(optionValue);
+                    if (seen.has(key)) {
+                        duplicates.push(key);
+                        return;
+                    }
+                    seen.add(key);
+                });
+
+                expect(
+                    duplicates,
+                    `Duplicate select option value(s) in ${nodeId}, field ${field.id || fieldIndex}: ${duplicates.join(", ")}`,
+                ).toEqual([]);
+            });
+        });
+    });
 });

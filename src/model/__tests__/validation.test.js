@@ -147,7 +147,7 @@ describe("validateSurveySubmission", () => {
             ],
             inventoryRecords: [
                 {
-                    nodeId: "view-290",
+                    nodeId: "view-remove-animals",
                     type: "remove",
                     count: 2,
                     date: "2026-09-02",
@@ -164,8 +164,8 @@ describe("validateSurveySubmission", () => {
 
     it("prevents herd stock transactions from going negative", () => {
         const result = validateSurveySubmission({
-            nodeId: "view-290",
-            answers: { "view-290-number": 12 },
+            nodeId: "view-remove-animals",
+            answers: { "view-remove-animals-number": 12 },
             records: [
                 {
                     ...baseRecords[0],
@@ -184,8 +184,8 @@ describe("validateSurveySubmission", () => {
 
     it("allows replacing a same-day herd removal record with a larger valid value", () => {
         const result = validateSurveySubmission({
-            nodeId: "view-290",
-            answers: { "view-290-number": 9 },
+            nodeId: "view-remove-animals",
+            answers: { "view-remove-animals-number": 9 },
             records: [
                 {
                     ...baseRecords[0],
@@ -194,7 +194,7 @@ describe("validateSurveySubmission", () => {
             ],
             inventoryRecords: [
                 {
-                    nodeId: "view-290",
+                    nodeId: "view-remove-animals",
                     type: "remove",
                     count: 2,
                     date: "2026-09-02",

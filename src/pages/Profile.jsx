@@ -5,11 +5,15 @@ import { Box, Button, Divider, TextField, Typography } from "@mui/material";
 import { useAuth } from "../contexts/AuthContext";
 import { useSurveyNodes } from "../hooks/useSurveyNodes";
 import { useSurveyLog } from "../hooks/useSurveyLog";
+import { useHerdInventory } from "../hooks/useHerdInventory";
 import { useToast } from "../contexts/ToastContext";
+import { useSettings } from "../contexts/SettingsContext";
 import FormCard from "../components/FormCard";
 import ViewContainer from "../components/ViewContainer";
 import { profileStyles as styles } from "../theme/Profile.styles";
 import { MONTH_KEYS } from "../constants/constants";
+import { getEffectiveHerdSizeOnDate } from "../utils/herdInventory";
+import { formatAsIsoDate } from "../utils/dateTime";
 
 const Profile = () => {
     const { t, i18n } = useTranslation();
@@ -18,6 +22,8 @@ const Profile = () => {
     const navigate = useNavigate();
     const nodes = useSurveyNodes();
     const { getRecordsByScenario } = useSurveyLog();
+    const { getRecords: getInventoryRecords } = useHerdInventory();
+    const { getCurrentDateTime } = useSettings();
     const hasUserProfileSurvey = Boolean(nodes["view-217"]);
 
     const [name, setName] = useState("");
@@ -27,6 +33,9 @@ const Profile = () => {
 
     const surveyProfileFields = useMemo(() => {
         const records = getRecordsByScenario("APP-SETUP");
+        const inventoryRecords = getInventoryRecords();
+        const todayIso = formatAsIsoDate(getCurrentDateTime());
+        const effectiveHerdSizeToday = getEffectiveHerdSizeOnDate(records, inventoryRecords, todayIso);
         const latestByNode = {};
         for (const rec of records) {
             if (!latestByNode[rec.nodeId] || rec.timestamp > latestByNode[rec.nodeId].timestamp) {
@@ -60,6 +69,10 @@ const Profile = () => {
                     return [];
                 }
 
+                if (nodeId === "view-220" && effectiveHerdSizeToday !== null) {
+                    return [{ label, answerLabel: String(effectiveHerdSizeToday) }];
+                }
+
                 answerLabel = String(rec.answer);
                 for (const field of (node.fields || [])) {
                     if (field.type === "select") {
@@ -85,7 +98,7 @@ const Profile = () => {
                 }
                 return [{ label, answerLabel }];
             });
-    }, [getRecordsByScenario, nodes, i18n.language, t]);
+    }, [getCurrentDateTime, getInventoryRecords, getRecordsByScenario, nodes, i18n.language, t]);
 
     const hasConfiguredSurveyData = useMemo(
         () => surveyProfileFields.length > 0,

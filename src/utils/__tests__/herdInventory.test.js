@@ -20,14 +20,14 @@ describe("herdInventory", () => {
     it("builds effective herd size using setup snapshot plus transactions", () => {
         const inventoryRecords = [
             {
-                nodeId: "view-190",
+                nodeId: "view-add-animals",
                 type: "add",
                 count: 3,
                 date: "2026-09-02",
                 timestamp: 200,
             },
             {
-                nodeId: "view-178",
+                nodeId: "view-dead-animals",
                 type: "death",
                 count: 2,
                 date: "2026-09-03",
@@ -64,7 +64,7 @@ describe("herdInventory", () => {
             ],
             [
                 {
-                    nodeId: "view-190",
+                    nodeId: "view-add-animals",
                     type: "add",
                     count: 3,
                     date: "2026-09-02",
@@ -85,7 +85,7 @@ describe("herdInventory", () => {
             surveyRecords,
             [
                 {
-                    nodeId: "view-290",
+                    nodeId: "view-remove-animals",
                     type: "remove",
                     count: 4,
                     date: "2026-09-02",
@@ -101,14 +101,14 @@ describe("herdInventory", () => {
     it("finds and excludes the current node record for same-day edits", () => {
         const records = [
             {
-                nodeId: "view-290",
+                nodeId: "view-remove-animals",
                 type: "remove",
                 count: 2,
                 date: "2026-09-02",
                 timestamp: 200,
             },
             {
-                nodeId: "view-178",
+                nodeId: "view-dead-animals",
                 type: "death",
                 count: 1,
                 date: "2026-09-02",
@@ -116,10 +116,10 @@ describe("herdInventory", () => {
             },
         ];
 
-        expect(getHerdInventoryRecordForNodeAndDate(records, "view-290", "2026-09-02")?.count).toBe(2);
-        expect(withoutHerdInventoryRecordForNodeAndDate(records, "view-290", "2026-09-02")).toEqual([
+        expect(getHerdInventoryRecordForNodeAndDate(records, "view-remove-animals", "2026-09-02")?.count).toBe(2);
+        expect(withoutHerdInventoryRecordForNodeAndDate(records, "view-remove-animals", "2026-09-02")).toEqual([
             {
-                nodeId: "view-178",
+                nodeId: "view-dead-animals",
                 type: "death",
                 count: 1,
                 date: "2026-09-02",

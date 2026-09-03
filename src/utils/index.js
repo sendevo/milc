@@ -59,3 +59,8 @@ export const formatNumericValue = value => {
 
     return trimmedDecimal ? `${groupedInteger},${trimmedDecimal}` : groupedInteger;
 };
+
+export const toFiniteNumber = (value) => {
+    const parsed = Number(value);
+    return Number.isFinite(parsed) ? parsed : null;
+};

@@ -14,9 +14,9 @@ export const SURVEY_LOG_RECORD_SCHEMA_VERSION = 1;
 export const HERD_INVENTORY_STORAGE_KEY = "milc_herd_inventory_log";
 export const HERD_INVENTORY_SCHEMA_VERSION = 1;
 export const HERD_INVENTORY_NODE_TYPES = {
-    "view-190": "add",
-    "view-290": "remove",
-    "view-178": "death",
+    "view-add-animals": "add",
+    "view-remove-animals": "remove",
+    "view-dead-animals": "death",
 };
 
 export const TELEMETRY_QUEUE_KEY = "milc_telemetry_queue_v1";

@@ -1,3 +1,5 @@
+import { ISO_DATE_RE } from "../constants/constants";
+
 export const toDayStart = (date) => new Date(date.getFullYear(), date.getMonth(), date.getDate());
 
 export const isSameDay = (a, b) =>
@@ -73,3 +75,5 @@ export const getPredefinedRange = (period, referenceDate) => {
 			return null;
 	}
 };
+
+export const isValidIsoDate = (value) => typeof value === "string" && ISO_DATE_RE.test(value);

@@ -74,7 +74,7 @@ const rules = [
     {
         id: "herd_inventory_cannot_go_negative",
         appliesTo: ({ nodeId, answers }) => {
-            return (nodeId === "view-178" || nodeId === "view-290") && getFirstSubmittedNumber(answers) !== null;
+            return (nodeId === "view-dead-animals" || nodeId === "view-remove-animals") && getFirstSubmittedNumber(answers) !== null;
         },
         validate: ({ nodeId, answers, records, inventoryRecords, currentDate, t }) => {
             const submittedCount = getFirstSubmittedNumber(answers);

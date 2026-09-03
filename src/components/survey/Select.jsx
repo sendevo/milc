@@ -10,9 +10,9 @@ import { SelectStyles as styles } from "../../theme/survey/Select.styles";
  */
 const Select = ({ options, onSelect }) => (
     <Box sx={styles.container}>
-        {options.map((option) => (
+        {options.map((option, index) => (
             <Button
-                key={option.value}
+                key={`${String(option.value ?? "option")}-${index}`}
                 fullWidth
                 variant="outlined"
                 sx={styles.button}
