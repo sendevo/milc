@@ -575,7 +575,6 @@ Startup flow:
 Current local migration behavior (`v0 -> v1`):
 
 - Reads `milc_survey_log` from persistent storage
-- Normalizes legacy answer value `dont_know` to `dont-know`
 - Ensures each survey record includes `schemaVersion: 1`
 - Rewrites malformed log payloads to a safe empty array
 

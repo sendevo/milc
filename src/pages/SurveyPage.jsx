@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useSurveyNodes } from "../hooks/useSurveyNodes";
@@ -93,6 +93,33 @@ const SurveyPage = () => {
     const isTrackable =
         node.scenario &&
         node.scenario !== "-";
+
+    const storableField = useMemo(() => {
+        if (!node?.fields) return null;
+        return node.fields.find(
+            (field) =>
+                field.type === "select" ||
+                field.type === "number_input" ||
+                field.type === "month_picker" ||
+                field.type === "date_picker",
+        ) || null;
+    }, [node]);
+
+    const initialAnswers = useMemo(() => {
+        if (!isTrackable || !storableField) {
+            return {};
+        }
+
+        const latestRecord = getRecords()
+            .filter((record) => record.nodeId === nodeId && record.scenario === node.scenario)
+            .sort((a, b) => b.timestamp - a.timestamp)[0];
+
+        if (!latestRecord || latestRecord.answer === undefined || latestRecord.answer === null) {
+            return {};
+        }
+
+        return { [storableField.id]: latestRecord.answer };
+    }, [getRecords, isTrackable, node?.scenario, nodeId, storableField]);
 
     /**
      * Extracts the relevant answer value from the submitted answers map.
@@ -213,6 +240,7 @@ const SurveyPage = () => {
             key={nodeId}
             nodeId={nodeId}
             node={node}
+            initialAnswers={initialAnswers}
             onSubmit={handleSubmit}
             onBack={() => navigate(-1)}
         />

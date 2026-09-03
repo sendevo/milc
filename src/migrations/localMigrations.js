@@ -8,7 +8,7 @@ function normalizeSurveyLogRecord(record) {
     if (!record || typeof record !== "object") return null;
 
     const normalized = { ...record };
-    if (normalized.answer === "dont_know") {
+    if (normalized.answer === "dont_know") { // previous version
         normalized.answer = "dont-know";
     }
     if (typeof normalized.schemaVersion !== "number") {

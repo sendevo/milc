@@ -176,9 +176,7 @@ export const useSurveyLog = () => {
      * @returns {number}
      */
     const getActiveDays = useCallback(() => {
-        const scoredRecords = records.filter(
-            (r) => r.answer !== "dont-know" && r.answer !== "dont_know"
-        );
+        const scoredRecords = records.filter(r => r.answer !== "dont-know");
         return new Set(scoredRecords.map((r) => r.date)).size;
     }, [records]);
 

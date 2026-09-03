@@ -79,8 +79,8 @@ export const classifyPEC = (pec) => {
  * Computes the PEC for a single scenario from the log.
  *
  * A record is "correct" if its `answer` matches the node's `score-answer`.
- * Records with a "dont-know" / "dont_know" answer are excluded from both
- * numerator and denominator (they neither help nor hurt the score, but they
+ * Records with a "dont-know" answer are excluded from both numerator
+ * and denominator (they neither help nor hurt the score, but they
  * do not count as an app-use day for this scenario).
  *
  * @param {Array<{scenario: string, answer: string, date: string}>} records
@@ -91,9 +91,7 @@ export const classifyPEC = (pec) => {
  */
 export const computePEC = (records, correctAnswer, periodicity) => {
     // Exclude "don't know" answers — they are educational detours, not executions.
-    const scored = records.filter(
-        (r) => r.answer !== "dont-know" && r.answer !== "dont_know"
-    );
+    const scored = records.filter(r => r.answer !== "dont-know");
 
     // The MILC methodology defines the observation window as app-use days, not
     // real calendar time. We therefore count distinct scored days for the

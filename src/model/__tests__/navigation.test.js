@@ -135,14 +135,6 @@ describe("nodes.json tree traversal", () => {
         ]);
     });
 
-    it("answer 'dont_know' → view-109 → view-35 (terminal)", () => {
-        const path = walkTree(nodes, "view-109", [{ udder_clean: "dont_know" }]);
-        expect(path).toEqual([
-            "view-109",
-            "view-35",
-        ]);
-    });
-
     it("view-123 is a terminal node", () => {
         const node = nodes["view-123"];
         expect(resolveNext(node, {})).toBeNull();

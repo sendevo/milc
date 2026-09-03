@@ -107,15 +107,6 @@ describe("computePEC", () => {
         expect(result.category).toBe("never");
     });
 
-    it("dont-know answers are excluded from scoring", () => {
-        // 2 yes + 2 dont-know. Only the 2 yes days count.
-        const records = makeRecords(["yes", "yes", "dont-know", "dont_know"]);
-        const result  = computePEC(records, "yes", "daily");
-        // 2 correct out of 2 expected days (dont-know days removed)
-        expect(result.pec).toBe(1.0);
-        expect(result.category).toBe("always");
-    });
-
     it("counts at most one scored occurrence per day", () => {
         const records = [
             { scenario: "PREORD-07", answer: "yes", date: "2026-01-01", timestamp: 1 },

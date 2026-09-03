@@ -200,10 +200,7 @@ La aplicación trata ```dont-know``` como una respuesta que no puntúa. Es decir
 El código hace:
 
 ```js
-const scored = records.filter(
-    r => r.answer !== "dont-know" &&
-         r.answer !== "dont_know"
-);
+const scored = records.filter(r => r.answer !== "dont-know");
 ```
 
 ### 6. Tercer paso: calcular PEC

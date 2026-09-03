@@ -20,7 +20,7 @@
                             "es": "No"
                         },
                         "target": "view-110",
-                        "value": "No"
+                        "value": "no"
                     },
                     {
                         "label": {
@@ -214,7 +214,7 @@
                             "es": "No sé"
                         },
                         "target": "view-35",
-                        "value": "dont_know"
+                        "value": "dont-know"
                     }
                 ],
                 "type": "select"
@@ -595,6 +595,19 @@
                     }
                 ],
                 "type": "image_list"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Back",
+                            "es": "Atrás"
+                        },
+                        "target": "view-129"
+                    }
+                ],
+                "id": "view-123-bottom-nav",
+                "type": "bottom_navigation"
             }
         ],
         "guide-id": "Filtrar la leche recién ordeñada, conservar la leche según momento de elaboración",

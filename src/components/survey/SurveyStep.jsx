@@ -1,4 +1,4 @@
-import { useState, Fragment } from "react";
+import { useEffect, useState, Fragment } from "react";
 import { Box, Button, Divider } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -57,10 +57,14 @@ const NON_NODE_TARGET_ROUTES = {
     profile: "/profile",
 };
 
-const SurveyStep = ({ node, nodeId, onSubmit, onBack }) => {
-    const [answers, setAnswers] = useState({});
+const SurveyStep = ({ node, nodeId, initialAnswers = {}, onSubmit, onBack }) => {
+    const [answers, setAnswers] = useState(initialAnswers);
     const navigate = useNavigate();
     const { t: tUI } = useTranslation();
+
+    useEffect(() => {
+        setAnswers(initialAnswers || {});
+    }, [initialAnswers]);
 
     // Extract input fields (exclude alerts) to determine auto-advance and completion.
     const inputFields = node.fields.filter((f) => inputFieldTypes.includes(f.type));
