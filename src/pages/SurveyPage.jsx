@@ -78,8 +78,9 @@ const SurveyPage = () => {
 
     useEffect(() => {
         if (node) return;
-        showToast(t("survey.inDevelopment"));
-        navigate("/home", { replace: true });
+        //showToast(t("survey.inDevelopment"));
+        //navigate("/home", { replace: true });
+        navigate("/error", { replace: true });
     }, [navigate, node, showToast, t]);
 
     if (!node) {
@@ -198,8 +199,9 @@ const SurveyPage = () => {
                 return;
             }
 
-            showToast(t("survey.inDevelopment"));
-            navigate("/home");
+            //showToast(t("survey.inDevelopment"));
+            //navigate("/home");
+            navigate("/error", { replace: true });
             return;
         }
 

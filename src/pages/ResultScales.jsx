@@ -65,7 +65,7 @@ const ResultScales = () => {
                 ),
                 actions: [
                     {
-                        label: t("survey.finish"),
+                        label: t("resultScales.ok"),
                         variant: "contained",
                     },
                 ],
@@ -85,14 +85,24 @@ const ResultScales = () => {
                     {`${t("resultScales.period")}: ${periodLabel}`}
                 </Typography>
                 <Box sx={styles.rowsContainer}>
-                    {aspects.map((aspect, index) => (
+                    {aspects.map((aspect, index) => {
+                        const isNotComputed = aspect.rating === 0;
+                        const mutedIconStyle = isNotComputed
+                            ? { filter: "grayscale(1)", opacity: 0.65 }
+                            : undefined;
+
+                        return (
                         <Box key={`${index}-${aspect.rating}`}>
                             <Box sx={styles.row}>
                                 <Box sx={styles.aspectColumn}>
                                     <IconButton
                                         onClick={() => handleAspectClick(aspect.rating, aspect.targetView)}
-                                        sx={styles.aspectButton(true)}>
-                                        <img src={aspect.icon} alt={aspect.label} style={styles.aspectIcon} />
+                                        sx={styles.aspectButton(true, isNotComputed)}>
+                                        <img
+                                            src={aspect.icon}
+                                            alt={aspect.label}
+                                            style={{ ...styles.aspectIcon, ...mutedIconStyle }}
+                                        />
                                     </IconButton>
                                     <Typography sx={styles.aspectLabel}>{aspect.label}</Typography>
                                 </Box>
@@ -103,14 +113,15 @@ const ResultScales = () => {
                                             key={`${index}-check-${i}`}
                                             src={i < aspect.rating ? checkTrue : checkFalse}
                                             alt={i < aspect.rating ? "checked" : "unchecked"}
-                                            style={styles.ratingIcon}
+                                            style={{ ...styles.ratingIcon, ...mutedIconStyle }}
                                         />
                                     ))}
                                 </Box>
                             </Box>
                             {index < aspects.length - 1 && <Divider sx={styles.rowDivider} />}
                         </Box>
-                    ))}
+                        );
+                    })}
                 </Box>
 
                 <Box sx={styles.bottomActions}>

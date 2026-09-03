@@ -121,6 +121,7 @@ const resources = {
                 back: "Back",
                 period: "Period",
                 notEvaluated: "This category was not evaluated yet.",
+                ok: "OK",
             },
             report: {
                 fileName: "my-records-milc",
@@ -360,7 +361,8 @@ const resources = {
                 title: "Mis registros",
                 back: "Atras",
                 period: "Periodo",
-                notEvaluated: "Esta categoria aún no fue evaluada.",
+                notEvaluated: "Esta categoría aún no fue evaluada.",
+                ok: "Aceptar",
             },
             report: {
                 fileName: "mis-registros-milc",

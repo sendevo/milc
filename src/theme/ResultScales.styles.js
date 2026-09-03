@@ -39,11 +39,11 @@ export const resultScalesStyles = {
         alignItems: "center",
         gap: 0.75,
     },
-    aspectButton: (hasRoute) => ({
+    aspectButton: (hasRoute, isNotComputed) => ({
         width: 72,
         height: 72,
         borderRadius: "50%",
-        border: "2.5px solid #1a8090",
+        border: isNotComputed ? "2.5px solid gray" : "2.5px solid #1a8090",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
