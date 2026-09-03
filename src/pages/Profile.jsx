@@ -25,7 +25,7 @@ const Profile = () => {
     const [profileLoading, setProfileLoading] = useState(false);
 
     const surveyProfileFields = useMemo(() => {
-        const MONTH_KEYS = ["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"];
+        const MONTH_KEYS = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
         const records = getRecordsByScenario("APP-SETUP");
         const latestByNode = {};
         for (const rec of records) {
@@ -33,16 +33,34 @@ const Profile = () => {
                 latestByNode[rec.nodeId] = rec;
             }
         }
+
         const lang = i18n.language?.startsWith("es") ? "es" : "en";
-        return Object.values(latestByNode)
-            .sort((a, b) => a.timestamp - b.timestamp)
-            .flatMap((rec) => {
-                const node = nodes[rec.nodeId];
-                if (!node) return [];
+
+        const setupNodes = Object.entries(nodes)
+            .filter(([, node]) => node?.scenario === "APP-SETUP")
+            .map(([nodeId, node]) => ({ nodeId, node }))
+            .filter(({ node }) => {
                 const sfn = node["setup-field-name"];
                 const label = sfn?.[lang] || sfn?.en || sfn?.es;
-                if (!label || label === "-") return [];
-                let answerLabel = String(rec.answer);
+                return Boolean(label && label !== "-");
+            })
+            .sort((a, b) => {
+                const aNum = Number((a.nodeId || "").split("-")[1]);
+                const bNum = Number((b.nodeId || "").split("-")[1]);
+                return (Number.isFinite(aNum) ? aNum : 0) - (Number.isFinite(bNum) ? bNum : 0);
+            });
+
+        return setupNodes.flatMap(({ nodeId, node }) => {
+                const sfn = node["setup-field-name"];
+                const label = sfn?.[lang] || sfn?.en || sfn?.es;
+                const rec = latestByNode[nodeId];
+                let answerLabel = "";
+
+                if (!rec || rec.answer === null || rec.answer === undefined || rec.answer === "") {
+                    return [];
+                }
+
+                answerLabel = String(rec.answer);
                 for (const field of (node.fields || [])) {
                     if (field.type === "select") {
                         const opt = (field.options || []).find((o) => o.value === rec.answer);
@@ -57,14 +75,22 @@ const Profile = () => {
                         answerLabel = rec.answer
                             .slice()
                             .sort((a, b) => a - b)
-                            .map((m) => t(`survey.months.${MONTH_KEYS[m - 1]}`),)
+                            .map((m) => t(`survey.months.${MONTH_KEYS[m - 1]}`))
                             .join(", ");
+                        if (!answerLabel) {
+                            return [];
+                        }
                         break;
                     }
                 }
                 return [{ label, answerLabel }];
             });
     }, [getRecordsByScenario, nodes, i18n.language, t]);
+
+    const hasConfiguredSurveyData = useMemo(
+        () => surveyProfileFields.length > 0,
+        [surveyProfileFields],
+    );
 
     const [currentPassword, setCurrentPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
@@ -171,44 +197,48 @@ const Profile = () => {
                         onChange={(e) => setHealthCard(e.target.value)}
                         required
                         fullWidth />
+
+                    <Box sx={styles.buttonContainer}>
+                        <Button
+                            type="submit"
+                            form="profile-form"
+                            variant="contained"
+                            fullWidth
+                            disabled={profileLoading}
+                            sx={styles.submitButton}>
+                            {t("profile.saveProfile")}
+                        </Button>
+                    </Box>
                 </FormCard>
 
-                {surveyProfileFields.length > 0 && (
-                    <Box sx={styles.surveyDataBox}>
-                        <Typography
-                            variant="h6"
-                            textAlign="center"
-                            fontWeight="bold"
-                            textTransform="uppercase"
-                            sx={{ color: "text.primary", mb: 1 }}>
-                            {t("profile.surveyDataSection")}
-                        </Typography>
-                        {surveyProfileFields.map(({ label, answerLabel }, i) => (
-                            <Box key={i} sx={styles.surveyDataRow}>
-                                <Typography sx={styles.surveyDataLabel}>{label}</Typography>
-                                <Typography sx={styles.surveyDataValue}>{answerLabel}</Typography>
-                            </Box>
-                        ))}
-                    </Box>
-                )}
-
-                <Box width="100%" maxWidth={380} display="flex" flexDirection="column" gap={1}>
-                    <Button
-                        type="submit"
-                        form="profile-form"
-                        variant="contained"
-                        fullWidth
-                        disabled={profileLoading}
-                        sx={styles.submitButton}>
-                        {t("profile.saveProfile")}
-                    </Button>
+                <Box sx={styles.surveyDataBox}>
+                    <Typography
+                        variant="h6"
+                        textAlign="center"
+                        fontWeight="bold"
+                        textTransform="uppercase"
+                        sx={{ color: "text.primary", mb: 1 }}>
+                        {t("profile.surveyDataSection")}
+                    </Typography>
+                    
+                    {surveyProfileFields.map(({ label, answerLabel }, i) => (
+                        <Box key={i} sx={styles.surveyDataRow}>
+                            <Typography sx={styles.surveyDataLabel}>{label}</Typography>
+                            <Typography sx={styles.surveyDataValue}>{answerLabel}</Typography>
+                        </Box>
+                    ))}                    
+                
                     {hasUserProfileSurvey && (
-                        <Button
-                            variant="outlined"
-                            fullWidth
-                            onClick={() => navigate("/survey/view-217")}>
-                            {t("profile.profileSurvey")}
-                        </Button>
+                        <Box sx={{...styles.buttonContainer, mt:1}}>
+                            <Button
+                                variant="contained"
+                                fullWidth
+                                onClick={() => navigate("/survey/view-217")}>
+                                {hasConfiguredSurveyData
+                                    ? t("profile.profileSurveyUpdate")
+                                    : t("profile.profileSurveyComplete")}
+                            </Button>
+                        </Box>
                     )}
                 </Box>
 
@@ -249,21 +279,21 @@ const Profile = () => {
                         onChange={(e) => setConfirmNewPassword(e.target.value)}
                         required
                         fullWidth />
+
+                    <Box sx={{...styles.buttonContainer, mt: 1}}>
+                        <Button
+                            type="submit"
+                            form="password-form"
+                            variant="contained"
+                            fullWidth
+                            disabled={passwordLoading}
+                            sx={styles.submitButton}>
+                            {t("profile.changePassword")}
+                        </Button>
+                    </Box>
                 </FormCard>
 
-                <Box width="100%" maxWidth={380} display="flex" flexDirection="column" gap={1}>
-                    <Button
-                        type="submit"
-                        form="password-form"
-                        variant="contained"
-                        fullWidth
-                        disabled={passwordLoading}
-                        sx={styles.submitButton}>
-                        {t("profile.changePassword")}
-                    </Button>
-
-                    <Divider sx={{ my: 1 }} />
-
+                <Box sx={{...styles.buttonContainer, mt: 1}}>
                     <Button
                         variant="outlined"
                         fullWidth

@@ -133,9 +133,15 @@ export const useSurveyLog = () => {
         };
 
         setRecords((prev) => {
-            // Strict overwrite policy: keep only one record per scenario per day.
+            // Strict overwrite policy: keep only one record per scenario+node per day.
             const next = [
-                ...prev.filter((r) => !(r.scenario === scenario && r.date === effectiveDate)),
+                ...prev.filter(
+                    (r) => !(
+                        r.scenario === scenario &&
+                        r.nodeId === nodeId &&
+                        r.date === effectiveDate
+                    ),
+                ),
                 record,
             ];
             void writeLog(next);

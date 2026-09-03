@@ -11,6 +11,13 @@ export const profileStyles = {
         color: "text.secondary",
         mb: 1,
     },
+    buttonContainer: {
+        width: "100%",
+        maxWidth: 380,
+        display: "flex",
+        flexDirection: "column",
+        gap: 1
+    },
     submitButton: {
         bgcolor: "#1a5f70",
         "&:hover": { bgcolor: "#154f5e" },
@@ -33,7 +40,6 @@ export const profileStyles = {
         flexDirection: "column",
         gap: 1.5,
     },
-
     surveyDataRow: {
         display: "flex",
         justifyContent: "space-between",

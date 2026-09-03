@@ -2,11 +2,34 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { Box, Button, Checkbox, Divider, FormControl, FormControlLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
+import { ref, remove } from "firebase/database";
 import ViewContainer from "../components/ViewContainer";
 import { useSettings } from "../contexts/SettingsContext";
-import { useSurveyNodes, refreshSurveyNodes } from "../hooks/useSurveyNodes";
+import { useAuth } from "../contexts/AuthContext";
+import { useSurveyNodes } from "../hooks/useSurveyNodes";
 import { useSurveyLog } from "../hooks/useSurveyLog";
+import { db } from "../firebase";
+import { removeItem } from "../utils/persistentStorage";
 import { configStyles as styles } from "../theme/Config.styles";
+
+const USAGE_KEYS = [
+    "milc_survey_log",
+    "milc_telemetry_queue_v1",
+    "milc_telemetry_sent_ids_v1",
+];
+const USAGE_KEY_PREFIXES = ["milc_action_"];
+
+const collectUsageKeys = () => {
+    const keys = new Set(USAGE_KEYS);
+    for (let i = 0; i < localStorage.length; i += 1) {
+        const key = localStorage.key(i);
+        if (!key) continue;
+        if (USAGE_KEY_PREFIXES.some((prefix) => key.startsWith(prefix))) {
+            keys.add(key);
+        }
+    }
+    return [...keys];
+};
 
 const Config = () => {
     const { t } = useTranslation();
@@ -20,22 +43,39 @@ const Config = () => {
         setThemeMode,
         setSimulatedDate,
     } = useSettings();
+    const { currentUser, logout } = useAuth();
     const nodes = useSurveyNodes();
     const { clearLog } = useSurveyLog();
-    const [refreshState, setRefreshState] = useState("idle"); // "idle" | "loading" | "done"
+    const [resetState, setResetState] = useState("idle");
     const isSimulatedDateEnabled = Boolean(simulatedDate);
     const nodesTreeVersion = nodes?.timestamp ?? "-";
 
-    const handleRefreshNodes = async () => {
-        setRefreshState("loading");
+    const handleResetUsageData = async () => {
+        if (!window.confirm(t("config.resetUsageDataConfirm"))) {
+            return;
+        }
+
+        setResetState("loading");
         try {
-            await refreshSurveyNodes();
-            setSimulatedDate("");
             clearLog();
-            setRefreshState("done");
-            setTimeout(() => setRefreshState("idle"), 2000);
-        } catch {
-            setRefreshState("idle");
+
+            const keys = collectUsageKeys();
+            await Promise.all(keys.map((key) => removeItem(key)));
+
+            if (currentUser?.uid) {
+                try {
+                    await remove(ref(db, `users/${currentUser.uid}/analytics/events`));
+                } catch (err) {
+                    console.warn("[config] Could not remove remote analytics events:", err);
+                }
+            }
+
+            setSimulatedDate("");
+            await logout();
+            navigate("/login", { replace: true });
+        } catch (err) {
+            console.error("[config] Failed to reset usage data:", err);
+            setResetState("idle");
         }
     };
 
@@ -112,16 +152,15 @@ const Config = () => {
                         </Box>
 
                         <Box sx={styles.settingRow}>
-                            <Typography sx={styles.label}>{t("config.resetNodes")}</Typography>
+                            <Typography sx={styles.label}>{t("config.resetUsageData")}</Typography>
                             <Button
-                                variant="outlined"
-                                disabled={refreshState !== "idle"}
-                                onClick={handleRefreshNodes}>
-                                {refreshState === "loading"
+                                variant="contained"
+                                color="error"
+                                disabled={resetState === "loading"}
+                                onClick={handleResetUsageData}>
+                                {resetState === "loading"
                                     ? t("common.loading")
-                                    : refreshState === "done"
-                                    ? t("config.resetNodesDone")
-                                    : t("config.resetNodesAction")}
+                                    : t("config.resetUsageDataAction")}
                             </Button>
                         </Box>
                     </>

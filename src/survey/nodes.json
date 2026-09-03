@@ -3313,11 +3313,18 @@
             "en": "-",
             "es": "-"
         },
+        "fields": [
+            {
+                "id": "view-28-alert",
+                "message": {
+                    "en": "Done!<br>You can start using the app",
+                    "es": "¡Listo!<br>Ya podés comenzar a usar la app"
+                },
+                "severity": "info",
+                "type": "alert"
+            }
+        ],
         "severity": 0,
-        "subtitle": {
-            "en": "Done! You can start using the app!",
-            "es": "¡Listo! Ya podés comenzar a usar la app"
-        },
         "title": {
             "en": "My Profile",
             "es": "Mi Perfil"
