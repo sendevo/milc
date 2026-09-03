@@ -114,8 +114,15 @@ const buildHeaders = (t) => ([
     t("activityExport.answer"),
 ]);
 
-const buildRows = ({ records, nodes, t, language }) => {
-    return [...records]
+const normalizeInventoryRecords = (inventoryRecords = []) => {
+    return inventoryRecords.map((record) => ({
+        ...record,
+        answer: record.count,
+    }));
+};
+
+const buildRows = ({ records, inventoryRecords, nodes, t, language }) => {
+    return [...records, ...normalizeInventoryRecords(inventoryRecords)]
         .sort((a, b) => Number(a.timestamp || 0) - Number(b.timestamp || 0))
         .map((record) => {
             const node = nodes?.[record.nodeId] || null;
@@ -171,9 +178,9 @@ const buildFilename = (t) => {
     return `${t("activityExport.fileName")}_${yyyy}${mm}${dd}_${hh}${mi}${ss}.csv`;
 };
 
-export const exportActivityCsv = ({ records, nodes, t, language }) => {
+export const exportActivityCsv = ({ records, inventoryRecords = [], nodes, t, language }) => {
     const headers = buildHeaders(t);
-    const rows = buildRows({ records, nodes, t, language });
+    const rows = buildRows({ records, inventoryRecords, nodes, t, language });
     const csv = toCsv(headers, rows);
     downloadCsv(csv, buildFilename(t));
 };

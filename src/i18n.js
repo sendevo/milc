@@ -166,6 +166,7 @@ const resources = {
                     generic: "Please review your input.",
                     milkedAnimalsExceedTotal: "Animals being milked cannot exceed total animals.",
                     sickAnimalsExceedMilked: "Sick animals cannot exceed animals being milked.",
+                    herdStockCannotGoNegative: "This operation cannot reduce the herd stock below zero.",
                 },
                 months: {
                     jan: "Jan", feb: "Feb", mar: "Mar", apr: "Apr",
@@ -416,6 +417,7 @@ const resources = {
                     generic: "Revisá los datos ingresados.",
                     milkedAnimalsExceedTotal: "La cantidad de animales en ordeñe no puede ser mayor que la cantidad total de animales.",
                     sickAnimalsExceedMilked: "La cantidad de animales enfermos no puede ser mayor que la cantidad de animales en ordeñe.",
+                    herdStockCannotGoNegative: "Esta operación no puede dejar el stock de animales por debajo de cero.",
                 },
                 months: {
                     jan: "Ene", feb: "Feb", mar: "Mar", apr: "Abr",

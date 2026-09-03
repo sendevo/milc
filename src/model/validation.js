@@ -1,3 +1,8 @@
+import {
+    getEffectiveHerdSizeOnDate,
+    withoutHerdInventoryRecordForNodeAndDate,
+} from "../utils/herdInventory";
+
 const VALIDATION_SEVERITY = {
     warning: "warning",
     error: "error",
@@ -14,15 +19,38 @@ const toFiniteNumber = (value) => {
     return Number.isFinite(numeric) ? numeric : null;
 };
 
+const getFirstSubmittedNumber = (answers = {}) => {
+    for (const value of Object.values(answers)) {
+        if (value !== undefined) {
+            return toFiniteNumber(value);
+        }
+    }
+
+    return null;
+};
+
 const RULES = [
     {
         id: "milked_animals_not_greater_than_total_animals",
         appliesTo: ({ nodeId, answers }) => {
             return nodeId === "view-235" && answers["view-235-number"] !== undefined;
         },
-        validate: ({ answers, records, t }) => {
+        validate: ({ answers, records, inventoryRecords, currentDate, t }) => {
             const milkedAnimals = toFiniteNumber(answers["view-235-number"]);
             if (milkedAnimals === null) {
+                return { isValid: true };
+            }
+
+            if (currentDate) {
+                const effectiveTotalAnimals = getEffectiveHerdSizeOnDate(records, inventoryRecords, currentDate);
+                if (effectiveTotalAnimals !== null && milkedAnimals > effectiveTotalAnimals) {
+                    return {
+                        isValid: false,
+                        message: t("survey.validation.milkedAnimalsExceedTotal"),
+                        severity: VALIDATION_SEVERITY.warning,
+                    };
+                }
+
                 return { isValid: true };
             }
 
@@ -40,6 +68,39 @@ const RULES = [
                 return {
                     isValid: false,
                     message: t("survey.validation.milkedAnimalsExceedTotal"),
+                    severity: VALIDATION_SEVERITY.warning,
+                };
+            }
+
+            return { isValid: true };
+        },
+    },
+    {
+        id: "herd_inventory_cannot_go_negative",
+        appliesTo: ({ nodeId, answers }) => {
+            return (nodeId === "view-178" || nodeId === "view-290") && getFirstSubmittedNumber(answers) !== null;
+        },
+        validate: ({ nodeId, answers, records, inventoryRecords, currentDate, t }) => {
+            const submittedCount = getFirstSubmittedNumber(answers);
+            if (submittedCount === null || !currentDate) {
+                return { isValid: true };
+            }
+
+            const recordsWithoutCurrentNode = withoutHerdInventoryRecordForNodeAndDate(
+                inventoryRecords,
+                nodeId,
+                currentDate,
+            );
+            const effectiveTotalAnimals = getEffectiveHerdSizeOnDate(records, recordsWithoutCurrentNode, currentDate);
+
+            if (effectiveTotalAnimals === null) {
+                return { isValid: true };
+            }
+
+            if (submittedCount > effectiveTotalAnimals) {
+                return {
+                    isValid: false,
+                    message: t("survey.validation.herdStockCannotGoNegative"),
                     severity: VALIDATION_SEVERITY.warning,
                 };
             }
@@ -81,11 +142,11 @@ const RULES = [
     },
 ];
 
-export const validateSurveySubmission = ({ nodeId, answers, records, t }) => {
+export const validateSurveySubmission = ({ nodeId, answers, records, inventoryRecords = [], currentDate = "", t }) => {
     for (const rule of RULES) {
         if (!rule.appliesTo({ nodeId, answers })) continue;
 
-        const result = rule.validate({ nodeId, answers, records, t });
+        const result = rule.validate({ nodeId, answers, records, inventoryRecords, currentDate, t });
         if (!result?.isValid) {
             return {
                 isValid: false,

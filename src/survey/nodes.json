@@ -611,7 +611,7 @@
                         "target": "view-129"
                     }
                 ],
-                "id": "view-123-bottom-nav",
+                "id": "view-128-bottom-nav",
                 "type": "bottom_navigation"
             }
         ],
@@ -1086,8 +1086,8 @@
             "es": "¿Cuántos animales retirás del rebaño?"
         },
         "title": {
-            "en": "New animals",
-            "es": "Nuevos animales"
+            "en": "Remove animals",
+            "es": "Retirar animales"
         }
     },
     "view-179": {
@@ -1566,6 +1566,19 @@
                 },
                 "severity": "warning",
                 "type": "alert"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Back",
+                            "es": "Atrás"
+                        },
+                        "target": "view-177"
+                    }
+                ],
+                "id": "view-193-bottom-nav",
+                "type": "bottom_navigation"
             }
         ],
         "guide-id": "",

@@ -8,13 +8,16 @@ import { useSettings } from "../contexts/SettingsContext";
 import { useAuth } from "../contexts/AuthContext";
 import { useSurveyNodes } from "../hooks/useSurveyNodes";
 import { useSurveyLog } from "../hooks/useSurveyLog";
+import { useHerdInventory } from "../hooks/useHerdInventory";
 import { db } from "../firebase";
 import { removeItem } from "../utils/persistentStorage";
 import { configStyles as styles } from "../theme/Config.styles";
 import { exportActivityCsv } from "../utils/exportActivityCsv";
+import { HERD_INVENTORY_STORAGE_KEY } from "../utils/herdInventory";
 
 const USAGE_KEYS = [
     "milc_survey_log",
+    HERD_INVENTORY_STORAGE_KEY,
     "milc_telemetry_queue_v1",
     "milc_telemetry_sent_ids_v1",
 ];
@@ -47,6 +50,7 @@ const Config = () => {
     const { currentUser, logout } = useAuth();
     const nodes = useSurveyNodes();
     const { clearLog, getRecords } = useSurveyLog();
+    const { clearLog: clearInventoryLog, getRecords: getInventoryRecords } = useHerdInventory();
     const [resetState, setResetState] = useState("idle");
     const isSimulatedDateEnabled = Boolean(simulatedDate);
     const nodesTreeVersion = nodes?.timestamp ?? "-";
@@ -59,6 +63,7 @@ const Config = () => {
         setResetState("loading");
         try {
             clearLog();
+            clearInventoryLog();
 
             const keys = collectUsageKeys();
             await Promise.all(keys.map((key) => removeItem(key)));
@@ -83,6 +88,7 @@ const Config = () => {
     const handleDownloadActivity = () => {
         exportActivityCsv({
             records: getRecords(),
+            inventoryRecords: getInventoryRecords(),
             nodes,
             t,
             language: i18n.language,

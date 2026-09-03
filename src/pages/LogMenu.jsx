@@ -9,6 +9,7 @@ import { menusStyles as styles } from "../theme/Menus.styles";
 import { useAuth } from "../contexts/AuthContext";
 import { useToast } from "../contexts/ToastContext";
 import { useSurveyLog } from "../hooks/useSurveyLog";
+import { useHerdInventory } from "../hooks/useHerdInventory";
 import { useSurveyNodes } from "../hooks/useSurveyNodes";
 import { parseIsoDate, getDaysBetweenInclusive } from "../utils/dateTime";
 import { computeReportStats, buildSafetyData, buildSetupData } from "../utils/reportData";
@@ -28,6 +29,7 @@ const LogMenu = () => {
     const { currentUser, getUserProfile } = useAuth();
     const { showToast } = useToast();
     const { getRecords } = useSurveyLog();
+    const { getRecords: getInventoryRecords } = useHerdInventory();
     const nodes = useSurveyNodes();
     const isDark = theme.palette.mode === "dark";
     const menuBorder = isDark ? "#9e9e9e" : "#1a8090";
@@ -38,11 +40,12 @@ const LogMenu = () => {
     const handleDownloadReportPDF = async () => {
         try {
             const records = getRecords();
+            const inventoryRecords = getInventoryRecords();
             const from = parseIsoDate(fromDate);
             const to = parseIsoDate(toDate);
             const language = i18n.language;
 
-            const stats = computeReportStats(records, from, to, language);
+            const stats = computeReportStats(records, inventoryRecords, from, to, language);
             const safetyAspects = buildSafetyData(records, nodes, from, to, t);
             const setup = buildSetupData(nodes, records, t);
             const profile = currentUser?.uid
@@ -108,11 +111,12 @@ const LogMenu = () => {
     const handleDownloadReportXLSX = async () => {
         try {
             const records = getRecords();
+            const inventoryRecords = getInventoryRecords();
             const from = parseIsoDate(fromDate);
             const to = parseIsoDate(toDate);
             const language = i18n.language;
 
-            const stats = computeReportStats(records, from, to, language);
+            const stats = computeReportStats(records, inventoryRecords, from, to, language);
 
             downloadDailyRowsXlsx({
                 t,

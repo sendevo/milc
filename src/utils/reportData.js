@@ -6,6 +6,7 @@ import {
     getDaysBetweenInclusive,
     getMonthSpanInclusive,
 } from "./dateTime";
+import { buildEffectiveHerdSizeByDate } from "./herdInventory";
 
 export const TOTAL_ANIMALS_NODE_IDS = ["view-220"];
 export const MILKED_ANIMALS_NODE_IDS = ["view-235", "view-36"];
@@ -50,60 +51,8 @@ export const buildLatestMilkByDate = (records, startDate, endDate) => {
     return valuesByDate;
 };
 
-export const buildEffectiveAnimalsByDate = (records, startDate, endDate) => {
-    if (!startDate || !endDate || startDate > endDate) return {};
-
-    const fromIso = formatAsIsoDate(startDate);
-    const toIso = formatAsIsoDate(endDate);
-    const latestByDate = {};
-    let latestBeforeStart = null;
-
-    for (const record of records) {
-        if (!TOTAL_ANIMALS_NODE_IDS.includes(record.nodeId)) continue;
-        if (!record.date || record.date > toIso) continue;
-
-        const value = Number(record.answer);
-        if (!Number.isFinite(value) || value <= 0) continue;
-
-        const timestamp = Number(record.timestamp) || 0;
-        if (record.date < fromIso) {
-            if (
-                !latestBeforeStart ||
-                record.date > latestBeforeStart.date ||
-                (record.date === latestBeforeStart.date && timestamp >= latestBeforeStart.timestamp)
-            ) {
-                latestBeforeStart = { date: record.date, value, timestamp };
-            }
-            continue;
-        }
-
-        const previous = latestByDate[record.date];
-        if (!previous || timestamp >= previous.timestamp) {
-            latestByDate[record.date] = { value, timestamp };
-        }
-    }
-
-    const valuesByDate = {};
-    let latestKnownAnimals = latestBeforeStart?.value ?? null;
-    const cursor = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
-    const finalDate = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate());
-
-    while (cursor <= finalDate) {
-        const isoDate = formatAsIsoDate(cursor);
-        const entry = latestByDate[isoDate];
-
-        if (entry) {
-            latestKnownAnimals = entry.value;
-        }
-
-        if (Number.isFinite(latestKnownAnimals) && latestKnownAnimals > 0) {
-            valuesByDate[isoDate] = latestKnownAnimals;
-        }
-
-        cursor.setDate(cursor.getDate() + 1);
-    }
-
-    return valuesByDate;
+export const buildEffectiveAnimalsByDate = (records, inventoryRecords, startDate, endDate) => {
+    return buildEffectiveHerdSizeByDate(records, inventoryRecords, startDate, endDate);
 };
 
 export const buildSeries = (startDate, endDate, language, valuesByDate) => {
@@ -323,8 +272,8 @@ export const computeLitersPerAnimal = (from, to, milkValuesByDate, animalsByDate
     return Number((totalDailyLitersPerAnimal / daysWithAnimals).toFixed(2));
 };
 
-export const computeReportStats = (records, from, to, language) => {
-    const totalAnimalsByDate = buildEffectiveValuesByDate(records, TOTAL_ANIMALS_NODE_IDS, from, to);
+export const computeReportStats = (records, inventoryRecords, from, to, language) => {
+    const totalAnimalsByDate = buildEffectiveHerdSizeByDate(records, inventoryRecords, from, to);
     const milkedAnimalsByDate = buildEffectiveValuesByDate(records, MILKED_ANIMALS_NODE_IDS, from, to);
     const milkValuesByDate = buildLatestMilkByDate(records, from, to);
     const mastitisByDate = buildLatestValuesByDate(records, MASTITIS_NODE_IDS, from, to);
@@ -347,7 +296,7 @@ export const computeReportStats = (records, from, to, language) => {
         from,
         to,
         milkValuesByDate,
-        buildEffectiveAnimalsByDate(records, from, to),
+        buildEffectiveAnimalsByDate(records, inventoryRecords, from, to),
     );
 
     const dailyRows = [];

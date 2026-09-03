@@ -134,4 +134,77 @@ describe("validateSurveySubmission", () => {
 
         expect(result.isValid).toBe(true);
     });
+
+    it("uses derived herd stock when inventory transactions reduce current total", () => {
+        const result = validateSurveySubmission({
+            nodeId: "view-235",
+            answers: { "view-235-number": 9 },
+            records: [
+                {
+                    ...baseRecords[0],
+                    date: "2026-09-01",
+                },
+            ],
+            inventoryRecords: [
+                {
+                    nodeId: "view-290",
+                    type: "remove",
+                    count: 2,
+                    date: "2026-09-02",
+                    timestamp: 200,
+                },
+            ],
+            currentDate: "2026-09-02",
+            t,
+        });
+
+        expect(result.isValid).toBe(false);
+        expect(result.ruleId).toBe("milked_animals_not_greater_than_total_animals");
+    });
+
+    it("prevents herd stock transactions from going negative", () => {
+        const result = validateSurveySubmission({
+            nodeId: "view-290",
+            answers: { "view-290-number": 12 },
+            records: [
+                {
+                    ...baseRecords[0],
+                    date: "2026-09-01",
+                },
+            ],
+            inventoryRecords: [],
+            currentDate: "2026-09-02",
+            t,
+        });
+
+        expect(result.isValid).toBe(false);
+        expect(result.ruleId).toBe("herd_inventory_cannot_go_negative");
+        expect(result.message).toBe("survey.validation.herdStockCannotGoNegative");
+    });
+
+    it("allows replacing a same-day herd removal record with a larger valid value", () => {
+        const result = validateSurveySubmission({
+            nodeId: "view-290",
+            answers: { "view-290-number": 9 },
+            records: [
+                {
+                    ...baseRecords[0],
+                    date: "2026-09-01",
+                },
+            ],
+            inventoryRecords: [
+                {
+                    nodeId: "view-290",
+                    type: "remove",
+                    count: 2,
+                    date: "2026-09-02",
+                    timestamp: 200,
+                },
+            ],
+            currentDate: "2026-09-02",
+            t,
+        });
+
+        expect(result.isValid).toBe(true);
+    });
 });

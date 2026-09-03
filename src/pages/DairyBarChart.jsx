@@ -5,11 +5,12 @@ import { Box, Button, Typography } from "@mui/material";
 import BarChart from "../components/BarChart";
 import ViewContainer from "../components/ViewContainer";
 import { useSurveyLog } from "../hooks/useSurveyLog";
+import { useHerdInventory } from "../hooks/useHerdInventory";
 import { dairyBarChartStyles as styles } from "../theme/DairyBarChart.styles";
 import { parseIsoDate, getDaysBetweenInclusive } from "../utils/dateTime";
 import {
-    TOTAL_ANIMALS_NODE_IDS,
     MILKED_ANIMALS_NODE_IDS,
+    buildEffectiveAnimalsByDate,
     buildEffectiveValuesByDate,
     buildChartBuckets,
     averageByDate,
@@ -20,6 +21,7 @@ const DairyBarChart = () => {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const { getRecords } = useSurveyLog();
+    const { getRecords: getInventoryRecords } = useHerdInventory();
 
     const fromDate = searchParams.get("fromDate") || "";
     const toDate = searchParams.get("toDate") || "";
@@ -27,6 +29,7 @@ const DairyBarChart = () => {
     const from = useMemo(() => parseIsoDate(fromDate), [fromDate]);
     const to = useMemo(() => parseIsoDate(toDate), [toDate]);
     const records = useMemo(() => getRecords(), [getRecords]);
+    const inventoryRecords = useMemo(() => getInventoryRecords(), [getInventoryRecords]);
     const isRangeValid = Boolean(from && to && from <= to);
     const isMonthlyGrouped = useMemo(
         () => Boolean(from && to && getDaysBetweenInclusive(from, to) > 31),
@@ -34,8 +37,8 @@ const DairyBarChart = () => {
     );
 
     const totalAnimalsByDate = useMemo(
-        () => buildEffectiveValuesByDate(records, TOTAL_ANIMALS_NODE_IDS, from, to),
-        [records, from, to],
+        () => buildEffectiveAnimalsByDate(records, inventoryRecords, from, to),
+        [records, inventoryRecords, from, to],
     );
     const milkedAnimalsByDate = useMemo(
         () => buildEffectiveValuesByDate(records, MILKED_ANIMALS_NODE_IDS, from, to),

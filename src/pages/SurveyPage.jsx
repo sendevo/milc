@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useSurveyNodes } from "../hooks/useSurveyNodes";
 import { resolveTarget } from "../model";
 import { useSurveyLog } from "../hooks/useSurveyLog";
+import { useHerdInventory } from "../hooks/useHerdInventory";
 import SurveyStep from "../components/survey/SurveyStep";
 import { useToast } from "../contexts/ToastContext";
 import { useAuth } from "../contexts/AuthContext";
@@ -17,6 +18,11 @@ import {
 } from "../telemetry/telemetryQueue";
 import packageJson from "../../package.json";
 import { getSpecialSurveyView } from "./specialViews";
+import {
+    getHerdInventoryRecordForNodeAndDate,
+    getHerdInventoryTypeForNode,
+    isHerdInventoryNode,
+} from "../utils/herdInventory";
 
 const APP_VERSION_FALLBACK = packageJson.version;
 
@@ -63,11 +69,13 @@ const SurveyPage = () => {
     const { showToast } = useToast();
     const { t, i18n } = useTranslation();
     const { saveAnswer, getRecords } = useSurveyLog();
+    const { saveTransaction, getRecords: getInventoryRecords } = useHerdInventory();
     const { currentUser } = useAuth();
     const { getCurrentDateTime } = useSettings();
 
     const node = nodes[nodeId];
     const SpecialSurveyView = getSpecialSurveyView(nodeId);
+    const currentDate = formatAsIsoDate(getCurrentDateTime());
 
     useEffect(() => {
         if (!import.meta.env.DEV) return;
@@ -95,6 +103,7 @@ const SurveyPage = () => {
     const isTrackable =
         node?.scenario &&
         node.scenario !== "-";
+    const isHerdInventoryTracked = isHerdInventoryNode(nodeId);
 
     const storableField = useMemo(() => {
         if (!node?.fields) return null;
@@ -108,7 +117,25 @@ const SurveyPage = () => {
     }, [node]);
 
     const initialAnswers = useMemo(() => {
-        if (!isTrackable || !storableField) {
+        if (!storableField) {
+            return {};
+        }
+
+        if (isHerdInventoryTracked) {
+            const latestInventoryRecord = getHerdInventoryRecordForNodeAndDate(
+                getInventoryRecords(),
+                nodeId,
+                currentDate,
+            );
+
+            if (latestInventoryRecord && latestInventoryRecord.count !== undefined && latestInventoryRecord.count !== null) {
+                return { [storableField.id]: latestInventoryRecord.count };
+            }
+
+            return {};
+        }
+
+        if (!isTrackable) {
             return {};
         }
 
@@ -121,7 +148,7 @@ const SurveyPage = () => {
         }
 
         return { [storableField.id]: latestRecord.answer };
-    }, [getRecords, isTrackable, node?.scenario, nodeId, storableField]);
+    }, [currentDate, getInventoryRecords, getRecords, isHerdInventoryTracked, isTrackable, node?.scenario, nodeId, storableField]);
 
     if (SpecialSurveyView) {
         return <SpecialSurveyView nodeId={nodeId} />;
@@ -163,6 +190,8 @@ const SurveyPage = () => {
             nodeId,
             answers,
             records: getRecords(),
+            inventoryRecords: getInventoryRecords(),
+            currentDate,
             t,
         });
 
@@ -177,7 +206,7 @@ const SurveyPage = () => {
         if (answer !== undefined) {
             if (isTrackable) {
                 saveAnswer(nodeId, node.scenario, answer, {
-                    date: formatAsIsoDate(getCurrentDateTime()),
+                    date: currentDate,
                 });
 
                 if (import.meta.env.DEV) {
@@ -187,6 +216,11 @@ const SurveyPage = () => {
                         answer,
                     });
                 }
+            }
+
+            if (isHerdInventoryTracked) {
+                const type = getHerdInventoryTypeForNode(nodeId);
+                saveTransaction(nodeId, type, answer, { date: currentDate });
             }
 
             const normalizedAnswer = typeof answer === "string"
