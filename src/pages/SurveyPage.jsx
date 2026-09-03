@@ -16,6 +16,7 @@ import {
     flushTelemetryQueue,
 } from "../telemetry/telemetryQueue";
 import packageJson from "../../package.json";
+import { getSpecialSurveyView } from "./specialViews";
 
 const APP_VERSION_FALLBACK = packageJson.version;
 
@@ -66,32 +67,33 @@ const SurveyPage = () => {
     const { getCurrentDateTime } = useSettings();
 
     const node = nodes[nodeId];
+    const SpecialSurveyView = getSpecialSurveyView(nodeId);
 
     useEffect(() => {
         if (!import.meta.env.DEV) return;
+        if (SpecialSurveyView) {
+            console.log("[survey] special view:", nodeId);
+            return;
+        }
         if (node) {
             console.log("[survey] current node:", nodeId);
             return;
         }
         console.log("[survey] unknown node id:", nodeId);
-    }, [nodeId, node]);
+    }, [nodeId, node, SpecialSurveyView]);
 
     useEffect(() => {
-        if (node) return;
+        if (node || SpecialSurveyView) return;
         //showToast(t("survey.inDevelopment"));
         //navigate("/home", { replace: true });
         navigate("/error", { replace: true });
-    }, [navigate, node, showToast, t]);
-
-    if (!node) {
-        return null;
-    }
+    }, [navigate, node, showToast, t, SpecialSurveyView]);
 
     // ---------------------------------------------------------------------------
     // Determine whether this node should be logged.
     // ---------------------------------------------------------------------------
     const isTrackable =
-        node.scenario &&
+        node?.scenario &&
         node.scenario !== "-";
 
     const storableField = useMemo(() => {
@@ -120,6 +122,14 @@ const SurveyPage = () => {
 
         return { [storableField.id]: latestRecord.answer };
     }, [getRecords, isTrackable, node?.scenario, nodeId, storableField]);
+
+    if (SpecialSurveyView) {
+        return <SpecialSurveyView nodeId={nodeId} />;
+    }
+
+    if (!node) {
+        return null;
+    }
 
     /**
      * Extracts the relevant answer value from the submitted answers map.
@@ -220,6 +230,12 @@ const SurveyPage = () => {
         }
 
         if (targetId && !targetNode) {
+            const targetSpecialView = getSpecialSurveyView(targetId);
+            if (targetSpecialView) {
+                navigate(`/survey/${targetId}`);
+                return;
+            }
+
             const targetRoute = resolveNonNodeTargetRoute(targetId);
             if (targetRoute) {
                 navigate(targetRoute);
