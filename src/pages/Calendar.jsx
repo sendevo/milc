@@ -1,27 +1,28 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Box, Button, IconButton, Typography } from "@mui/material";
+import { 
+	Box, 
+	Button, 
+	FormControl, 
+	IconButton, 
+	InputLabel, 
+	MenuItem, 
+	Select, 
+	Typography 
+} from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ViewContainer from "../components/ViewContainer";
+import { useSettings } from "../contexts/SettingsContext";
 import { calendarStyles as styles } from "../theme/Calendar.styles";
-
-const toDayStart = (date) => new Date(date.getFullYear(), date.getMonth(), date.getDate());
-
-const formatAsIsoDate = (date) => {
-	const year = date.getFullYear();
-	const month = String(date.getMonth() + 1).padStart(2, "0");
-	const day = String(date.getDate()).padStart(2, "0");
-	return `${year}-${month}-${day}`;
-};
-
-const isSameDay = (a, b) =>
-	a &&
-	b &&
-	a.getFullYear() === b.getFullYear() &&
-	a.getMonth() === b.getMonth() &&
-	a.getDate() === b.getDate();
+import {
+	toDayStart, 
+	formatAsIsoDate, 
+	isSameDay, 
+	subtractMonthsClamped,
+	getPredefinedRange
+} from "../utils/dateTime";
 
 const buildMonthMatrix = (displayMonth) => {
 	const year = displayMonth.getFullYear();
@@ -49,11 +50,13 @@ const buildMonthMatrix = (displayMonth) => {
 const Calendar = () => {
 	const { t } = useTranslation();
 	const navigate = useNavigate();
+	const { getCurrentDateTime } = useSettings();
 
-	const today = toDayStart(new Date());
-	const [displayMonth, setDisplayMonth] = useState(new Date(today.getFullYear(), today.getMonth(), 1));
+	const today = toDayStart(getCurrentDateTime());
+	const [displayMonth, setDisplayMonth] = useState(() => new Date(today.getFullYear(), today.getMonth(), 1));
 	const [fromDate, setFromDate] = useState(null);
 	const [toDate, setToDate] = useState(null);
+	const [selectedPeriod, setSelectedPeriod] = useState("");
 
 	const isRangeValid = useMemo(() => {
 		if (!fromDate || !toDate) return false;
@@ -91,6 +94,7 @@ const Calendar = () => {
 
 	const handleDayClick = (date) => {
 		const clickedDay = toDayStart(date);
+		setSelectedPeriod("");
 
 		if (!fromDate || (fromDate && toDate)) {
 			setFromDate(clickedDay);
@@ -105,6 +109,22 @@ const Calendar = () => {
 		}
 
 		setToDate(clickedDay);
+	};
+
+	const handlePredefinedPeriodChange = (event) => {
+		const period = event.target.value;
+		setSelectedPeriod(period);
+
+		const range = getPredefinedRange(period, today);
+		if (!range) {
+			setFromDate(null);
+			setToDate(null);
+			return;
+		}
+
+		setFromDate(range.from);
+		setToDate(range.to);
+		setDisplayMonth(new Date(range.to.getFullYear(), range.to.getMonth(), 1));
 	};
 
 	const handleNext = () => {
@@ -123,6 +143,26 @@ const Calendar = () => {
 			onBack={() => navigate("/home")}
 			showDate>
 			<Box sx={styles.page}>
+				<Typography sx={styles.sectionTitle}>{t("calendar.predefinedTitle")}</Typography>
+				<Box sx={styles.presetCard}>
+					<FormControl fullWidth>
+						<InputLabel id="calendar-predefined-period-label">{t("calendar.selectPeriod")}</InputLabel>
+						<Select
+							labelId="calendar-predefined-period-label"
+							value={selectedPeriod}
+							label={t("calendar.selectPeriod")}
+							onChange={handlePredefinedPeriodChange}>
+							<MenuItem value="" disabled>
+								{t("calendar.selectPeriod")}
+							</MenuItem>
+							<MenuItem value="lastWeek">{t("calendar.lastWeek")}</MenuItem>
+							<MenuItem value="lastMonth">{t("calendar.lastMonth")}</MenuItem>
+							<MenuItem value="lastSixMonths">{t("calendar.lastSixMonths")}</MenuItem>
+						</Select>
+					</FormControl>
+				</Box>
+
+				<Typography sx={styles.sectionTitle}>{t("calendar.customTitle")}</Typography>
 				<Box sx={styles.calendarCard}>
 					<Box sx={styles.monthHeader}>
 						<IconButton onClick={handlePrevMonth} size="small" sx={styles.monthArrow}>
