@@ -11,6 +11,7 @@ import { useSurveyLog } from "../hooks/useSurveyLog";
 import { db } from "../firebase";
 import { removeItem } from "../utils/persistentStorage";
 import { configStyles as styles } from "../theme/Config.styles";
+import { exportActivityCsv } from "../utils/exportActivityCsv";
 
 const USAGE_KEYS = [
     "milc_survey_log",
@@ -32,7 +33,7 @@ const collectUsageKeys = () => {
 };
 
 const Config = () => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const navigate = useNavigate();
     const today = new Date().toISOString().slice(0, 10);
     const {
@@ -45,7 +46,7 @@ const Config = () => {
     } = useSettings();
     const { currentUser, logout } = useAuth();
     const nodes = useSurveyNodes();
-    const { clearLog } = useSurveyLog();
+    const { clearLog, getRecords } = useSurveyLog();
     const [resetState, setResetState] = useState("idle");
     const isSimulatedDateEnabled = Boolean(simulatedDate);
     const nodesTreeVersion = nodes?.timestamp ?? "-";
@@ -79,6 +80,15 @@ const Config = () => {
         }
     };
 
+    const handleDownloadActivity = () => {
+        exportActivityCsv({
+            records: getRecords(),
+            nodes,
+            t,
+            language: i18n.language,
+        });
+    };
+
     return (
         <ViewContainer
             title={t("config.title")}
@@ -106,6 +116,15 @@ const Config = () => {
                             <MenuItem value="dark">{t("config.dark")}</MenuItem>
                         </Select>
                     </FormControl>
+                </Box>
+
+                <Box sx={styles.settingRow}>
+                    <Typography sx={styles.label}>{t("config.downloadMyActivity")}</Typography>
+                    <Button
+                        variant="contained"
+                        onClick={handleDownloadActivity}>
+                        {t("config.downloadMyActivity")}
+                    </Button>
                 </Box>
 
                 {import.meta.env.DEV && (

@@ -16,7 +16,21 @@ import View223 from "../View223";
  */
 
 const SPECIAL_SURVEY_VIEWS = {
-    "view-223": View223,
+    "view-223": {
+        component: View223,
+        exportMeta: {
+            title: {
+                en: "Milk conditioning",
+                es: "Acondicionar la leche",
+            },
+            subtitle: {
+                en: "Label the container",
+                es: "Rotular el envase",
+            },
+        },
+    },
 };
 
-export const getSpecialSurveyView = (nodeId) => SPECIAL_SURVEY_VIEWS[nodeId] || null;
+export const getSpecialSurveyView = (nodeId) => SPECIAL_SURVEY_VIEWS[nodeId]?.component || null;
+
+export const getSpecialSurveyViewExportMeta = (nodeId) => SPECIAL_SURVEY_VIEWS[nodeId]?.exportMeta || null;

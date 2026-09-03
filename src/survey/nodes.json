@@ -972,20 +972,28 @@
                 "options": [
                     {
                         "label": {
+                            "en": "New animals",
+                            "es": "Nuevos animales"
+                        },
+                        "target": "view-190",
+                        "value": "new"
+                    },
+                    {
+                        "label": {
+                            "en": "Removed animals",
+                            "es": "Retiro de animales"
+                        },
+                        "target": "view-290",
+                        "value": "dead"
+                    },
+                    {
+                        "label": {
                             "en": "Dead animals",
                             "es": "Animales muertos"
                         },
                         "target": "view-178",
                         "value": "dead"
-                    },
-                    {
-                        "label": {
-                            "en": "New animals to milk",
-                            "es": "Nuevos animales a ordeño"
-                        },
-                        "target": "view-190",
-                        "value": "new"
-                    },
+                    },                    
                     {
                         "label": {
                             "en": "Brucellosis",
@@ -993,14 +1001,6 @@
                         },
                         "target": "view-180",
                         "value": "brucellosis"
-                    },
-                    {
-                        "label": {
-                            "en": "Mastitis",
-                            "es": "Mastitis"
-                        },
-                        "target": "view-189",
-                        "value": "mastitis"
                     }
                 ],
                 "type": "select"
@@ -1057,6 +1057,37 @@
         "title": {
             "en": "Deaths",
             "es": "Muertes"
+        }
+    },
+    "view-290": {
+        "category": "health",
+        "fields": [
+            {
+                "id": "view-290-number",
+                "target": "view-177",
+                "type": "number_input"
+            }
+        ],
+        "guide-id": "",
+        "icon": "edit.png",
+        "manual-page": "",
+        "milking-method": "",
+        "modified": {
+            "at": "2026-05-28T05:09:29.013Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "",
+        "scenario": "",
+        "score-answer": "",
+        "severity": 0,
+        "showDate": true,
+        "subtitle": {
+            "en": "How many animals do you remove from the herd?",
+            "es": "¿Cuántos animales retirás del rebaño?"
+        },
+        "title": {
+            "en": "New animals",
+            "es": "Nuevos animales"
         }
     },
     "view-179": {
