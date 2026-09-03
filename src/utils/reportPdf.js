@@ -1,11 +1,16 @@
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 import membrete from "../assets/membrete.jpg";
+import checkTrue from "../assets/icons/check_true.png";
+import checkFalse from "../assets/icons/check_false.png";
 
 const PAGE_MARGIN_X = 14;
+const KEY_VALUE_VALUE_X = 84;
 const HEADER_HEIGHT = 28;
 const CONTENT_TOP = HEADER_HEIGHT + 8;
 const CONTENT_BOTTOM = 16;
+const SCALE_ICON_SIZE = 4;
+const SCALE_ICON_GAP = 1.8;
 
 const loadImageAsDataUrl = async (url) => {
     const response = await fetch(url);
@@ -39,8 +44,23 @@ const drawKeyValueRow = (doc, y, label, value) => {
     doc.setFont("helvetica", "bold");
     doc.text(`${label}:`, PAGE_MARGIN_X, y);
     doc.setFont("helvetica", "normal");
-    doc.text(value || "-", PAGE_MARGIN_X + 52, y);
+    doc.text(value || "-", KEY_VALUE_VALUE_X, y);
     return y + 6;
+};
+
+const drawRatingChecks = (doc, y, rating, checkedIconData, uncheckedIconData, scaleLabel) => {
+    const labelX = PAGE_MARGIN_X + 2;
+    doc.setFont("helvetica", "normal");
+    doc.text(`${scaleLabel}:`, labelX, y);
+
+    const labelWidth = doc.getTextWidth(`${scaleLabel}:`);
+    let iconX = labelX + labelWidth + 3;
+
+    for (let index = 0; index < 4; index += 1) {
+        const icon = index < rating ? checkedIconData : uncheckedIconData;
+        doc.addImage(icon, "PNG", iconX, y - SCALE_ICON_SIZE + 0.8, SCALE_ICON_SIZE, SCALE_ICON_SIZE);
+        iconX += SCALE_ICON_SIZE + SCALE_ICON_GAP;
+    }
 };
 
 const drawChartImage = (doc, y, imageDataUrl, title, headerImageData) => {
@@ -73,7 +93,7 @@ const buildChartImage = ({ categories, series, yAxisLabel, xAxisLabel }) => {
         top: 42,
         right: 30,
         bottom: 74,
-        left: 62,
+        left: 86,
     };
 
     const chartWidth = width - padding.left - padding.right;
@@ -118,10 +138,15 @@ const buildChartImage = ({ categories, series, yAxisLabel, xAxisLabel }) => {
         ctx.fillText(String(label), padding.left + index * groupWidth + groupWidth / 2, height - 42);
     });
 
+    ctx.save();
     ctx.fillStyle = "#111827";
     ctx.font = "bold 18px Arial";
-    ctx.textAlign = "left";
-    ctx.fillText(yAxisLabel, padding.left, 24);
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.translate(26, padding.top + chartHeight / 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.fillText(yAxisLabel, 0, 0);
+    ctx.restore();
 
     ctx.font = "16px Arial";
     ctx.textAlign = "center";
@@ -165,7 +190,11 @@ export const downloadReportPdf = async ({
     fileName,
 }) => {
     const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
-    const headerImageData = await loadImageAsDataUrl(membrete);
+    const [headerImageData, checkedIconData, uncheckedIconData] = await Promise.all([
+        loadImageAsDataUrl(membrete),
+        loadImageAsDataUrl(checkTrue),
+        loadImageAsDataUrl(checkFalse),
+    ]);
     drawHeader(doc, headerImageData);
 
     let y = CONTENT_TOP;
@@ -229,9 +258,7 @@ export const downloadReportPdf = async ({
         doc.text(aspect.label, PAGE_MARGIN_X, y);
         y += 5;
 
-        const checks = Array.from({ length: 4 }, (_, index) => (index < aspect.rating ? "[x]" : "[ ]")).join(" ");
-        doc.setFont("helvetica", "normal");
-        doc.text(`${t("report.scale")}: ${checks}`, PAGE_MARGIN_X + 2, y);
+        drawRatingChecks(doc, y, aspect.rating, checkedIconData, uncheckedIconData, t("report.scale"));
         y += 5;
 
         const split = doc.splitTextToSize(aspect.detailMessage || t("resultScales.notEvaluated"), 176);

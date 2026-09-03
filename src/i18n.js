@@ -116,7 +116,7 @@ const resources = {
                 notEvaluated: "This category was not evaluated yet.",
             },
             report: {
-                fileName: "my-records",
+                fileName: "my-records-milc",
                 title: "My records",
                 name: "Name",
                 healthCard: "Health card",
@@ -344,7 +344,7 @@ const resources = {
                 notEvaluated: "Esta categoria aún no fue evaluada.",
             },
             report: {
-                fileName: "mis-registros",
+                fileName: "mis-registros-milc",
                 title: "Mis registros",
                 name: "Nombre",
                 healthCard: "Carnet sanitario",
