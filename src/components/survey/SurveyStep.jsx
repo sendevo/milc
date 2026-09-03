@@ -15,6 +15,7 @@ import BottomNavigation from "./BottomNavigation";
 import { t } from "../../model";
 import { runAction } from "../../model";
 import { surveyStepStyles as styles } from "../../theme/SurveyStep.styles";
+import { NON_NODE_TARGET_ROUTES } from "../../constants/constants";
 
 /**
  *
@@ -52,10 +53,6 @@ import { surveyStepStyles as styles } from "../../theme/SurveyStep.styles";
 
 const inputFieldTypes = ["select", "number_input", "month_picker", "date_picker"];
 const selfNavigatingTypes = ["bottom_navigation"];
-const NON_NODE_TARGET_ROUTES = {
-    home: "/home",
-    profile: "/profile",
-};
 
 const SurveyStep = ({ node, nodeId, initialAnswers = {}, onSubmit, onBack }) => {
     const [answers, setAnswers] = useState(initialAnswers);

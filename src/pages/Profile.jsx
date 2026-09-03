@@ -9,6 +9,7 @@ import { useToast } from "../contexts/ToastContext";
 import FormCard from "../components/FormCard";
 import ViewContainer from "../components/ViewContainer";
 import { profileStyles as styles } from "../theme/Profile.styles";
+import { MONTH_KEYS } from "../constants/constants";
 
 const Profile = () => {
     const { t, i18n } = useTranslation();
@@ -25,7 +26,6 @@ const Profile = () => {
     const [profileLoading, setProfileLoading] = useState(false);
 
     const surveyProfileFields = useMemo(() => {
-        const MONTH_KEYS = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
         const records = getRecordsByScenario("APP-SETUP");
         const latestByNode = {};
         for (const rec of records) {

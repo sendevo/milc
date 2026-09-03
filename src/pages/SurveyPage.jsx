@@ -16,20 +16,16 @@ import {
     enqueueTelemetryEvent,
     flushTelemetryQueue,
 } from "../telemetry/telemetryQueue";
-import packageJson from "../../package.json";
 import { getSpecialSurveyView } from "./specialViews";
 import {
     getHerdInventoryRecordForNodeAndDate,
     getHerdInventoryTypeForNode,
     isHerdInventoryNode,
 } from "../utils/herdInventory";
-
-const APP_VERSION_FALLBACK = packageJson.version;
-
-const NON_NODE_TARGET_ROUTES = {
-    home: "/home",
-    profile: "/profile"
-};
+import {
+    APP_VERSION_FALLBACK,
+    NON_NODE_TARGET_ROUTES,
+} from "../constants/constants";
 
 const resolveNonNodeTargetRoute = (targetId) => {
     if (!targetId) return null;

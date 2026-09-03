@@ -1,8 +1,9 @@
 import { getItem, getJSONItem, setItem, setJSONItem } from "../utils/persistentStorage";
-
-const LOCAL_SCHEMA_VERSION_KEY = "milc_schema_version";
-const CURRENT_LOCAL_SCHEMA_VERSION = 1;
-const SURVEY_LOG_KEY = "milc_survey_log";
+import {
+    CURRENT_LOCAL_SCHEMA_VERSION,
+    LOCAL_SCHEMA_VERSION_KEY,
+    SURVEY_LOG_STORAGE_KEY,
+} from "../constants/constants";
 
 function normalizeSurveyLogRecord(record) {
     if (!record || typeof record !== "object") return null;
@@ -18,9 +19,9 @@ function normalizeSurveyLogRecord(record) {
 }
 
 async function migrateToV1() {
-    const log = await getJSONItem(SURVEY_LOG_KEY, []);
+    const log = await getJSONItem(SURVEY_LOG_STORAGE_KEY, []);
     if (!Array.isArray(log)) {
-        await setJSONItem(SURVEY_LOG_KEY, []);
+        await setJSONItem(SURVEY_LOG_STORAGE_KEY, []);
         return;
     }
 
@@ -28,7 +29,7 @@ async function migrateToV1() {
         .map(normalizeSurveyLogRecord)
         .filter(Boolean);
 
-    await setJSONItem(SURVEY_LOG_KEY, migrated);
+    await setJSONItem(SURVEY_LOG_STORAGE_KEY, migrated);
 }
 
 export async function runLocalMigrations() {

@@ -15,7 +15,7 @@ import View223 from "../View223";
  * }
  */
 
-const SPECIAL_SURVEY_VIEWS = {
+const specialSurveyViews = {
     "view-223": {
         component: View223,
         exportMeta: {
@@ -31,6 +31,6 @@ const SPECIAL_SURVEY_VIEWS = {
     },
 };
 
-export const getSpecialSurveyView = (nodeId) => SPECIAL_SURVEY_VIEWS[nodeId]?.component || null;
+export const getSpecialSurveyView = (nodeId) => specialSurveyViews[nodeId]?.component || null;
 
-export const getSpecialSurveyViewExportMeta = (nodeId) => SPECIAL_SURVEY_VIEWS[nodeId]?.exportMeta || null;
+export const getSpecialSurveyViewExportMeta = (nodeId) => specialSurveyViews[nodeId]?.exportMeta || null;

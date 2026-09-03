@@ -6,13 +6,7 @@ import weed from "../assets/icons/weed.png";
 import cattlePen from "../assets/icons/cattle_pen.png";
 import barn from "../assets/icons/barn.png";
 import pest from "../assets/icons/pest.png";
-
-export const CHECKS_BY_RATING = {
-    excellent: 4,
-    "very-good": 3,
-    regular: 2,
-    "needs-improvement": 1,
-};
+import { CHECKS_BY_RATING } from "../constants/constants";
 
 export const normalizeCategoryKey = (value) => (value || "").toLowerCase().replace(/[-_\s]/g, "");
 

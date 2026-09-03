@@ -2,14 +2,15 @@ import { Capacitor } from "@capacitor/core";
 import { ref, update } from "firebase/database";
 import { db } from "../firebase";
 import { getJSONItem, setJSONItem } from "../utils/persistentStorage";
-
-const TELEMETRY_QUEUE_KEY = "milc_telemetry_queue_v1";
-const TELEMETRY_SENT_IDS_KEY = "milc_telemetry_sent_ids_v1";
-const TELEMETRY_SCHEMA_VERSION = 1;
-const FLUSH_BATCH_SIZE = 20;
-const MAX_SENT_IDS = 2000;
-const MAX_QUEUED_EVENTS = 1000;
-const FLUSH_AGE_MS = 3 * 60 * 1000;
+import {
+    FLUSH_AGE_MS,
+    FLUSH_BATCH_SIZE,
+    MAX_QUEUED_EVENTS,
+    MAX_SENT_IDS,
+    TELEMETRY_QUEUE_KEY,
+    TELEMETRY_SCHEMA_VERSION,
+    TELEMETRY_SENT_IDS_KEY,
+} from "../constants/constants";
 
 const now = () => Date.now();
 

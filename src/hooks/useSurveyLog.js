@@ -21,10 +21,11 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { getJSONItem, setJSONItem } from "../utils/persistentStorage";
-
-const STORAGE_KEY = "milc_survey_log";
-const SURVEY_LOG_RECORD_SCHEMA_VERSION = 1;
-const ISO_DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
+import {
+    ISO_DATE_RE,
+    SURVEY_LOG_RECORD_SCHEMA_VERSION,
+    SURVEY_LOG_STORAGE_KEY,
+} from "../constants/constants";
 
 // ---------------------------------------------------------------------------
 // Local-date helper
@@ -54,13 +55,13 @@ const resolveEffectiveDate = (date) => {
 // ---------------------------------------------------------------------------
 
 const readLog = async () => {
-    const parsed = await getJSONItem(STORAGE_KEY, []);
+    const parsed = await getJSONItem(SURVEY_LOG_STORAGE_KEY, []);
     return Array.isArray(parsed) ? parsed : [];
 };
 
 const writeLog = async (records) => {
     try {
-        await setJSONItem(STORAGE_KEY, records);
+        await setJSONItem(SURVEY_LOG_STORAGE_KEY, records);
     } catch (err) {
         console.error("[useSurveyLog] Failed to write log:", err);
     }

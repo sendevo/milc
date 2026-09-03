@@ -9,12 +9,12 @@ import { useHerdInventory } from "../hooks/useHerdInventory";
 import { dairyBarChartStyles as styles } from "../theme/DairyBarChart.styles";
 import { parseIsoDate, getDaysBetweenInclusive } from "../utils/dateTime";
 import {
-    MILKED_ANIMALS_NODE_IDS,
     buildEffectiveAnimalsByDate,
     buildEffectiveValuesByDate,
     buildChartBuckets,
     averageByDate,
 } from "../utils/reportData";
+import { MILKED_ANIMALS_NODE_IDS } from "../constants/constants";
 
 const DairyBarChart = () => {
     const { t, i18n } = useTranslation();

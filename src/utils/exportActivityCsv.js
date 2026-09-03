@@ -1,6 +1,5 @@
 import { getSpecialSurveyViewExportMeta } from "../pages/specialViews";
-
-const MONTH_KEYS = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+import { MONTH_KEYS } from "../constants/constants";
 
 const csvEscape = (value) => {
     if (value === null || value === undefined) return "";

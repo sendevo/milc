@@ -13,15 +13,7 @@ import { db } from "../firebase";
 import { removeItem } from "../utils/persistentStorage";
 import { configStyles as styles } from "../theme/Config.styles";
 import { exportActivityCsv } from "../utils/exportActivityCsv";
-import { HERD_INVENTORY_STORAGE_KEY } from "../utils/herdInventory";
-
-const USAGE_KEYS = [
-    "milc_survey_log",
-    HERD_INVENTORY_STORAGE_KEY,
-    "milc_telemetry_queue_v1",
-    "milc_telemetry_sent_ids_v1",
-];
-const USAGE_KEY_PREFIXES = ["milc_action_"];
+import { USAGE_KEYS, USAGE_KEY_PREFIXES } from "../constants/constants";
 
 const collectUsageKeys = () => {
     const keys = new Set(USAGE_KEYS);

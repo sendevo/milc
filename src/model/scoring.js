@@ -9,28 +9,7 @@
  *
  * See README.md for a full description of the scoring methodology.
  */
-
-// Fallback metadata for known MILC scenarios.
-// Used when nodes arrive without scoring fields from Firebase/nodes.json.
-const SCENARIO_DEFAULTS = {
-    "PREORD-01": { correctAnswer: "yes", severity: 3, periodicity: "daily", category: "before-milking" },
-    "PREORD-02": { correctAnswer: "yes", severity: 3, periodicity: "daily", category: "before-milking" },
-    "PREORD-03": { correctAnswer: "yes", severity: 3, periodicity: "daily", category: "before-milking" },
-    "PREORD-04": { correctAnswer: "yes", severity: 3, periodicity: "daily", category: "before-milking" },
-    "PREORD-05": { correctAnswer: "yes", severity: 3, periodicity: "daily", category: "before-milking" },
-    "PREORD-06": { correctAnswer: "yes", severity: 3, periodicity: "daily", category: "before-milking" },
-    "PREORD-07": { correctAnswer: "yes", severity: 3, periodicity: "daily", category: "before-milking" },
-    "PREORD-08": { correctAnswer: "yes", severity: 3, periodicity: "daily", category: "before-milking" },
-    "ORD-02-03": { correctAnswer: "yes", severity: 3, periodicity: "daily", category: "during-milking" },
-    "ORD-07": { correctAnswer: "yes", severity: 3, periodicity: "daily", category: "during-milking" },
-    "HEALTH-01": { correctAnswer: "no", severity: 3, periodicity: "daily", category: "health" },
-    "FEED-01": { correctAnswer: "yes", severity: 3, periodicity: "daily", category: "food" },
-    "FACIL-01": { correctAnswer: "yes", severity: 3, periodicity: "semester", category: "facilities" },
-    "FACIL-02": { correctAnswer: "yes", severity: 3, periodicity: "semester", category: "facilities" },
-    "FACIL-03": { correctAnswer: "yes", severity: 3, periodicity: "semester", category: "facilities" },
-    "SUPPLY-01": { correctAnswer: "yes", severity: 3, periodicity: "semester", category: "supplies" },
-    "SUPPLY-02": { correctAnswer: "yes", severity: 3, periodicity: "semester", category: "supplies" },
-};
+import { SCENARIO_DEFAULTS } from "../constants/constants";
 
 // ---------------------------------------------------------------------------
 // Periodicity helpers

@@ -1,7 +1,6 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-
-const APP_VERSION = import.meta.env.APP_VERSION;
+import { APP_VERSION } from "./constants/constants";
 
 const resources = {
     en: {

@@ -7,13 +7,13 @@ import {
     getMonthSpanInclusive,
 } from "./dateTime";
 import { buildEffectiveHerdSizeByDate } from "./herdInventory";
-
-export const TOTAL_ANIMALS_NODE_IDS = ["view-220"];
-export const MILKED_ANIMALS_NODE_IDS = ["view-235", "view-36"];
-export const MILK_LITERS_NODE_ID = "view-55";
-export const MASTITIS_NODE_IDS = ["view-236", "view-42", "view-189"];
-
-const MONTH_KEYS = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+import {
+    MASTITIS_NODE_IDS,
+    MILK_LITERS_NODE_ID,
+    MILKED_ANIMALS_NODE_IDS,
+    MONTH_KEYS,
+    TOTAL_ANIMALS_NODE_IDS,
+} from "../constants/constants";
 
 export const filterRecordsByRange = (records, from, to) => {
     if (!from || !to || from > to) return records;

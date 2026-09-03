@@ -1,12 +1,13 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import i18n from "../i18n";
 import { getItem, removeItem, setItem } from "../utils/persistentStorage";
+import {
+    STORAGE_KEY_LANG,
+    STORAGE_KEY_THEME,
+    STORAGE_KEY_SIMULATED_DATE,
+} from "../constants/constants";
 
 const SettingsContext = createContext(null);
-
-const STORAGE_KEY_LANG = "milc_language";
-const STORAGE_KEY_THEME = "milc_theme";
-const STORAGE_KEY_SIMULATED_DATE = "milc_simulated_date";
 
 export const SettingsProvider = ({ children }) => {
     const [language, setLanguageState] = useState(() => i18n.language || "es");

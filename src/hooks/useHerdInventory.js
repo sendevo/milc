@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
 import { getJSONItem, setJSONItem } from "../utils/persistentStorage";
-import { HERD_INVENTORY_STORAGE_KEY } from "../utils/herdInventory";
-
-const HERD_INVENTORY_SCHEMA_VERSION = 1;
-const ISO_DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
+import {
+    HERD_INVENTORY_SCHEMA_VERSION,
+    HERD_INVENTORY_STORAGE_KEY,
+    ISO_DATE_RE,
+} from "../constants/constants";
 
 const localDateString = () => {
     const date = new Date();

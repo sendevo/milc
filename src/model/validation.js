@@ -2,11 +2,7 @@ import {
     getEffectiveHerdSizeOnDate,
     withoutHerdInventoryRecordForNodeAndDate,
 } from "../utils/herdInventory";
-
-const VALIDATION_SEVERITY = {
-    warning: "warning",
-    error: "error",
-};
+import { VALIDATION_SEVERITY } from "../constants/constants";
 
 const getLatestRecord = (records, predicate) => {
     return records
@@ -29,7 +25,7 @@ const getFirstSubmittedNumber = (answers = {}) => {
     return null;
 };
 
-const RULES = [
+const rules = [
     {
         id: "milked_animals_not_greater_than_total_animals",
         appliesTo: ({ nodeId, answers }) => {
@@ -143,7 +139,7 @@ const RULES = [
 ];
 
 export const validateSurveySubmission = ({ nodeId, answers, records, inventoryRecords = [], currentDate = "", t }) => {
-    for (const rule of RULES) {
+    for (const rule of rules) {
         if (!rule.appliesTo({ nodeId, answers })) continue;
 
         const result = rule.validate({ nodeId, answers, records, inventoryRecords, currentDate, t });

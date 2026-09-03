@@ -7,8 +7,7 @@ import { useAuth } from "../contexts/AuthContext";
 import FormCard from "../components/FormCard";
 import { loginStyles as styles } from "../theme/Login.styles";
 import { captchaDialogStyles as captchaStyles } from "../theme/CaptchaDialog.styles";
-
-const RECAPTCHA_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
+import { RECAPTCHA_SITE_KEY } from "../constants/constants";
 
 const Login = () => {
     const { t } = useTranslation();

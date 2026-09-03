@@ -23,8 +23,7 @@
  */
 
 import { setItem } from "../utils/persistentStorage";
-
-const STORAGE_PREFIX = "milc_action_";
+import { ACTION_IDS, STORAGE_PREFIX } from "../constants/constants";
 
 const registry = {
     /**
@@ -76,4 +75,4 @@ export function runAction(actionId, context) {
 }
 
 /** List of all registered action ids — used by the editor to build the dropdown. */
-export const ACTION_IDS = Object.keys(registry);
+export { ACTION_IDS };

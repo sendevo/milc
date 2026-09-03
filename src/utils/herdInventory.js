@@ -1,14 +1,11 @@
 import { formatAsIsoDate } from "./dateTime";
+import {
+    HERD_INVENTORY_NODE_TYPES,
+    HERD_INVENTORY_STORAGE_KEY,
+    ISO_DATE_RE,
+} from "../constants/constants";
 
-export const HERD_INVENTORY_STORAGE_KEY = "milc_herd_inventory_log";
-
-export const HERD_INVENTORY_NODE_TYPES = {
-    "view-190": "add",
-    "view-290": "remove",
-    "view-178": "death",
-};
-
-const ISO_DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
+export { HERD_INVENTORY_NODE_TYPES, HERD_INVENTORY_STORAGE_KEY };
 
 const compareEvents = (left, right) => {
     if (left.date !== right.date) {

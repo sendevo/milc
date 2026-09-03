@@ -13,20 +13,9 @@ import {
     DialogContent,
     DialogTitle,
 } from "@mui/material";
+import { DEFAULT_MODAL_STATE } from "../constants/constants";
 
 const ModalContext = createContext(null);
-
-const DEFAULT_MODAL_STATE = {
-    open: false,
-    title: "",
-    content: null,
-    actions: [],
-    onClose: null,
-    disableClose: false,
-    maxWidth: "sm",
-    fullWidth: true,
-    formValues: {},
-};
 
 const resolveInputValue = (eventOrValue) => {
     if (eventOrValue && typeof eventOrValue === "object" && "target" in eventOrValue) {

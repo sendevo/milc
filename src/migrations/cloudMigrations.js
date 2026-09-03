@@ -1,7 +1,8 @@
 import { get, ref, set } from "firebase/database";
 import { db } from "../firebase";
+import { CURRENT_PROFILE_SCHEMA_VERSION } from "../constants/constants";
 
-export const CURRENT_PROFILE_SCHEMA_VERSION = 1;
+export { CURRENT_PROFILE_SCHEMA_VERSION };
 
 function normalizeUserProfile(profile) {
     const now = Date.now();

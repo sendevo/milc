@@ -3,14 +3,15 @@ import autoTable from "jspdf-autotable";
 import membrete from "../assets/membrete.jpg";
 import checkTrue from "../assets/icons/check_true.png";
 import checkFalse from "../assets/icons/check_false.png";
-
-const PAGE_MARGIN_X = 14;
-const KEY_VALUE_VALUE_X = 84;
-const HEADER_HEIGHT = 28;
-const CONTENT_TOP = HEADER_HEIGHT + 8;
-const CONTENT_BOTTOM = 16;
-const SCALE_ICON_SIZE = 4;
-const SCALE_ICON_GAP = 1.8;
+import {
+    CONTENT_BOTTOM,
+    CONTENT_TOP,
+    HEADER_HEIGHT,
+    KEY_VALUE_VALUE_X,
+    PAGE_MARGIN_X,
+    SCALE_ICON_GAP,
+    SCALE_ICON_SIZE,
+} from "../constants/constants";
 
 const loadImageAsDataUrl = async (url) => {
     const response = await fetch(url);
