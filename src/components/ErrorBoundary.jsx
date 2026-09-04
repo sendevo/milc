@@ -19,20 +19,35 @@ class ErrorBoundary extends React.Component {
 
     componentDidCatch(error, errorInfo) {
         const errorLog = {
-            error: error.toString(),
-            info: errorInfo.componentStack,
+            error: {
+                name: error?.name || "Error",
+                message: error?.message || String(error),
+                stack: error?.stack || null,
+            },
+            componentStack: errorInfo?.componentStack || null,
             timestamp: new Date().toISOString(),
+            location: window.location.href,
+            userAgent: navigator.userAgent,
+            screen: {
+                width: window.innerWidth,
+                height: window.innerHeight,
+                pixelRatio: window.devicePixelRatio,
+            },
         };
-        localStorage.setItem("errorLog", JSON.stringify(errorLog));
-        this.setState({ errorInfo, error });
+
+        localStorage.setItem(
+            "errorLog",
+            JSON.stringify(errorLog)
+        );
+
+        this.setState({
+            errorInfo,
+            error,
+        });
     }
 
     resetErrorBoundary = () => {
         this.setState({ hasError: false, errorInfo: null, error: null });
-    }
-
-    handleReport = () => {
-        console.log("error reported");
     }
 
     handleReset = () => {
@@ -44,8 +59,8 @@ class ErrorBoundary extends React.Component {
         if (this.state.hasError) {
             return (
                 <Error 
-                    errorMessage={`Error: ${this.state.error}, info: ${this.state.errorInfo?.componentStack}`}
-                    onReport={this.handleReport}
+                    error={this.state.error}
+                    errorInfo={this.state.errorInfo}
                     onReset={this.handleReset} />
             );
         }

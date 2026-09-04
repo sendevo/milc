@@ -88,9 +88,9 @@ const SurveyPage = () => {
 
     useEffect(() => {
         if (node || SpecialSurveyView) return;
-        //showToast(t("survey.inDevelopment"));
-        //navigate("/home", { replace: true });
-        navigate("/error", { replace: true });
+        showToast(t("survey.inDevelopment"));
+        navigate("/home", { replace: true });
+        //navigate("/error", { replace: true });
     }, [navigate, node, showToast, t, SpecialSurveyView]);
 
     // ---------------------------------------------------------------------------
@@ -272,9 +272,9 @@ const SurveyPage = () => {
                 return;
             }
 
-            //showToast(t("survey.inDevelopment"));
-            //navigate("/home");
-            navigate("/error", { replace: true });
+            showToast(t("survey.inDevelopment"));
+            navigate("/home");
+            //navigate("/error", { replace: true });
             return;
         }
 

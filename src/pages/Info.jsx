@@ -21,6 +21,9 @@ const Info = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
 
+    // TODO: remove this
+    console.log(array.map(a => a+1)); // To debug error boundary
+
     return (
         <ViewContainer
             title={t("info.title")}

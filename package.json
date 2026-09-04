@@ -26,6 +26,7 @@
     "@mui/icons-material": "^7.3.10",
     "@mui/material": "^7.3.10",
     "firebase": "^12.12.1",
+    "html2canvas": "^1.4.1",
     "i18next": "^26.0.7",
     "jspdf": "^4.2.1",
     "jspdf-autotable": "^5.0.8",
