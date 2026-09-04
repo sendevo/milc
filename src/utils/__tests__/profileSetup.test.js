@@ -8,27 +8,25 @@ import {
 
 describe("profileSetup", () => {
     it("detects the no-all-year answer from survey data", () => {
-        expect(isNoMilkAllYearAnswer("view-produce-year-round-opt-no")).toBe(true);
         expect(isNoMilkAllYearAnswer("No")).toBe(true);
         expect(isNoMilkAllYearAnswer("yes")).toBe(false);
     });
 
     it("detects the yes-all-year answer from survey data", () => {
-        expect(isYesMilkAllYearAnswer("view-produce-year-round-opt-yes")).toBe(true);
+        expect(isYesMilkAllYearAnswer("yes")).toBe(true);
         expect(isYesMilkAllYearAnswer("Yes")).toBe(true);
-        expect(isYesMilkAllYearAnswer("view-produce-year-round-opt-no")).toBe(false);
     });
 
     it("removes stale same-day conflicting profile setup records", () => {
         const records = [
-            { nodeId: "view-produce-year-round", scenario: "APP-SETUP", date: "2026-09-04", answer: "view-produce-year-round-opt-yes", timestamp: 1 },
+            { nodeId: "view-produce-year-round", scenario: "APP-SETUP", date: "2026-09-04", answer: "yes", timestamp: 1 },
             { nodeId: "view-milking-calendar", scenario: "APP-SETUP", date: "2026-09-04", answer: [1, 2, 3], timestamp: 2 },
-            { nodeId: "view-217", scenario: "APP-SETUP", date: "2026-09-04", answer: "view-produce-year-round-opt-yes", timestamp: 3 },
+            { nodeId: "view-217", scenario: "APP-SETUP", date: "2026-09-04", answer: "yes", timestamp: 3 },
             { nodeId: "view-milking-method", scenario: "APP-SETUP", date: "2026-09-04", answer: "manual", timestamp: 4 },
         ];
 
         expect(cleanConflictingProfileSetupRecords(records, "view-produce-year-round", "APP-SETUP", "2026-09-04")).toEqual([
-            { nodeId: "view-produce-year-round", scenario: "APP-SETUP", date: "2026-09-04", answer: "view-produce-year-round-opt-yes", timestamp: 1 },
+            { nodeId: "view-produce-year-round", scenario: "APP-SETUP", date: "2026-09-04", answer: "yes", timestamp: 1 },
             { nodeId: "view-milking-method", scenario: "APP-SETUP", date: "2026-09-04", answer: "manual", timestamp: 4 },
         ]);
     });

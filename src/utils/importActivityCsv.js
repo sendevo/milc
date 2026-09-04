@@ -109,8 +109,9 @@ export const importActivityCsv = ({ csvText, nodes = {}, saveAnswer }) => {
         const node = nodes[row.nodeId];
         const scenario = node?.scenario;
 
-        if (!node || !scenario || scenario === "-") {
+        if (!node) {
             skipped += 1;
+            console.warn(`Skipping row with unknown nodeId: ${row.nodeId}`);
             continue;
         }
 

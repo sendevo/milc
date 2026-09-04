@@ -334,6 +334,123 @@ litersPerAnimal = average(dailyRatio(d) for valid days d in [fromDate, toDate])
 
 This prevents a late update (for example, 10 to 10000 animals) from retroactively collapsing the metric for previous days/months.
 
+## Importing an activity CSV file
+
+The app can import activity data from a CSV file from the Settings screen.
+
+### How to import
+
+1. Open the app and go to the Configuration page.
+2. Select the CSV file you want to import.
+3. Confirm the import prompt.
+4. The app reads each row, validates the date and answer, and saves valid survey answers back into the local activity log.
+
+### Required CSV format
+
+The importer expects a header row and uses the following columns:
+
+```csv
+Date (DD-MM-YYYY),View ID,Answer
+05-09-2026,view-213,yes
+05-09-2026,view-100,no
+```
+
+#### Accepted header:
+
+- `Date (DD-MM-YYYY)`
+- `View ID`
+- `Answer`
+
+#### Accepted view IDs:
+
+```txt
+view-100, view-105, view-106, view-milking-room, view-109, view-110, view-111, view-112, view-113, view-115, view-120, view-123, view-124, view-128, view-96, view-129, view-130, view-131, view-132, view-133, view-134, view-135, view-177, view-dead-animals, view-remove-animals, view-179, view-180, view-181, view-182, view-224, view-184, view-185, view-187, view-188, view-189, view-add-animals, view-192, view-193, view-194, view-196, view-198, view-199, view-200, view-201, view-202, view-203, view-206, view-207, view-208, view-209, view-213, view-214, view-215, view-269, view-270, view-271, view-272, view-produce-year-round, view-milking-calendar, view-animal-count, view-233, view-234, view-235, view-236, view-237, view-milking-method, view-240, view-241, view-243, view-244, view-245, view-248, view-249, view-251, view-252, view-254, view-255, view-256, view-258, view-259, view-260, view-261, view-262, view-263, view-265, view-266, view-267, view-268, view-user-profile-completed, view-33, view-35, view-36, view-37, view-38, view-40, view-42, view-45, view-250, view-46, view-47, view-247, view-48, view-49, view-50, view-52, view-53, view-55, view-56, view-57, view-58, view-59, view-60, view-61, view-63, view-64, view-65, view-66, view-67, view-68, view-69, view-70, view-85, view-90, view-92, view-93, view-94, view-95, view-result-bad, view-result-excellent, view-result-good, view-result-regular
+```
+
+#### Accepted answers:
+
+```txt
+yes, no, dont-know
+```
+
+Exceptions:
+```txt
+view-93: inmediatly, up-to-2-hours, up-to-48-hours, up-to-7-months
+view-131: inmediatly, up-to-2-hours, up-to-48-hours, more-than-48-hours
+view-177: new, remove, dead, brucellosis
+view-milking-method: manual, mec
+view-result-bad: clean-machines, label-containers, filter-milk
+view-result-good: check-parlor
+view-result-regular: require-health, remove-with-mastitis
+```
+
+#### Example:
+
+```csv
+Date (DD-MM-YYYY),View ID,Answer
+03-09-2026,view-milking-method,manual
+03-09-2026,view-produce-year-round,yes
+03-09-2026,view-100,yes
+03-09-2026,view-110,no
+03-09-2026,view-124,yes
+03-09-2026,view-233,yes
+03-09-2026,view-129,yes
+03-09-2026,view-131,up-to-2-hours
+02-09-2026,view-100,yes
+02-09-2026,view-110,yes
+02-09-2026,view-185,yes
+02-09-2026,view-129,yes
+02-09-2026,view-131,inmediatly
+01-09-2026,view-100,no
+01-09-2026,view-110,no
+01-09-2026,view-180,no
+01-09-2026,view-177,new
+31-08-2026,view-milking-method,mec
+31-08-2026,view-100,yes
+31-08-2026,view-110,no
+31-08-2026,view-243,yes
+31-08-2026,view-244,yes
+31-08-2026,view-129,no
+30-08-2026,view-100,yes
+30-08-2026,view-110,dont-know
+30-08-2026,view-124,no
+30-08-2026,view-94,yes
+30-08-2026,view-93,up-to-48-hours
+29-08-2026,view-result-good,check-parlor
+29-08-2026,view-100,yes
+29-08-2026,view-110,no
+28-08-2026,view-result-regular,remove-with-mastitis
+28-08-2026,view-100,yes
+28-08-2026,view-110,yes
+27-08-2026,view-result-bad,clean-machines
+27-08-2026,view-100,no
+26-08-2026,view-177,brucellosis
+26-08-2026,view-180,yes
+25-08-2026,view-200,yes
+25-08-2026,view-202,yes
+25-08-2026,view-206,yes
+25-08-2026,view-208,yes
+24-08-2026,view-213,no
+24-08-2026,view-215,yes
+23-08-2026,view-46,yes
+23-08-2026,view-49,no
+23-08-2026,view-50,yes
+22-08-2026,view-52,yes
+22-08-2026,view-64,no
+21-08-2026,view-129,yes
+21-08-2026,view-130,yes
+21-08-2026,view-131,more-than-48-hours
+20-08-2026,view-94,yes
+20-08-2026,view-95,no
+20-08-2026,view-93,up-to-7-months
+```
+
+
+### Notes
+
+- Only nodes that exist in the survey tree are imported.
+- The importer is meant for restoring or reloading previous activity, not for creating new survey content.
+- The app's export format does not match the import format.
 
 ## Features
 

@@ -4,8 +4,12 @@ import { MONTH_KEYS } from "../constants";
 const csvEscape = (value) => {
     if (value === null || value === undefined) return "";
 
-    const text = String(value);
-    if (/[",\n\r]/.test(text)) {
+    const text = String(value)
+        .replace(/,/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+
+    if (/["\n\r]/.test(text)) {
         return `"${text.replace(/"/g, '""')}"`;
     }
 

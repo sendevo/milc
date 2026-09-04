@@ -808,7 +808,7 @@
                             "es": "Elaboré inmediatamente"
                         },
                         "target": "view-134",
-                        "value": "opt-1"
+                        "value": "inmediatly"
                     },
                     {
                         "label": {
@@ -816,7 +816,7 @@
                             "es": "Heladera/pileta (0-2 horas)"
                         },
                         "target": "view-130",
-                        "value": "opt-2"
+                        "value": "up-to-2-hours"
                     },
                     {
                         "label": {
@@ -824,7 +824,7 @@
                             "es": "Tanque frío/heladera (2-48 horas)"
                         },
                         "target": "view-130",
-                        "value": "opt-3"
+                        "value": "up-to-48-hours"
                     },
                     {
                         "label": {
@@ -832,7 +832,7 @@
                             "es": "Freezer (+48 horas)"
                         },
                         "target": "view-130",
-                        "value": "opt-4"
+                        "value": "more-than-48-hours"
                     }
                 ],
                 "type": "select"
@@ -2717,7 +2717,7 @@
                             "es": "Sí"
                         },
                         "target": "view-animal-count",
-                        "value": "view-produce-year-round-opt-yes"
+                        "value": "yes"
                     },
                     {
                         "label": {
@@ -2725,7 +2725,7 @@
                             "es": "No"
                         },
                         "target": "view-milking-calendar",
-                        "value": "view-produce-year-round-opt-no"
+                        "value": "no"
                     }
                 ],
                 "type": "select"
@@ -5495,7 +5495,7 @@
                             "es": "Elaboré inmediatamente"
                         },
                         "target": "view-135",
-                        "value": "opt-1"
+                        "value": "inmediatly"
                     },
                     {
                         "label": {
@@ -5503,7 +5503,7 @@
                             "es": "Hasta 2 horas: Heladera/pileta"
                         },
                         "target": "view-135",
-                        "value": "opt-2"
+                        "value": "up-to-2-hours"
                     },
                     {
                         "label": {
@@ -5511,7 +5511,7 @@
                             "es": "Hasta 48 horas: Tanque frío/heladera"
                         },
                         "target": "view-135",
-                        "value": "opt-3"
+                        "value": "up-to-48-hours"
                     },
                     {
                         "label": {
@@ -5519,7 +5519,7 @@
                             "es": "Hasta 7 meses: Freezer"
                         },
                         "target": "view-135",
-                        "value": "opt-4"
+                        "value": "up-to-7-months"
                     }
                 ],
                 "type": "select"

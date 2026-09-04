@@ -11,7 +11,7 @@ export function isYesMilkAllYearAnswer(answer) {
 
     if (typeof answer === "string") {
         const normalized = answer.trim().toLowerCase();
-        return normalized === "yes" || normalized === "view-produce-year-round-opt-yes";
+        return normalized === "yes";
     }
 
     return false;
@@ -28,7 +28,7 @@ export function isNoMilkAllYearAnswer(answer) {
 
     if (typeof answer === "string") {
         const normalized = answer.trim().toLowerCase();
-        return normalized === "no" || normalized === "view-produce-year-round-opt-no";
+        return normalized === "no";
     }
 
     return false;
