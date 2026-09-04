@@ -1,11 +1,12 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import i18n from "../i18n";
+import { DEV_TOOLS_ENABLED } from "../constants";
 import { getItem, removeItem, setItem } from "../utils/persistentStorage";
 import {
     STORAGE_KEY_LANG,
     STORAGE_KEY_THEME,
     STORAGE_KEY_SIMULATED_DATE,
-} from "../constants/constants";
+} from "../constants";
 
 const SettingsContext = createContext(null);
 
@@ -13,7 +14,7 @@ export const SettingsProvider = ({ children }) => {
     const [language, setLanguageState] = useState(() => i18n.language || "es");
     const [themeMode, setThemeModeState] = useState("light");
     const [simulatedDate, setSimulatedDateState] = useState(() => {
-        if (!import.meta.env.DEV) {
+        if (!DEV_TOOLS_ENABLED) {
             return "";
         }
         return "";
@@ -26,7 +27,7 @@ export const SettingsProvider = ({ children }) => {
             const [storedLang, storedTheme, storedDate] = await Promise.all([
                 getItem(STORAGE_KEY_LANG),
                 getItem(STORAGE_KEY_THEME),
-                import.meta.env.DEV ? getItem(STORAGE_KEY_SIMULATED_DATE) : Promise.resolve("")
+                DEV_TOOLS_ENABLED ? getItem(STORAGE_KEY_SIMULATED_DATE) : Promise.resolve("")
             ]);
 
             if (!isMounted) return;
@@ -36,7 +37,7 @@ export const SettingsProvider = ({ children }) => {
 
             setLanguageState(lang);
             setThemeModeState(mode);
-            if (import.meta.env.DEV) {
+            if (DEV_TOOLS_ENABLED) {
                 setSimulatedDateState(storedDate || "");
             }
 
@@ -64,7 +65,7 @@ export const SettingsProvider = ({ children }) => {
     };
 
     const setSimulatedDate = (date) => {
-        if (!import.meta.env.DEV) {
+        if (!DEV_TOOLS_ENABLED) {
             return;
         }
         if (date) {
@@ -77,7 +78,7 @@ export const SettingsProvider = ({ children }) => {
 
     const getCurrentDateTime = () => {
         const systemNow = new Date();
-        if (!import.meta.env.DEV || !simulatedDate) {
+        if (!DEV_TOOLS_ENABLED || !simulatedDate) {
             return systemNow;
         }
 

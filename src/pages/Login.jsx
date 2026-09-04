@@ -16,7 +16,7 @@ import FormCard from "../components/FormCard";
 import ViewContainer from "../components/ViewContainer";
 import { registerLoginStyles as styles } from "../theme/RegisterLogin.styles";
 import { captchaDialogStyles as captchaStyles } from "../theme/CaptchaDialog.styles";
-import { RECAPTCHA_SITE_KEY } from "../constants/constants";
+import { RECAPTCHA_SITE_KEY } from "../constants";
 
 const Login = () => {
     const { t } = useTranslation();

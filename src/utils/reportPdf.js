@@ -11,7 +11,7 @@ import {
     PAGE_MARGIN_X,
     SCALE_ICON_GAP,
     SCALE_ICON_SIZE,
-} from "../constants/constants";
+} from "../constants";
 
 const loadImageAsDataUrl = async (url) => {
     const response = await fetch(url);

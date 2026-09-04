@@ -23,7 +23,7 @@
  */
 
 import { setItem } from "../utils/persistentStorage";
-import { ACTION_IDS, STORAGE_PREFIX } from "../constants/constants";
+import { ACTION_IDS, STORAGE_PREFIX } from "../constants";
 
 const registry = {
     /**

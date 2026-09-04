@@ -4,6 +4,8 @@ export const APP_VERSION = import.meta.env.APP_VERSION;
 export const APP_VERSION_FALLBACK = packageJson.version;
 export const RECAPTCHA_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
 
+export const DEV_TOOLS_ENABLED = import.meta.env.DEV || import.meta.env.VITE_ENABLE_DEV_TOOLS === "true";
+
 export const STORAGE_KEY_LANG = "milc_language";
 export const STORAGE_KEY_THEME = "milc_theme";
 export const STORAGE_KEY_SIMULATED_DATE = "milc_simulated_date";

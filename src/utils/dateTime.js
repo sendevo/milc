@@ -1,4 +1,4 @@
-import { ISO_DATE_RE } from "../constants/constants";
+import { ISO_DATE_RE } from "../constants";
 
 export const toDayStart = (date) => new Date(date.getFullYear(), date.getMonth(), date.getDate());
 

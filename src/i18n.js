@@ -1,6 +1,6 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-import { APP_VERSION } from "./constants/constants";
+import { APP_VERSION } from "./constants";
 
 const resources = {
     en: {
@@ -200,6 +200,8 @@ const resources = {
                 resetUsageData: "Test reset",
                 resetUsageDataAction: "Clear data and logout",
                 resetUsageDataConfirm: "This will delete all app usage records/logs (including APP-SETUP) and log out. Profile and account data will be kept. Continue?",
+                importActivity: "Import activity",
+                importActivityDataConfirm: "This will replace the existing activity with the data contained in the imported file. Continue?",
             },
             activityExport: {
                 fileName: "my-activity",
@@ -453,6 +455,8 @@ const resources = {
                 resetUsageData: "Reinicio de prueba",
                 resetUsageDataAction: "Borrar datos y cerrar sesión",
                 resetUsageDataConfirm: "Esto eliminará todos los registros/logs de uso (incluyendo APP-SETUP) y cerrará la sesión. Los datos de cuenta y perfil se conservarán. ¿Continuar?",
+                importActivity: "Importar actividad",
+                importActivityDataConfirm: "Esto reemplazará la actividad existente por la contenida en el archivo a importar. ¿Continuar?",
             },
             activityExport: {
                 fileName: "mi-actividad",

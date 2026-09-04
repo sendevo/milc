@@ -14,7 +14,7 @@ import {
     buildChartBuckets,
     averageByDate,
 } from "../utils/reportData";
-import { MILKED_ANIMALS_NODE_IDS } from "../constants/constants";
+import { MILKED_ANIMALS_NODE_IDS } from "../constants";
 
 const DairyBarChart = () => {
     const { t, i18n } = useTranslation();

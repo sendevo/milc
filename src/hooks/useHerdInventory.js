@@ -4,7 +4,7 @@ import {
     HERD_INVENTORY_SCHEMA_VERSION,
     HERD_INVENTORY_STORAGE_KEY,
     ISO_DATE_RE,
-} from "../constants/constants";
+} from "../constants";
 
 const localDateString = () => {
     const date = new Date();

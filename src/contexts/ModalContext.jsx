@@ -13,7 +13,7 @@ import {
     DialogContent,
     DialogTitle,
 } from "@mui/material";
-import { DEFAULT_MODAL_STATE } from "../constants/constants";
+import { DEFAULT_MODAL_STATE } from "../constants";
 
 const ModalContext = createContext(null);
 

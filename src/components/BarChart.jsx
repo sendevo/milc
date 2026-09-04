@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { Box, Typography, useTheme } from "@mui/material";
 import { barChartStyles as styles } from "../theme/BarChart.styles";
-import { DEFAULT_GRADIENTS } from "../constants/constants";
+import { DEFAULT_GRADIENTS } from "../constants";
 
 const toNumber = (value) => {
     const numeric = Number(value);

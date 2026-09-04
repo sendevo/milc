@@ -2,7 +2,7 @@ import { formatAsIsoDate } from "./dateTime";
 import {
     HERD_INVENTORY_NODE_TYPES,
     HERD_INVENTORY_STORAGE_KEY
-} from "../constants/constants";
+} from "../constants";
 import { toFiniteNumber } from "./index";
 import { isValidIsoDate } from "./dateTime";
 

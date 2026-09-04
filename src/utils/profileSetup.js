@@ -1,4 +1,4 @@
-import { MONTH_KEYS, PROFILE_SETUP_CONFLICTING_NODE_IDS } from "../constants/constants";
+import { MONTH_KEYS, PROFILE_SETUP_CONFLICTING_NODE_IDS } from "../constants";
 
 export function isYesMilkAllYearAnswer(answer) {
     if (answer === undefined || answer === null || answer === "") {

@@ -15,7 +15,7 @@ import BottomNavigation from "./BottomNavigation";
 import { t } from "../../model";
 import { runAction } from "../../model";
 import { surveyStepStyles as styles } from "../../theme/SurveyStep.styles";
-import { NON_NODE_TARGET_ROUTES } from "../../constants/constants";
+import { NON_NODE_TARGET_ROUTES, DEV_TOOLS_ENABLED } from "../../constants";
 
 /**
  *
@@ -213,7 +213,7 @@ const SurveyStep = ({ node, nodeId, initialAnswers = {}, onSubmit, onBack }) => 
     return (
         <ViewContainer 
             title={t(node.title)}
-            headerRightText={import.meta.env.DEV ? nodeId : undefined}
+            headerRightText={DEV_TOOLS_ENABLED ? nodeId : undefined}
             subtitle={node.subtitle ? t(node.subtitle) : undefined}
             icon={iconUrl}
             showDate={true}

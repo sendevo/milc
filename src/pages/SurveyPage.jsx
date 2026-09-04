@@ -25,7 +25,8 @@ import {
 import {
     APP_VERSION_FALLBACK,
     NON_NODE_TARGET_ROUTES,
-} from "../constants/constants";
+    DEV_TOOLS_ENABLED
+} from "../constants";
 
 const resolveNonNodeTargetRoute = (targetId) => {
     if (!targetId) return null;
@@ -74,7 +75,7 @@ const SurveyPage = () => {
     const currentDate = formatAsIsoDate(getCurrentDateTime());
 
     useEffect(() => {
-        if (!import.meta.env.DEV) return;
+        if (!DEV_TOOLS_ENABLED) return;
         if (SpecialSurveyView) {
             console.log("[survey] special view:", nodeId);
             return;
@@ -205,7 +206,7 @@ const SurveyPage = () => {
                     date: currentDate,
                 });
 
-                if (import.meta.env.DEV) {
+                if (DEV_TOOLS_ENABLED) {
                     console.log("[survey] logged answer:", {
                         nodeId,
                         scenario: node.scenario,
@@ -255,7 +256,7 @@ const SurveyPage = () => {
         const targetId = resolveTarget(node, answers);
         const targetNode = targetId ? nodes[targetId] : null;
 
-        if (import.meta.env.DEV) {
+        if (DEV_TOOLS_ENABLED) {
             console.log("[survey] target view:", targetId ?? "/home");
         }
 

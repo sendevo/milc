@@ -3,7 +3,7 @@ import {
     CURRENT_LOCAL_SCHEMA_VERSION,
     LOCAL_SCHEMA_VERSION_KEY,
     SURVEY_LOG_STORAGE_KEY,
-} from "../constants/constants";
+} from "../constants";
 
 function normalizeSurveyLogRecord(record) {
     if (!record || typeof record !== "object") return null;

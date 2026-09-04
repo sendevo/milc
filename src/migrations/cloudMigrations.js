@@ -1,6 +1,6 @@
 import { get, ref, set } from "firebase/database";
 import { db } from "../firebase";
-import { CURRENT_PROFILE_SCHEMA_VERSION } from "../constants/constants";
+import { CURRENT_PROFILE_SCHEMA_VERSION } from "../constants";
 
 export { CURRENT_PROFILE_SCHEMA_VERSION };
 

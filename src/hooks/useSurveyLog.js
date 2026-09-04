@@ -25,7 +25,7 @@ import {
     ISO_DATE_RE,
     SURVEY_LOG_RECORD_SCHEMA_VERSION,
     SURVEY_LOG_STORAGE_KEY,
-} from "../constants/constants";
+} from "../constants";
 import { cleanConflictingProfileSetupRecords } from "../utils/profileSetup";
 
 // ---------------------------------------------------------------------------

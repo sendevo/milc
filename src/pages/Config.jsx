@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { Box, Button, Checkbox, Divider, FormControl, FormControlLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
@@ -13,7 +13,8 @@ import { db } from "../firebase";
 import { removeItem } from "../utils/persistentStorage";
 import { configStyles as styles } from "../theme/Config.styles";
 import { exportActivityCsv } from "../utils/exportActivityCsv";
-import { USAGE_KEYS, USAGE_KEY_PREFIXES } from "../constants/constants";
+import { importActivityCsv } from "../utils/importActivityCsv";
+import { USAGE_KEYS, USAGE_KEY_PREFIXES, DEV_TOOLS_ENABLED } from "../constants";
 
 const collectUsageKeys = () => {
     const keys = new Set(USAGE_KEYS);
@@ -41,9 +42,11 @@ const Config = () => {
     } = useSettings();
     const { currentUser, logout } = useAuth();
     const nodes = useSurveyNodes();
-    const { clearLog, getRecords } = useSurveyLog();
+    const { clearLog, getRecords, saveAnswer } = useSurveyLog();
     const { clearLog: clearInventoryLog, getRecords: getInventoryRecords } = useHerdInventory();
     const [resetState, setResetState] = useState("idle");
+    const [importState, setImportState] = useState("idle");
+    const fileInputRef = useRef(null);
     const isSimulatedDateEnabled = Boolean(simulatedDate);
     const nodesTreeVersion = nodes?.timestamp ?? "-";
 
@@ -87,6 +90,38 @@ const Config = () => {
         });
     };
 
+    const handleImportActivity = () => {
+        if (!window.confirm(t("config.importActivityDataConfirm"))) {
+            return;
+        }
+        fileInputRef.current?.click();
+    };
+
+    const handleImportFile = async (event) => {
+        const file = event.target.files?.[0];
+        if (!file) {
+            return;
+        }
+
+        try {
+            const csvText = await file.text();
+            const result = importActivityCsv({
+                csvText,
+                nodes,
+                saveAnswer,
+            });
+
+            setImportState(result.imported > 0 ? "success" : "empty");
+            window.alert(`Imported ${result.imported} interaction rows. Skipped ${result.skipped}.`);
+        } catch (err) {
+            console.error("[config] Failed to import activity CSV:", err);
+            setImportState("error");
+            window.alert("The CSV could not be imported. Please check the column names and values.");
+        } finally {
+            event.target.value = "";
+        }
+    };
+
     return (
         <ViewContainer
             title={t("config.title")}
@@ -125,7 +160,7 @@ const Config = () => {
                     </Button>
                 </Box>
 
-                {import.meta.env.DEV && (
+                {DEV_TOOLS_ENABLED && (
                     <>
                         <Divider>
                             <Typography sx={styles.devSectionTitle}>
@@ -179,6 +214,23 @@ const Config = () => {
                                     ? t("common.loading")
                                     : t("config.resetUsageDataAction")}
                             </Button>
+                        </Box>
+
+                        <Box sx={styles.settingRow}>
+                            <Typography sx={styles.label}>{t("config.importActivity")}</Typography>
+                            <Button
+                                variant="contained"
+                                color="error"
+                                onClick={handleImportActivity}>
+                                {t("config.importActivity")}
+                            </Button>
+                            <input
+                                ref={fileInputRef}
+                                type="file"
+                                accept=".csv,text/csv"
+                                hidden
+                                onChange={handleImportFile}
+                            />
                         </Box>
                     </>
                 )}

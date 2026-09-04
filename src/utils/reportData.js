@@ -13,7 +13,7 @@ import {
     MILKED_ANIMALS_NODE_IDS,
     MONTH_KEYS,
     TOTAL_ANIMALS_NODE_IDS,
-} from "../constants/constants";
+} from "../constants";
 
 export const filterRecordsByRange = (records, from, to) => {
     if (!from || !to || from > to) return records;

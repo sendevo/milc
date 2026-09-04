@@ -2,7 +2,7 @@ import {
     getEffectiveHerdSizeOnDate,
     withoutHerdInventoryRecordForNodeAndDate,
 } from "../utils/herdInventory";
-import { VALIDATION_SEVERITY } from "../constants/constants";
+import { VALIDATION_SEVERITY } from "../constants";
 
 const getLatestRecord = (records, predicate) => {
     return records

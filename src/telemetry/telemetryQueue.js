@@ -10,7 +10,7 @@ import {
     TELEMETRY_QUEUE_KEY,
     TELEMETRY_SCHEMA_VERSION,
     TELEMETRY_SENT_IDS_KEY,
-} from "../constants/constants";
+} from "../constants";
 
 const now = () => Date.now();
 

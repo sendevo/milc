@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Box, Button, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { monthPickerStyles as styles } from "../../theme/survey/MonthPicker.styles";
-import { MONTH_KEYS } from "../../constants/constants";
+import { MONTH_KEYS } from "../../constants";
 
 /**
  * Multi-select month picker displayed as a 4×3 grid of toggle buttons.

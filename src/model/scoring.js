@@ -9,7 +9,7 @@
  *
  * See README.md for a full description of the scoring methodology.
  */
-import { SCENARIO_DEFAULTS } from "../constants/constants";
+import { SCENARIO_DEFAULTS } from "../constants";
 
 // ---------------------------------------------------------------------------
 // Periodicity helpers

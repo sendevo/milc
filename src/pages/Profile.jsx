@@ -20,7 +20,7 @@ import { useSettings } from "../contexts/SettingsContext";
 import FormCard from "../components/FormCard";
 import ViewContainer from "../components/ViewContainer";
 import { profileStyles as styles } from "../theme/Profile.styles";
-import { MONTH_KEYS } from "../constants/constants";
+import { MONTH_KEYS } from "../constants";
 import { getEffectiveHerdSizeOnDate } from "../utils/herdInventory";
 import { formatAsIsoDate } from "../utils/dateTime";
 import { formatMonthList, isNoMilkAllYearAnswer, isYesMilkAllYearAnswer } from "../utils/profileSetup";
