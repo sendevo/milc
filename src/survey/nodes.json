@@ -1357,7 +1357,7 @@
                         "target": "view-95"
                     }
                 ],
-                "id": "view-123-bottom-nav",
+                "id": "view-224-bottom-nav",
                 "type": "bottom_navigation"
             }
         ],
@@ -1847,6 +1847,19 @@
                     }
                 ],
                 "type": "image_list"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Back",
+                            "es": "Atrás"
+                        },
+                        "target": "view-196"
+                    }
+                ],
+                "id": "view-198-bottom-nav",
+                "type": "bottom_navigation"
             }
         ],
         "guide-id": "Instalaciones",
@@ -1978,6 +1991,19 @@
                     }
                 ],
                 "type": "image_list"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Back",
+                            "es": "Atrás"
+                        },
+                        "target": "view-200"
+                    }
+                ],
+                "id": "view-201-bottom-nav",
+                "type": "bottom_navigation"
             }
         ],
         "guide-id": "Instalaciones",
@@ -2077,6 +2103,19 @@
                     }
                 ],
                 "type": "image_list"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Back",
+                            "es": "Atrás"
+                        },
+                        "target": "view-202"
+                    }
+                ],
+                "id": "view-203-bottom-nav",
+                "type": "bottom_navigation"
             }
         ],
         "guide-id": "Instalaciones",
@@ -2182,6 +2221,19 @@
                     }
                 ],
                 "type": "image_list"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Back",
+                            "es": "Atrás"
+                        },
+                        "target": "view-208"
+                    }
+                ],
+                "id": "view-207-bottom-nav",
+                "type": "bottom_navigation"
             }
         ],
         "guide-id": "Insumos",
@@ -2281,6 +2333,19 @@
                     }
                 ],
                 "type": "image_list"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Back",
+                            "es": "Atrás"
+                        },
+                        "target": "view-206"
+                    }
+                ],
+                "id": "view-209-bottom-nav",
+                "type": "bottom_navigation"
             }
         ],
         "guide-id": "Insumos",
@@ -2302,6 +2367,342 @@
         "title": {
             "en": "My supplies",
             "es": "Mis insumos"
+        }
+    },
+    "view-213": {
+        "category": "pests",
+        "fields": [
+            {
+                "id": "view-213-select",
+                "options": [
+                    {
+                        "label": {
+                            "en": "Yes",
+                            "es": "Si"
+                        },
+                        "target": "view-215",
+                        "value": "yes"
+                    },
+                    {
+                        "label": {
+                            "en": "No",
+                            "es": "No"
+                        },
+                        "target": "view-270",
+                        "value": "no"
+                    },
+                    {
+                        "label": {
+                            "en": "Don't know",
+                            "es": "No se"
+                        },
+                        "target": "view-214",
+                        "value": "dont-know"
+                    }
+                ],
+                "type": "select"
+            }
+        ],
+        "guide-id": "Plagas",
+        "icon": "pest.png",
+        "manual-page": "",
+        "milking-method": "",
+        "modified": {
+            "at": "2026-05-28T15:10:00.000Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "semester",
+        "scenario": "PLAGAS",
+        "score-answer": "yes",
+        "severity": 3,
+        "showDate": true,
+        "subtitle": {
+            "en": "Do you take precautions to prevent insects and rodents?",
+            "es": "¿Tomas recaudos para prevenir insectos y roedores?"
+        },
+        "title": {
+            "en": "Pests",
+            "es": "Plagas"
+        }
+    },
+    "view-214": {
+        "category": "pests",
+        "fields": [
+            {
+                "audios": [
+                    {
+                        "src": "AUDIO21.mp3"
+                    }
+                ],
+                "id": "view-214-audio",
+                "type": "audio_list"
+            },
+            {
+                "id": "view-214-image",
+                "images": [
+                    {
+                        "src": "facilities_roof.png"
+                    }
+                ],
+                "type": "image_list"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Back",
+                            "es": "Atrás"
+                        },
+                        "target": "view-213"
+                    }
+                ],
+                "id": "view-214-bottom-nav",
+                "type": "bottom_navigation"
+            }
+        ],
+        "guide-id": "Plagas",
+        "manual-page": "",
+        "milking-method": "",
+        "modified": {
+            "at": "2026-05-28T15:10:00.000Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "",
+        "scenario": "PLAGAS",
+        "score-answer": "",
+        "severity": 0,
+        "showDate": true,
+        "subtitle": {
+            "en": "Prevention of insects and rodents",
+            "es": "Prevención de insectos y roedores"
+        },
+        "title": {
+            "en": "Pests",
+            "es": "Plagas"
+        }
+    },
+    "view-215": {
+        "category": "pests",
+        "fields": [
+            {
+                "id": "view-215-select",
+                "options": [
+                    {
+                        "label": {
+                            "en": "Yes",
+                            "es": "Si"
+                        },
+                        "target": "view-272",
+                        "value": "yes"
+                    },
+                    {
+                        "label": {
+                            "en": "No",
+                            "es": "No"
+                        },
+                        "target": "view-271",
+                        "value": "no"
+                    },
+                    {
+                        "label": {
+                            "en": "Don't know",
+                            "es": "No se"
+                        },
+                        "target": "view-269",
+                        "value": "dont-know"
+                    }
+                ],
+                "type": "select"
+            }
+        ],
+        "guide-id": "Plagas",
+        "icon": "pest.png",
+        "manual-page": "",
+        "milking-method": "",
+        "modified": {
+            "at": "2026-05-28T15:10:00.000Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "semester",
+        "scenario": "PLAGAS",
+        "score-answer": "yes",
+        "severity": 3,
+        "showDate": true,
+        "subtitle": {
+            "en": "Do you carry out pest and rodent control?",
+            "es": "¿Realizás control de plagas y roedores?"
+        },
+        "title": {
+            "en": "Pests",
+            "es": "Plagas"
+        }
+    },
+    "view-269": {
+        "category": "pests",
+        "fields": [
+            {
+                "audios": [
+                    {
+                        "src": "AUDIO10.mp3"
+                    }
+                ],
+                "id": "view-269-audio",
+                "type": "audio_list"
+            },
+            {
+                "id": "view-269-image",
+                "images": [
+                    {
+                        "src": "insects.png"
+                    }
+                ],
+                "type": "image_list"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Back",
+                            "es": "Atrás"
+                        },
+                        "target": "view-215"
+                    }
+                ],
+                "id": "view-269-bottom-nav",
+                "type": "bottom_navigation"
+            }
+        ],
+        "guide-id": "Plagas",
+        "manual-page": "",
+        "milking-method": "",
+        "modified": {
+            "at": "2026-05-28T15:10:00.000Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "",
+        "scenario": "PLAGAS",
+        "score-answer": "",
+        "severity": 0,
+        "subtitle": {
+            "en": "Prevention of insects and rodents",
+            "es": "Prevención de insectos y roedores"
+        },
+        "title": {
+            "en": "Pests",
+            "es": "Plagas"
+        }
+    },
+    "view-270": {
+        "category": "pests",
+        "fields": [
+            {
+                "id": "view-270-alert",
+                "message": {
+                    "en": "<b>Attention</b><br>Check your facilities to prevent pests from entering",
+                    "es": "<b>Atención</b><br>Revisá tus instalaciones para evitar el ingreso de plagas"
+                },
+                "severity": "warning",
+                "type": "alert"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Back",
+                            "es": "Atrás"
+                        },
+                        "target": "view-213"
+                    }
+                ],
+                "id": "view-270-bottom-nav",
+                "type": "bottom_navigation"
+            }
+        ],
+        "guide-id": "Plagas",
+        "manual-page": "",
+        "milking-method": "",
+        "modified": {
+            "at": "2026-05-28T15:10:00.000Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "",
+        "scenario": "PLAGAS",
+        "score-answer": "",
+        "severity": 0,
+        "title": {
+            "en": "Pests",
+            "es": "Plagas"
+        }
+    },
+    "view-271": {
+        "category": "pests",
+        "fields": [
+            {
+                "id": "view-271-alert",
+                "message": {
+                    "en": "<b>Attention</b><br>Control the presence of pests in your facilities",
+                    "es": "<b>Atención</b><br>Controlá la presencia de plagas en tus instalaciones"
+                },
+                "severity": "warning",
+                "type": "alert"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Back",
+                            "es": "Atrás"
+                        },
+                        "target": "view-215"
+                    }
+                ],
+                "id": "view-271-bottom-nav",
+                "type": "bottom_navigation"
+            }
+        ],
+        "guide-id": "Plagas",
+        "manual-page": "",
+        "milking-method": "",
+        "modified": {
+            "at": "2026-05-28T15:10:00.000Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "",
+        "scenario": "PLAGAS",
+        "score-answer": "",
+        "severity": 0,
+        "title": {
+            "en": "Pests",
+            "es": "Plagas"
+        }
+    },
+    "view-272": {
+        "category": "pests",
+        "fields": [
+            {
+                "id": "view-272-alert",
+                "message": {
+                    "en": "Done!<br>You completed pest control",
+                    "es": "¡Listo!<br>Completaste el control de plagas"
+                },
+                "severity": "info",
+                "type": "alert"
+            }
+        ],
+        "guide-id": "Plagas",
+        "manual-page": "",
+        "milking-method": "",
+        "modified": {
+            "at": "2026-05-28T15:10:00.000Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "",
+        "scenario": "PLAGAS",
+        "score-answer": "",
+        "severity": 0,
+        "title": {
+            "en": "Pests",
+            "es": "Plagas"
         }
     },
     "view-produce-year-round": {
@@ -3432,6 +3833,19 @@
                 },
                 "severity": "warning",
                 "type": "alert"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Back",
+                            "es": "Atrás"
+                        },
+                        "target": "view-208"
+                    }
+                ],
+                "id": "view-267-bottom-nav",
+                "type": "bottom_navigation"
             }
         ],
         "guide-id": "Insumos",

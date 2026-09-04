@@ -66,9 +66,9 @@ export default defineConfig({
             urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
             handler: "CacheFirst",
             options: { cacheName: "google-fonts-cache" },
-            maximumFileSizeToCacheInBytes: 5000000
           },
         ],
+        maximumFileSizeToCacheInBytes: 5000000
       },
     }),
   ],
