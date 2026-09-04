@@ -1,5 +1,5 @@
 {
-    "timestamp": 1787585024,
+    "timestamp": 1788537903704,
     "view-100": {
         "category": "before-milking",
         "fields": [
@@ -1299,6 +1299,19 @@
                     }
                 ],
                 "type": "image_list"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Back",
+                            "es": "Atrás"
+                        },
+                        "target": "view-180"
+                    }
+                ],
+                "id": "view-182-bottom-nav",
+                "type": "bottom_navigation"
             }
         ],
         "guide-id": "",
@@ -1496,6 +1509,19 @@
                     }
                 ],
                 "type": "image_list"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Back",
+                            "es": "Atrás"
+                        },
+                        "target": "view-185"
+                    }
+                ],
+                "id": "view-187-bottom-nav",
+                "type": "bottom_navigation"
             }
         ],
         "guide-id": "Alimentación",
@@ -1711,6 +1737,19 @@
                 },
                 "severity": "warning",
                 "type": "alert"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Back",
+                            "es": "Atrás"
+                        },
+                        "target": "view-255"
+                    }
+                ],
+                "id": "view-194-bottom-nav",
+                "type": "bottom_navigation"
             }
         ],
         "guide-id": "",
@@ -3159,6 +3198,19 @@
                     }
                 ],
                 "type": "image_list"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Back",
+                            "es": "Atrás"
+                        },
+                        "target": "view-260"
+                    }
+                ],
+                "id": "view-259-bottom-nav",
+                "type": "bottom_navigation"
             }
         ],
         "guide-id": "Alimentación",
@@ -3222,6 +3274,19 @@
                 },
                 "severity": "warning",
                 "type": "alert"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Back",
+                            "es": "Atrás"
+                        },
+                        "target": "view-188"
+                    }
+                ],
+                "id": "view-261-bottom-nav",
+                "type": "bottom_navigation"
             }
         ],
         "guide-id": "Alimentación",
@@ -5323,7 +5388,7 @@
         "category": "",
         "fields": [
             {
-                "id": "view-285-text-block",
+                "id": "view-result-regular-text-block",
                 "message": {
                     "en": "<b>High hazard index</b>",
                     "es": "<b>Índice de peligro alto</b>"
@@ -5331,7 +5396,7 @@
                 "type": "text_block"
             },
             {
-                "id": "view-result-regular",
+                "id": "view-result-regular-select",
                 "options": [
                     {
                         "label": {
