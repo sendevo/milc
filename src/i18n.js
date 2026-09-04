@@ -11,7 +11,8 @@ const resources = {
                 start: "Start",
             },
             login: {
-                title: "Login",
+                title: "Welcome!",
+                subtitle: "Login",
                 email: "Email",
                 password: "Password",
                 submit: "Login",
@@ -20,7 +21,8 @@ const resources = {
                 continueWithoutAccount: "Continue without account",
             },
             register: {
-                title: "Register",
+                title: "Welcome!",
+                subtitle: "Register",
                 name: "Name",
                 place: "Location",
                 healthCard: "Health Card (Carnet Sanitario)",
@@ -262,7 +264,8 @@ const resources = {
                 start: "Comenzar",
             },
             login: {
-                title: "Iniciar sesión",
+                title: "¡Bienvenido!",
+                subtitle: "Iniciar sesión",
                 email: "Correo electrónico",
                 password: "Contraseña",
                 submit: "Ingresar",
@@ -271,7 +274,8 @@ const resources = {
                 continueWithoutAccount: "Continuar sin cuenta",
             },
             register: {
-                title: "Registrarse",
+                title: "¡Bienvenido!",
+                subtitle: "Registrarse",
                 name: "Nombre",
                 place: "Lugar",
                 healthCard: "Carnet Sanitario",

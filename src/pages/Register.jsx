@@ -4,7 +4,8 @@ import { useTranslation } from "react-i18next";
 import { Box, Button, TextField } from "@mui/material";
 import { useAuth } from "../contexts/AuthContext";
 import FormCard from "../components/FormCard";
-import { registerStyles as styles } from "../theme/Register.styles";
+import ViewContainer from "../components/ViewContainer";
+import { registerLoginStyles as styles } from "../theme/RegisterLogin.styles";
 
 const Register = () => {
     const { t } = useTranslation();
@@ -39,85 +40,78 @@ const Register = () => {
     };
 
     return (
-        <Box
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            minHeight="100vh"
-            px={3}
-            pt={8}
-            pb={5}
-            sx={styles.page}>
-            <FormCard
-                id="register-form"
-                onSubmit={handleSubmit}
-                title={t("register.title")}
-                error={error}>
-                <TextField
-                    placeholder={t("register.name")}
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    required
-                    fullWidth />
-                <TextField
-                    placeholder={t("register.place")}
-                    type="text"
-                    value={place}
-                    onChange={(e) => setPlace(e.target.value)}
-                    required
-                    fullWidth />
-                <TextField
-                    placeholder={t("register.healthCard")}
-                    type="text"
-                    value={healthCard}
-                    onChange={(e) => setHealthCard(e.target.value)}
-                    required
-                    fullWidth />
-                <TextField
-                    placeholder={t("login.email")}
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    fullWidth />
-                <TextField
-                    placeholder={t("login.password")}
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                    fullWidth />
-                <TextField
-                    placeholder={t("register.confirmPassword")}
-                    type="password"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    required
-                    fullWidth />
-            </FormCard>
+        <ViewContainer title={t("register.title")}>
+            <Box sx={styles.page}>
+                <FormCard
+                    sx={styles.formCard}
+                    id="register-form"
+                    onSubmit={handleSubmit}
+                    title={t("register.subtitle")}
+                    error={error}>
+                    <TextField
+                        placeholder={t("register.name")}
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        required
+                        fullWidth />
+                    <TextField
+                        placeholder={t("register.place")}
+                        type="text"
+                        value={place}
+                        onChange={(e) => setPlace(e.target.value)}
+                        required
+                        fullWidth />
+                    <TextField
+                        placeholder={t("register.healthCard")}
+                        type="text"
+                        value={healthCard}
+                        onChange={(e) => setHealthCard(e.target.value)}
+                        required
+                        fullWidth />
+                    <TextField
+                        placeholder={t("login.email")}
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                        fullWidth />
+                    <TextField
+                        placeholder={t("login.password")}
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                        fullWidth />
+                    <TextField
+                        placeholder={t("register.confirmPassword")}
+                        type="password"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        required
+                        fullWidth />
+                </FormCard>
 
-            <Box flexGrow={1} minHeight={60} />
-
-            <Box width="100%" maxWidth={380} display="flex" flexDirection="column" gap={1}>
-                <Button
-                    type="submit"
-                    form="register-form"
-                    variant="contained"
-                    fullWidth
-                    disabled={loading}
-                    sx={styles.submitButton}>
-                    {t("register.submit")}
-                </Button>
-                <Button
-                    variant="text"
-                    onClick={() => navigate("/login")}
-                    fullWidth
-                    sx={styles.backToLoginButton}>
-                    {t("register.backToLogin")}
-                </Button>
+                <Box sx={styles.buttonContainer}>
+                    <Button
+                        type="submit"
+                        form="register-form"
+                        variant="contained"
+                        fullWidth
+                        disabled={loading}
+                        sx={styles.submitButton}>
+                        {t("register.submit")}
+                    </Button>
+                    <Button
+                        variant="text"
+                        onClick={() => navigate("/login")}
+                        fullWidth
+                        sx={styles.backToLoginButton}>
+                        {t("register.backToLogin")}
+                    </Button>
+                </Box>
             </Box>
-        </Box>
+        </ViewContainer>
     );
 };
 
