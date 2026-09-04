@@ -18,6 +18,19 @@ export const profileStyles = {
         flexDirection: "column",
         gap: 1
     },
+    accordionContainer: {
+        bgcolor: "background.paper",
+        border: "1px solid",
+        borderColor: "divider",
+        borderRadius: 4,
+        px: 2,
+        py: 2,
+        width: "100%",
+        maxWidth: 380,
+        display: "flex",
+        flexDirection: "column",
+        gap: 2.5,
+    },
     submitButton: {
         bgcolor: "#1a5f70",
         "&:hover": { bgcolor: "#154f5e" },

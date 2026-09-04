@@ -8,7 +8,7 @@ import {
 
 const surveyRecords = [
     {
-        nodeId: "view-220",
+        nodeId: "view-animal-count",
         scenario: "APP-SETUP",
         answer: 10,
         date: "2026-09-01",
@@ -55,7 +55,7 @@ describe("herdInventory", () => {
             [
                 ...surveyRecords,
                 {
-                    nodeId: "view-220",
+                    nodeId: "view-animal-count",
                     scenario: "APP-SETUP",
                     answer: 20,
                     date: "2026-09-03",

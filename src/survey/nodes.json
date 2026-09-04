@@ -141,18 +141,18 @@
             "es": "Al ordeñar"
         }
     },
-    "view-107": {
+    "view-milking-room": {
         "category": "",
         "fields": [
             {
-                "id": "view-107-select",
+                "id": "view-milking-room-select",
                 "options": [
                     {
                         "label": {
                             "en": "Yes",
                             "es": "Si"
                         },
-                        "target": "view-28",
+                        "target": "view-user-profile-completed",
                         "value": "yes"
                     },
                     {
@@ -160,7 +160,7 @@
                             "en": "No",
                             "es": "No"
                         },
-                        "target": "view-28",
+                        "target": "view-user-profile-completed",
                         "value": "no"
                     }
                 ],
@@ -612,6 +612,62 @@
                     }
                 ],
                 "id": "view-128-bottom-nav",
+                "type": "bottom_navigation"
+            }
+        ],
+        "guide-id": "Filtrar la leche recién ordeñada, conservar la leche según momento de elaboración",
+        "manual-page": "31 y 32",
+        "milking-method": "mecanico",
+        "modified": {
+            "at": "2026-05-28T03:23:50.694Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "",
+        "scenario": "ACON-01-02",
+        "score-answer": "",
+        "severity": 0,
+        "showDate": true,
+        "subtitle": {
+            "en": "Before storing the milk",
+            "es": "Antes de guardar la leche"
+        },
+        "title": {
+            "en": "Milk care",
+            "es": "Acondicionar la leche"
+        }
+    },
+    "view-96": {
+        "category": "milk-care",
+        "fields": [
+            {
+                "audios": [
+                    {
+                        "src": "AUDIO10.mp3"
+                    }
+                ],
+                "id": "view-96-audio",
+                "type": "audio_list"
+            },
+            {
+                "id": "view-96-image",
+                "images": [
+                    {
+                        "src": "cream.png"
+                    }
+                ],
+                "type": "image_list"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Back",
+                            "es": "Atrás"
+                        },
+                        "target": "view-94"
+                    }
+                ],
+                "id": "view-96-bottom-nav",
                 "type": "bottom_navigation"
             }
         ],
@@ -1264,6 +1320,53 @@
         "title": {
             "en": "Health",
             "es": "Sanidad"
+        }
+    },
+    "view-224": {
+        "category": "health",
+        "fields": [
+            {
+                "audios": [
+                    {
+                        "src": "AUDIO11.mp3"
+                    }
+                ],
+                "id": "view-224-audio",
+                "type": "audio_list"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Back",
+                            "es": "Atrás"
+                        },
+                        "target": "view-95"
+                    }
+                ],
+                "id": "view-123-bottom-nav",
+                "type": "bottom_navigation"
+            }
+        ],
+        "guide-id": "Filtrar la leche recién ordeñada, conservar la leche según momento de elaboración",
+        "manual-page": "31 y 32",
+        "milking-method": "manual",
+        "modified": {
+            "at": "2026-05-28T05:29:40.086Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "",
+        "scenario": "ACON-01-02",
+        "score-answer": "",
+        "severity": 0,
+        "showDate": true,
+        "subtitle": {
+            "en": "Label the container",
+            "es": "Rotular el envase"
+        },
+        "title": {
+            "en": "Condition the milk",
+            "es": "Acondicionar la leche"
         }
     },
     "view-184": {
@@ -2162,27 +2265,27 @@
             "es": "Mis insumos"
         }
     },
-    "view-217": {
+    "view-produce-year-round": {
         "category": "",
         "fields": [
             {
-                "id": "view-217-select",
+                "id": "view-produce-year-round-select",
                 "options": [
                     {
                         "label": {
                             "en": "Yes",
                             "es": "Sí"
                         },
-                        "target": "view-220",
-                        "value": "view-217-opt-yes"
+                        "target": "view-animal-count",
+                        "value": "view-produce-year-round-opt-yes"
                     },
                     {
                         "label": {
                             "en": "No",
                             "es": "No"
                         },
-                        "target": "view-218",
-                        "value": "view-217-opt-no"
+                        "target": "view-milking-calendar",
+                        "value": "view-produce-year-round-opt-no"
                     }
                 ],
                 "type": "select"
@@ -2208,12 +2311,12 @@
             "es": "Mi perfil"
         }
     },
-    "view-218": {
+    "view-milking-calendar": {
         "category": "",
         "fields": [
             {
-                "id": "view-220-month-picker",
-                "target": "view-220",
+                "id": "view-animal-count-month-picker",
+                "target": "view-animal-count",
                 "type": "month_picker"
             }
         ],
@@ -2237,15 +2340,15 @@
             "es": "Mi perfil"
         }
     },
-    "view-220": {
+    "view-animal-count": {
         "category": "",
         "fields": [
             {
                 "default": 0,
-                "id": "view-220-number",
+                "id": "view-animal-count-number",
                 "min": 0,
                 "step": 1,
-                "target": "view-24",
+                "target": "view-milking-method",
                 "type": "number_input"
             }
         ],
@@ -2341,7 +2444,7 @@
                             "en": "No",
                             "es": "No"
                         },
-                        "target": "view-239",
+                        "target": "view-111",
                         "value": "no"
                     },
                     {
@@ -2469,7 +2572,7 @@
             "es": "Antes de ordeñar"
         }
     },
-    "view-24": {
+    "view-milking-method": {
         "category": "",
         "fields": [
             {
@@ -2480,7 +2583,7 @@
                             "en": "Manual",
                             "es": "Manual"
                         },
-                        "target": "view-28",
+                        "target": "view-user-profile-completed",
                         "value": "manual"
                     },
                     {
@@ -2488,7 +2591,7 @@
                             "en": "Mechanical",
                             "es": "Mecánico"
                         },
-                        "target": "view-107",
+                        "target": "view-milking-room",
                         "value": "mec"
                     }
                 ],
@@ -3331,7 +3434,7 @@
             "es": "Mis insumos"
         }
     },
-    "view-28": {
+    "view-user-profile-completed": {
         "category": "",
         "guide-id": "Seteo de app",
         "manual-page": "-",
@@ -3345,7 +3448,7 @@
         },
         "fields": [
             {
-                "id": "view-28-alert",
+                "id": "view-user-profile-completed-alert",
                 "message": {
                     "en": "Done!<br>You can start using the app",
                     "es": "¡Listo!<br>Ya podés comenzar a usar la app"
@@ -3712,6 +3815,67 @@
             "es": "Al ordeñar"
         }
     },
+    "view-250": {
+        "category": "during-milking",
+        "fields": [
+            {
+                "audios": [
+                    {
+                        "src": "AUDIO4-2.mp3"
+                    }
+                ],
+                "id": "view-45-audio",
+                "type": "audio_list"
+            },
+            {
+                "id": "view-250-image-list",
+                "images": [
+                    {
+                        "src": "hands.png"
+                    },
+                    {
+                        "src": "gauntlets.png"
+                    },
+                    {
+                        "src": "nose.png"
+                    }
+                ],
+                "type": "image_list"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Back",
+                            "es": "Atrás"
+                        },
+                        "target": "view-243"
+                    }
+                ],
+                "id": "view-250-bottom-nav",
+                "type": "bottom_navigation"
+            }
+        ],
+        "guide-id": "Inspección de ubres y despunte",
+        "manual-page": "16",
+        "milking-method": "todos",
+        "modified": {
+            "at": "2026-05-28T04:08:02.364Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "",
+        "scenario": "ORD-02-03",
+        "score-answer": "",
+        "severity": 0,
+        "subtitle": {
+            "en": "Your health in the farm",
+            "es": "Tu salud en el tambo"
+        },
+        "title": {
+            "en": "When milking",
+            "es": "Al ordeñar"
+        }
+    },
     "view-46": {
         "category": "during-milking",
         "fields": [
@@ -3787,6 +3951,48 @@
                     }
                 ],
                 "id": "view-47-bottom-nav",
+                "type": "bottom_navigation"
+            }
+        ],
+        "guide-id": "Las personas involucradas en el tambo deben conocer y aplicar las indicaciones de salud",
+        "manual-page": "22, 23",
+        "milking-method": "todos",
+        "modified": {
+            "at": "2026-05-28T04:08:14.319Z",
+            "by": "matias.micheletto@uns.edu.ar"
+        },
+        "periodicity": "",
+        "scenario": "ORD-02-03",
+        "score-answer": "",
+        "severity": 0,
+        "title": {
+            "en": "When milking",
+            "es": "Al ordeñar"
+        }
+    },
+    "view-247": {
+        "category": "during-milking",
+        "fields": [
+            {
+                "id": "view-247-alert",
+                "message": {
+                    "en": "Attention<br>Do not milk with sympthoms",
+                    "es": "Atención<br>No ordeñes con síntomas"
+                },
+                "severity": "warning",
+                "type": "alert"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Ok",
+                            "es": "Aceptar"
+                        },
+                        "target": "view-244"
+                    }
+                ],
+                "id": "view-247-bottom-nav",
                 "type": "bottom_navigation"
             }
         ],
@@ -3979,7 +4185,7 @@
                             "en": "No",
                             "es": "No"
                         },
-                        "target": "vew-112",
+                        "target": "view-112",
                         "value": "no"
                     },
                     {
@@ -4156,7 +4362,7 @@
                             "en": "Next",
                             "es": "Siguiente"
                         },
-                        "target": "view-158"
+                        "target": "view-58"
                     }
                 ],
                 "id": "view-57-navigation",
@@ -4764,7 +4970,7 @@
         "severity": 0,
         "showDate": true,
         "title": {
-            "en": "",
+            "en": "Condition the milk",
             "es": "Acondicionar la leche"
         }
     },

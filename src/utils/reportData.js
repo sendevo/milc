@@ -377,7 +377,7 @@ const getLatestRecordByNodeId = (records, nodeId) => {
 
 export const buildSetupData = (nodes, records, t) => {
     const milkingMethodNodeId = findNodeIdByFieldId(nodes, "milk-select");
-    const milkingRoomNodeId = findNodeIdByFieldId(nodes, "view-107-select");
+    const milkingRoomNodeId = findNodeIdByFieldId(nodes, "view-milking-room-select");
 
     const milkingMethodRecord = getLatestRecordByNodeId(records, milkingMethodNodeId);
     const milkingRoomRecord = getLatestRecordByNodeId(records, milkingRoomNodeId);

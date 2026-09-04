@@ -5,7 +5,7 @@ const t = (key) => key;
 
 const baseRecords = [
     {
-        nodeId: "view-220",
+        nodeId: "view-animal-count",
         scenario: "APP-SETUP",
         answer: 10,
         timestamp: 100,
@@ -63,7 +63,7 @@ describe("validateSurveySubmission", () => {
         const records = [
             ...baseRecords,
             {
-                nodeId: "view-220",
+                nodeId: "view-animal-count",
                 scenario: "APP-SETUP",
                 answer: 8,
                 timestamp: 200,

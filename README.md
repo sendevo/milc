@@ -287,18 +287,18 @@ The **scoreable moment** is at `view-110`. A "Yes" answer to "Did you check udde
 On first launch, the user completes a one-time profile setup. The flow is:
 
 ```
-view-217 → "Do you produce milk all year round?"
-             Yes → view-220
-             No  → view-218 → month picker → view-220
+view-produce-year-round → "Do you produce milk all year round?"
+             Yes → view-animal-count
+             No  → view-milking-calendar → month picker → view-animal-count
 
-view-220 → Enter number of dairy animals → view-24
+view-animal-count → Enter number of dairy animals → view-milking-method
 
-view-24  → Select milking method:
+view-milking-method  → Select milking method:
              Manual     → user-profile (setup complete)
-             Mechanical → view-107
+             Mechanical → view-milking-room
 
-view-107 → "Do you have a milking parlour?"
-             Yes / No   → view-28 (setup complete)
+view-milking-room → "Do you have a milking parlour?"
+             Yes / No   → view-user-profile-completed (setup complete)
 ```
 
 The answers collected here drive which nodes are shown throughout the app (`milking-method` filter) and when periodicity counters should be active (production months, animal count).
@@ -320,7 +320,7 @@ The `MilkBarChart` page includes a derived metric shown as liters per animal (`l
 Current implementation considerations:
 
 - Milk amount per day comes from the latest answer of node `view-55` for that date.
-- Animal count per day comes from node `view-220` using latest-per-date resolution.
+- Animal count per day comes from node `view-animal-count` using latest-per-date resolution.
 - Animal count is treated as a step function in time: for each day in the selected range, use that day value if present; otherwise carry forward the latest known value.
 - If there is no animal record inside the range start, seed with the latest valid animal count before `fromDate`.
 - Days without a valid animal count (`<= 0` or missing historical seed) are excluded from liters-per-animal averaging.

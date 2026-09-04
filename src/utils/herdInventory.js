@@ -28,7 +28,7 @@ const compareEvents = (left, right) => {
 
 const buildSnapshotEvents = (surveyRecords = []) => {
     return surveyRecords
-        .filter((record) => record?.nodeId === "view-220" && record?.scenario === "APP-SETUP")
+        .filter((record) => record?.nodeId === "view-animal-count" && record?.scenario === "APP-SETUP")
         .map((record) => {
             const count = toFiniteNumber(record.answer);
             if (!isValidIsoDate(record.date) || count === null || count < 0) {

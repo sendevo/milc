@@ -78,6 +78,11 @@ export const SCENARIO_DEFAULTS = {
     "SUPPLY-02": { correctAnswer: "yes", severity: 3, periodicity: "semester", category: "supplies" },
 };
 
+export const PROFILE_SETUP_CONFLICTING_NODE_IDS = {
+    "view-produce-year-round": new Set(["view-produce-year-round", "view-217", "view-milking-calendar", "view-218"]),
+    "view-milking-calendar": new Set(["view-milking-calendar", "view-218", "view-produce-year-round", "view-217"]),
+};
+
 export const CHECKS_BY_RATING = {
     excellent: 4,
     "very-good": 3,
@@ -85,7 +90,7 @@ export const CHECKS_BY_RATING = {
     "needs-improvement": 1,
 };
 
-export const TOTAL_ANIMALS_NODE_IDS = ["view-220"];
+export const TOTAL_ANIMALS_NODE_IDS = ["view-animal-count"];
 export const MILKED_ANIMALS_NODE_IDS = ["view-235", "view-36"];
 export const MILK_LITERS_NODE_ID = "view-55";
 export const MASTITIS_NODE_IDS = ["view-236", "view-42", "view-189"];

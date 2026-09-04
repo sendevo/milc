@@ -26,6 +26,7 @@ import {
     SURVEY_LOG_RECORD_SCHEMA_VERSION,
     SURVEY_LOG_STORAGE_KEY,
 } from "../constants/constants";
+import { cleanConflictingProfileSetupRecords } from "../utils/profileSetup";
 
 // ---------------------------------------------------------------------------
 // Local-date helper
@@ -134,9 +135,11 @@ export const useSurveyLog = () => {
         };
 
         setRecords((prev) => {
+            const cleanedPrev = cleanConflictingProfileSetupRecords(prev, nodeId, scenario, effectiveDate);
+
             // Strict overwrite policy: keep only one record per scenario+node per day.
             const next = [
-                ...prev.filter(
+                ...cleanedPrev.filter(
                     (r) => !(
                         r.scenario === scenario &&
                         r.nodeId === nodeId &&

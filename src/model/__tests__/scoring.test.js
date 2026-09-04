@@ -235,7 +235,7 @@ describe("computeFullScore", () => {
             fields: [{ id: "udder_clean", type: "select", options: [] }],
         },
         // Non-scoreable node — should be ignored.
-        "view-28": {
+        "view-user-profile-completed": {
             scenario:    "-",
             fields: [],
         },

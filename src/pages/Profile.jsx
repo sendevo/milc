@@ -1,7 +1,16 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Box, Button, Divider, TextField, Typography } from "@mui/material";
+import { 
+    Box, 
+    Button, 
+    TextField, 
+    Typography,
+    Accordion,
+    AccordionDetails,
+    AccordionSummary 
+} from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useAuth } from "../contexts/AuthContext";
 import { useSurveyNodes } from "../hooks/useSurveyNodes";
 import { useSurveyLog } from "../hooks/useSurveyLog";
@@ -14,6 +23,7 @@ import { profileStyles as styles } from "../theme/Profile.styles";
 import { MONTH_KEYS } from "../constants/constants";
 import { getEffectiveHerdSizeOnDate } from "../utils/herdInventory";
 import { formatAsIsoDate } from "../utils/dateTime";
+import { formatMonthList, isNoMilkAllYearAnswer, isYesMilkAllYearAnswer } from "../utils/profileSetup";
 
 const Profile = () => {
     const { t, i18n } = useTranslation();
@@ -24,7 +34,7 @@ const Profile = () => {
     const { getRecordsByScenario } = useSurveyLog();
     const { getRecords: getInventoryRecords } = useHerdInventory();
     const { getCurrentDateTime } = useSettings();
-    const hasUserProfileSurvey = Boolean(nodes["view-217"]);
+    const hasUserProfileSurvey = Boolean(nodes["view-produce-year-round"]);
 
     const [name, setName] = useState("");
     const [place, setPlace] = useState("");
@@ -59,7 +69,12 @@ const Profile = () => {
                 return (Number.isFinite(aNum) ? aNum : 0) - (Number.isFinite(bNum) ? bNum : 0);
             });
 
-        return setupNodes.flatMap(({ nodeId, node }) => {
+        const productionMonthsNode = setupNodes.find(({ nodeId }) => nodeId === "view-milking-calendar");
+        const productionMonthsLabel = productionMonthsNode
+            ? (productionMonthsNode.node["setup-field-name"]?.[lang] || productionMonthsNode.node["setup-field-name"]?.en || productionMonthsNode.node["setup-field-name"]?.es)
+            : t("profile.productionMonths");
+
+        const profileRows = setupNodes.flatMap(({ nodeId, node }) => {
                 const sfn = node["setup-field-name"];
                 const label = sfn?.[lang] || sfn?.en || sfn?.es;
                 const rec = latestByNode[nodeId];
@@ -69,7 +84,7 @@ const Profile = () => {
                     return [];
                 }
 
-                if (nodeId === "view-220" && effectiveHerdSizeToday !== null) {
+                if (nodeId === "view-animal-count" && effectiveHerdSizeToday !== null) {
                     return [{ label, answerLabel: String(effectiveHerdSizeToday) }];
                 }
 
@@ -85,11 +100,7 @@ const Profile = () => {
                         answerLabel = String(rec.answer);
                         break;
                     } else if (field.type === "month_picker" && Array.isArray(rec.answer)) {
-                        answerLabel = rec.answer
-                            .slice()
-                            .sort((a, b) => a - b)
-                            .map((m) => t(`survey.months.${MONTH_KEYS[m - 1]}`))
-                            .join(", ");
+                        answerLabel = formatMonthList(rec.answer, t);
                         if (!answerLabel) {
                             return [];
                         }
@@ -98,6 +109,25 @@ const Profile = () => {
                 }
                 return [{ label, answerLabel }];
             });
+
+        const allYearAnswer = latestByNode["view-produce-year-round"]?.answer;
+        const productionMonths = Array.isArray(latestByNode["view-milking-calendar"]?.answer)
+            ? latestByNode["view-milking-calendar"].answer
+            : [];
+        const formattedProductionMonths = formatMonthList(productionMonths, t);
+
+        if (isNoMilkAllYearAnswer(allYearAnswer) && formattedProductionMonths) {
+            return [
+                ...profileRows.filter((row) => row.label !== productionMonthsLabel),
+                { label: productionMonthsLabel, answerLabel: formattedProductionMonths },
+            ];
+        }
+
+        if (isYesMilkAllYearAnswer(allYearAnswer)) {
+            return profileRows.filter((row) => row.label !== productionMonthsLabel);
+        }
+
+        return profileRows;
     }, [getCurrentDateTime, getInventoryRecords, getRecordsByScenario, nodes, i18n.language, t]);
 
     const hasConfiguredSurveyData = useMemo(
@@ -246,7 +276,7 @@ const Profile = () => {
                             <Button
                                 variant="contained"
                                 fullWidth
-                                onClick={() => navigate("/survey/view-217")}>
+                                onClick={() => navigate("/survey/view-produce-year-round")}>
                                 {hasConfiguredSurveyData
                                     ? t("profile.profileSurveyUpdate")
                                     : t("profile.profileSurveyComplete")}
@@ -255,56 +285,104 @@ const Profile = () => {
                     )}
                 </Box>
 
-                <Divider sx={{ width: "100%", maxWidth: 380 }} />
-
                 {/* Change password section */}
-                <FormCard
-                    id="password-form"
-                    onSubmit={handlePasswordSubmit}
-                    title={t("profile.passwordSection")}
-                    error={passwordError}>
-                    {passwordSuccess && (
-                        <Typography variant="body2" color="success.main" textAlign="center">
-                            {t("profile.passwordSuccess")}
+                <Accordion
+                    disableGutters
+                    sx={{
+                        ...styles.accordionContainer,
+                        boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.08)",
+                        "&:before": {
+                            display: "none",
+                        },
+                    }}>
+                    <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        sx={{
+                            px: 0,
+                            minHeight: 0,
+                            width: "100%",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            "& .MuiAccordionSummary-content": {
+                                margin: 0,
+                                width: "100%",
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                            },
+                            "& .MuiAccordionSummary-expandIconWrapper": {
+                                position: "absolute",
+                                right: 16,
+                            },
+                        }}>
+                        <Typography
+                            variant="h6"
+                            textAlign="center"
+                            fontWeight="bold"
+                            textTransform="uppercase"
+                            sx={{ color: "text.primary" }}>
+                            {t("profile.passwordSection")}
                         </Typography>
-                    )}
-                    <TextField
-                        placeholder={t("profile.currentPassword")}
-                        label={t("profile.currentPassword")}
-                        type="password"
-                        value={currentPassword}
-                        onChange={(e) => setCurrentPassword(e.target.value)}
-                        required
-                        fullWidth />
-                    <TextField
-                        placeholder={t("profile.newPassword")}
-                        label={t("profile.newPassword")}
-                        type="password"
-                        value={newPassword}
-                        onChange={(e) => setNewPassword(e.target.value)}
-                        required
-                        fullWidth />
-                    <TextField
-                        placeholder={t("register.confirmPassword")}
-                        label={t("register.confirmPassword")}
-                        type="password"
-                        value={confirmNewPassword}
-                        onChange={(e) => setConfirmNewPassword(e.target.value)}
-                        required
-                        fullWidth />
+                    </AccordionSummary>
+                    <AccordionDetails sx={{ px: 0, pb: 0 }}>
+                        <FormCard
+                            id="password-form"
+                            sx={{
+                                border: "none",
+                                boxShadow: "none",
+                                width: "100%",
+                                maxWidth: "none",
+                                px: 0,
+                                py: 0,
+                            }}
+                            onSubmit={handlePasswordSubmit}
+                            error={passwordError}>
+                            {passwordSuccess && (
+                                <Typography variant="body2" color="success.main" textAlign="center">
+                                    {t("profile.passwordSuccess")}
+                                </Typography>
+                            )}
+                            <TextField
+                                placeholder={t("profile.currentPassword")}
+                                label={t("profile.currentPassword")}
+                                type="password"
+                                value={currentPassword}
+                                onChange={(e) => setCurrentPassword(e.target.value)}
+                                required
+                                fullWidth />
+                            <TextField
+                                placeholder={t("profile.newPassword")}
+                                label={t("profile.newPassword")}
+                                type="password"
+                                value={newPassword}
+                                onChange={(e) => setNewPassword(e.target.value)}
+                                required
+                                fullWidth />
+                            <TextField
+                                placeholder={t("register.confirmPassword")}
+                                label={t("register.confirmPassword")}
+                                type="password"
+                                value={confirmNewPassword}
+                                onChange={(e) => setConfirmNewPassword(e.target.value)}
+                                required
+                                fullWidth />
 
-                    <Box sx={{...styles.buttonContainer, mt: 1}}>
-                        <Button
-                            type="submit"
-                            form="password-form"
-                            variant="contained"
-                            fullWidth
-                            disabled={passwordLoading}
-                            sx={styles.submitButton}>
-                            {t("profile.changePassword")}
-                        </Button>
-                    </Box>
-                </FormCard>
+                            <Box sx={{...styles.buttonContainer, mt: 1}}>
+                                <Button
+                                    type="submit"
+                                    form="password-form"
+                                    variant="contained"
+                                    fullWidth
+                                    disabled={passwordLoading}
+                                    sx={styles.submitButton}>
+                                    {t("profile.changePassword")}
+                                </Button>
+                            </Box>
+                        </FormCard>
+                    </AccordionDetails>
+                </Accordion>
+
 
                 <Box sx={{...styles.buttonContainer, mt: 1}}>
                     <Button

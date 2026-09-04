@@ -52,7 +52,7 @@ const rules = [
 
             const latestTotalAnimalsRecord = getLatestRecord(
                 records,
-                (record) => record.scenario === "APP-SETUP" && record.nodeId === "view-220",
+                (record) => record.scenario === "APP-SETUP" && record.nodeId === "view-animal-count",
             );
 
             const totalAnimals = toFiniteNumber(latestTotalAnimalsRecord?.answer);

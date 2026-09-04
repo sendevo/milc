@@ -1,12 +1,12 @@
 import { Alert, Box, Typography } from "@mui/material";
 import { formCardStyles as styles } from "../theme/FormCard.styles";
 
-const FormCard = ({ id, onSubmit, title, error, children }) => (
+const FormCard = ({ id, onSubmit, title, error, children, sx }) => (
     <Box
         id={id}
         component="form"
         onSubmit={onSubmit}
-        sx={styles.box}>
+        sx={{ ...styles.box, ...sx }}>
         <Typography
             variant="h6"
             textAlign="center"

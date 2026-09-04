@@ -44,7 +44,7 @@ test.describe("Profile page", () => {
     });
 
     test("shows effective herd size after registering dead animals", async ({ page }) => {
-        await page.goto("/survey/view-220");
+        await page.goto("/survey/view-animal-count");
         await page.locator('input[type="text"]').first().fill("100");
         await page.getByRole("button", { name: /save|guardar|registrar/i }).click();
 
