@@ -16,10 +16,27 @@ const getNodeNumber = (nodeId) => {
     return match ? match[1] : "";
 };
 
+const isIsoDate = (value) => {
+    return typeof value === "string" && /^\d{4}-\d{2}-\d{2}$/.test(value);
+};
+
 const formatDateTime = (timestamp, fallbackDate) => {
     const date = Number.isFinite(Number(timestamp)) ? new Date(Number(timestamp)) : null;
+    const hasValidTimestamp = Boolean(date && !Number.isNaN(date.getTime()));
 
-    if (date && !Number.isNaN(date.getTime())) {
+    if (isIsoDate(fallbackDate)) {
+        const [year, month, day] = fallbackDate.split("-");
+        if (!hasValidTimestamp) {
+            return `${day}-${month}-${year}`;
+        }
+
+        const hours = String(date.getHours()).padStart(2, "0");
+        const minutes = String(date.getMinutes()).padStart(2, "0");
+        const seconds = String(date.getSeconds()).padStart(2, "0");
+        return `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
+    }
+
+    if (hasValidTimestamp) {
         const day = String(date.getDate()).padStart(2, "0");
         const month = String(date.getMonth() + 1).padStart(2, "0");
         const year = date.getFullYear();
@@ -27,11 +44,6 @@ const formatDateTime = (timestamp, fallbackDate) => {
         const minutes = String(date.getMinutes()).padStart(2, "0");
         const seconds = String(date.getSeconds()).padStart(2, "0");
         return `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
-    }
-
-    if (typeof fallbackDate === "string" && /^\d{4}-\d{2}-\d{2}$/.test(fallbackDate)) {
-        const [year, month, day] = fallbackDate.split("-");
-        return `${day}-${month}-${year}`;
     }
 
     return "";
@@ -114,7 +126,15 @@ const normalizeInventoryRecords = (inventoryRecords = []) => {
 
 export const getActivityExportRows = ({ records, inventoryRecords, nodes, t, language }) => {
     return [...records, ...normalizeInventoryRecords(inventoryRecords)]
-        .sort((a, b) => Number(a.timestamp || 0) - Number(b.timestamp || 0))
+        .sort((a, b) => {
+            const leftDate = String(a?.date ?? "");
+            const rightDate = String(b?.date ?? "");
+            if (leftDate && rightDate && leftDate !== rightDate) {
+                return leftDate.localeCompare(rightDate);
+            }
+
+            return Number(a.timestamp || 0) - Number(b.timestamp || 0);
+        })
         .map((record) => {
             const node = nodes?.[record.nodeId] || null;
             const specialMeta = getSpecialSurveyViewExportMeta(record.nodeId);

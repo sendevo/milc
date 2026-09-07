@@ -8,6 +8,20 @@ import { isValidIsoDate } from "./dateTime";
 
 export { HERD_INVENTORY_NODE_TYPES, HERD_INVENTORY_STORAGE_KEY };
 
+const resolveEventIsoDate = (record = {}) => {
+    if (isValidIsoDate(record?.date)) {
+        return record.date;
+    }
+
+    const timestamp = Number(record?.timestamp);
+    if (!Number.isFinite(timestamp)) {
+        return null;
+    }
+
+    const derivedDate = formatAsIsoDate(new Date(timestamp));
+    return isValidIsoDate(derivedDate) ? derivedDate : null;
+};
+
 const compareEvents = (left, right) => {
     if (left.date !== right.date) {
         return left.date.localeCompare(right.date);
@@ -31,13 +45,14 @@ const buildSnapshotEvents = (surveyRecords = []) => {
         .filter((record) => record?.nodeId === "view-animal-count" && record?.scenario === "APP-SETUP")
         .map((record) => {
             const count = toFiniteNumber(record.answer);
-            if (!isValidIsoDate(record.date) || count === null || count < 0) {
+            const eventDate = resolveEventIsoDate(record);
+            if (!eventDate || count === null || count < 0) {
                 return null;
             }
 
             return {
                 kind: "snapshot",
-                date: record.date,
+                date: eventDate,
                 timestamp: Number(record.timestamp) || 0,
                 count,
             };
@@ -49,14 +64,15 @@ const buildTransactionEvents = (inventoryRecords = []) => {
     return inventoryRecords
         .map((record) => {
             const count = toFiniteNumber(record.count);
-            if (!isValidIsoDate(record?.date) || count === null || count < 0 || !record?.type) {
+            const eventDate = resolveEventIsoDate(record);
+            if (!eventDate || count === null || count < 0 || !record?.type) {
                 return null;
             }
 
             return {
                 kind: "transaction",
                 type: record.type,
-                date: record.date,
+                date: eventDate,
                 timestamp: Number(record.timestamp) || 0,
                 count,
             };

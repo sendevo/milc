@@ -22,6 +22,28 @@ const resolveEffectiveDate = (date) => {
     return localDateString();
 };
 
+const buildTimestampForDate = (isoDate) => {
+    const match = String(isoDate ?? "").match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if (!match) {
+        return Date.now();
+    }
+
+    const [, year, month, day] = match;
+    const now = new Date();
+    const aligned = new Date(
+        Number(year),
+        Number(month) - 1,
+        Number(day),
+        now.getHours(),
+        now.getMinutes(),
+        now.getSeconds(),
+        now.getMilliseconds(),
+    );
+
+    const timestamp = aligned.getTime();
+    return Number.isFinite(timestamp) ? timestamp : Date.now();
+};
+
 const readLog = async () => {
     const parsed = await getJSONItem(HERD_INVENTORY_STORAGE_KEY, []);
     return Array.isArray(parsed) ? parsed : [];
@@ -70,7 +92,7 @@ export const useHerdInventory = () => {
             type,
             count: numericCount,
             date: effectiveDate,
-            timestamp: Date.now(),
+            timestamp: buildTimestampForDate(effectiveDate),
             schemaVersion: HERD_INVENTORY_SCHEMA_VERSION,
         };
 

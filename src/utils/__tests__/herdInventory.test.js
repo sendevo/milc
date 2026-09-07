@@ -98,6 +98,31 @@ describe("herdInventory", () => {
         expect(result).toBe(6);
     });
 
+    it("derives baseline date from timestamp when setup snapshot has no explicit date", () => {
+        const result = getEffectiveHerdSizeOnDate(
+            [
+                {
+                    nodeId: "view-animal-count",
+                    scenario: "APP-SETUP",
+                    answer: 10,
+                    timestamp: new Date("2026-09-01T10:00:00").getTime(),
+                },
+            ],
+            [
+                {
+                    nodeId: "view-add-animals",
+                    type: "add",
+                    count: 2,
+                    date: "2026-09-02",
+                    timestamp: 200,
+                },
+            ],
+            "2026-09-02",
+        );
+
+        expect(result).toBe(12);
+    });
+
     it("finds and excludes the current node record for same-day edits", () => {
         const records = [
             {

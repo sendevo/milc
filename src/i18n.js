@@ -168,6 +168,8 @@ const resources = {
                     milkedAnimalsExceedTotal: "Animals being milked cannot exceed total animals.",
                     sickAnimalsExceedMilked: "Sick animals cannot exceed animals being milked.",
                     herdStockCannotGoNegative: "This operation cannot reduce the herd stock below zero.",
+                    inventoryAnimalsExceedTotal: "This animal count cannot exceed total animals.",
+                    herdCountRequired: "Set up the herd animal count in your profile before entering inventory data.",
                 },
                 months: {
                     jan: "Jan", feb: "Feb", mar: "Mar", apr: "Apr",
@@ -429,6 +431,8 @@ const resources = {
                     milkedAnimalsExceedTotal: "La cantidad de animales en ordeñe no puede ser mayor que la cantidad total de animales.",
                     sickAnimalsExceedMilked: "La cantidad de animales enfermos no puede ser mayor que la cantidad de animales en ordeñe.",
                     herdStockCannotGoNegative: "Esta operación no puede dejar el stock de animales por debajo de cero.",
+                    inventoryAnimalsExceedTotal: "Esta cantidad de animales no puede ser mayor que la cantidad total de animales.",
+                    herdCountRequired: "Configurá la cantidad total de animales en tu perfil antes de cargar datos de inventario.",
                 },
                 months: {
                     jan: "Ene", feb: "Feb", mar: "Mar", apr: "Abr",

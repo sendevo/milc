@@ -51,6 +51,28 @@ const resolveEffectiveDate = (date) => {
     return localDateString();
 };
 
+const buildTimestampForDate = (isoDate) => {
+    const match = String(isoDate ?? "").match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if (!match) {
+        return Date.now();
+    }
+
+    const [, year, month, day] = match;
+    const now = new Date();
+    const aligned = new Date(
+        Number(year),
+        Number(month) - 1,
+        Number(day),
+        now.getHours(),
+        now.getMinutes(),
+        now.getSeconds(),
+        now.getMilliseconds(),
+    );
+
+    const timestamp = aligned.getTime();
+    return Number.isFinite(timestamp) ? timestamp : Date.now();
+};
+
 // ---------------------------------------------------------------------------
 // Low-level storage helpers (not exported — use the hook instead)
 // ---------------------------------------------------------------------------
@@ -130,7 +152,7 @@ export const useSurveyLog = () => {
             scenario,
             answer,
             date:      effectiveDate,
-            timestamp: Date.now(),
+            timestamp: buildTimestampForDate(effectiveDate),
             schemaVersion: SURVEY_LOG_RECORD_SCHEMA_VERSION,
         };
 

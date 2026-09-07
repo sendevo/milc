@@ -18,9 +18,11 @@ import {
 } from "../telemetry/telemetryQueue";
 import { getSpecialSurveyView } from "./specialViews";
 import {
+    getEffectiveHerdSizeOnDate,
     getHerdInventoryRecordForNodeAndDate,
     getHerdInventoryTypeForNode,
     isHerdInventoryNode,
+    withoutHerdInventoryRecordForNodeAndDate,
 } from "../utils/herdInventory";
 import {
     APP_VERSION_FALLBACK,
@@ -41,6 +43,41 @@ const resolveNonNodeTargetRoute = (targetId) => {
     }
 
     return null;
+};
+
+const DEBUG_ANIMAL_COUNT_NODE_IDS = new Set([
+    "view-36",
+    "view-add-animals",
+    "view-remove-animals",
+    "view-dead-animals",
+    "view-181",
+]);
+
+const getFirstSubmittedNumber = (answers = {}) => {
+    for (const value of Object.values(answers)) {
+        const numeric = Number(value);
+        if (Number.isFinite(numeric)) {
+            return numeric;
+        }
+    }
+
+    return null;
+};
+
+const getProjectedHerdCount = (inventoryType, currentHerdCount, enteredValue) => {
+    if (!Number.isFinite(currentHerdCount) || !Number.isFinite(enteredValue)) {
+        return currentHerdCount;
+    }
+
+    if (inventoryType === "add") {
+        return currentHerdCount + enteredValue;
+    }
+
+    if (inventoryType === "remove" || inventoryType === "death") {
+        return Math.max(0, currentHerdCount - enteredValue);
+    }
+
+    return currentHerdCount;
 };
 
 /**
@@ -183,11 +220,38 @@ const SurveyPage = () => {
     // Submit handler
     // ---------------------------------------------------------------------------
     const handleSubmit = (answers) => {
+        const records = getRecords();
+        const inventoryRecords = getInventoryRecords();
+
+        if (DEBUG_ANIMAL_COUNT_NODE_IDS.has(nodeId)) {
+            const enteredValue = getFirstSubmittedNumber(answers);
+            const inventoryType = getHerdInventoryTypeForNode(nodeId);
+            const baselineInventoryRecords = isHerdInventoryTracked
+                ? withoutHerdInventoryRecordForNodeAndDate(inventoryRecords, nodeId, currentDate)
+                : inventoryRecords;
+
+            const currentHerdCount = getEffectiveHerdSizeOnDate(
+                records,
+                baselineInventoryRecords,
+                currentDate,
+            );
+
+            const projectedHerdCount = getProjectedHerdCount(inventoryType, currentHerdCount, enteredValue);
+
+            console.log("[animal-count-debug]", {
+                viewId: nodeId,
+                currentDate,
+                currentHerdCount,
+                enteredValue,
+                projectedHerdCount,
+            });
+        }
+
         const validationResult = validateSurveySubmission({
             nodeId,
             answers,
-            records: getRecords(),
-            inventoryRecords: getInventoryRecords(),
+            records,
+            inventoryRecords,
             currentDate,
             t,
         });

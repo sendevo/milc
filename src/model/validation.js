@@ -1,5 +1,6 @@
 import {
     getEffectiveHerdSizeOnDate,
+    isHerdInventoryNode,
     withoutHerdInventoryRecordForNodeAndDate,
 } from "../utils/herdInventory";
 import { VALIDATION_SEVERITY } from "../constants";
@@ -15,6 +16,18 @@ const toFiniteNumber = (value) => {
     return Number.isFinite(numeric) ? numeric : null;
 };
 
+const getEffectiveTotalAnimals = ({ records, inventoryRecords, currentDate }) => {
+    if (currentDate) {
+        return getEffectiveHerdSizeOnDate(records, inventoryRecords, currentDate);
+    }
+
+    const latestTotalAnimalsRecord = getLatestRecord(
+        records,
+        (record) => record.scenario === "APP-SETUP" && record.nodeId === "view-animal-count",
+    );
+    return toFiniteNumber(latestTotalAnimalsRecord?.answer);
+};
+
 const getFirstSubmittedNumber = (answers = {}) => {
     for (const value of Object.values(answers)) {
         if (value !== undefined) {
@@ -25,45 +38,59 @@ const getFirstSubmittedNumber = (answers = {}) => {
     return null;
 };
 
+const MILKED_ANIMALS_NODE_IDS = new Set(["view-235", "view-36"]);
+const SICK_ANIMALS_NODE_IDS = new Set(["view-236", "view-42"]);
+const COUNT_MUST_NOT_EXCEED_TOTAL_NODE_IDS = new Set([
+    "view-235",
+    "view-36",
+    "view-add-animals",
+    "view-181",
+]);
+const STOCK_DEDUCTION_NODE_IDS = new Set(["view-dead-animals", "view-remove-animals", "view-181"]);
+
 const rules = [
     {
         id: "milked_animals_not_greater_than_total_animals",
         appliesTo: ({ nodeId, answers }) => {
-            return nodeId === "view-235" && answers["view-235-number"] !== undefined;
+            return COUNT_MUST_NOT_EXCEED_TOTAL_NODE_IDS.has(nodeId) && getFirstSubmittedNumber(answers) !== null;
         },
-        validate: ({ answers, records, inventoryRecords, currentDate, t }) => {
-            const milkedAnimals = toFiniteNumber(answers["view-235-number"]);
+        validate: ({ nodeId, answers, records, inventoryRecords, currentDate, t }) => {
+            const milkedAnimals = getFirstSubmittedNumber(answers);
             if (milkedAnimals === null) {
                 return { isValid: true };
             }
 
-            if (currentDate) {
-                const effectiveTotalAnimals = getEffectiveHerdSizeOnDate(records, inventoryRecords, currentDate);
-                if (effectiveTotalAnimals !== null && milkedAnimals > effectiveTotalAnimals) {
-                    return {
-                        isValid: false,
-                        message: t("survey.validation.milkedAnimalsExceedTotal"),
-                        severity: VALIDATION_SEVERITY.warning,
-                    };
-                }
-
-                return { isValid: true };
+            let effectiveInventoryRecords = inventoryRecords;
+            if (currentDate && COUNT_MUST_NOT_EXCEED_TOTAL_NODE_IDS.has(nodeId) && isHerdInventoryNode(nodeId)) {
+                effectiveInventoryRecords = withoutHerdInventoryRecordForNodeAndDate(
+                    inventoryRecords,
+                    nodeId,
+                    currentDate,
+                );
             }
 
-            const latestTotalAnimalsRecord = getLatestRecord(
+            const totalAnimals = getEffectiveTotalAnimals({
                 records,
-                (record) => record.scenario === "APP-SETUP" && record.nodeId === "view-animal-count",
-            );
+                inventoryRecords: effectiveInventoryRecords,
+                currentDate,
+            });
 
-            const totalAnimals = toFiniteNumber(latestTotalAnimalsRecord?.answer);
             if (totalAnimals === null) {
-                return { isValid: true };
+                return {
+                    isValid: false,
+                    message: t("survey.validation.herdCountRequired"),
+                    severity: VALIDATION_SEVERITY.warning,
+                };
             }
 
             if (milkedAnimals > totalAnimals) {
                 return {
                     isValid: false,
-                    message: t("survey.validation.milkedAnimalsExceedTotal"),
+                    message: t(
+                        MILKED_ANIMALS_NODE_IDS.has(nodeId)
+                            ? "survey.validation.milkedAnimalsExceedTotal"
+                            : "survey.validation.inventoryAnimalsExceedTotal",
+                    ),
                     severity: VALIDATION_SEVERITY.warning,
                 };
             }
@@ -74,7 +101,7 @@ const rules = [
     {
         id: "herd_inventory_cannot_go_negative",
         appliesTo: ({ nodeId, answers }) => {
-            return (nodeId === "view-dead-animals" || nodeId === "view-remove-animals") && getFirstSubmittedNumber(answers) !== null;
+            return STOCK_DEDUCTION_NODE_IDS.has(nodeId) && getFirstSubmittedNumber(answers) !== null;
         },
         validate: ({ nodeId, answers, records, inventoryRecords, currentDate, t }) => {
             const submittedCount = getFirstSubmittedNumber(answers);
@@ -90,7 +117,11 @@ const rules = [
             const effectiveTotalAnimals = getEffectiveHerdSizeOnDate(records, recordsWithoutCurrentNode, currentDate);
 
             if (effectiveTotalAnimals === null) {
-                return { isValid: true };
+                return {
+                    isValid: false,
+                    message: t("survey.validation.herdCountRequired"),
+                    severity: VALIDATION_SEVERITY.warning,
+                };
             }
 
             if (submittedCount > effectiveTotalAnimals) {
@@ -107,17 +138,17 @@ const rules = [
     {
         id: "sick_animals_not_greater_than_milked_animals",
         appliesTo: ({ nodeId, answers }) => {
-            return nodeId === "view-236" && answers["view-235-number"] !== undefined;
+            return SICK_ANIMALS_NODE_IDS.has(nodeId) && getFirstSubmittedNumber(answers) !== null;
         },
         validate: ({ answers, records, t }) => {
-            const sickAnimals = toFiniteNumber(answers["view-235-number"]);
+            const sickAnimals = getFirstSubmittedNumber(answers);
             if (sickAnimals === null) {
                 return { isValid: true };
             }
 
             const latestMilkedAnimalsRecord = getLatestRecord(
                 records,
-                (record) => record.scenario === "PREORD-07" && record.nodeId === "view-235",
+                (record) => record.scenario === "PREORD-07" && MILKED_ANIMALS_NODE_IDS.has(record.nodeId),
             );
 
             const milkedAnimals = toFiniteNumber(latestMilkedAnimalsRecord?.answer);

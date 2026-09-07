@@ -78,7 +78,7 @@ const ResultScales = () => {
     return (
         <ViewContainer
             title={t("resultScales.title")}
-            onBack={() => navigate(`/milkbarchart${searchParams.toString() ? `?${searchParams.toString()}` : ""}`)}  
+            onBack={() => navigate("/calendar")}  
             showDate>
             <Box sx={styles.page}>
                 <Typography sx={{ alignSelf: "flex-start", mb: 1 }}>

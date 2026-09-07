@@ -78,7 +78,7 @@ describe("importActivityCsv", () => {
 	    xlsxMocks.writeFile.mockClear();
 
         exportActivityCsv({
-            records: [{ timestamp: 1720000000000, nodeId: "view-1", answer: "yes, no" }],
+            records: [{ timestamp: 1720000000000, date: "2026-07-29", nodeId: "view-1", answer: "yes, no" }],
             inventoryRecords: [],
             nodes: {
                 "view-1": {
@@ -102,7 +102,7 @@ describe("importActivityCsv", () => {
         const [sheetRows] = xlsxMocks.aoaToSheet.mock.calls[0];
         expect(sheetRows[0]).toEqual(["Date", "Page", "Title", "Subtitle", "Answer"]);
         expect(sheetRows[1]).toEqual([
-            expect.stringMatching(/^03-07-2024 \d{2}:\d{2}:\d{2}$/),
+            expect.stringMatching(/^29-07-2026 \d{2}:\d{2}:\d{2}$/),
             "1",
             "Title, subtitle",
             "Sub, title",

@@ -102,6 +102,7 @@ const Config = () => {
 
             setImportState(result.imported > 0 ? "success" : "empty");
             window.alert(`Imported ${result.imported} interaction rows. Skipped ${result.skipped}.`);
+            navigate("/activity");
         } catch (err) {
             console.error("[config] Failed to import activity CSV:", err);
             setImportState("error");
