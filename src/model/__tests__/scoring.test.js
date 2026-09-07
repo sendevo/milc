@@ -30,20 +30,20 @@ describe("expectedOccurrences", () => {
         expect(expectedOccurrences("every-other-day", 10)).toBe(5);
     });
 
-    it("weekly: 14 days → 2 occurrences", () => {
-        expect(expectedOccurrences("weekly", 14)).toBe(2);
+    it("weekly preserves fractional expected occurrences", () => {
+        expect(expectedOccurrences("weekly", 10)).toBeCloseTo(10 / 7);
     });
 
-    it("biweekly: 30 days → 2 occurrences", () => {
-        expect(expectedOccurrences("biweekly", 30)).toBe(2);
+    it("biweekly preserves fractional expected occurrences", () => {
+        expect(expectedOccurrences("biweekly", 31)).toBeCloseTo(31 / 15);
     });
 
-    it("monthly: 31 days → 1 occurrence", () => {
-        expect(expectedOccurrences("monthly", 31)).toBe(1);
+    it("monthly preserves fractional expected occurrences", () => {
+        expect(expectedOccurrences("monthly", 31)).toBeCloseTo(31 / 30);
     });
 
-    it("semester: 180 days → 1 occurrence", () => {
-        expect(expectedOccurrences("semester", 180)).toBe(1);
+    it("semester preserves fractional expected occurrences", () => {
+        expect(expectedOccurrences("semester", 180)).toBeCloseTo(180 / 120);
     });
 
     it("returns 0 for 0 days", () => {
@@ -107,18 +107,18 @@ describe("computePEC", () => {
         expect(result.category).toBe("never");
     });
 
-    it("counts at most one scored occurrence per day", () => {
+    it("does not collapse same-day records", () => {
         const records = [
             { scenario: "PREORD-07", answer: "yes", date: "2026-01-01", timestamp: 1 },
-            { scenario: "PREORD-07", answer: "no",  date: "2026-01-01", timestamp: 2 },
+            { scenario: "PREORD-07", answer: "yes", date: "2026-01-01", timestamp: 2 },
             { scenario: "PREORD-07", answer: "yes", date: "2026-01-02", timestamp: 3 },
         ];
 
         const result = computePEC(records, "yes", "daily");
-        expect(result.correct).toBe(1);
-        expect(result.expected).toBe(2);
-        expect(result.pec).toBe(0.5);
-        expect(result.category).toBe("sometimes");
+        expect(result.correct).toBe(3);
+        expect(result.expected).toBe(3);
+        expect(result.pec).toBe(1);
+        expect(result.category).toBe("always");
     });
 
     it("returns never if no records", () => {
@@ -128,23 +128,30 @@ describe("computePEC", () => {
         expect(result.expected).toBe(0);
     });
 
-    it("uses expected=1 when periodicity rounds to zero but scored data exists", () => {
-        const records = [{ scenario: "FACIL-01", answer: "yes", date: "2026-01-01" }];
-        const result = computePEC(records, "yes", "semester");
-        expect(result.expected).toBe(1);
+    it("treats dont-know as no-sum and keeps fractional expected occurrences", () => {
+        const records = [
+            { scenario: "FACIL-01", answer: "yes", date: "2026-01-01" },
+            { scenario: "FACIL-01", answer: "dont-know", date: "2026-01-02" },
+            { scenario: "FACIL-01", answer: "no", date: "2026-01-03" },
+        ];
+
+        const result = computePEC(records, "yes", "weekly");
+        expect(result.expected).toBeCloseTo(2 / 7);
+        expect(result.correct).toBe(1);
         expect(result.pec).toBe(1);
         expect(result.category).toBe("always");
     });
 
     it("caps pec at 1.0 if correct > expected", () => {
-        // 4 correct answers in 4 days but periodicity is weekly (expected=0 for <7 days)
-        // Use 8 days so expected=1, but send 2 correct answers
+        // Fractional expectations can exceed the observed count; PEC is still capped.
         const records = [
             { scenario: "X", answer: "yes", date: "2026-01-01" },
             { scenario: "X", answer: "yes", date: "2026-01-08" },
+            { scenario: "X", answer: "yes", date: "2026-01-15" },
         ];
         const result = computePEC(records, "yes", "weekly");
         expect(result.pec).toBeLessThanOrEqual(1.0);
+        expect(result.expected).toBeCloseTo(3 / 7);
     });
 });
 
@@ -218,21 +225,49 @@ describe("resultViewId", () => {
 
 describe("computeFullScore", () => {
     const nodes = {
-        "view-100": {
+        "view-233": {
             scenario:       "PREORD-07",
             "score-answer": "yes",
             severity:       3,
             periodicity:    "daily",
             category:       "before-milking",
-            fields: [{ id: "view-100-select", type: "select", options: [] }],
+            fields: [{ id: "view-233-select", type: "select", options: [] }],
         },
-        "view-109": {
+        "view-234": {
+            scenario:       "PREORD-07",
+            "score-answer": "no",
+            severity:       3,
+            periodicity:    "daily",
+            category:       "before-milking",
+            fields: [{ id: "view-234-select", type: "select", options: [] }],
+        },
+        "view-235": {
+            scenario:       "PREORD-07",
+            fields: [{ id: "view-235-number", type: "number_input", options: [] }],
+        },
+        "view-300": {
             scenario:       "PREORD-02",
             "score-answer": "yes",
             severity:       3,
             periodicity:    "daily",
-            category:       "before-milking",
-            fields: [{ id: "udder_clean", type: "select", options: [] }],
+            category:       "during-milking",
+            fields: [{ id: "view-300-select", type: "select", options: [] }],
+        },
+        "view-301": {
+            scenario:       "PREORD-03",
+            "score-answer": "yes",
+            severity:       2,
+            periodicity:    "weekly",
+            category:       "milk-care",
+            fields: [{ id: "view-301-select", type: "select", options: [] }],
+        },
+        "view-302": {
+            scenario:       "PREORD-07",
+            "score-answer": "yes",
+            severity:       1,
+            periodicity:    "monthly",
+            category:       "health",
+            fields: [{ id: "view-302-select", type: "select", options: [] }],
         },
         // Non-scoreable node — should be ignored.
         "view-user-profile-completed": {
@@ -242,42 +277,91 @@ describe("computeFullScore", () => {
     };
 
     const records = [
-        // PREORD-07: answered yes 3 of 3 days → always → MR 0.00
-        { scenario: "PREORD-07", answer: "yes", date: "2026-01-01", timestamp: 1 },
-        { scenario: "PREORD-07", answer: "yes", date: "2026-01-02", timestamp: 2 },
-        { scenario: "PREORD-07", answer: "yes", date: "2026-01-03", timestamp: 3 },
-        // PREORD-02: answered yes 1 of 3 days → sometimes → MR 0.67
-        { scenario: "PREORD-02", answer: "yes", date: "2026-01-01", timestamp: 4 },
-        { scenario: "PREORD-02", answer: "no",  date: "2026-01-02", timestamp: 5 },
-        { scenario: "PREORD-02", answer: "no",  date: "2026-01-03", timestamp: 6 },
+        // Shared-scenario interaction log from a single day.
+        { id: "dc672055-7c5f-4864-8324-3086f68c39ed", nodeId: "view-109", scenario: "PREORD-02", answer: "yes", date: "2026-09-07", timestamp: 1788812185541, schemaVersion: 1 },
+        { id: "992cdbe4-41bc-4809-bd30-88ae591b1e32", nodeId: "view-produce-year-round", scenario: "APP-SETUP", answer: "yes", date: "2026-09-07", timestamp: 1788812196716, schemaVersion: 1 },
+        { id: "7ec32ed1-da0e-4088-9116-a6255c6354a4", nodeId: "view-animal-count", scenario: "APP-SETUP", answer: 100, date: "2026-09-07", timestamp: 1788812200011, schemaVersion: 1 },
+        { id: "8c75cbb3-3760-4aec-99bc-97d7553bb70b", nodeId: "view-milking-method", scenario: "APP-SETUP", answer: "manual", date: "2026-09-07", timestamp: 1788812200826, schemaVersion: 1 },
+        { id: "81747452-fc10-4132-9620-9782b580457f", nodeId: "view-124", scenario: "PREORD-03", answer: "yes", date: "2026-09-07", timestamp: 1788812204161, schemaVersion: 1 },
+        { id: "dfd12e4c-6ade-4045-a5e0-01a2813b7b6a", nodeId: "view-235", scenario: "PREORD-07", answer: 50, date: "2026-09-07", timestamp: 1788812207382, schemaVersion: 1 },
+        { id: "6d5bdc67-a3f2-4c99-bc4b-db393686e136", nodeId: "view-233", scenario: "PREORD-07", answer: "yes", date: "2026-09-07", timestamp: 1788812209681, schemaVersion: 1 },
+        { id: "60771146-5647-424b-bc4b-1d2d15f8eec5", nodeId: "view-234", scenario: "PREORD-07", answer: "no", date: "2026-09-07", timestamp: 1788812211194, schemaVersion: 1 },
     ];
 
-    it("computes byScenario correctly", () => {
+    it("computes byScenario correctly for shared scenarios", () => {
         const { byScenario } = computeFullScore(records, nodes);
-        expect(byScenario["PREORD-07"].mr).toBe(0.00);
-        expect(byScenario["PREORD-07"].pecCategory).toBe("always");
-        expect(byScenario["PREORD-02"].pecCategory).toBe("sometimes");
-        expect(byScenario["PREORD-02"].mr).toBeCloseTo(0.6666666667);
+        expect(byScenario["view-233"].nodeId).toBe("view-233");
+        expect(byScenario["view-233"].scenario).toBe("PREORD-07");
+        expect(byScenario["view-233"].pec).toBe(1);
+        expect(byScenario["view-233"].mr).toBe(0);
+        expect(byScenario["view-233"].pecCategory).toBe("always");
+
+        expect(byScenario["view-234"].nodeId).toBe("view-234");
+        expect(byScenario["view-234"].scenario).toBe("PREORD-07");
+        expect(byScenario["view-234"].pec).toBe(1);
+        expect(byScenario["view-234"].mr).toBe(0);
+        expect(byScenario["view-234"].pecCategory).toBe("always");
+
+        expect(byScenario["view-235"]).toBeUndefined();
+        expect(byScenario["view-300"]).toBeUndefined();
+        expect(byScenario["view-301"]).toBeUndefined();
+        expect(byScenario["view-302"]).toBeUndefined();
     });
 
     it("computes byCategory with averaged MR", () => {
         const { byCategory } = computeFullScore(records, nodes);
         const cat = byCategory["before-milking"];
-        // avg of 0.00 and 0.67 = 0.33 → very-good
-        expect(cat.avgMR).toBeCloseTo(0.3333333333);
-        expect(cat.rating).toBe("very-good");
-        expect(cat.resultViewId).toBe("view-result-good");
+        // Two scored questions on the same day, both correct → average MR 0 → excellent.
+        expect(cat.avgMR).toBe(0);
+        expect(cat.rating).toBe("excellent");
+        expect(cat.resultViewId).toBe("view-result-excellent");
+    });
+
+    it("ignores scoreable nodes with no records when many are present", () => {
+        const extraNodes = {
+            ...nodes,
+            "view-400": {
+                scenario:       "FEED-01",
+                "score-answer": "yes",
+                severity:       3,
+                periodicity:    "daily",
+                category:       "food",
+                fields: [{ id: "view-400-select", type: "select", options: [] }],
+            },
+            "view-401": {
+                scenario:       "FACIL-01",
+                "score-answer": "yes",
+                severity:       3,
+                periodicity:    "weekly",
+                category:       "facilities",
+                fields: [{ id: "view-401-select", type: "select", options: [] }],
+            },
+            "view-402": {
+                scenario:       "SUPPLY-01",
+                "score-answer": "yes",
+                severity:       2,
+                periodicity:    "monthly",
+                category:       "supplies",
+                fields: [{ id: "view-402-select", type: "select", options: [] }],
+            },
+        };
+
+        const { byScenario, byCategory } = computeFullScore(records, extraNodes);
+        expect(byScenario["view-400"]).toBeUndefined();
+        expect(byScenario["view-401"]).toBeUndefined();
+        expect(byScenario["view-402"]).toBeUndefined();
+        expect(byCategory["before-milking"].rating).toBe("excellent");
     });
 
     it("ignores non-scoreable nodes", () => {
         const { byScenario } = computeFullScore(records, nodes);
-        expect(byScenario["-"]).toBeUndefined();
+        expect(byScenario["view-user-profile-completed"]).toBeUndefined();
     });
 
     it("handles empty log gracefully", () => {
         const { byScenario, byCategory } = computeFullScore([], nodes);
-        // All scenarios exist but with pec=0 (no records → expected=0 → never)
-        expect(byScenario["PREORD-07"].pecCategory).toBe("never");
-        expect(Object.keys(byCategory).length).toBeGreaterThan(0);
+        expect(byScenario["view-233"]).toBeUndefined();
+        expect(byScenario["view-234"]).toBeUndefined();
+        expect(Object.keys(byCategory).length).toBe(0);
     });
 });

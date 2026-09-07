@@ -20,21 +20,21 @@ import { SCENARIO_DEFAULTS } from "../constants";
  * should have been performed in a given number of app-use days.
  *
  * @param {"daily"|"every-other-day"|"weekly"|"biweekly"|"monthly"|"semester"} periodicity
- * @param {number} totalDays - Number of distinct days the user used the app
- * @returns {number} Expected occurrences (floored to whole number, minimum 0)
+ * @param {number} totalDays - Number of scored app-use days
+ * @returns {number} Expected occurrences as a fractional value
  */
 export const expectedOccurrences = (periodicity, totalDays) => {
     if (totalDays <= 0) return 0;
-    const rates = {
+    const periodDays = {
         "daily":          1,
-        "every-other-day": 1 / 2,
-        "weekly":         1 / 7,
-        "biweekly":       1 / 15,
-        "monthly":        1 / 30,
-        "semester":       1 / 120,
+        "every-other-day": 2,
+        "weekly":         7,
+        "biweekly":       15,
+        "monthly":        30,
+        "semester":       120,
     };
-    const rate = rates[periodicity] ?? 1;
-    return Math.max(0, Math.floor(totalDays * rate));
+    const daysPerOccurrence = periodDays[periodicity] ?? 1;
+    return totalDays / daysPerOccurrence;
 };
 
 // ---------------------------------------------------------------------------
@@ -59,8 +59,8 @@ export const classifyPEC = (pec) => {
  *
  * A record is "correct" if its `answer` matches the node's `score-answer`.
  * Records with a "dont-know" answer are excluded from both numerator
- * and denominator (they neither help nor hurt the score, but they
- * do not count as an app-use day for this scenario).
+ * and denominator (they neither help nor hurt the score, matching the
+ * spreadsheet's NO SUMA / blank-cell behavior).
  *
  * @param {Array<{scenario: string, answer: string, date: string}>} records
  *   All log records for this scenario (pre-filtered by caller).
@@ -71,35 +71,13 @@ export const classifyPEC = (pec) => {
 export const computePEC = (records, correctAnswer, periodicity) => {
     // Exclude "don't know" answers — they are educational detours, not executions.
     const scored = records.filter(r => r.answer !== "dont-know");
-
-    // The MILC methodology defines the observation window as app-use days, not
-    // real calendar time. We therefore count distinct scored days for the
-    // denominator, and we collapse multiple same-day records to one effective
-    // observation so duplicate entries cannot inflate the numerator.
-    const perDay = new Map();
-    for (const record of scored) {
-        const date = record.date;
-        const current = perDay.get(date);
-        if (!current || (record.timestamp ?? 0) >= (current.timestamp ?? 0)) {
-            perDay.set(date, record);
-        }
-    }
-
-    const effectiveScored = Array.from(perDay.values());
-    const distinctDays = effectiveScored.length;
-    let expected = expectedOccurrences(periodicity, distinctDays);
-
-    // If there is scored evidence but expected rounds down to zero
-    // (e.g. semester checks in short ranges), mark one expected occurrence.
-    if (expected === 0 && effectiveScored.length > 0) {
-        expected = 1;
-    }
+    const expected = expectedOccurrences(periodicity, scored.length);
 
     if (expected === 0) {
         return { pec: 0, category: "never", correct: 0, expected: 0 };
     }
 
-    const correct = effectiveScored.filter((r) => r.answer === correctAnswer).length;
+    const correct = scored.filter((r) => r.answer === correctAnswer).length;
     const pec = Math.min(correct / expected, 1); // cap at 1.0
 
     return {
@@ -190,12 +168,12 @@ export const resultViewId = (rating) => {
 /**
  * Runs the complete scoring pipeline over the full log and the node tree.
  *
- * For each node that has a scoreable scenario (scenario !== "-" and scenario
- * is defined), it looks up all log records for that scenario, computes PEC,
- * then MR, and groups the result by category.
+ * For each scoreable node (scenario !== "-" and the required scoring metadata
+ * is present), it looks up the log records that belong to that node, computes
+ * PEC, then MR, and groups the result by category.
  *
- * Nodes with the same `scenario` value are deduplicated — only one PEC is
- * computed per scenario, using all records for that scenario across any node.
+ * The returned `byScenario` object is keyed by node ID so shared scenarios do
+ * not collapse multiple scoreable questions into a single PEC/MR value.
  *
  * @param {Array<{scenario: string, answer: string, date: string}>} allRecords
  *   The full log from useSurveyLog.
@@ -203,19 +181,22 @@ export const resultViewId = (rating) => {
  *   The full nodes tree from nodes.json (keyed by view id).
  * @returns {Object} Scoring summary:
  *   {
- *     byScenario: { [scenarioId]: { pec, pecCategory, mr, severity, category } },
+ *     byScenario: { [nodeId]: { nodeId, scenario, pec, pecCategory, mr, severity, category } },
  *     byCategory: { [category]: { avgMR, rating, resultViewId } },
  *   }
  */
 
 export const computeFullScore = (allRecords, nodes) => {
-    // Build a map of scenario → node metadata (first node wins for dedup).
-    const scenarioMeta = {};
-    for (const node of Object.values(nodes)) {
-        const s = node.scenario;
-        if (!s || s === "-" || scenarioMeta[s]) continue;
+    // Compute PEC + MR per scoreable node.
+    const byScenario = {};
+    for (const [nodeId, node] of Object.entries(nodes)) {
+        const scenarioId = node.scenario;
+        if (!scenarioId || scenarioId === "-") continue;
 
-        const fallback = SCENARIO_DEFAULTS[s] ?? {};
+        const hasNumericInput = (node.fields || []).some((field) => field.type === "number_input");
+        if (!node["score-answer"] && hasNumericInput) continue;
+
+        const fallback = SCENARIO_DEFAULTS[scenarioId] ?? {};
         const correctAnswer = node["score-answer"] || fallback.correctAnswer;
         const severity = node.severity || fallback.severity;
         const periodicity = node.periodicity || fallback.periodicity;
@@ -223,33 +204,30 @@ export const computeFullScore = (allRecords, nodes) => {
 
         if (!correctAnswer || !severity || !periodicity) continue;
 
-        scenarioMeta[s] = {
-            correctAnswer,
-            severity,
-            periodicity,
-            category,
-        };
-    }
+        const records = allRecords.filter((record) => {
+            if (record.nodeId) return record.nodeId === nodeId;
+            return record.scenario === scenarioId;
+        });
 
-    // Compute PEC + MR per scenario.
-    const byScenario = {};
-    for (const [scenarioId, meta] of Object.entries(scenarioMeta)) {
-        const records = allRecords.filter((r) => r.scenario === scenarioId);
+        if (records.length === 0) continue;
+
         const { pec, category: pecCategory, correct, expected } = computePEC(
             records,
-            meta.correctAnswer,
-            meta.periodicity
+            correctAnswer,
+            periodicity
         );
-        const mr = computeMR(pec, meta.severity);
+        const mr = computeMR(pec, severity);
 
-        byScenario[scenarioId] = {
+        byScenario[nodeId] = {
+            nodeId,
+            scenario: scenarioId,
             pec,
             pecCategory,
             correct,
             expected,
             mr,
-            severity:  meta.severity,
-            category:  meta.category,
+            severity,
+            category,
         };
     }
 
