@@ -521,9 +521,10 @@ button:disabled { opacity: 0.35; cursor: not-allowed; }
 
 .graph-container {
     flex: 1;
-    overflow: auto;
+    overflow: hidden;
     padding: 20px;
     cursor: grab;
+    user-select: none;
 }
 
 .graph-container:active { cursor: grabbing; }

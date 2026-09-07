@@ -322,6 +322,137 @@ function diffLine(text, type) {
     return el;
 }
 
+function setupGraphPanZoom(container, inner) {
+    if (container._panZoomCleanup) {
+        container._panZoomCleanup();
+    }
+
+    const state = {
+        scale: 1,
+        translateX: 0,
+        translateY: 0,
+        isPanning: false,
+        pointerId: null,
+        startX: 0,
+        startY: 0,
+        startTranslateX: 0,
+        startTranslateY: 0,
+        suppressClick: false,
+    };
+
+    const minScale = 0.35;
+    const maxScale = 3.5;
+    const zoomStep = 1.12;
+    const panThreshold = 3;
+
+    function applyTransform() {
+        inner.style.transform = `translate(${state.translateX}px, ${state.translateY}px) scale(${state.scale})`;
+        inner.style.transformOrigin = '0 0';
+    }
+
+    function clampScale(value) {
+        return Math.min(maxScale, Math.max(minScale, value));
+    }
+
+    function zoomAt(clientX, clientY, factor) {
+        const rect = container.getBoundingClientRect();
+        const nextScale = clampScale(state.scale * factor);
+        const offsetX = clientX - rect.left;
+        const offsetY = clientY - rect.top;
+        const graphX = (offsetX - state.translateX) / state.scale;
+        const graphY = (offsetY - state.translateY) / state.scale;
+
+        state.scale = nextScale;
+        state.translateX = offsetX - graphX * state.scale;
+        state.translateY = offsetY - graphY * state.scale;
+        applyTransform();
+    }
+
+    function onPointerDown(event) {
+        if (event.button !== 0) return;
+        state.isPanning = true;
+        state.pointerId = event.pointerId;
+        state.startX = event.clientX;
+        state.startY = event.clientY;
+        state.startTranslateX = state.translateX;
+        state.startTranslateY = state.translateY;
+        container.setPointerCapture(event.pointerId);
+        container.style.userSelect = 'none';
+    }
+
+    function onPointerMove(event) {
+        if (!state.isPanning || event.pointerId !== state.pointerId) return;
+        const deltaX = event.clientX - state.startX;
+        const deltaY = event.clientY - state.startY;
+
+        if (!state.suppressClick && (Math.abs(deltaX) > panThreshold || Math.abs(deltaY) > panThreshold)) {
+            state.suppressClick = true;
+        }
+
+        state.translateX = state.startTranslateX + deltaX;
+        state.translateY = state.startTranslateY + deltaY;
+        applyTransform();
+    }
+
+    function endPan(event) {
+        if (event.pointerId !== state.pointerId) return;
+        state.isPanning = false;
+        state.pointerId = null;
+        container.style.userSelect = '';
+        if (container.hasPointerCapture(event.pointerId)) {
+            container.releasePointerCapture(event.pointerId);
+        }
+    }
+
+    function onPointerUp(event) {
+        const wasPanning = state.isPanning;
+        endPan(event);
+        if (wasPanning) {
+            window.setTimeout(() => {
+                state.suppressClick = false;
+            }, 0);
+        }
+    }
+
+    function onPointerCancel(event) {
+        endPan(event);
+        state.suppressClick = false;
+    }
+
+    function onWheel(event) {
+        event.preventDefault();
+        const factor = event.deltaY < 0 ? zoomStep : 1 / zoomStep;
+        zoomAt(event.clientX, event.clientY, factor);
+    }
+
+    function onClickCapture(event) {
+        if (!state.suppressClick) return;
+        event.preventDefault();
+        event.stopPropagation();
+        state.suppressClick = false;
+    }
+
+    container.style.touchAction = 'none';
+    applyTransform();
+
+    container.addEventListener('pointerdown', onPointerDown);
+    container.addEventListener('pointermove', onPointerMove);
+    container.addEventListener('pointerup', onPointerUp);
+    container.addEventListener('pointercancel', onPointerCancel);
+    container.addEventListener('wheel', onWheel, { passive: false });
+    container.addEventListener('click', onClickCapture, true);
+
+    container._panZoomCleanup = () => {
+        container.removeEventListener('pointerdown', onPointerDown);
+        container.removeEventListener('pointermove', onPointerMove);
+        container.removeEventListener('pointerup', onPointerUp);
+        container.removeEventListener('pointercancel', onPointerCancel);
+        container.removeEventListener('wheel', onWheel);
+        container.removeEventListener('click', onClickCapture, true);
+        delete container._panZoomCleanup;
+    };
+}
+
 // ─── Init ─────────────────────────────────────────────────────────────────────
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -1370,12 +1501,17 @@ async function openGraphModal() {
 
     const def = buildMermaidDef(nodes);
     const inner = document.getElementById('graph-inner');
+    const container = document.getElementById('graph-container');
+    if (container._panZoomCleanup) {
+        container._panZoomCleanup();
+    }
     inner.innerHTML = '';
 
     try {
         const id = 'milc-graph-' + Date.now();
         const { svg } = await mermaid.render(id, def);
         inner.innerHTML = svg;
+        setupGraphPanZoom(container, inner);
 
         // Wire click-to-select on every node
         inner.querySelectorAll('.node').forEach(el => {
