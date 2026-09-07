@@ -93,9 +93,21 @@ export const CHECKS_BY_RATING = {
 };
 
 export const TOTAL_ANIMALS_NODE_IDS = ["view-animal-count"];
-export const MILKED_ANIMALS_NODE_IDS = ["view-235", "view-36"];
+export const MILKED_ANIMALS_NODE_IDS = new Set(["view-235", "view-36"]);
 export const MILK_LITERS_NODE_ID = "view-55";
 export const MASTITIS_NODE_IDS = ["view-236", "view-42", "view-189"];
+export const SICK_ANIMALS_NODE_IDS = new Set(["view-236", "view-42"]);
+export const COUNT_MUST_NOT_EXCEED_TOTAL_NODE_IDS = new Set([
+    "view-235",
+    "view-36",
+    "view-add-animals",
+    "view-181",
+]);
+export const STOCK_DEDUCTION_NODE_IDS = new Set([
+    "view-dead-animals", 
+    "view-remove-animals", 
+    "view-181"
+]);
 
 export const ISO_DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 

@@ -3,7 +3,13 @@ import {
     isHerdInventoryNode,
     withoutHerdInventoryRecordForNodeAndDate,
 } from "../utils/herdInventory";
-import { VALIDATION_SEVERITY } from "../constants";
+import { 
+    VALIDATION_SEVERITY,
+    MILKED_ANIMALS_NODE_IDS,
+    SICK_ANIMALS_NODE_IDS,
+    COUNT_MUST_NOT_EXCEED_TOTAL_NODE_IDS,
+    STOCK_DEDUCTION_NODE_IDS,
+} from "../constants";
 
 const getLatestRecord = (records, predicate) => {
     return records
@@ -37,16 +43,6 @@ const getFirstSubmittedNumber = (answers = {}) => {
 
     return null;
 };
-
-const MILKED_ANIMALS_NODE_IDS = new Set(["view-235", "view-36"]);
-const SICK_ANIMALS_NODE_IDS = new Set(["view-236", "view-42"]);
-const COUNT_MUST_NOT_EXCEED_TOTAL_NODE_IDS = new Set([
-    "view-235",
-    "view-36",
-    "view-add-animals",
-    "view-181",
-]);
-const STOCK_DEDUCTION_NODE_IDS = new Set(["view-dead-animals", "view-remove-animals", "view-181"]);
 
 const rules = [
     {

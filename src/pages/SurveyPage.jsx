@@ -45,14 +45,6 @@ const resolveNonNodeTargetRoute = (targetId) => {
     return null;
 };
 
-const DEBUG_ANIMAL_COUNT_NODE_IDS = new Set([
-    "view-36",
-    "view-add-animals",
-    "view-remove-animals",
-    "view-dead-animals",
-    "view-181",
-]);
-
 const getFirstSubmittedNumber = (answers = {}) => {
     for (const value of Object.values(answers)) {
         const numeric = Number(value);
@@ -222,30 +214,6 @@ const SurveyPage = () => {
     const handleSubmit = (answers) => {
         const records = getRecords();
         const inventoryRecords = getInventoryRecords();
-
-        if (DEBUG_ANIMAL_COUNT_NODE_IDS.has(nodeId)) {
-            const enteredValue = getFirstSubmittedNumber(answers);
-            const inventoryType = getHerdInventoryTypeForNode(nodeId);
-            const baselineInventoryRecords = isHerdInventoryTracked
-                ? withoutHerdInventoryRecordForNodeAndDate(inventoryRecords, nodeId, currentDate)
-                : inventoryRecords;
-
-            const currentHerdCount = getEffectiveHerdSizeOnDate(
-                records,
-                baselineInventoryRecords,
-                currentDate,
-            );
-
-            const projectedHerdCount = getProjectedHerdCount(inventoryType, currentHerdCount, enteredValue);
-
-            console.log("[animal-count-debug]", {
-                viewId: nodeId,
-                currentDate,
-                currentHerdCount,
-                enteredValue,
-                projectedHerdCount,
-            });
-        }
 
         const validationResult = validateSurveySubmission({
             nodeId,
