@@ -4,6 +4,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import ErrorBoundary from './components/ErrorBoundary';
 import Welcome from "./pages/Welcome";
 import Login from "./pages/Login";
+import ActivityLog from "./pages/ActivityLog";
 import Register from "./pages/Register";
 import MainMenu from "./pages/MainMenu";
 import LogMenu from "./pages/LogMenu";
@@ -64,6 +65,13 @@ const App = () => {
                                 element={
                                     <ProtectedRoute>
                                     <SurveyPage />
+                                    </ProtectedRoute>
+                                }/>
+                            <Route
+                                path="/activity"
+                                element={
+                                    <ProtectedRoute>
+                                    <ActivityLog />
                                     </ProtectedRoute>
                                 }/>
                             <Route

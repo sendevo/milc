@@ -1,4 +1,21 @@
 import { describe, expect, it, vi } from "vitest";
+
+const xlsxMocks = vi.hoisted(() => ({
+    aoaToSheet: vi.fn(() => ({ sheet: true })),
+    bookNew: vi.fn(() => ({ workbook: true })),
+    bookAppendSheet: vi.fn(),
+    writeFile: vi.fn(),
+}));
+
+vi.mock("xlsx", () => ({
+    utils: {
+        aoa_to_sheet: xlsxMocks.aoaToSheet,
+        book_new: xlsxMocks.bookNew,
+        book_append_sheet: xlsxMocks.bookAppendSheet,
+    },
+    writeFile: xlsxMocks.writeFile,
+}));
+
 import { importActivityCsv, parseActivityCsv } from "../importActivityCsv";
 import { exportActivityCsv } from "../exportActivityCsv";
 
@@ -24,6 +41,28 @@ describe("importActivityCsv", () => {
         ]);
     });
 
+    it("sorts imported rows by date before saving", () => {
+        const saved = [];
+
+        importActivityCsv({
+            csvText: `Date (DD-MM-YYYY),View ID,Answer\n06-09-2026,view-215,no\n05-09-2026,view-213,yes\n04-09-2026,view-214,maybe`,
+            nodes: {
+                "view-213": { scenario: "PLAGAS" },
+                "view-214": { scenario: "PLAGAS" },
+                "view-215": { scenario: "PLAGAS" },
+            },
+            saveAnswer: (nodeId, scenario, answer, options = {}) => {
+                saved.push({ nodeId, scenario, answer, date: options.date });
+            },
+        });
+
+        expect(saved).toEqual([
+            { nodeId: "view-214", scenario: "PLAGAS", answer: "maybe", date: "2026-09-04" },
+            { nodeId: "view-213", scenario: "PLAGAS", answer: "yes", date: "2026-09-05" },
+            { nodeId: "view-215", scenario: "PLAGAS", answer: "no", date: "2026-09-06" },
+        ]);
+    });
+
     it("skips malformed rows without crashing", () => {
         const rows = parseActivityCsv(`Date (DD-MM-YYYY),View ID,Answer\n05-09-2026,view-213,yes\ninvalid`);
 
@@ -32,65 +71,52 @@ describe("importActivityCsv", () => {
         ]);
     });
 
-    it("replaces commas in exported CSV text with spaces", () => {
-        const originalDocument = global.document;
-        const originalURL = global.URL;
-        const originalBlob = global.Blob;
+    it("exports activity rows to an xlsx workbook", () => {
+    	xlsxMocks.aoaToSheet.mockClear();
+	    xlsxMocks.bookNew.mockClear();
+	    xlsxMocks.bookAppendSheet.mockClear();
+	    xlsxMocks.writeFile.mockClear();
 
-        const createElement = vi.fn(() => ({
-            href: "",
-            download: "",
-            style: {},
-            click: vi.fn(),
-            remove: vi.fn(),
-        }));
+        exportActivityCsv({
+            records: [{ timestamp: 1720000000000, nodeId: "view-1", answer: "yes, no" }],
+            inventoryRecords: [],
+            nodes: {
+                "view-1": {
+                    title: { en: "Title, subtitle", es: "Titulo, subtitulo" },
+                    subtitle: { en: "Sub, title", es: "Sub, titulo" },
+                    scenario: "TEST" },
+            },
+            t: (key) => ({
+                "activityLog.title": "Activity",
+                "activityExport.dateTime": "Date",
+                "activityExport.pageNumber": "Page",
+                "activityExport.pageTitle": "Title",
+                "activityExport.pageSubtitle": "Subtitle",
+                "activityExport.answer": "Answer",
+                "activityExport.fileName": "activity",
+            })[key] ?? key,
+            language: "en",
+        });
 
-        global.document = {
-            body: { appendChild: vi.fn() },
-            createElement,
-        };
-        global.URL = {
-            createObjectURL: vi.fn((blob) => `blob:${blob?.size ?? 0}`),
-            revokeObjectURL: vi.fn(),
-        };
-        global.Blob = class Blob {
-            constructor(parts, options = {}) {
-                this.parts = parts;
-                this.type = options.type;
-                this.size = parts.join("").length;
-            }
-        };
-
-        try {
-            exportActivityCsv({
-                records: [{ timestamp: 1720000000000, nodeId: "view-1", answer: "yes, no" }],
-                inventoryRecords: [],
-                nodes: {
-                    "view-1": {
-                        title: { en: "Title, subtitle", es: "Titulo, subtitulo" },
-                        subtitle: { en: "Sub, title", es: "Sub, titulo" },
-                        scenario: "TEST" },
-                },
-                t: (key) => ({
-                    "activityExport.dateTime": "Date",
-                    "activityExport.pageNumber": "Page",
-                    "activityExport.pageTitle": "Title",
-                    "activityExport.pageSubtitle": "Subtitle",
-                    "activityExport.answer": "Answer",
-                    "activityExport.fileName": "activity",
-                })[key] ?? key,
-                language: "en",
-            });
-
-            const csvText = global.URL.createObjectURL.mock.calls[0][0].parts[0];
-            expect(csvText).toContain("yes no");
-            expect(csvText).not.toContain("yes, no");
-            expect(csvText).toContain("Title subtitle");
-            expect(csvText).not.toContain("Title, subtitle");
-        } finally {
-            global.document = originalDocument;
-            global.URL = originalURL;
-            global.Blob = originalBlob;
-        }
+        expect(xlsxMocks.aoaToSheet).toHaveBeenCalledTimes(1);
+        const [sheetRows] = xlsxMocks.aoaToSheet.mock.calls[0];
+        expect(sheetRows[0]).toEqual(["Date", "Page", "Title", "Subtitle", "Answer"]);
+        expect(sheetRows[1]).toEqual([
+            expect.stringMatching(/^03-07-2024 \d{2}:\d{2}:\d{2}$/),
+            "1",
+            "Title, subtitle",
+            "Sub, title",
+            "yes, no",
+        ]);
+        expect(xlsxMocks.bookAppendSheet).toHaveBeenCalledWith(
+            { workbook: true },
+            expect.objectContaining({ sheet: true }),
+            "Activity",
+        );
+        expect(xlsxMocks.writeFile).toHaveBeenCalledWith(
+            { workbook: true },
+            expect.stringMatching(/^activity_\d{8}_\d{6}\.xlsx$/),
+            { compression: true },
+        );
     });
 });

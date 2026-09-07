@@ -101,7 +101,7 @@ export const importActivityCsv = ({ csvText, nodes = {}, saveAnswer }) => {
         throw new TypeError("saveAnswer must be a function");
     }
 
-    const rows = parseActivityCsv(csvText);
+    const rows = parseActivityCsv(csvText).sort((left, right) => left.date.localeCompare(right.date));
     let imported = 0;
     let skipped = 0;
 

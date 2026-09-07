@@ -1,20 +1,6 @@
 import { getSpecialSurveyViewExportMeta } from "../pages/specialViews";
+import * as XLSX from "xlsx";
 import { MONTH_KEYS } from "../constants";
-
-const csvEscape = (value) => {
-    if (value === null || value === undefined) return "";
-
-    const text = String(value)
-        .replace(/,/g, " ")
-        .replace(/\s+/g, " ")
-        .trim();
-
-    if (/["\n\r]/.test(text)) {
-        return `"${text.replace(/"/g, '""')}"`;
-    }
-
-    return text;
-};
 
 const getLocalizedText = (text, language) => {
     if (!text || typeof text !== "object") {
@@ -85,7 +71,7 @@ const formatMonthAnswer = (answer, t) => {
         .join(", ");
 };
 
-const formatAnswer = (record, node, t) => {
+const formatAnswer = (record, node, t, language) => {
     const field = resolveTrackedField(node);
     const answer = record?.answer;
 
@@ -95,7 +81,7 @@ const formatAnswer = (record, node, t) => {
 
     if (field.type === "select") {
         const option = field.options?.find((item) => item.value === answer);
-        return option ? getLocalizedText(option.label) : String(answer ?? "");
+        return option ? getLocalizedText(option.label, language) : String(answer ?? "");
     }
 
     if (field.type === "month_picker") {
@@ -117,6 +103,8 @@ const buildHeaders = (t) => ([
     t("activityExport.answer"),
 ]);
 
+export const getActivityExportHeaders = buildHeaders;
+
 const normalizeInventoryRecords = (inventoryRecords = []) => {
     return inventoryRecords.map((record) => ({
         ...record,
@@ -124,7 +112,7 @@ const normalizeInventoryRecords = (inventoryRecords = []) => {
     }));
 };
 
-const buildRows = ({ records, inventoryRecords, nodes, t, language }) => {
+export const getActivityExportRows = ({ records, inventoryRecords, nodes, t, language }) => {
     return [...records, ...normalizeInventoryRecords(inventoryRecords)]
         .sort((a, b) => Number(a.timestamp || 0) - Number(b.timestamp || 0))
         .map((record) => {
@@ -142,32 +130,24 @@ const buildRows = ({ records, inventoryRecords, nodes, t, language }) => {
                 getNodeNumber(record.nodeId),
                 title,
                 subtitle,
-                formatAnswer(record, node, t),
+                formatAnswer(record, node, t, language),
             ];
         });
 };
 
-const toCsv = (headers, rows) => {
-    const lines = [headers.map(csvEscape).join(",")];
+const downloadWorkbook = ({ headers, rows, filename, t }) => {
+    const worksheet = XLSX.utils.aoa_to_sheet([headers, ...rows]);
+    worksheet["!cols"] = headers.map((header, index) => {
+        const maxCellLength = Math.max(
+            header.length,
+            ...rows.map((row) => String(row[index] ?? "").length),
+        );
+        return { wch: Math.min(Math.max(maxCellLength + 2, 14), 48) };
+    });
 
-    for (const row of rows) {
-        lines.push(row.map(csvEscape).join(","));
-    }
-
-    return lines.join("\n");
-};
-
-const downloadCsv = (content, filename) => {
-    const blob = new Blob([content], { type: "text/csv;charset=utf-8;" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = filename;
-    link.style.display = "none";
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-    URL.revokeObjectURL(url);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, t("activityLog.title"));
+    XLSX.writeFile(workbook, filename, { compression: true });
 };
 
 const buildFilename = (t) => {
@@ -178,12 +158,11 @@ const buildFilename = (t) => {
     const hh = String(now.getHours()).padStart(2, "0");
     const mi = String(now.getMinutes()).padStart(2, "0");
     const ss = String(now.getSeconds()).padStart(2, "0");
-    return `${t("activityExport.fileName")}_${yyyy}${mm}${dd}_${hh}${mi}${ss}.csv`;
+    return `${t("activityExport.fileName")}_${yyyy}${mm}${dd}_${hh}${mi}${ss}.xlsx`;
 };
 
 export const exportActivityCsv = ({ records, inventoryRecords = [], nodes, t, language }) => {
-    const headers = buildHeaders(t);
-    const rows = buildRows({ records, inventoryRecords, nodes, t, language });
-    const csv = toCsv(headers, rows);
-    downloadCsv(csv, buildFilename(t));
+    const headers = getActivityExportHeaders(t);
+    const rows = getActivityExportRows({ records, inventoryRecords, nodes, t, language });
+    downloadWorkbook({ headers, rows, filename: buildFilename(t), t });
 };

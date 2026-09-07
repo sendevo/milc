@@ -12,7 +12,6 @@ import { useHerdInventory } from "../hooks/useHerdInventory";
 import { db } from "../firebase";
 import { removeItem } from "../utils/persistentStorage";
 import { configStyles as styles } from "../theme/Config.styles";
-import { exportActivityCsv } from "../utils/exportActivityCsv";
 import { importActivityCsv } from "../utils/importActivityCsv";
 import { USAGE_KEYS, USAGE_KEY_PREFIXES, DEV_TOOLS_ENABLED } from "../constants";
 
@@ -80,16 +79,6 @@ const Config = () => {
         }
     };
 
-    const handleDownloadActivity = () => {
-        exportActivityCsv({
-            records: getRecords(),
-            inventoryRecords: getInventoryRecords(),
-            nodes,
-            t,
-            language: i18n.language,
-        });
-    };
-
     const handleImportActivity = () => {
         if (!window.confirm(t("config.importActivityDataConfirm"))) {
             return;
@@ -152,11 +141,11 @@ const Config = () => {
                 </Box>
 
                 <Box sx={styles.settingRow}>
-                    <Typography sx={styles.label}>{t("config.downloadMyActivity")}</Typography>
+                    <Typography sx={styles.label}>{t("config.myAppActivity")}</Typography>
                     <Button
                         variant="contained"
-                        onClick={handleDownloadActivity}>
-                        {t("config.downloadMyActivity")}
+                        onClick={()=>{navigate("/activity")}}>
+                        {t("config.viewMyActivity")}
                     </Button>
                 </Box>
 

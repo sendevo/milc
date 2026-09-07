@@ -180,6 +180,11 @@ const resources = {
                 confirm: "Confirm",
                 cancel: "Cancel",
             },
+            activityLog: {
+                title: "My Activity",
+                downloadMyActivity: "Download my activity",
+                empty: "No activity records available.",
+            },
             config: {
                 title: "Settings",
                 language: "Language",
@@ -188,7 +193,8 @@ const resources = {
                 theme: "Theme",
                 light: "Light",
                 dark: "Dark",
-                downloadMyActivity: "Download my activity",
+                myAppActivity: "My App Activity",
+                viewMyActivity: "View my activity",
                 enableSimulatedDate: "Simulate app date",
                 simulatedDate: "Simulated date",
                 useSystemDate: "Use system date",
@@ -435,6 +441,11 @@ const resources = {
                 confirm: "Confirmar",
                 cancel: "Cancelar",
             },
+            activityLog: {
+                title: "Mi actividad",
+                downloadMyActivity: "Descargar mi actividad",
+                empty: "No hay registros de actividad disponibles.",
+            },
             config: {
                 title: "Configuración",
                 language: "Idioma",
@@ -443,7 +454,8 @@ const resources = {
                 theme: "Apariencia",
                 light: "Claro",
                 dark: "Oscuro",
-                downloadMyActivity: "Descargar mi actividad",
+                myAppActivity: "Mi actividad en la app",
+                viewMyActivity: "Ver mi actividad",
                 enableSimulatedDate: "Simular fecha de la app",
                 simulatedDate: "Fecha simulada",
                 useSystemDate: "Usar fecha del sistema",
