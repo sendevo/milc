@@ -10,8 +10,64 @@ import { useSurveyNodes } from "../hooks/useSurveyNodes";
 import { computeFullScore } from "../model/scoring";
 import { buildScoredAspects } from "../model/aspects";
 import { parseIsoDate, formatAsIsoDate } from "../utils/dateTime";
-import checkTrue from "../assets/icons/check_true.png";
-import checkFalse from "../assets/icons/check_false.png";
+
+const getRatingCircleSx = (rating, index) => {
+    const isFilled = index < rating;
+
+    if (rating === 4) {
+        return styles.ratingCircle({
+            borderColor: "#2e7d32",
+            backgroundColor: "#2e7d32",
+        });
+    }
+
+    if (rating === 3) {
+        return styles.ratingCircle(
+            isFilled
+                ? {
+                    borderColor: "#c62828",
+                    backgroundColor: "#c62828",
+                }
+                : {
+                    borderColor: "#c62828",
+                    backgroundColor: "#ffffff",
+                }
+        );
+    }
+
+    if (rating === 2) {
+        return styles.ratingCircle(
+            isFilled
+                ? {
+                    borderColor: "#c62828",
+                    backgroundImage: "repeating-linear-gradient(90deg, #c62828 0 6px, #111111 6px 12px)",
+                }
+                : {
+                    borderColor: "#c62828",
+                    backgroundColor: "#ffffff",
+                }
+        );
+    }
+
+    if (rating === 1) {
+        return styles.ratingCircle(
+            isFilled
+                ? {
+                    borderColor: "#111111",
+                    backgroundColor: "#111111",
+                }
+                : {
+                    borderColor: "#111111",
+                    backgroundColor: "#ffffff",
+                }
+        );
+    }
+
+    return styles.ratingCircle({
+        borderColor: "#9e9e9e",
+        backgroundColor: "#ffffff",
+    });
+};
 
 const ResultScales = () => {
     const { t } = useTranslation();
@@ -109,11 +165,13 @@ const ResultScales = () => {
 
                                 <Box sx={styles.ratingContainer}>
                                     {Array.from({ length: 4 }, (_, i) => (
-                                        <img
+                                        <Box
                                             key={`${index}-check-${i}`}
-                                            src={i < aspect.rating ? checkTrue : checkFalse}
-                                            alt={i < aspect.rating ? "checked" : "unchecked"}
-                                            style={{ ...styles.ratingIcon, ...mutedIconStyle }}
+                                            aria-hidden="true"
+                                            sx={{
+                                                ...getRatingCircleSx(aspect.rating, i),
+                                                ...(isNotComputed ? styles.ratingCircleMuted : {}),
+                                            }}
                                         />
                                     ))}
                                 </Box>

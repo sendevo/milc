@@ -72,10 +72,21 @@ export const resultScalesStyles = {
         flex: 1,
         pr: 1,
     },
-    ratingIcon: {
+    ratingCircle: ({ borderColor, backgroundColor, backgroundImage }) => ({
         width: 40,
         height: 40,
-        objectFit: "contain",
+        borderRadius: "50%",
+        border: `2px solid ${borderColor}`,
+        backgroundColor,
+        backgroundImage,
+        backgroundSize: "100% 100%",
+        backgroundRepeat: "no-repeat",
+        boxSizing: "border-box",
+        flexShrink: 0,
+    }),
+    ratingCircleMuted: {
+        filter: "grayscale(1)",
+        opacity: 0.65,
     },
     bottomActions: {
         mt: "auto",
