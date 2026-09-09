@@ -20,8 +20,8 @@ import { SCENARIO_DEFAULTS } from "../constants";
  * should have been performed in a given number of app-use days.
  *
  * @param {"daily"|"every-other-day"|"weekly"|"biweekly"|"monthly"|"semester"} periodicity
- * @param {number} totalDays - Number of scored app-use days (distinct dates)
- * @returns {number} Expected occurrences as an integer value
+ * @param {number} totalDays - Number of scored app-use days
+ * @returns {number} Expected occurrences as a fractional value
  */
 export const expectedOccurrences = (periodicity, totalDays) => {
     if (totalDays <= 0) return 0;
@@ -34,9 +34,7 @@ export const expectedOccurrences = (periodicity, totalDays) => {
         "semester":       120,
     };
     const daysPerOccurrence = periodDays[periodicity] ?? 1;
-    
-    // Contabiliza ciclos enteros de días de uso completados.
-    return Math.max(1, Math.floor(totalDays / daysPerOccurrence));
+    return totalDays / daysPerOccurrence;
 };
 
 // ---------------------------------------------------------------------------
@@ -50,10 +48,10 @@ export const expectedOccurrences = (periodicity, totalDays) => {
  * @returns {"always"|"almostAlways"|"sometimes"|"never"}
  */
 export const classifyPEC = (pec) => {
-    if (pec >= 0.91) return "always";        // "Siempre"
-    if (pec >= 0.51) return "almostAlways";  // "Casi Siempre"
-    if (pec >= 0.11) return "sometimes";     // "Algunas Veces"
-    return "never";                          // "Nunca"
+    if (pec >= 0.91) return "always";
+    if (pec >= 0.51) return "almostAlways";
+    if (pec >= 0.11) return "sometimes";
+    return "never";
 };
 
 /**
@@ -61,7 +59,8 @@ export const classifyPEC = (pec) => {
  *
  * A record is "correct" if its `answer` matches the node's `score-answer`.
  * Records with a "dont-know" answer are excluded from both numerator
- * and denominator.
+ * and denominator (they neither help nor hurt the score, matching the
+ * spreadsheet's NO SUMA / blank-cell behavior).
  *
  * @param {Array<{scenario: string, answer: string, date: string}>} records
  *   All log records for this scenario (pre-filtered by caller).
@@ -70,31 +69,16 @@ export const classifyPEC = (pec) => {
  * @returns {{ pec: number, category: string, correct: number, expected: number }}
  */
 export const computePEC = (records, correctAnswer, periodicity) => {
-    // 1. Excluir respuestas de desvío educativo ("dont-know")
-    const scoredRecords = records.filter(r => r.answer !== "dont-know");
-
-    if (scoredRecords.length === 0) {
-        return { pec: 0, category: "never", correct: 0, expected: 0 };
-    }
-
-    // 2. Agrupar por fecha única para evitar que respuestas múltiples el mismo día distorsionen el PEC
-    const recordsByDate = {};
-    for (const record of scoredRecords) {
-        recordsByDate[record.date] = record;
-    }
-    const uniqueDayRecords = Object.values(recordsByDate);
-
-    // 3. El total de días únicos de uso real calcula las ocurrencias esperadas
-    const totalAppUseDays = uniqueDayRecords.length;
-    const expected = expectedOccurrences(periodicity, totalAppUseDays);
+    // Exclude "don't know" answers — they are educational detours, not executions.
+    const scored = records.filter(r => r.answer !== "dont-know");
+    const expected = expectedOccurrences(periodicity, scored.length);
 
     if (expected === 0) {
         return { pec: 0, category: "never", correct: 0, expected: 0 };
     }
 
-    // 4. Contar cuántos de esos días únicos contaron con la respuesta correcta
-    const correct = uniqueDayRecords.filter((r) => r.answer === correctAnswer).length;
-    const pec = Math.min(correct / expected, 1); // Forzar tope máximo en 1.0 (100%)
+    const correct = scored.filter((r) => r.answer === correctAnswer).length;
+    const pec = Math.min(correct / expected, 1); // cap at 1.0
 
     return {
         pec,
@@ -111,7 +95,12 @@ export const computePEC = (records, correctAnswer, periodicity) => {
 /**
  * Computes MR from the raw PEC value and consequence severity.
  *
+ * MILC 2024 defines the risk magnitude as:
  * MR = severity * (1 - PEC) / 3
+ *
+ * PEC is normalized to the [0, 1] range and severity is expected to be 1, 2,
+ * or 3. This keeps MR in the [0, 1] range while preserving the guide's
+ * boundaries: S1 max ≈ 0.33, S2 max ≈ 0.67, S3 max = 1.00.
  *
  * @param {number} pec
  * @param {1|2|3} severity
@@ -132,17 +121,28 @@ export const computeMR = (pec, severity) => {
 // ---------------------------------------------------------------------------
 
 /**
+ * Computes the average MR for an array of individual MR values.
+ *
+ * @param {number[]} mrValues
+ * @returns {number} Average MR, or 0 if the array is empty
+ */
+export const computeCategoryMR = (mrValues) => {
+    if (!mrValues || mrValues.length === 0) return 0;
+    const sum = mrValues.reduce((acc, v) => acc + v, 0);
+    return sum / mrValues.length;
+};
+
+/**
  * Maps a category's average MR to a result rating.
- * Aligned with the exact limits defined in the MILC INTA spreadsheet.
  *
  * @param {number} avgMR
  * @returns {"excellent"|"very-good"|"regular"|"needs-improvement"}
  */
 export const classifyResult = (avgMR) => {
-    if (avgMR <= 0.11) return "excellent";          // "Excelente"
-    if (avgMR <= 0.51) return "very-good";          // "Muy bien"
-    if (avgMR <= 0.91) return "regular";            // "Bien"
-    return "needs-improvement";                     // "Hay que mejorar"
+    if (avgMR <= 0.10) return "excellent";
+    if (avgMR <= 0.50) return "very-good";
+    if (avgMR <= 0.90) return "regular";
+    return "needs-improvement";
 };
 
 /**
@@ -168,16 +168,27 @@ export const resultViewId = (rating) => {
 /**
  * Runs the complete scoring pipeline over the full log and the node tree.
  *
+ * For each scoreable node (scenario !== "-" and the required scoring metadata
+ * is present), it looks up the log records that belong to that node, computes
+ * PEC, then MR, and groups the result by category.
+ *
+ * The returned `byScenario` object is keyed by node ID so shared scenarios do
+ * not collapse multiple scoreable questions into a single PEC/MR value.
+ *
  * @param {Array<{scenario: string, answer: string, date: string}>} allRecords
  *   The full log from useSurveyLog.
  * @param {Object} nodes
  *   The full nodes tree from nodes.json (keyed by view id).
- * @returns {Object} Scoring summary
+ * @returns {Object} Scoring summary:
+ *   {
+ *     byScenario: { [nodeId]: { nodeId, scenario, pec, pecCategory, mr, severity, category } },
+ *     byCategory: { [category]: { avgMR, rating, resultViewId } },
+ *   }
  */
+
 export const computeFullScore = (allRecords, nodes) => {
+    // Compute PEC + MR per scoreable node.
     const byScenario = {};
-    
-    // 1. Procesamiento individual por cada Nodo del árbol de decisiones
     for (const [nodeId, node] of Object.entries(nodes)) {
         const scenarioId = node.scenario;
         if (!scenarioId || scenarioId === "-") continue;
@@ -198,12 +209,13 @@ export const computeFullScore = (allRecords, nodes) => {
             return record.scenario === scenarioId;
         });
 
-        // Corrección INTA: Si la pregunta no posee respuestas registradas en el log, 
-        // toma el comportamiento por defecto (PEC: 0), garantizando que compute la categoría grupal.
-        const { pec, category: pecCategory, correct, expected } = records.length > 0 
-            ? computePEC(records, correctAnswer, periodicity)
-            : { pec: 0, category: "never", correct: 0, expected: 0 };
+        if (records.length === 0) continue;
 
+        const { pec, category: pecCategory, correct, expected } = computePEC(
+            records,
+            correctAnswer,
+            periodicity
+        );
         const mr = computeMR(pec, severity);
 
         byScenario[nodeId] = {
@@ -219,29 +231,18 @@ export const computeFullScore = (allRecords, nodes) => {
         };
     }
 
-    // 2. Agrupación y Ponderación por Categoría Temática (Estructura de matriz del Excel)
+    // Aggregate MR values by thematic category.
     const grouped = {};
     for (const data of Object.values(byScenario)) {
-        if (!grouped[data.category]) {
-            grouped[data.category] = { pecs: [], severities: [] };
-        }
-        grouped[data.category].pecs.push(data.pec);
-        grouped[data.category].severities.push(data.severity);
+        if (!grouped[data.category]) grouped[data.category] = [];
+        grouped[data.category].push(data.mr);
     }
 
     const byCategory = {};
-    for (const [cat, data] of Object.entries(grouped)) {
-        // Obtiene promedios globales de componentes tal como dicta la planilla matemática
-        const avgPEC = data.pecs.reduce((acc, v) => acc + v, 0) / data.pecs.length;
-        const avgSeverity = data.severities.reduce((acc, v) => acc + v, 0) / data.severities.length;
-        
-        // El MR grupal se computa a partir de los promedios globales ponderados del grupo
-        const avgMR = computeMR(avgPEC, avgSeverity);
+    for (const [cat, mrValues] of Object.entries(grouped)) {
+        const avgMR  = computeCategoryMR(mrValues);
         const rating = classifyResult(avgMR);
-
         byCategory[cat] = {
-            avgPEC,
-            avgSeverity,
             avgMR,
             rating,
             resultViewId: resultViewId(rating),
