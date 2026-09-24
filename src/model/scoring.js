@@ -139,12 +139,11 @@ export const computeMR = (pec, severity) => {
  * @returns {"excellent"|"very-good"|"regular"|"needs-improvement"}
  */
 export const classifyResult = (avgMR) => {
-    if (avgMR <= 0.11) return "excellent";          // "Excelente"
-    if (avgMR <= 0.51) return "very-good";          // "Muy bien"
-    if (avgMR <= 0.91) return "regular";            // "Bien"
-    return "needs-improvement";                     // "Hay que mejorar"
+    if (avgMR >= 0.91) return "needs-improvement";
+    if (avgMR >= 0.51) return "regular";
+    if (avgMR >= 0.11) return "very-good";
+    return "excellent";
 };
-
 /**
  * Maps a result rating to its corresponding result view ID.
  *
@@ -174,7 +173,7 @@ export const resultViewId = (rating) => {
  *   The full nodes tree from nodes.json (keyed by view id).
  * @returns {Object} Scoring summary
  */
-export const computeFullScore = (allRecords, nodes) => {
+export const computeFullScore = (allRecords, nodes, milkingMethod = "todos") => {
     const byScenario = {};
     
     // 1. Procesamiento individual por cada Nodo del árbol de decisiones
@@ -184,7 +183,11 @@ export const computeFullScore = (allRecords, nodes) => {
 
         const hasNumericInput = (node.fields || []).some((field) => field.type === "number_input");
         if (!node["score-answer"] && hasNumericInput) continue;
+        const hasOwnScoringSignal = (node.severity && node.severity > 0) || node["score-answer"];
+        if (!hasOwnScoringSignal) continue;
 
+        const nodeMethod = node["milking-method"];
+        if (nodeMethod && nodeMethod !== "todos" && nodeMethod !== milkingMethod) continue;
         const fallback = SCENARIO_DEFAULTS[scenarioId] ?? {};
         const correctAnswer = node["score-answer"] || fallback.correctAnswer;
         const severity = node.severity || fallback.severity;

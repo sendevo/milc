@@ -420,7 +420,12 @@ const extractResultMessage = (resultNode) => {
 
 export const buildSafetyData = (records, nodes, from, to, t) => {
     const filteredRecords = filterRecordsByRange(records, from, to);
-    const score = computeFullScore(filteredRecords, nodes);
+    const milkingMethodNodeId = findNodeIdByFieldId(nodes, "milk-select");
+    const milkingMethodAnswer = getLatestRecordByNodeId(records, milkingMethodNodeId)?.answer ?? "todos";
+    // El perfil guarda "mec", pero los nodos usan "mecanico" en "milking-method"
+    const milkingMethod = milkingMethodAnswer === "mec" ? "mecanico" : milkingMethodAnswer;
+
+    const score = computeFullScore(filteredRecords, nodes, milkingMethod);
     const aspects = buildScoredAspects(score, t);
 
     return aspects.map((aspect) => {
