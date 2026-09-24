@@ -10,6 +10,7 @@ import { useSurveyNodes } from "../hooks/useSurveyNodes";
 import { computeFullScore } from "../model/scoring";
 import { buildScoredAspects } from "../model/aspects";
 import { parseIsoDate, formatAsIsoDate } from "../utils/dateTime";
+import { getMilkingMethod } from "../utils/reportData";
 
 const getRatingCircleSx = (rating, index) => {
     const isFilled = index < rating;
@@ -103,8 +104,9 @@ const ResultScales = () => {
     }, [from, to]);
 
     const score = useMemo(() => {
-        return computeFullScore(filteredRecords, nodes);
-    }, [filteredRecords, nodes]);
+        const milkingMethod = getMilkingMethod(getRecords(), nodes);
+        return computeFullScore(filteredRecords, nodes, milkingMethod);
+    }, [filteredRecords, getRecords, nodes]);
 
     const aspects = useMemo(() => {
         return buildScoredAspects(score, t);

@@ -418,12 +418,20 @@ const extractResultMessage = (resultNode) => {
     return lines.join("\n");
 };
 
+/**
+ * Returns the user's milking method as used by the "milking-method" node property
+ * ("manual" | "mecanico"), or "todos" when it has not been configured.
+ */
+export const getMilkingMethod = (records, nodes) => {
+    const milkingMethodNodeId = findNodeIdByFieldId(nodes, "milk-select");
+    const answer = getLatestRecordByNodeId(records, milkingMethodNodeId)?.answer ?? "todos";
+    // El perfil guarda "mec", pero los nodos usan "mecanico" en "milking-method"
+    return answer === "mec" ? "mecanico" : answer;
+};
+
 export const buildSafetyData = (records, nodes, from, to, t) => {
     const filteredRecords = filterRecordsByRange(records, from, to);
-    const milkingMethodNodeId = findNodeIdByFieldId(nodes, "milk-select");
-    const milkingMethodAnswer = getLatestRecordByNodeId(records, milkingMethodNodeId)?.answer ?? "todos";
-    // El perfil guarda "mec", pero los nodos usan "mecanico" en "milking-method"
-    const milkingMethod = milkingMethodAnswer === "mec" ? "mecanico" : milkingMethodAnswer;
+    const milkingMethod = getMilkingMethod(records, nodes);
 
     const score = computeFullScore(filteredRecords, nodes, milkingMethod);
     const aspects = buildScoredAspects(score, t);
