@@ -447,6 +447,26 @@
                 },
                 "severity": "warning",
                 "type": "alert"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Back",
+                            "es": "Atrás"
+                        },
+                        "target": "view-124"
+                    },
+                    {
+                        "label": {
+                            "en": "Next",
+                            "es": "Siguiente"
+                        },
+                        "target": "view-235"
+                    }
+                ],
+                "id": "view-120-navigation",
+                "type": "bottom_navigation"
             }
         ],
         "guide-id": "Requisitos de limpieza del espacio de ordeño manual",
