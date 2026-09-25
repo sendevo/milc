@@ -1324,9 +1324,9 @@ function saveNode() {
         const icon = document.getElementById('field-icon').value.trim();
         if (icon) node.icon = icon;
 
-        // Keep result recommendation data, which has no inputs in this form
+        // Keep result recommendation and conditional-scoring data, which have no inputs in this form
         const previousNode = selectedNodeId ? nodes[selectedNodeId] : null;
-        for (const key of ['recommendation', 'recommendation-view']) {
+        for (const key of ['recommendation', 'recommendation-view', 'conditional']) {
             if (previousNode?.[key] !== undefined) node[key] = previousNode[key];
         }
 

@@ -201,6 +201,11 @@ export const computeFullScore = (allRecords, nodes, milkingMethod = "todos") => 
             return record.scenario === scenarioId;
         });
 
+        // Conditional questions are only asked for some answers of a previous
+        // question (e.g. labeling is skipped when milk is processed immediately):
+        // when unanswered they are left out instead of counting as PEC 0.
+        if (node.conditional && records.length === 0) continue;
+
         // Corrección INTA: Si la pregunta no posee respuestas registradas en el log, 
         // toma el comportamiento por defecto (PEC: 0), garantizando que compute la categoría grupal.
         const { pec, category: pecCategory, correct, expected } = records.length > 0 
