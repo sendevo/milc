@@ -834,7 +834,8 @@
             "en": "Label the containers to preserve the milk",
             "es": "Rotulá los envases para conservar la leche"
         },
-        "recommendation-view": "view-224"
+        "recommendation-view": "view-223",
+        "conditional": true
     },
     "view-131": {
         "category": "milk-care",
@@ -1380,13 +1381,56 @@
             "es": "Sanidad"
         }
     },
+    "view-223": {
+        "category": "milk-care",
+        "fields": [
+            {
+                "audios": [
+                    {
+                        "src": "AUDIO8.mp3"
+                    }
+                ],
+                "id": "view-223-audio",
+                "type": "audio_list"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Back",
+                            "es": "Atrás"
+                        },
+                        "target": "view-130"
+                    }
+                ],
+                "id": "view-223-bottom-nav",
+                "type": "bottom_navigation"
+            }
+        ],
+        "guide-id": "Filtrar la leche recién ordeñada, conservar la leche según momento de elaboración",
+        "manual-page": "31 y 32",
+        "milking-method": "mecanico",
+        "periodicity": "",
+        "scenario": "ACON-01-02",
+        "score-answer": "",
+        "severity": 0,
+        "showDate": true,
+        "subtitle": {
+            "en": "Label the container",
+            "es": "Rotular el envase"
+        },
+        "title": {
+            "en": "Condition the milk",
+            "es": "Acondicionar la leche"
+        }
+    },
     "view-224": {
         "category": "health",
         "fields": [
             {
                 "audios": [
                     {
-                        "src": "AUDIO11.mp3"
+                        "src": "AUDIO8.mp3"
                     }
                 ],
                 "id": "view-224-audio",
@@ -5683,7 +5727,7 @@
                             "en": "Back",
                             "es": "Atrás"
                         },
-                        "target": "home"
+                        "target": "view-95"
                     },
                     {
                         "label": {
@@ -5725,6 +5769,26 @@
                 },
                 "severity": "warning",
                 "type": "alert"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Back",
+                            "es": "Atrás"
+                        },
+                        "target": "view-94"
+                    },
+                    {
+                        "label": {
+                            "en": "Next",
+                            "es": "Siguiente"
+                        },
+                        "target": "view-93"
+                    }
+                ],
+                "id": "view-92-navigation",
+                "type": "bottom_navigation"
             }
         ],
         "guide-id": "Filtrar la leche recién ordeñada, conservar la leche según momento de elaboración",
@@ -5763,7 +5827,7 @@
                             "en": "Up to 2 hours: Fridge/pool",
                             "es": "Hasta 2 horas: Heladera/pileta"
                         },
-                        "target": "view-135",
+                        "target": "view-95",
                         "value": "up-to-2-hours"
                     },
                     {
@@ -5771,7 +5835,7 @@
                             "en": "Up to 48 hours: Cold tank/fridge",
                             "es": "Hasta 48 horas: Tanque frío/heladera"
                         },
-                        "target": "view-135",
+                        "target": "view-95",
                         "value": "up-to-48-hours"
                     },
                     {
@@ -5779,7 +5843,7 @@
                             "en": "Up to 7 months: Freezer",
                             "es": "Hasta 7 meses: Freezer"
                         },
-                        "target": "view-135",
+                        "target": "view-95",
                         "value": "up-to-7-months"
                     }
                 ],
@@ -5928,7 +5992,8 @@
             "en": "Label the containers to preserve the milk",
             "es": "Rotulá los envases para conservar la leche"
         },
-        "recommendation-view": "view-224"
+        "recommendation-view": "view-224",
+        "conditional": true
     },
     "view-result-bad": {
         "category": "",
