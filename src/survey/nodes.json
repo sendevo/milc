@@ -241,7 +241,12 @@
         "title": {
             "en": "Before Milking",
             "es": "Antes de ordeñar"
-        }
+        },
+        "recommendation": {
+            "en": "Regularly check the cleanliness of the milking room",
+            "es": "Revisá periódicamente la limpieza de la sala de ordeño"
+        },
+        "recommendation-view": "view-35"
     },
     "view-110": {
         "category": "before-milking",
@@ -598,7 +603,12 @@
         "title": {
             "en": "Before milking",
             "es": "Antes de ordeñar"
-        }
+        },
+        "recommendation": {
+            "en": "Clean the pen",
+            "es": "Limpiá el corral"
+        },
+        "recommendation-view": "view-123"
     },
     "view-128": {
         "category": "milk-care",
@@ -762,7 +772,12 @@
         "title": {
             "en": "Milk conditioning",
             "es": "Acondicionar la leche"
-        }
+        },
+        "recommendation": {
+            "en": "Strain freshly milked milk",
+            "es": "Filtrá la leche recién ordeñada"
+        },
+        "recommendation-view": "view-128"
     },
     "view-130": {
         "category": "milk-care",
@@ -814,7 +829,12 @@
         "title": {
             "en": "Milk conditioning",
             "es": "Acondicionar la leche"
-        }
+        },
+        "recommendation": {
+            "en": "Label the containers to preserve the milk",
+            "es": "Rotulá los envases para conservar la leche"
+        },
+        "recommendation-view": "view-224"
     },
     "view-131": {
         "category": "milk-care",
@@ -1069,7 +1089,7 @@
                         },
                         "target": "view-dead-animals",
                         "value": "dead"
-                    },                    
+                    },
                     {
                         "label": {
                             "en": "Brucellosis",
@@ -1266,7 +1286,12 @@
         "title": {
             "en": "Brucellosis",
             "es": "Brucelosis"
-        }
+        },
+        "recommendation": {
+            "en": "Carry out brucellosis testing",
+            "es": "Realizá los controles de brucelosis"
+        },
+        "recommendation-view": "view-182"
     },
     "view-181": {
         "category": "health",
@@ -1504,7 +1529,12 @@
         "title": {
             "en": "Feed",
             "es": "Alimentación"
-        }
+        },
+        "recommendation": {
+            "en": "Check the goats feed",
+            "es": "Controlá el alimento de las cabras"
+        },
+        "recommendation-view": "view-187"
     },
     "view-187": {
         "category": "food",
@@ -1842,7 +1872,12 @@
         "title": {
             "en": "Facilities",
             "es": "Instalaciones"
-        }
+        },
+        "recommendation": {
+            "en": "Check the milking facilities",
+            "es": "Revisá las instalaciones para ordeñar"
+        },
+        "recommendation-view": "view-198"
     },
     "view-198": {
         "category": "facilities",
@@ -1986,7 +2021,12 @@
         "title": {
             "en": "Facilities",
             "es": "Instalaciones"
-        }
+        },
+        "recommendation": {
+            "en": "Check the milking facilities",
+            "es": "Revisá las instalaciones para ordeñar"
+        },
+        "recommendation-view": "view-201"
     },
     "view-201": {
         "category": "facilities",
@@ -2101,7 +2141,12 @@
         "title": {
             "en": "Facilities",
             "es": "Instalaciones"
-        }
+        },
+        "recommendation": {
+            "en": "Check the milk conditioning room",
+            "es": "Revisá la sala para acondicionar la leche"
+        },
+        "recommendation-view": "view-203"
     },
     "view-203": {
         "category": "facilities",
@@ -2213,7 +2258,12 @@
         "title": {
             "en": "My supplies",
             "es": "Mis insumos"
-        }
+        },
+        "recommendation": {
+            "en": "Check the supplies storage",
+            "es": "Revisá el depósito de insumos"
+        },
+        "recommendation-view": "view-209"
     },
     "view-207": {
         "category": "supplies",
@@ -2331,7 +2381,12 @@
         "title": {
             "en": "My supplies",
             "es": "Mis insumos"
-        }
+        },
+        "recommendation": {
+            "en": "Check the feed storage",
+            "es": "Revisá el depósito de alimentos"
+        },
+        "recommendation-view": "view-207"
     },
     "view-209": {
         "category": "supplies",
@@ -2443,7 +2498,12 @@
         "title": {
             "en": "Pests",
             "es": "Plagas"
-        }
+        },
+        "recommendation": {
+            "en": "Check for pests",
+            "es": "Controlá la presencia de plagas"
+        },
+        "recommendation-view": "view-214"
     },
     "view-214": {
         "category": "pests",
@@ -2555,7 +2615,12 @@
         "title": {
             "en": "Pests",
             "es": "Plagas"
-        }
+        },
+        "recommendation": {
+            "en": "Check for pests",
+            "es": "Controlá la presencia de plagas"
+        },
+        "recommendation-view": "view-269"
     },
     "view-269": {
         "category": "pests",
@@ -2883,7 +2948,12 @@
         "title": {
             "en": "Before milking",
             "es": "Antes de ordeñar"
-        }
+        },
+        "recommendation": {
+            "en": "Check the udders before milking",
+            "es": "Revisá las ubres antes de ordeñar"
+        },
+        "recommendation-view": "view-240"
     },
     "view-234": {
         "category": "before-milking",
@@ -2935,7 +3005,12 @@
         "title": {
             "en": "Before milking",
             "es": "Antes de ordeñar"
-        }
+        },
+        "recommendation": {
+            "en": "Talk to your veterinary advisor",
+            "es": "Hablá con tu asesor/a veterinario/a"
+        },
+        "recommendation-view": "view-241"
     },
     "view-235": {
         "category": "before-milking",
@@ -3127,7 +3202,7 @@
             {
                 "audios": [
                     {
-                        "src": "AUDIO3.mp3"
+                        "src": "AUDIO3-2.mp3"
                     }
                 ],
                 "id": "view-241-audio",
@@ -3218,7 +3293,12 @@
         "title": {
             "en": "During milking",
             "es": "Al ordeñar"
-        }
+        },
+        "recommendation": {
+            "en": "Check your health before milking",
+            "es": "Controlá tu salud antes de ordeñar"
+        },
+        "recommendation-view": "view-250"
     },
     "view-244": {
         "category": "during-milking",
@@ -3274,7 +3354,12 @@
         "title": {
             "en": "During milking",
             "es": "Al ordeñar"
-        }
+        },
+        "recommendation": {
+            "en": "Wear suitable clothing",
+            "es": "Utilizá indumentaria adecuada"
+        },
+        "recommendation-view": "view-251"
     },
     "view-245": {
         "category": "during-milking",
@@ -3330,7 +3415,12 @@
         "title": {
             "en": "During milking",
             "es": "Al ordeñar"
-        }
+        },
+        "recommendation": {
+            "en": "Follow personal hygiene guidelines",
+            "es": "Seguí las pautas de higiene personal"
+        },
+        "recommendation-view": "view-252"
     },
     "view-248": {
         "category": "during-milking",
@@ -4425,7 +4515,12 @@
         "title": {
             "en": "When milking",
             "es": "Al ordeñar"
-        }
+        },
+        "recommendation": {
+            "en": "Check your health before milking",
+            "es": "Controlá tu salud antes de ordeñar"
+        },
+        "recommendation-view": "view-45"
     },
     "view-47": {
         "category": "during-milking",
@@ -4611,7 +4706,12 @@
         "title": {
             "en": "When milking",
             "es": "Al ordeñar"
-        }
+        },
+        "recommendation": {
+            "en": "Wear suitable clothing",
+            "es": "Utilizá indumentaria adecuada"
+        },
+        "recommendation-view": "view-48"
     },
     "view-50": {
         "category": "during-milking",
@@ -4663,7 +4763,12 @@
         "title": {
             "en": "When milking",
             "es": "Al ordeñar"
-        }
+        },
+        "recommendation": {
+            "en": "Follow personal hygiene guidelines",
+            "es": "Seguí las pautas de higiene personal"
+        },
+        "recommendation-view": "view-106"
     },
     "view-52": {
         "category": "during-milking",
@@ -4707,10 +4812,10 @@
             "at": "2026-05-28T04:08:34.497Z",
             "by": "matias.micheletto@uns.edu.ar"
         },
-        "periodicity": "",
+        "periodicity": "daily",
         "scenario": "ORD-07",
-        "score-answer": "",
-        "severity": 0,
+        "score-answer": "yes",
+        "severity": 3,
         "showDate": true,
         "subtitle": {
             "en": "Did you complete full equipment cleaning?",
@@ -4719,7 +4824,12 @@
         "title": {
             "en": "During milking",
             "es": "Al ordeñar"
-        }
+        },
+        "recommendation": {
+            "en": "Clean the milking equipment",
+            "es": "Limpiá los equipos de ordeñe"
+        },
+        "recommendation-view": "view-56"
     },
     "view-53": {
         "category": "during-milking",
@@ -5193,7 +5303,12 @@
         "title": {
             "en": "During milking",
             "es": "Al ordeñar"
-        }
+        },
+        "recommendation": {
+            "en": "Clean the milking equipment",
+            "es": "Limpiá los equipos de ordeñe"
+        },
+        "recommendation-view": "view-65"
     },
     "view-65": {
         "category": "during-milking",
@@ -5621,7 +5736,12 @@
         "title": {
             "en": "",
             "es": "Acondicionar la leche"
-        }
+        },
+        "recommendation": {
+            "en": "Strain freshly milked milk",
+            "es": "Filtrá la leche recién ordeñada"
+        },
+        "recommendation-view": "view-96"
     },
     "view-95": {
         "category": "milk-care",
@@ -5677,7 +5797,12 @@
         "title": {
             "en": "",
             "es": "Acondicionar la leche"
-        }
+        },
+        "recommendation": {
+            "en": "Label the containers to preserve the milk",
+            "es": "Rotulá los envases para conservar la leche"
+        },
+        "recommendation-view": "view-224"
     },
     "view-result-bad": {
         "category": "",
