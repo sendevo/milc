@@ -57,6 +57,12 @@ const MainMenu = () => {
             : "/survey/view-109";
     }, [latestMethodAnswer]);
 
+    const duringMilkingRoute = useMemo(() => {
+        return latestMethodAnswer === "manual"
+            ? "/survey/view-243"
+            : "/survey/view-46";
+    }, [latestMethodAnswer]);
+
     const milkCareRoute = useMemo(() => {
         return latestMethodAnswer === "manual"
             ? "/survey/view-94"
@@ -124,7 +130,7 @@ const MainMenu = () => {
             icon: udder, 
             label: t("mainMenu.duringMilking"),
             category: "during-milking",
-            route: "/survey/view-46",
+            route: duringMilkingRoute,
         },
         { 
             icon: milkPail, 

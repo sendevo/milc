@@ -9,7 +9,7 @@ import {
 import { buildEffectiveHerdSizeByDate } from "./herdInventory";
 import {
     MASTITIS_NODE_IDS,
-    MILK_LITERS_NODE_ID,
+    MILK_LITERS_NODE_IDS,
     MILKED_ANIMALS_NODE_IDS,
     MONTH_KEYS,
     TOTAL_ANIMALS_NODE_IDS,
@@ -30,7 +30,7 @@ export const buildLatestMilkByDate = (records, startDate, endDate) => {
     const latestByDate = {};
 
     for (const record of records) {
-        if (record.nodeId !== MILK_LITERS_NODE_ID) continue;
+        if (!MILK_LITERS_NODE_IDS.has(record.nodeId)) continue;
         if (!record.date || record.date < fromIso || record.date > toIso) continue;
 
         const value = Number(record.answer);

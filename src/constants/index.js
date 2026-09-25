@@ -94,7 +94,7 @@ export const CHECKS_BY_RATING = {
 
 export const TOTAL_ANIMALS_NODE_IDS = ["view-animal-count"];
 export const MILKED_ANIMALS_NODE_IDS = new Set(["view-235", "view-36"]);
-export const MILK_LITERS_NODE_ID = "view-55";
+export const MILK_LITERS_NODE_IDS = new Set(["view-55", "view-63"]);
 export const MASTITIS_NODE_IDS = ["view-236", "view-42", "view-189"];
 export const SICK_ANIMALS_NODE_IDS = new Set(["view-236", "view-42"]);
 export const COUNT_MUST_NOT_EXCEED_TOTAL_NODE_IDS = new Set([
