@@ -5,12 +5,9 @@ import { Box, Button, Divider, IconButton, Typography } from "@mui/material";
 import ViewContainer from "../components/ViewContainer";
 import { resultScalesStyles as styles } from "../theme/ResultScales.styles";
 import { useModal } from "../contexts/ModalContext";
-import { useSurveyLog } from "../hooks/useSurveyLog";
-import { useSurveyNodes } from "../hooks/useSurveyNodes";
-import { computeFullScore } from "../model/scoring";
+import { useResultScore } from "../hooks/useResultScore";
 import { buildScoredAspects } from "../model/aspects";
-import { parseIsoDate, formatAsIsoDate } from "../utils/dateTime";
-import { getMilkingMethod } from "../utils/reportData";
+import { formatAsIsoDate } from "../utils/dateTime";
 
 const getRatingCircleSx = (rating, index) => {
     const isFilled = index < rating;
@@ -75,24 +72,10 @@ const ResultScales = () => {
     const navigate = useNavigate();
     const { openModal } = useModal();
     const [searchParams] = useSearchParams();
-    const { getRecords } = useSurveyLog();
-    const nodes = useSurveyNodes();
 
     const fromDate = searchParams.get("fromDate") || "";
     const toDate = searchParams.get("toDate") || "";
-    const from = useMemo(() => parseIsoDate(fromDate), [fromDate]);
-    const to = useMemo(() => parseIsoDate(toDate), [toDate]);
-
-    const filteredRecords = useMemo(() => {
-        const allRecords = getRecords();
-        // If a valid date range is provided, filter records within that range
-        if (from && to && from <= to) {
-            const fromIso = formatAsIsoDate(from);
-            const toIso = formatAsIsoDate(to);
-            return allRecords.filter((r) => r.date >= fromIso && r.date <= toIso);
-        }
-        return allRecords;
-    }, [getRecords, from, to]);
+    const { score, from, to } = useResultScore(fromDate, toDate);
 
     const periodLabel = useMemo(() => {
         if (from && to && from <= to) {
@@ -103,16 +86,11 @@ const ResultScales = () => {
         return "-";
     }, [from, to]);
 
-    const score = useMemo(() => {
-        const milkingMethod = getMilkingMethod(getRecords(), nodes);
-        return computeFullScore(filteredRecords, nodes, milkingMethod);
-    }, [filteredRecords, getRecords, nodes]);
-
     const aspects = useMemo(() => {
         return buildScoredAspects(score, t);
     }, [score.byCategory, score.byScenario, t]);
 
-    const handleAspectClick = (rating, targetView) => {
+    const handleAspectClick = (rating, category) => {
         if (rating === 0) {
             openModal({
                 title: t("resultScales.title"),
@@ -130,8 +108,8 @@ const ResultScales = () => {
             });
             return;
         }
-        if (!targetView) return;
-        navigate(`/survey/${targetView}`);
+        if (!category) return;
+        navigate(`/result/${category}?${searchParams.toString()}`);
     };
     return (
         <ViewContainer
@@ -154,7 +132,7 @@ const ResultScales = () => {
                             <Box sx={styles.row}>
                                 <Box sx={styles.aspectColumn}>
                                     <IconButton
-                                        onClick={() => handleAspectClick(aspect.rating, aspect.targetView)}
+                                        onClick={() => handleAspectClick(aspect.rating, aspect.category)}
                                         sx={styles.aspectButton(true, isNotComputed)}>
                                         <img
                                             src={aspect.icon}

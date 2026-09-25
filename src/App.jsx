@@ -13,6 +13,7 @@ import Calendar from "./pages/Calendar";
 import MilkBarChart from "./pages/MilkBarChart";
 import DairyBarChart from "./pages/DairyBarChart";
 import ResultScales from "./pages/ResultScales";
+import ResultDetail from "./pages/ResultDetail";
 import Config from "./pages/Config";
 import Info from "./pages/Info";
 import Profile from "./pages/Profile";
@@ -100,6 +101,13 @@ const App = () => {
                                 element={
                                     <ProtectedRoute>
                                     <ResultScales />
+                                    </ProtectedRoute>
+                                }/>
+                            <Route
+                                path="/result/:category"
+                                element={
+                                    <ProtectedRoute>
+                                    <ResultDetail />
                                     </ProtectedRoute>
                                 }/>
                             <Route

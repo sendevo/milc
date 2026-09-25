@@ -83,7 +83,41 @@ export const buildScoredAspects = (score, t) => {
             label: t(aspect.label),
             rating,
             targetView,
+            category: hasEvaluatedData ? matchedCategory : null,
             key: aspect.label,
         };
     });
+};
+
+/**
+ * Returns the recommendations for the questions of a category that were not
+ * performed correctly (MR > 0). Questions sharing the same recommendation
+ * text are listed only once.
+ *
+ * @returns {Array<{ nodeId: string, label: {en, es}, targetView: string }>}
+ */
+export const getCategoryRecommendations = (score, nodes, category) => {
+    const categoryKey = normalizeCategoryKey(category);
+    const recommendations = [];
+    const seenLabels = new Set();
+
+    for (const scenarioScore of Object.values(score.byScenario)) {
+        if (normalizeCategoryKey(scenarioScore.category) !== categoryKey) continue;
+        if (scenarioScore.mr <= 0) continue;
+
+        const node = nodes[scenarioScore.nodeId];
+        if (!node?.recommendation || !node["recommendation-view"]) continue;
+
+        const labelKey = node.recommendation.es || node.recommendation.en;
+        if (seenLabels.has(labelKey)) continue;
+        seenLabels.add(labelKey);
+
+        recommendations.push({
+            nodeId: scenarioScore.nodeId,
+            label: node.recommendation,
+            targetView: node["recommendation-view"],
+        });
+    }
+
+    return recommendations;
 };

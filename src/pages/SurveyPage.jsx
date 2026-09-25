@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useSurveyNodes } from "../hooks/useSurveyNodes";
 import { resolveTarget } from "../model";
@@ -91,6 +91,9 @@ const getProjectedHerdCount = (inventoryType, currentHerdCount, enteredValue) =>
 const SurveyPage = () => {
     const { nodeId } = useParams();
     const navigate = useNavigate();
+    const location = useLocation();
+    // Guide views opened from a result screen return there instead of going to the question
+    const fromResults = Boolean(location.state?.fromResults);
     const nodes = useSurveyNodes();
     const { showToast } = useToast();
     const { t, i18n } = useTranslation();
@@ -100,6 +103,8 @@ const SurveyPage = () => {
     const { getCurrentDateTime } = useSettings();
 
     const node = nodes[nodeId];
+    // Targets that lead back to a scored question (or home) from a guide view
+    const isReturnTarget = (target) => target === "home" || Boolean(nodes[target]?.["score-answer"]);
     const SpecialSurveyView = getSpecialSurveyView(nodeId);
     const currentDate = formatAsIsoDate(getCurrentDateTime());
 
@@ -288,6 +293,11 @@ const SurveyPage = () => {
         const targetId = resolveTarget(node, answers);
         const targetNode = targetId ? nodes[targetId] : null;
 
+        if (fromResults && (!targetId || isReturnTarget(targetId))) {
+            navigate(-1);
+            return;
+        }
+
         if (DEV_TOOLS_ENABLED) {
             console.log("[survey] target view:", targetId ?? "/home");
         }
@@ -322,6 +332,7 @@ const SurveyPage = () => {
             initialAnswers={initialAnswers}
             onSubmit={handleSubmit}
             onBack={() => navigate(-1)}
+            isReturnTarget={fromResults ? isReturnTarget : undefined}
         />
     );
 };

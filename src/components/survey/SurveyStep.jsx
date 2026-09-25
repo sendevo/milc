@@ -49,12 +49,14 @@ import { NON_NODE_TARGET_ROUTES, DEV_TOOLS_ENABLED } from "../../constants";
  * Props:
  *   onSubmit — (answers: object) => void  called when the step is complete
  *   onBack   — () => void                 optional back navigation handler
+ *   isReturnTarget — (target) => boolean  optional; bottom navigation targets
+ *                                         for which onBack is called instead
  */
 
 const inputFieldTypes = ["select", "number_input", "month_picker", "date_picker"];
 const selfNavigatingTypes = ["bottom_navigation"];
 
-const SurveyStep = ({ node, nodeId, initialAnswers = {}, onSubmit, onBack }) => {
+const SurveyStep = ({ node, nodeId, initialAnswers = {}, onSubmit, onBack, isReturnTarget }) => {
     const [answers, setAnswers] = useState(initialAnswers);
     const navigate = useNavigate();
     const { t: tUI } = useTranslation();
@@ -196,6 +198,10 @@ const SurveyStep = ({ node, nodeId, initialAnswers = {}, onSubmit, onBack }) => 
                             target: b.target,
                         }))}
                         onNavigate={(target) => {
+                            if (isReturnTarget?.(target)) {
+                                onBack?.();
+                                return;
+                            }
                             const resolved = resolveNavigationTarget(target);
                             if (!resolved) return;
                             navigate(resolved);

@@ -1324,6 +1324,12 @@ function saveNode() {
         const icon = document.getElementById('field-icon').value.trim();
         if (icon) node.icon = icon;
 
+        // Keep result recommendation data, which has no inputs in this form
+        const previousNode = selectedNodeId ? nodes[selectedNodeId] : null;
+        for (const key of ['recommendation', 'recommendation-view']) {
+            if (previousNode?.[key] !== undefined) node[key] = previousNode[key];
+        }
+
         node.modified = buildNodeModifiedMeta();
 
         // If ID changed, remove old entry
