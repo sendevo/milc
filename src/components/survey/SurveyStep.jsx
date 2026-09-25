@@ -50,13 +50,15 @@ import { NON_NODE_TARGET_ROUTES, DEV_TOOLS_ENABLED } from "../../constants";
  *   onSubmit — (answers: object) => void  called when the step is complete
  *   onBack   — () => void                 optional back navigation handler
  *   isReturnTarget — (target) => boolean  optional; bottom navigation targets
- *                                         for which onBack is called instead
+ *                                         for which onReturn is called instead
+ *   onReturn — () => void                 optional; see isReturnTarget
+ *   navigationState — object              optional router state for bottom navigation
  */
 
 const inputFieldTypes = ["select", "number_input", "month_picker", "date_picker"];
 const selfNavigatingTypes = ["bottom_navigation"];
 
-const SurveyStep = ({ node, nodeId, initialAnswers = {}, onSubmit, onBack, isReturnTarget }) => {
+const SurveyStep = ({ node, nodeId, initialAnswers = {}, onSubmit, onBack, isReturnTarget, onReturn, navigationState }) => {
     const [answers, setAnswers] = useState(initialAnswers);
     const navigate = useNavigate();
     const { t: tUI } = useTranslation();
@@ -194,17 +196,20 @@ const SurveyStep = ({ node, nodeId, initialAnswers = {}, onSubmit, onBack, isRet
                     <BottomNavigation
                         key={field.id}
                         buttons={(field.buttons || []).map((b) => ({
-                            label: t(b.label),
+                            // A "Next" that returns to the result screen is shown as "Finish"
+                            label: isReturnTarget?.(b.target) && b.label?.en === "Next"
+                                ? tUI("survey.finish")
+                                : t(b.label),
                             target: b.target,
                         }))}
                         onNavigate={(target) => {
                             if (isReturnTarget?.(target)) {
-                                onBack?.();
+                                onReturn?.();
                                 return;
                             }
                             const resolved = resolveNavigationTarget(target);
                             if (!resolved) return;
-                            navigate(resolved);
+                            navigate(resolved, { state: navigationState });
                         }} />
                 );
             default:

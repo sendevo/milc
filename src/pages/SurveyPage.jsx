@@ -93,7 +93,10 @@ const SurveyPage = () => {
     const navigate = useNavigate();
     const location = useLocation();
     // Guide views opened from a result screen return there instead of going to the question
-    const fromResults = Boolean(location.state?.fromResults);
+    // resultsDepth: how many guide views were opened since leaving the result screen
+    const resultsDepth = Number(location.state?.resultsDepth) || 0;
+    const fromResults = resultsDepth > 0;
+    const returnToResults = () => navigate(-resultsDepth);
     const nodes = useSurveyNodes();
     const { showToast } = useToast();
     const { t, i18n } = useTranslation();
@@ -294,7 +297,7 @@ const SurveyPage = () => {
         const targetNode = targetId ? nodes[targetId] : null;
 
         if (fromResults && (!targetId || isReturnTarget(targetId))) {
-            navigate(-1);
+            returnToResults();
             return;
         }
 
@@ -333,6 +336,8 @@ const SurveyPage = () => {
             onSubmit={handleSubmit}
             onBack={() => navigate(-1)}
             isReturnTarget={fromResults ? isReturnTarget : undefined}
+            onReturn={returnToResults}
+            navigationState={fromResults ? { resultsDepth: resultsDepth + 1 } : undefined}
         />
     );
 };

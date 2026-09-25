@@ -1,4 +1,4 @@
-import { useMemo, useEffect } from "react";
+import { useMemo } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import SurveyStep from "../components/survey/SurveyStep";
 import { useResultScore } from "../hooks/useResultScore";
@@ -29,10 +29,6 @@ const ResultDetail = () => {
     const resultNodeId = categoryData?.resultViewId;
     const resultNode = resultNodeId ? nodes[resultNodeId] : null;
 
-    useEffect(() => {
-        if (!resultNode) navigate("/resultscales", { replace: true });
-    }, [navigate, resultNode]);
-
     const node = useMemo(() => {
         if (!resultNode) return null;
 
@@ -53,12 +49,13 @@ const ResultDetail = () => {
         return { ...resultNode, fields, next: null };
     }, [resultNode, score, nodes, category]);
 
+    // Records are loaded asynchronously: render nothing until the category score exists
     if (!node) return null;
 
     const handleSubmit = (answers) => {
         const targetView = answers[RECOMMENDATIONS_FIELD_ID];
         if (targetView) {
-            navigate(`/survey/${targetView}`, { state: { fromResults: true } });
+            navigate(`/survey/${targetView}`, { state: { resultsDepth: 1 } });
             return;
         }
         navigate(-1);
