@@ -84,6 +84,11 @@ const Profile = () => {
                     return [];
                 }
 
+                // The milking room is only asked for mechanical milking
+                if (nodeId === "view-milking-room" && latestByNode["view-milking-method"]?.answer !== "mec") {
+                    return [];
+                }
+
                 if (nodeId === "view-animal-count" && effectiveHerdSizeToday !== null) {
                     return [{ label, answerLabel: String(effectiveHerdSizeToday) }];
                 }

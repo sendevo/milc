@@ -385,9 +385,14 @@ export const buildSetupData = (nodes, records, t) => {
     const milkingMethodNode = milkingMethodNodeId ? nodes[milkingMethodNodeId] : null;
     const milkingRoomNode = milkingRoomNodeId ? nodes[milkingRoomNodeId] : null;
 
+    // The milking room is only asked for mechanical milking
+    const isMechanical = milkingMethodRecord?.answer === "mec";
+
     return {
         milkingMethod: resolveSetupValueLabel(milkingMethodNode, milkingMethodRecord?.answer, t),
-        milkingRoom: resolveSetupValueLabel(milkingRoomNode, milkingRoomRecord?.answer, t),
+        milkingRoom: isMechanical
+            ? resolveSetupValueLabel(milkingRoomNode, milkingRoomRecord?.answer, t)
+            : "-",
     };
 };
 
