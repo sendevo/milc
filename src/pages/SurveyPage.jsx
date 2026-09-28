@@ -17,6 +17,7 @@ import {
     flushTelemetryQueue,
 } from "../telemetry/telemetryQueue";
 import { getSpecialSurveyView } from "./specialViews";
+import { getMilkingMethod } from "../utils/reportData";
 import {
     getEffectiveHerdSizeOnDate,
     getHerdInventoryRecordForNodeAndDate,
@@ -293,7 +294,7 @@ const SurveyPage = () => {
         }
 
         // 2. Navigate to the next node (unchanged from original logic).
-        const targetId = resolveTarget(node, answers);
+        const targetId = resolveTarget(node, answers, getMilkingMethod(getRecords(), nodes));
         const targetNode = targetId ? nodes[targetId] : null;
 
         if (fromResults && (!targetId || isReturnTarget(targetId))) {

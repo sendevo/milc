@@ -36,9 +36,15 @@ export const t = (text) => {
  * @param {object} answers - Map of fieldId → answer value
  * @returns {string|null} Target node ID or null
  */
-export const resolveTarget = (node, answers) => {
+export const resolveTarget = (node, answers, milkingMethod) => {
     if (!node || typeof node !== "object") {
         return null;
+    }
+
+    // Shared views where the manual and mechanical flows split again
+    const nextByMethod = node["next-by-method"];
+    if (nextByMethod && milkingMethod && nextByMethod[milkingMethod]) {
+        return nextByMethod[milkingMethod];
     }
 
     // First, try the legacy "next" attribute system (for backward compatibility)
