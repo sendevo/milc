@@ -247,6 +247,13 @@ export const averageByDate = (valuesByDate) => {
     return Number((sum / values.length).toFixed(1));
 };
 
+/**
+ * Animals being milked per date ("Cantidad de animales en ordeñe"); days
+ * without a record keep the last known value.
+ */
+export const buildMilkedAnimalsByDate = (records, from, to) =>
+    buildEffectiveValuesByDate(records, MILKED_ANIMALS_NODE_IDS, from, to);
+
 export const computeLitersPerAnimal = (from, to, milkValuesByDate, animalsByDate) => {
     if (!from || !to || from > to) return 0;
 
@@ -274,7 +281,7 @@ export const computeLitersPerAnimal = (from, to, milkValuesByDate, animalsByDate
 
 export const computeReportStats = (records, inventoryRecords, from, to, language) => {
     const totalAnimalsByDate = buildEffectiveHerdSizeByDate(records, inventoryRecords, from, to);
-    const milkedAnimalsByDate = buildEffectiveValuesByDate(records, MILKED_ANIMALS_NODE_IDS, from, to);
+    const milkedAnimalsByDate = buildMilkedAnimalsByDate(records, from, to);
     const milkValuesByDate = buildLatestMilkByDate(records, from, to);
     const mastitisByDate = buildLatestValuesByDate(records, MASTITIS_NODE_IDS, from, to);
 
@@ -292,12 +299,8 @@ export const computeReportStats = (records, inventoryRecords, from, to, language
         ? Number((totalLiters / monthsInRange).toFixed(1))
         : 0;
 
-    const litersPerAnimal = computeLitersPerAnimal(
-        from,
-        to,
-        milkValuesByDate,
-        buildEffectiveAnimalsByDate(records, inventoryRecords, from, to),
-    );
+    // Liters per milked animal (not per herd animal)
+    const litersPerAnimal = computeLitersPerAnimal(from, to, milkValuesByDate, milkedAnimalsByDate);
 
     const dailyRows = [];
     if (from && to && from <= to) {

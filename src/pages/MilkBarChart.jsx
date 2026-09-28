@@ -5,12 +5,11 @@ import { Box, Button, Typography } from "@mui/material";
 import BarChart from "../components/BarChart";
 import ViewContainer from "../components/ViewContainer";
 import { useSurveyLog } from "../hooks/useSurveyLog";
-import { useHerdInventory } from "../hooks/useHerdInventory";
 import { milkBarChartStyles as styles } from "../theme/MilkBarChart.styles";
 import { parseIsoDate, formatAsIsoDate, getDaysBetweenInclusive, getMonthSpanInclusive } from "../utils/dateTime";
 import {
     buildLatestMilkByDate,
-    buildEffectiveAnimalsByDate,
+    buildMilkedAnimalsByDate,
     buildSeries,
     computeLitersPerAnimal,
 } from "../utils/reportData";
@@ -20,7 +19,6 @@ const MilkBarChart = () => {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const { getRecords } = useSurveyLog();
-    const { getRecords: getInventoryRecords } = useHerdInventory();
 
     const fromDate = searchParams.get("fromDate") || "";
     const toDate = searchParams.get("toDate") || "";
@@ -28,7 +26,6 @@ const MilkBarChart = () => {
     const from = useMemo(() => parseIsoDate(fromDate), [fromDate]);
     const to = useMemo(() => parseIsoDate(toDate), [toDate]);
     const records = useMemo(() => getRecords(), [getRecords]);
-    const inventoryRecords = useMemo(() => getInventoryRecords(), [getInventoryRecords]);
     const isRangeValid = Boolean(from && to && from <= to);
     const totalDaysInRange = useMemo(
         () => (from && to && from <= to ? getDaysBetweenInclusive(from, to) : 0),
@@ -46,9 +43,9 @@ const MilkBarChart = () => {
         () => buildLatestMilkByDate(records, from, to),
         [records, from, to],
     );
-    const animalsByDate = useMemo(
-        () => buildEffectiveAnimalsByDate(records, inventoryRecords, from, to),
-        [records, inventoryRecords, from, to],
+    const milkedAnimalsByDate = useMemo(
+        () => buildMilkedAnimalsByDate(records, from, to),
+        [records, from, to],
     );
     const series = useMemo(
         () => buildSeries(from, to, i18n.language, milkValuesByDate),
@@ -72,8 +69,8 @@ const MilkBarChart = () => {
         return Number((totalLiters / totalDaysInRange).toFixed(1));
     }, [totalLiters, totalDaysInRange]);
     const litersPerAnimal = useMemo(() => {
-        return computeLitersPerAnimal(from, to, milkValuesByDate, animalsByDate);
-    }, [from, to, milkValuesByDate, animalsByDate]);
+        return computeLitersPerAnimal(from, to, milkValuesByDate, milkedAnimalsByDate);
+    }, [from, to, milkValuesByDate, milkedAnimalsByDate]);
 
     useEffect(() => {
         if (isRangeValid) return;
