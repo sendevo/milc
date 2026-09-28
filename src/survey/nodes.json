@@ -1482,8 +1482,8 @@
             {
                 "id": "view-194-alert",
                 "message": {
-                    "en": "<b>Attention</b><br>Remove positive animals",
-                    "es": "<b>Atención</b><br>Descartá los animales positivos"
+                    "en": "<b>Attention</b><br>Remove positive animals<br>Record their exit in Remove animals",
+                    "es": "<b>Atención</b><br>Descartá los animales positivos<br>Registrá su salida en Retiro de animales"
                 },
                 "severity": "warning",
                 "type": "alert"
@@ -1492,8 +1492,15 @@
                 "buttons": [
                     {
                         "label": {
-                            "en": "Back",
-                            "es": "Atrás"
+                            "en": "Remove animals",
+                            "es": "Retirar animales"
+                        },
+                        "target": "view-remove-animals"
+                    },
+                    {
+                        "label": {
+                            "en": "Next",
+                            "es": "Siguiente"
                         },
                         "target": "view-255"
                     }
