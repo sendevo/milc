@@ -590,7 +590,7 @@
             }
         ],
         "guide-id": "Filtrar la leche recién ordeñada, conservar la leche según momento de elaboración",
-        "icon": "filter.png",
+        "icon": "edit.png",
         "manual-page": "31 y 32",
         "milking-method": "todos",
         "periodicity": "daily",
