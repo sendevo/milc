@@ -112,7 +112,7 @@
         "guide-id": "Requisitos de limpieza de la sala de ordeño mecánico",
         "icon": "shroom.png",
         "manual-page": "11",
-        "milking-method": "mecanico",
+        "milking-method": "con-sala",
         "modified": {
             "at": "2026-05-28T04:04:06.157Z",
             "by": "matias.micheletto@uns.edu.ar"
@@ -418,7 +418,7 @@
         "guide-id": "Requisitos de limpieza del espacio de ordeño manual",
         "icon": "shroom.png",
         "manual-page": "12",
-        "milking-method": "manual",
+        "milking-method": "manual,sin-sala",
         "modified": {
             "at": "2026-05-28T03:41:27.945Z",
             "by": "matias.micheletto@uns.edu.ar"

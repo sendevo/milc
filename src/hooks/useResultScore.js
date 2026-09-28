@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { useSurveyLog } from "./useSurveyLog";
 import { useSurveyNodes } from "./useSurveyNodes";
 import { computeFullScore } from "../model/scoring";
-import { getMilkingMethod } from "../utils/reportData";
+import { getMilkingSetup } from "../utils/reportData";
 import { parseIsoDate, formatAsIsoDate } from "../utils/dateTime";
 
 /**
@@ -29,8 +29,8 @@ export const useResultScore = (fromDate, toDate) => {
             const toIso = formatAsIsoDate(to);
             filteredRecords = allRecords.filter((r) => r.date >= fromIso && r.date <= toIso);
         }
-        const milkingMethod = getMilkingMethod(allRecords, nodes);
-        return computeFullScore(filteredRecords, nodes, milkingMethod);
+        const milkingSetup = getMilkingSetup(allRecords, nodes);
+        return computeFullScore(filteredRecords, nodes, milkingSetup);
     }, [getRecords, from, to, nodes]);
 
     return { score, from, to, nodes };

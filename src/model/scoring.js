@@ -171,11 +171,15 @@ export const resultViewId = (rating) => {
  *   The full log from useSurveyLog.
  * @param {Object} nodes
  *   The full nodes tree from nodes.json (keyed by view id).
+ * @param {string|string[]} milkingSetup
+ *   The user's milking setup tokens (e.g. ["mecanico", "sin-sala"]); a single
+ *   method string is also accepted.
  * @returns {Object} Scoring summary
  */
-export const computeFullScore = (allRecords, nodes, milkingMethod = "todos") => {
+export const computeFullScore = (allRecords, nodes, milkingSetup = "todos") => {
     const byScenario = {};
-    
+    const setupTokens = Array.isArray(milkingSetup) ? milkingSetup : [milkingSetup];
+
     // 1. Procesamiento individual por cada Nodo del árbol de decisiones
     for (const [nodeId, node] of Object.entries(nodes)) {
         const scenarioId = node.scenario;
@@ -186,8 +190,12 @@ export const computeFullScore = (allRecords, nodes, milkingMethod = "todos") => 
         const hasOwnScoringSignal = (node.severity && node.severity > 0) || node["score-answer"];
         if (!hasOwnScoringSignal) continue;
 
-        const nodeMethod = node["milking-method"];
-        if (nodeMethod && nodeMethod !== "todos" && nodeMethod !== milkingMethod) continue;
+        // "milking-method" lists the setups a question applies to, e.g. "manual,sin-sala"
+        const nodeSetups = String(node["milking-method"] || "").split(",").map((s) => s.trim()).filter(Boolean);
+        const appliesToUser = nodeSetups.length === 0
+            || nodeSetups.includes("todos")
+            || nodeSetups.some((s) => setupTokens.includes(s));
+        if (!appliesToUser) continue;
         const fallback = SCENARIO_DEFAULTS[scenarioId] ?? {};
         const correctAnswer = node["score-answer"] || fallback.correctAnswer;
         const severity = node.severity || fallback.severity;

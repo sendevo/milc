@@ -12,6 +12,7 @@ import { useSurveyNodes } from "../hooks/useSurveyNodes";
 import { useModal } from "../contexts/ModalContext";
 import { useSettings } from "../contexts/SettingsContext";
 import { formatAsIsoDate } from "../utils/dateTime";
+import { getMilkingSetup } from "../utils/reportData";
 import blueGoat from "../assets/icons/blue_goat.png";
 import udder from "../assets/icons/udder.png";
 import milkPail from "../assets/icons/milk_pail.png";
@@ -37,25 +38,13 @@ const MainMenu = () => {
     const isDark = theme.palette.mode === "dark";
     const menuBorder = isDark ? "#9e9e9e" : "#1a8090";
 
-    const latestMethodAnswer = useMemo(() => {
-        const milkingMethodNodeId = Object.keys(nodes).find((nodeId) =>
-            (nodes[nodeId]?.fields || []).some((field) => field?.id === "milk-select")
-        );
-
-        if (!milkingMethodNodeId) {
-            return null;
-        }
-
-        return getRecordsByScenario("APP-SETUP")
-            .filter((record) => record.nodeId === milkingMethodNodeId)
-            .sort((a, b) => b.timestamp - a.timestamp)[0]?.answer;
-    }, [getRecordsByScenario, nodes]);
-
+    // Milking room cleaning only for mechanical milking with a room; otherwise the pen
     const beforeMilkingRoute = useMemo(() => {
-        return latestMethodAnswer === "manual"
-            ? "/survey/view-124"
-            : "/survey/view-109";
-    }, [latestMethodAnswer]);
+        const milkingSetup = getMilkingSetup(getRecordsByScenario("APP-SETUP"), nodes);
+        return milkingSetup.includes("con-sala")
+            ? "/survey/view-109"
+            : "/survey/view-124";
+    }, [getRecordsByScenario, nodes]);
 
     const dailyScenariosByCategory = useMemo(() => {
         const byCategory = {};

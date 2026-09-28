@@ -434,11 +434,25 @@ export const getMilkingMethod = (records, nodes) => {
     return answer === "mec" ? "mecanico" : answer;
 };
 
+/**
+ * Returns the user's milking setup as the list of "milking-method" tokens it
+ * matches: the method ("manual" | "mecanico" | "todos") and, for mechanical
+ * milking, "con-sala" or "sin-sala" depending on the milking room answer.
+ */
+export const getMilkingSetup = (records, nodes) => {
+    const method = getMilkingMethod(records, nodes);
+    if (method !== "mecanico") return [method];
+
+    const milkingRoomNodeId = findNodeIdByFieldId(nodes, "view-milking-room-select");
+    const roomAnswer = getLatestRecordByNodeId(records, milkingRoomNodeId)?.answer;
+    return [method, roomAnswer === "no" ? "sin-sala" : "con-sala"];
+};
+
 export const buildSafetyData = (records, nodes, from, to, t) => {
     const filteredRecords = filterRecordsByRange(records, from, to);
-    const milkingMethod = getMilkingMethod(records, nodes);
+    const milkingSetup = getMilkingSetup(records, nodes);
 
-    const score = computeFullScore(filteredRecords, nodes, milkingMethod);
+    const score = computeFullScore(filteredRecords, nodes, milkingSetup);
     const aspects = buildScoredAspects(score, t);
 
     return aspects.map((aspect) => {
