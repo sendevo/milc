@@ -1,6 +1,6 @@
 import { t as resolveNodeText } from "../model";
 import { computeFullScore } from "../model/scoring";
-import { buildScoredAspects } from "../model/aspects";
+import { buildScoredAspects, getCategoryRecommendations } from "../model/aspects";
 import {
     formatAsIsoDate,
     getDaysBetweenInclusive,
@@ -399,7 +399,12 @@ export const buildSetupData = (nodes, records, t) => {
     };
 };
 
-const extractResultMessage = (resultNode) => {
+/**
+ * Builds the report text for a category result: the result node header and
+ * danger index, followed by the category recommendations (the same ones the
+ * result screen shows, instead of the generic node's fixed options).
+ */
+const extractResultMessage = (resultNode, recommendations = []) => {
     if (!resultNode) return "";
 
     const lines = [];
@@ -410,17 +415,14 @@ const extractResultMessage = (resultNode) => {
         if (field.type === "text_block" || field.type === "alert") {
             const text = cleanRichText(resolveNodeText(field.message));
             if (text) lines.push(text);
-            continue;
         }
+    }
 
-        if (field.type === "select") {
-            const optionLabels = (field.options || [])
-                .map((option) => cleanRichText(resolveNodeText(option.label)))
-                .filter(Boolean);
-            if (optionLabels.length > 0) {
-                lines.push(optionLabels.join("; "));
-            }
-        }
+    const recommendationLabels = recommendations
+        .map((recommendation) => cleanRichText(resolveNodeText(recommendation.label)))
+        .filter(Boolean);
+    if (recommendationLabels.length > 0) {
+        lines.push(recommendationLabels.join("; "));
     }
 
     return lines.join("\n");
@@ -467,7 +469,8 @@ export const buildSafetyData = (records, nodes, from, to, t) => {
         }
 
         const node = nodes[aspect.targetView];
-        const detailMessage = extractResultMessage(node) || t("resultScales.notEvaluated");
+        const recommendations = getCategoryRecommendations(score, nodes, aspect.category);
+        const detailMessage = extractResultMessage(node, recommendations) || t("resultScales.notEvaluated");
 
         return {
             ...aspect,
