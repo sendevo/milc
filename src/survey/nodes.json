@@ -1,61 +1,5 @@
 {
     "timestamp": 1788537903704,
-    "view-100": {
-        "category": "before-milking",
-        "fields": [
-            {
-                "id": "view-100-select",
-                "options": [
-                    {
-                        "label": {
-                            "en": "Yes",
-                            "es": "Si"
-                        },
-                        "target": "view-110",
-                        "value": "yes"
-                    },
-                    {
-                        "label": {
-                            "en": "No",
-                            "es": "No"
-                        },
-                        "target": "view-110",
-                        "value": "no"
-                    },
-                    {
-                        "label": {
-                            "en": "Don't know",
-                            "es": "No se"
-                        },
-                        "target": "view-38",
-                        "value": "dont-know"
-                    }
-                ],
-                "type": "select"
-            }
-        ],
-        "guide-id": "Inspección de ubres y despunte",
-        "icon": "udder.png",
-        "manual-page": "16",
-        "milking-method": "manual",
-        "modified": {
-            "at": "2026-05-28T04:03:34.270Z",
-            "by": "matias.micheletto@uns.edu.ar"
-        },
-        "periodicity": "",
-        "scenario": "PREORD-07",
-        "score-answer": "",
-        "severity": 0,
-        "showDate": true,
-        "subtitle": {
-            "en": "Did you check udders?",
-            "es": "¿Revisaste las ubres?"
-        },
-        "title": {
-            "en": "Before milking",
-            "es": "Antes de ordeñar"
-        }
-    },
     "view-105": {
         "category": "during-milking",
         "fields": [
@@ -80,62 +24,6 @@
         "scenario": "ORD-02-03",
         "score-answer": "",
         "severity": 0,
-        "title": {
-            "en": "When milking",
-            "es": "Al ordeñar"
-        }
-    },
-    "view-106": {
-        "category": "during-milking",
-        "fields": [
-            {
-                "audios": [
-                    {
-                        "src": "AUDIO6.mp3"
-                    }
-                ],
-                "id": "view-106-audio",
-                "type": "audio_list"
-            },
-            {
-                "id": "",
-                "images": [
-                    {
-                        "src": "hands2.png"
-                    }
-                ],
-                "type": "image_list"
-            },
-            {
-                "buttons": [
-                    {
-                        "label": {
-                            "en": "Back",
-                            "es": "Atrás"
-                        },
-                        "target": "view-50"
-                    }
-                ],
-                "id": "view-106-bottom-nav",
-                "type": "bottom_navigation"
-            }
-        ],
-        "guide-id": "Las personas involucradas en el tambo deben conocer y aplicar las indicaciones de salud",
-        "manual-page": "22, 23",
-        "milking-method": "todos",
-        "modified": {
-            "at": "2026-05-28T04:03:46.454Z",
-            "by": "matias.micheletto@uns.edu.ar"
-        },
-        "periodicity": "",
-        "scenario": "ORD-02-03",
-        "score-answer": "",
-        "severity": 0,
-        "showDate": true,
-        "subtitle": {
-            "en": "Your personal hygiene",
-            "es": "Tu higiene personal"
-        },
         "title": {
             "en": "When milking",
             "es": "Al ordeñar"
@@ -198,7 +86,7 @@
                             "en": "Yes",
                             "es": "Sí"
                         },
-                        "target": "view-36",
+                        "target": "view-235",
                         "value": "yes"
                     },
                     {
@@ -206,7 +94,7 @@
                             "en": "No",
                             "es": "No"
                         },
-                        "target": "view-36",
+                        "target": "view-235",
                         "value": "no"
                     },
                     {
@@ -247,62 +135,6 @@
             "es": "Revisá periódicamente la limpieza de la sala de ordeño"
         },
         "recommendation-view": "view-35"
-    },
-    "view-110": {
-        "category": "before-milking",
-        "fields": [
-            {
-                "id": "view-110-select",
-                "options": [
-                    {
-                        "label": {
-                            "en": "Yes",
-                            "es": "Si"
-                        },
-                        "target": "view-42",
-                        "value": "yes"
-                    },
-                    {
-                        "label": {
-                            "en": "No",
-                            "es": "No"
-                        },
-                        "target": "view-111",
-                        "value": "no"
-                    },
-                    {
-                        "label": {
-                            "en": "Don't know",
-                            "es": "No se"
-                        },
-                        "target": "view-38",
-                        "value": "dont-know"
-                    }
-                ],
-                "type": "select"
-            }
-        ],
-        "guide-id": "Inspección de ubres y despunte",
-        "icon": "udder.png",
-        "manual-page": "16",
-        "milking-method": "todos",
-        "modified": {
-            "at": "2026-05-28T04:04:16.370Z",
-            "by": "matias.micheletto@uns.edu.ar"
-        },
-        "periodicity": "",
-        "scenario": "PREORD-07",
-        "score-answer": "",
-        "severity": 0,
-        "showDate": true,
-        "subtitle": {
-            "en": "Have you noticed any symptoms of mastitis?",
-            "es": "¿Encontraste síntomas de mastitis?"
-        },
-        "title": {
-            "en": "Before milking",
-            "es": "Antes de ordeñar"
-        }
     },
     "view-111": {
         "category": "before-milking",
@@ -647,63 +479,7 @@
         ],
         "guide-id": "Filtrar la leche recién ordeñada, conservar la leche según momento de elaboración",
         "manual-page": "31 y 32",
-        "milking-method": "mecanico",
-        "modified": {
-            "at": "2026-05-28T03:23:50.694Z",
-            "by": "matias.micheletto@uns.edu.ar"
-        },
-        "periodicity": "",
-        "scenario": "ACON-01-02",
-        "score-answer": "",
-        "severity": 0,
-        "showDate": true,
-        "subtitle": {
-            "en": "Before storing the milk",
-            "es": "Antes de guardar la leche"
-        },
-        "title": {
-            "en": "Milk care",
-            "es": "Acondicionar la leche"
-        }
-    },
-    "view-96": {
-        "category": "milk-care",
-        "fields": [
-            {
-                "audios": [
-                    {
-                        "src": "AUDIO10.mp3"
-                    }
-                ],
-                "id": "view-96-audio",
-                "type": "audio_list"
-            },
-            {
-                "id": "view-96-image",
-                "images": [
-                    {
-                        "src": "cream.png"
-                    }
-                ],
-                "type": "image_list"
-            },
-            {
-                "buttons": [
-                    {
-                        "label": {
-                            "en": "Back",
-                            "es": "Atrás"
-                        },
-                        "target": "view-94"
-                    }
-                ],
-                "id": "view-96-bottom-nav",
-                "type": "bottom_navigation"
-            }
-        ],
-        "guide-id": "Filtrar la leche recién ordeñada, conservar la leche según momento de elaboración",
-        "manual-page": "31 y 32",
-        "milking-method": "mecanico",
+        "milking-method": "todos",
         "modified": {
             "at": "2026-05-28T03:23:50.694Z",
             "by": "matias.micheletto@uns.edu.ar"
@@ -759,7 +535,7 @@
         "guide-id": "Filtrar la leche recién ordeñada, conservar la leche según momento de elaboración",
         "icon": "filter.png",
         "manual-page": "31 y 32",
-        "milking-method": "mecanico",
+        "milking-method": "todos",
         "periodicity": "daily",
         "scenario": "ACON-01-02",
         "score-answer": "yes",
@@ -816,7 +592,7 @@
         "guide-id": "Filtrar la leche recién ordeñada, conservar la leche según momento de elaboración",
         "icon": "filter.png",
         "manual-page": "31 y 32",
-        "milking-method": "mecanico",
+        "milking-method": "todos",
         "periodicity": "daily",
         "scenario": "ACON-01-02",
         "score-answer": "yes",
@@ -882,7 +658,7 @@
         "guide-id": "Filtrar la leche recién ordeñada conservar la leche según momento de elaboración",
         "icon": "watch.png",
         "manual-page": "31 y 32",
-        "milking-method": "mecanico",
+        "milking-method": "todos",
         "modified": {
             "at": "2026-05-29T19:13:27.564Z",
             "by": "matias.micheletto@uns.edu.ar"
@@ -936,7 +712,7 @@
         ],
         "guide-id": "Filtrar la leche recién ordeñada, conservar la leche según momento de elaboración",
         "manual-page": "31 y 32",
-        "milking-method": "mecanico",
+        "milking-method": "todos",
         "modified": {
             "at": "2026-05-28T03:37:02.978Z",
             "by": "matias.micheletto@uns.edu.ar"
@@ -986,7 +762,7 @@
         ],
         "guide-id": "Filtrar la leche recién ordeñada, conservar la leche según momento de elaboración",
         "manual-page": "31 y 32",
-        "milking-method": "mecanico",
+        "milking-method": "todos",
         "modified": {
             "at": "2026-05-29T21:15:43.664Z",
             "by": "matias.micheletto@uns.edu.ar"
@@ -1016,39 +792,9 @@
         ],
         "guide-id": "Filtrar la leche recién ordeñada, conservar la leche según momento de elaboración",
         "manual-page": "31 y 32",
-        "milking-method": "mecanico",
+        "milking-method": "todos",
         "modified": {
             "at": "2026-05-29T20:40:50.090Z",
-            "by": "matias.micheletto@uns.edu.ar"
-        },
-        "periodicity": "",
-        "scenario": "ACON-01-02",
-        "score-answer": "",
-        "severity": 0,
-        "showDate": true,
-        "title": {
-            "en": "Milk conditioning",
-            "es": "Acondicionar la leche"
-        }
-    },
-    "view-135": {
-        "category": "milk-care",
-        "fields": [
-            {
-                "id": "view-135",
-                "message": {
-                    "en": "You completed milk conditioning",
-                    "es": "Completaste el acondicionamiento de la leche"
-                },
-                "severity": "info",
-                "type": "alert"
-            }
-        ],
-        "guide-id": "Filtrar la leche recién ordeñada, conservar la leche según momento de elaboración",
-        "manual-page": "31 y 32",
-        "milking-method": "mecanico",
-        "modified": {
-            "at": "2026-05-29T20:41:03.327Z",
             "by": "matias.micheletto@uns.edu.ar"
         },
         "periodicity": "",
@@ -1379,96 +1125,6 @@
         "title": {
             "en": "Health",
             "es": "Sanidad"
-        }
-    },
-    "view-223": {
-        "category": "milk-care",
-        "fields": [
-            {
-                "audios": [
-                    {
-                        "src": "AUDIO8.mp3"
-                    }
-                ],
-                "id": "view-223-audio",
-                "type": "audio_list"
-            },
-            {
-                "buttons": [
-                    {
-                        "label": {
-                            "en": "Back",
-                            "es": "Atrás"
-                        },
-                        "target": "view-130"
-                    }
-                ],
-                "id": "view-223-bottom-nav",
-                "type": "bottom_navigation"
-            }
-        ],
-        "guide-id": "Filtrar la leche recién ordeñada, conservar la leche según momento de elaboración",
-        "manual-page": "31 y 32",
-        "milking-method": "mecanico",
-        "periodicity": "",
-        "scenario": "ACON-01-02",
-        "score-answer": "",
-        "severity": 0,
-        "showDate": true,
-        "subtitle": {
-            "en": "Label the container",
-            "es": "Rotular el envase"
-        },
-        "title": {
-            "en": "Condition the milk",
-            "es": "Acondicionar la leche"
-        }
-    },
-    "view-224": {
-        "category": "health",
-        "fields": [
-            {
-                "audios": [
-                    {
-                        "src": "AUDIO8.mp3"
-                    }
-                ],
-                "id": "view-224-audio",
-                "type": "audio_list"
-            },
-            {
-                "buttons": [
-                    {
-                        "label": {
-                            "en": "Back",
-                            "es": "Atrás"
-                        },
-                        "target": "view-95"
-                    }
-                ],
-                "id": "view-224-bottom-nav",
-                "type": "bottom_navigation"
-            }
-        ],
-        "guide-id": "Filtrar la leche recién ordeñada, conservar la leche según momento de elaboración",
-        "manual-page": "31 y 32",
-        "milking-method": "manual",
-        "modified": {
-            "at": "2026-05-28T05:29:40.086Z",
-            "by": "matias.micheletto@uns.edu.ar"
-        },
-        "periodicity": "",
-        "scenario": "ACON-01-02",
-        "score-answer": "",
-        "severity": 0,
-        "showDate": true,
-        "subtitle": {
-            "en": "Label the container",
-            "es": "Rotular el envase"
-        },
-        "title": {
-            "en": "Condition the milk",
-            "es": "Acondicionar la leche"
         }
     },
     "view-184": {
@@ -3320,7 +2976,7 @@
         "guide-id": "Las personas involucradas en el tambo deben conocer y aplicar las indicaciones de salud",
         "icon": "heart.png",
         "manual-page": "22 y 23",
-        "milking-method": "manual",
+        "milking-method": "todos",
         "modified": {
             "at": "2026-05-28T04:17:53.435Z",
             "by": "matias.micheletto@uns.edu.ar"
@@ -3381,7 +3037,7 @@
         "guide-id": "Las personas involucradas en el tambo deben conocer y aplicar las indicaciones de salud",
         "icon": "jacket.png",
         "manual-page": "22 y 23",
-        "milking-method": "manual",
+        "milking-method": "todos",
         "modified": {
             "at": "2026-05-28T04:19:36.627Z",
             "by": "matias.micheletto@uns.edu.ar"
@@ -3442,7 +3098,7 @@
         "guide-id": "Las personas involucradas en el tambo deben conocer y aplicar las indicaciones de salud",
         "icon": "hands.png",
         "manual-page": "22 y 23",
-        "milking-method": "manual",
+        "milking-method": "todos",
         "modified": {
             "at": "2026-05-28T04:21:54.359Z",
             "by": "matias.micheletto@uns.edu.ar"
@@ -3599,7 +3255,7 @@
                 "id": "view-252-image",
                 "images": [
                     {
-                        "src": "hands.png"
+                        "src": "hands2.png"
                     }
                 ],
                 "type": "image_list"
@@ -4210,131 +3866,6 @@
             "es": "Antes de ordeñar"
         }
     },
-    "view-36": {
-        "category": "before-milking",
-        "fields": [
-            {
-                "default": 1,
-                "id": "animal_count",
-                "label": {
-                    "en": "Number of animals being milked",
-                    "es": "Cantidad de animales en ordeñe"
-                },
-                "min": 1,
-                "step": 1,
-                "target": "view-100",
-                "type": "number_input"
-            }
-        ],
-        "guide-id": "Inspección de ubres y despunte",
-        "manual-page": "16",
-        "milking-method": "todos",
-        "modified": {
-            "at": "2026-05-28T04:05:20.313Z",
-            "by": "matias.micheletto@uns.edu.ar"
-        },
-        "periodicity": "",
-        "scenario": "PREORD-07",
-        "score-answer": "",
-        "severity": 0,
-        "subtitle": {
-            "en": "Number of animals being milked",
-            "es": "Cantidad de animales en ordeñe"
-        },
-        "title": {
-            "en": "Before milking",
-            "es": "Antes de ordeñar"
-        }
-    },
-    "view-37": {
-        "category": "before-milking",
-        "fields": [
-            {
-                "id": "view-37-alert",
-                "message": {
-                    "en": "Attention<br>Milk those animals at the end and discard their milk",
-                    "es": "Atención<br>Ordeñá esos animales al final y descartá su leche"
-                },
-                "severity": "warning",
-                "type": "alert"
-            },
-            {
-                "buttons": [
-                    {
-                        "label": {
-                            "en": "Ok",
-                            "es": "Aceptar"
-                        },
-                        "target": "view-111"
-                    }
-                ],
-                "id": "view-37-bottom-nav",
-                "type": "bottom_navigation"
-            }
-        ],
-        "guide-id": "Inspección de ubres y despunte",
-        "manual-page": "16",
-        "milking-method": "todos",
-        "modified": {
-            "at": "2026-05-28T04:05:27.674Z",
-            "by": "matias.micheletto@uns.edu.ar"
-        },
-        "periodicity": "",
-        "scenario": "PREORD-07",
-        "score-answer": "",
-        "severity": 0,
-        "title": {
-            "en": "Before milking",
-            "es": "Antes de ordeñar"
-        }
-    },
-    "view-38": {
-        "category": "before-milking",
-        "fields": [
-            {
-                "id": "view-38-image",
-                "images": [
-                    {
-                        "src": "udder.png"
-                    }
-                ],
-                "type": "image_list"
-            },
-            {
-                "buttons": [
-                    {
-                        "label": {
-                            "en": "Finish",
-                            "es": "Finalizar"
-                        },
-                        "target": "view-100"
-                    }
-                ],
-                "id": "view-38-bottom-nav",
-                "type": "bottom_navigation"
-            }
-        ],
-        "guide-id": "Inspección de ubres y despunte",
-        "manual-page": "16",
-        "milking-method": "todos",
-        "modified": {
-            "at": "2026-05-28T04:05:37.520Z",
-            "by": "matias.micheletto@uns.edu.ar"
-        },
-        "periodicity": "",
-        "scenario": "PREORD-07",
-        "score-answer": "",
-        "severity": 0,
-        "showDate": true,
-        "subtitle": {
-            "en": "Check udders",
-            "es": "Revisá las ubres"
-        },
-        "title": {
-            "en": "Before milking",
-            "es": "Antes de ordeñar"
-        }
-    },
     "view-40": {
         "category": "before-milking",
         "fields": [
@@ -4354,7 +3885,7 @@
                             "en": "Back",
                             "es": "Atrás"
                         },
-                        "target": "view-110"
+                        "target": "view-234"
                     }
                 ],
                 "id": "view-40-bottom-nav",
@@ -4380,98 +3911,6 @@
         "title": {
             "en": "Before milking",
             "es": "Antes de ordeñar"
-        }
-    },
-    "view-42": {
-        "category": "before-milking",
-        "fields": [
-            {
-                "default": 0,
-                "id": "view-42-input",
-                "target": "view-37",
-                "type": "number_input"
-            }
-        ],
-        "guide-id": "Inspección de ubres y despunte",
-        "manual-page": "16",
-        "milking-method": "todos",
-        "modified": {
-            "at": "2026-05-28T04:07:54.403Z",
-            "by": "matias.micheletto@uns.edu.ar"
-        },
-        "periodicity": "",
-        "scenario": "PREORD-07",
-        "score-answer": "",
-        "severity": 0,
-        "showDate": true,
-        "subtitle": {
-            "en": "How many animals were ill?",
-            "es": "¿Cuántos animales estaban mal?"
-        },
-        "title": {
-            "en": "Before milking",
-            "es": "Antes de ordeñar"
-        }
-    },
-    "view-45": {
-        "category": "during-milking",
-        "fields": [
-            {
-                "audios": [
-                    {
-                        "src": "AUDIO4-2.mp3"
-                    }
-                ],
-                "id": "view-45-audio",
-                "type": "audio_list"
-            },
-            {
-                "id": "view-45-image-list",
-                "images": [
-                    {
-                        "src": "hands.png"
-                    },
-                    {
-                        "src": "gauntlets.png"
-                    },
-                    {
-                        "src": "nose.png"
-                    }
-                ],
-                "type": "image_list"
-            },
-            {
-                "buttons": [
-                    {
-                        "label": {
-                            "en": "Back",
-                            "es": "Atrás"
-                        },
-                        "target": "view-46"
-                    }
-                ],
-                "id": "view-45-bottom-nav",
-                "type": "bottom_navigation"
-            }
-        ],
-        "guide-id": "Inspección de ubres y despunte",
-        "manual-page": "16",
-        "milking-method": "todos",
-        "modified": {
-            "at": "2026-05-28T04:08:02.364Z",
-            "by": "matias.micheletto@uns.edu.ar"
-        },
-        "periodicity": "",
-        "scenario": "PREORD-07",
-        "score-answer": "",
-        "severity": 0,
-        "subtitle": {
-            "en": "Your health in the farm",
-            "es": "Tu salud en el tambo"
-        },
-        "title": {
-            "en": "When milking",
-            "es": "Al ordeñar"
         }
     },
     "view-250": {
@@ -4535,105 +3974,6 @@
             "es": "Al ordeñar"
         }
     },
-    "view-46": {
-        "category": "during-milking",
-        "fields": [
-            {
-                "id": "view-46-select",
-                "options": [
-                    {
-                        "label": {
-                            "en": "Yes",
-                            "es": "Si"
-                        },
-                        "target": "view-49",
-                        "value": "yes"
-                    },
-                    {
-                        "label": {
-                            "en": "No",
-                            "es": "No"
-                        },
-                        "target": "view-47",
-                        "value": "no"
-                    },
-                    {
-                        "label": {
-                            "en": "Don't know",
-                            "es": "No se"
-                        },
-                        "target": "view-45",
-                        "value": "dont-know"
-                    }
-                ],
-                "type": "select"
-            }
-        ],
-        "guide-id": "Las personas involucradas en el tambo deben conocer y aplicar las indicaciones de salud",
-        "icon": "heart.png",
-        "manual-page": "22, 23",
-        "milking-method": "mecanico",
-        "periodicity": "daily",
-        "scenario": "ORD-02-03",
-        "score-answer": "yes",
-        "severity": 3,
-        "showDate": true,
-        "subtitle": {
-            "en": "Were you able to milk the cow?",
-            "es": "¿Estabas en condiciones de ordeñar?"
-        },
-        "title": {
-            "en": "When milking",
-            "es": "Al ordeñar"
-        },
-        "recommendation": {
-            "en": "Check your health before milking",
-            "es": "Controlá tu salud antes de ordeñar"
-        },
-        "recommendation-view": "view-45"
-    },
-    "view-47": {
-        "category": "during-milking",
-        "fields": [
-            {
-                "id": "view-47-alert",
-                "message": {
-                    "en": "Attention<br>Do not milk with sympthoms",
-                    "es": "Atención<br>No ordeñes con síntomas"
-                },
-                "severity": "warning",
-                "type": "alert"
-            },
-            {
-                "buttons": [
-                    {
-                        "label": {
-                            "en": "Ok",
-                            "es": "Aceptar"
-                        },
-                        "target": "view-49"
-                    }
-                ],
-                "id": "view-47-bottom-nav",
-                "type": "bottom_navigation"
-            }
-        ],
-        "guide-id": "Las personas involucradas en el tambo deben conocer y aplicar las indicaciones de salud",
-        "manual-page": "22, 23",
-        "milking-method": "todos",
-        "modified": {
-            "at": "2026-05-28T04:08:14.319Z",
-            "by": "matias.micheletto@uns.edu.ar"
-        },
-        "periodicity": "",
-        "scenario": "ORD-02-03",
-        "score-answer": "",
-        "severity": 0,
-        "title": {
-            "en": "When milking",
-            "es": "Al ordeñar"
-        }
-    },
     "view-247": {
         "category": "during-milking",
         "fields": [
@@ -4675,170 +4015,6 @@
             "en": "When milking",
             "es": "Al ordeñar"
         }
-    },
-    "view-48": {
-        "category": "during-milking",
-        "fields": [
-            {
-                "id": "",
-                "images": [
-                    {
-                        "src": "clothing.png"
-                    },
-                    {
-                        "src": "boots.png"
-                    }
-                ],
-                "type": "image_list"
-            },
-            {
-                "buttons": [
-                    {
-                        "label": {
-                            "en": "Back",
-                            "es": "Atrás"
-                        },
-                        "target": "view-49"
-                    }
-                ],
-                "id": "view-48-bottom-nav",
-                "type": "bottom_navigation"
-            }
-        ],
-        "guide-id": "Las personas involucradas en el tambo deben conocer y aplicar las indicaciones de salud",
-        "manual-page": "22, 23",
-        "milking-method": "todos",
-        "modified": {
-            "at": "2026-05-28T04:08:22.425Z",
-            "by": "matias.micheletto@uns.edu.ar"
-        },
-        "periodicity": "",
-        "scenario": "ORD-02-03",
-        "score-answer": "",
-        "severity": 0,
-        "showDate": true,
-        "subtitle": {
-            "en": "Your clothing",
-            "es": "Tu indumentaria"
-        },
-        "title": {
-            "en": "When milking",
-            "es": "Al ordeñar"
-        }
-    },
-    "view-49": {
-        "category": "during-milking",
-        "fields": [
-            {
-                "id": "view-49-select",
-                "options": [
-                    {
-                        "label": {
-                            "en": "Yes",
-                            "es": "Si"
-                        },
-                        "target": "view-50",
-                        "value": "yes"
-                    },
-                    {
-                        "label": {
-                            "en": "No",
-                            "es": "No"
-                        },
-                        "target": "view-50",
-                        "value": "no"
-                    },
-                    {
-                        "label": {
-                            "en": "Don't know",
-                            "es": "No se"
-                        },
-                        "target": "view-48",
-                        "value": "dont-know"
-                    }
-                ],
-                "type": "select"
-            }
-        ],
-        "guide-id": "Las personas involucradas en el tambo deben conocer y aplicar las indicaciones de salud",
-        "icon": "jacket.png",
-        "manual-page": "22, 23",
-        "milking-method": "mecanico",
-        "periodicity": "daily",
-        "scenario": "ORD-02-03",
-        "score-answer": "yes",
-        "severity": 3,
-        "showDate": true,
-        "subtitle": {
-            "en": "Do you have appropriate clothing?",
-            "es": "¿Contás con indumentaria adecuada?"
-        },
-        "title": {
-            "en": "When milking",
-            "es": "Al ordeñar"
-        },
-        "recommendation": {
-            "en": "Wear suitable clothing",
-            "es": "Utilizá indumentaria adecuada"
-        },
-        "recommendation-view": "view-48"
-    },
-    "view-50": {
-        "category": "during-milking",
-        "fields": [
-            {
-                "id": "view-50-select",
-                "options": [
-                    {
-                        "label": {
-                            "en": "Yes",
-                            "es": "Si"
-                        },
-                        "target": "view-55",
-                        "value": "yes"
-                    },
-                    {
-                        "label": {
-                            "en": "No",
-                            "es": "No"
-                        },
-                        "target": "view-55",
-                        "value": "no"
-                    },
-                    {
-                        "label": {
-                            "en": "Don't know",
-                            "es": "No sé"
-                        },
-                        "target": "view-106",
-                        "value": "dont-know"
-                    }
-                ],
-                "type": "select"
-            }
-        ],
-        "guide-id": "Las personas involucradas en el tambo deben conocer y aplicar las indicaciones de salud",
-        "icon": "hands.png",
-        "manual-page": "22, 23",
-        "milking-method": "mecanico",
-        "periodicity": "daily",
-        "scenario": "ORD-02-03",
-        "score-answer": "yes",
-        "severity": 3,
-        "showDate": true,
-        "subtitle": {
-            "en": "Did you follow personal hygiene guidelines?",
-            "es": "¿Seguiste las indicaciones de higiene personal?"
-        },
-        "title": {
-            "en": "When milking",
-            "es": "Al ordeñar"
-        },
-        "recommendation": {
-            "en": "Follow personal hygiene guidelines",
-            "es": "Seguí las pautas de higiene personal"
-        },
-        "recommendation-view": "view-106"
     },
     "view-52": {
         "category": "during-milking",
@@ -4927,38 +4103,6 @@
         "severity": 0,
         "title": {
             "en": "When milking",
-            "es": "Al ordeñar"
-        }
-    },
-    "view-55": {
-        "category": "during-milking",
-        "fields": [
-            {
-                "default": 0,
-                "id": "view-55-number",
-                "min": 0,
-                "target": "view-52",
-                "type": "number_input"
-            }
-        ],
-        "guide-id": "Ordeño mecánico: Lavar correctamente el equipo de ordeño",
-        "manual-page": "27",
-        "milking-method": "mecanico",
-        "modified": {
-            "at": "2026-05-28T04:08:45.865Z",
-            "by": "matias.micheletto@uns.edu.ar"
-        },
-        "periodicity": "",
-        "scenario": "ORD-07",
-        "score-answer": "",
-        "severity": 0,
-        "showDate": true,
-        "subtitle": {
-            "en": "Liters of milk per day",
-            "es": "Litros de leche del día"
-        },
-        "title": {
-            "en": "During milking",
             "es": "Al ordeñar"
         }
     },
@@ -5300,7 +4444,7 @@
         ],
         "guide-id": "Ordeño manual: lavar correctamente los accesorios y utensilios de ordeño",
         "manual-page": "28",
-        "milking-method": "manual",
+        "milking-method": "todos",
         "modified": {
             "at": "2026-05-28T04:36:48.275Z",
             "by": "matias.micheletto@uns.edu.ar"
@@ -5317,6 +4461,10 @@
         "title": {
             "en": "During milking",
             "es": "Al ordeñar"
+        },
+        "next-by-method": {
+            "manual": "view-64",
+            "mecanico": "view-52"
         }
     },
     "view-64": {
@@ -5707,293 +4855,6 @@
             "en": "Before milking",
             "es": "Antes de ordeñar"
         }
-    },
-    "view-90": {
-        "category": "milk-care",
-        "fields": [
-            {
-                "id": "view-90-alert",
-                "message": {
-                    "en": "",
-                    "es": "Rotulá siempre el envase con su fecha"
-                },
-                "severity": "warning",
-                "type": "alert"
-            },
-            {
-                "buttons": [
-                    {
-                        "label": {
-                            "en": "Back",
-                            "es": "Atrás"
-                        },
-                        "target": "view-95"
-                    },
-                    {
-                        "label": {
-                            "en": "Next",
-                            "es": "Siguiente"
-                        },
-                        "target": "view-135"
-                    }
-                ],
-                "id": "view-90-bottom-nav",
-                "type": "bottom_navigation"
-            }
-        ],
-        "guide-id": "Filtrar la leche recién ordeñada, conservar la leche según momento de elaboración",
-        "manual-page": "31 y 32",
-        "milking-method": "manual",
-        "modified": {
-            "at": "2026-05-29T20:35:04.724Z",
-            "by": "matias.micheletto@uns.edu.ar"
-        },
-        "periodicity": "",
-        "scenario": "ACON-01-02",
-        "score-answer": "",
-        "severity": 0,
-        "showDate": true,
-        "title": {
-            "en": "Condition the milk",
-            "es": "Acondicionar la leche"
-        }
-    },
-    "view-92": {
-        "category": "milk-care",
-        "fields": [
-            {
-                "id": "view-92-alert",
-                "message": {
-                    "en": "",
-                    "es": "Filtrá siempre la leche recién ordeñada"
-                },
-                "severity": "warning",
-                "type": "alert"
-            },
-            {
-                "buttons": [
-                    {
-                        "label": {
-                            "en": "Back",
-                            "es": "Atrás"
-                        },
-                        "target": "view-94"
-                    },
-                    {
-                        "label": {
-                            "en": "Next",
-                            "es": "Siguiente"
-                        },
-                        "target": "view-93"
-                    }
-                ],
-                "id": "view-92-navigation",
-                "type": "bottom_navigation"
-            }
-        ],
-        "guide-id": "Filtrar la leche recién ordeñada, conservar la leche según momento de elaboración",
-        "manual-page": "31 y 32",
-        "milking-method": "manual",
-        "modified": {
-            "at": "2026-05-29T20:32:14.522Z",
-            "by": "matias.micheletto@uns.edu.ar"
-        },
-        "periodicity": "",
-        "scenario": "ACON-01-02",
-        "score-answer": "",
-        "severity": 0,
-        "showDate": true,
-        "title": {
-            "en": "",
-            "es": "Acondicionar la leche"
-        }
-    },
-    "view-93": {
-        "category": "milk-care",
-        "fields": [
-            {
-                "id": "view-93-select",
-                "options": [
-                    {
-                        "label": {
-                            "en": "Inmediately elaborated",
-                            "es": "Elaboré inmediatamente"
-                        },
-                        "target": "view-135",
-                        "value": "inmediatly"
-                    },
-                    {
-                        "label": {
-                            "en": "Up to 2 hours: Fridge/pool",
-                            "es": "Hasta 2 horas: Heladera/pileta"
-                        },
-                        "target": "view-95",
-                        "value": "up-to-2-hours"
-                    },
-                    {
-                        "label": {
-                            "en": "Up to 48 hours: Cold tank/fridge",
-                            "es": "Hasta 48 horas: Tanque frío/heladera"
-                        },
-                        "target": "view-95",
-                        "value": "up-to-48-hours"
-                    },
-                    {
-                        "label": {
-                            "en": "Up to 7 months: Freezer",
-                            "es": "Hasta 7 meses: Freezer"
-                        },
-                        "target": "view-95",
-                        "value": "up-to-7-months"
-                    }
-                ],
-                "type": "select"
-            }
-        ],
-        "guide-id": "Filtrar la leche recién ordeñada conservar la leche según momento de elaboración",
-        "icon": "watch.png",
-        "manual-page": "31 y 32",
-        "milking-method": "manual",
-        "modified": {
-            "at": "2026-05-29T20:32:25.718Z",
-            "by": "matias.micheletto@uns.edu.ar"
-        },
-        "periodicity": "",
-        "scenario": "ACON-01-02",
-        "score-answer": "",
-        "severity": 0,
-        "showDate": true,
-        "subtitle": {
-            "en": "",
-            "es": "¿Cómo conservaste la leche hoy?"
-        },
-        "title": {
-            "en": "",
-            "es": "Acondicionar la leche"
-        }
-    },
-    "view-94": {
-        "category": "milk-care",
-        "fields": [
-            {
-                "id": "view-94-select",
-                "options": [
-                    {
-                        "label": {
-                            "en": "Yes",
-                            "es": "Si"
-                        },
-                        "target": "view-93",
-                        "value": "yes"
-                    },
-                    {
-                        "label": {
-                            "en": "No",
-                            "es": "No"
-                        },
-                        "target": "view-92",
-                        "value": "no"
-                    },
-                    {
-                        "label": {
-                            "en": "Don't know",
-                            "es": "No se"
-                        },
-                        "target": "view-96",
-                        "value": "dont-know"
-                    }
-                ],
-                "type": "select"
-            }
-        ],
-        "guide-id": "Filtrar la leche recién ordeñada, conservar la leche según momento de elaboración",
-        "icon": "filter.png",
-        "manual-page": "31 y 32",
-        "milking-method": "manual",
-        "modified": {
-            "at": "2026-05-29T20:32:36.330Z",
-            "by": "matias.micheletto@uns.edu.ar"
-        },
-        "periodicity": "daily",
-        "scenario": "ACON-01-02",
-        "score-answer": "yes",
-        "severity": 3,
-        "showDate": true,
-        "subtitle": {
-            "en": "",
-            "es": "¿Filtraste la leche?"
-        },
-        "title": {
-            "en": "",
-            "es": "Acondicionar la leche"
-        },
-        "recommendation": {
-            "en": "Strain freshly milked milk",
-            "es": "Filtrá la leche recién ordeñada"
-        },
-        "recommendation-view": "view-96"
-    },
-    "view-95": {
-        "category": "milk-care",
-        "fields": [
-            {
-                "id": "view-95-select",
-                "options": [
-                    {
-                        "label": {
-                            "en": "Yes",
-                            "es": "Si"
-                        },
-                        "target": "view-135",
-                        "value": "yes"
-                    },
-                    {
-                        "label": {
-                            "en": "No",
-                            "es": "No"
-                        },
-                        "target": "view-90",
-                        "value": "no"
-                    },
-                    {
-                        "label": {
-                            "en": "Don't know",
-                            "es": "No se"
-                        },
-                        "target": "view-224",
-                        "value": "dont-know"
-                    }
-                ],
-                "type": "select"
-            }
-        ],
-        "guide-id": "Filtrar la leche recién ordeñada, conservar la leche según momento de elaboración",
-        "icon": "edit.png",
-        "manual-page": "31 y 32",
-        "milking-method": "manual",
-        "modified": {
-            "at": "2026-05-29T20:32:46.444Z",
-            "by": "matias.micheletto@uns.edu.ar"
-        },
-        "periodicity": "daily",
-        "scenario": "ACON-01-02",
-        "score-answer": "yes",
-        "severity": 3,
-        "showDate": true,
-        "subtitle": {
-            "en": "",
-            "es": "¿Rotulaste el envase?"
-        },
-        "title": {
-            "en": "",
-            "es": "Acondicionar la leche"
-        },
-        "recommendation": {
-            "en": "Label the containers to preserve the milk",
-            "es": "Rotulá los envases para conservar la leche"
-        },
-        "recommendation-view": "view-224",
-        "conditional": true
     },
     "view-result-bad": {
         "category": "",

@@ -57,18 +57,6 @@ const MainMenu = () => {
             : "/survey/view-109";
     }, [latestMethodAnswer]);
 
-    const duringMilkingRoute = useMemo(() => {
-        return latestMethodAnswer === "manual"
-            ? "/survey/view-243"
-            : "/survey/view-46";
-    }, [latestMethodAnswer]);
-
-    const milkCareRoute = useMemo(() => {
-        return latestMethodAnswer === "manual"
-            ? "/survey/view-94"
-            : "/survey/view-129";
-    }, [latestMethodAnswer]);
-
     const dailyScenariosByCategory = useMemo(() => {
         const byCategory = {};
 
@@ -130,13 +118,13 @@ const MainMenu = () => {
             icon: udder, 
             label: t("mainMenu.duringMilking"),
             category: "during-milking",
-            route: duringMilkingRoute,
+            route: "/survey/view-243",
         },
         { 
             icon: milkPail, 
             label: t("mainMenu.milkCare"),
             category: "milk-care",
-            route: milkCareRoute,
+            route: "/survey/view-129",
         },
     ];
 

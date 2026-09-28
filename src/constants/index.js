@@ -95,6 +95,8 @@ export const CHECKS_BY_RATING = {
 };
 
 export const TOTAL_ANIMALS_NODE_IDS = ["view-animal-count"];
+// view-36, view-42 and view-55 were merged into view-235, view-236 and view-63;
+// they are kept here so records saved before the merge still count.
 export const MILKED_ANIMALS_NODE_IDS = new Set(["view-235", "view-36"]);
 export const MILK_LITERS_NODE_IDS = new Set(["view-55", "view-63"]);
 export const MASTITIS_NODE_IDS = ["view-236", "view-42", "view-189"];
