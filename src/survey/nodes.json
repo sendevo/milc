@@ -1234,7 +1234,8 @@
             "en": "Check the goats feed",
             "es": "Controlá el alimento de las cabras"
         },
-        "recommendation-view": "view-187"
+        "recommendation-view": "view-187",
+        "conditional": true
     },
     "view-187": {
         "category": "food",
@@ -1960,7 +1961,7 @@
         "showDate": true,
         "subtitle": {
             "en": "Do you have a storage area for chemical products?",
-            "es": "¿Contas con un depósito para guardar productos químicos?"
+            "es": "¿Contás con un depósito para guardar productos químicos?"
         },
         "title": {
             "en": "My supplies",
@@ -2200,7 +2201,7 @@
         "showDate": true,
         "subtitle": {
             "en": "Do you take precautions to prevent insects and rodents?",
-            "es": "¿Tomas recaudos para prevenir insectos y roedores?"
+            "es": "¿Tomás recaudos para prevenir insectos y roedores?"
         },
         "title": {
             "en": "Pests",
@@ -2335,7 +2336,7 @@
             {
                 "audios": [
                     {
-                        "src": "AUDIO10.mp3"
+                        "src": "AUDIO22.mp3"
                     }
                 ],
                 "id": "view-269-audio",
@@ -2404,6 +2405,13 @@
                             "es": "Atrás"
                         },
                         "target": "view-213"
+                    },
+                    {
+                        "label": {
+                            "en": "Next",
+                            "es": "Siguiente"
+                        },
+                        "target": "view-215"
                     }
                 ],
                 "id": "view-270-bottom-nav",
@@ -2446,6 +2454,13 @@
                             "es": "Atrás"
                         },
                         "target": "view-215"
+                    },
+                    {
+                        "label": {
+                            "en": "Next",
+                            "es": "Siguiente"
+                        },
+                        "target": "view-272"
                     }
                 ],
                 "id": "view-271-bottom-nav",
@@ -3476,6 +3491,13 @@
                             "en": "Back",
                             "es": "Atrás"
                         },
+                        "target": "view-188"
+                    },
+                    {
+                        "label": {
+                            "en": "Next",
+                            "es": "Siguiente"
+                        },
                         "target": "view-260"
                     }
                 ],
@@ -3511,7 +3533,7 @@
                 "id": "view-260-alert",
                 "message": {
                     "en": "Done!<br>You completed feed log",
-                    "es": "¡Listo!<br>Completaste el regsitro de alimentación"
+                    "es": "¡Listo!<br>Completaste el registro de alimentación"
                 },
                 "severity": "info",
                 "type": "alert"
@@ -3551,6 +3573,13 @@
                         "label": {
                             "en": "Back",
                             "es": "Atrás"
+                        },
+                        "target": "view-185"
+                    },
+                    {
+                        "label": {
+                            "en": "Next",
+                            "es": "Siguiente"
                         },
                         "target": "view-188"
                     }
@@ -3709,6 +3738,13 @@
                         "label": {
                             "en": "Back",
                             "es": "Atrás"
+                        },
+                        "target": "view-206"
+                    },
+                    {
+                        "label": {
+                            "en": "Next",
+                            "es": "Siguiente"
                         },
                         "target": "view-208"
                     }
