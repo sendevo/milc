@@ -44,9 +44,9 @@ test.describe("Login page — validation", () => {
         await page.getByPlaceholder("Email").fill("wrong@example.com");
         await page.getByPlaceholder("Password").fill("wrongpassword");
         await page.getByRole("button", { name: /^login$/i }).click();
-        // The component sets error = t("login.error") on catch
+        // The component maps the Firebase error code to t("authErrors.invalidCredentials")
         await expect(
-            page.getByText(/login failed|please check your credentials/i),
+            page.getByText(/wrong email or password/i),
         ).toBeVisible({ timeout: 10_000 });
     });
 });

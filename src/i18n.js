@@ -20,6 +20,16 @@ const resources = {
                 register: "Create an account",
                 continueWithoutAccount: "Continue without account",
             },
+            authErrors: {
+                weakPassword: "The password must be at least 6 characters long.",
+                emailInUse: "An account with this email already exists. Log in instead.",
+                invalidEmail: "The email address is not valid.",
+                missingPassword: "Enter your password.",
+                invalidCredentials: "Wrong email or password.",
+                userDisabled: "This account has been disabled.",
+                tooManyRequests: "Too many attempts. Wait a few minutes and try again.",
+                network: "No internet connection. Check your connection and try again.",
+            },
             register: {
                 title: "Welcome!",
                 subtitle: "Register",
@@ -282,6 +292,16 @@ const resources = {
                 error: "Error al iniciar sesión. Verifica tus credenciales.",
                 register: "Crear una cuenta",
                 continueWithoutAccount: "Continuar sin cuenta",
+            },
+            authErrors: {
+                weakPassword: "La contraseña debe tener al menos 6 caracteres.",
+                emailInUse: "Ya existe una cuenta con ese correo. Iniciá sesión.",
+                invalidEmail: "El correo electrónico no es válido.",
+                missingPassword: "Ingresá tu contraseña.",
+                invalidCredentials: "Correo o contraseña incorrectos.",
+                userDisabled: "Esta cuenta fue deshabilitada.",
+                tooManyRequests: "Demasiados intentos. Esperá unos minutos y volvé a intentar.",
+                network: "Sin conexión a internet. Revisá tu conexión y volvé a intentar.",
             },
             register: {
                 title: "¡Bienvenido!",

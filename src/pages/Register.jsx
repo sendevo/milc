@@ -6,6 +6,7 @@ import { useAuth } from "../contexts/AuthContext";
 import FormCard from "../components/FormCard";
 import ViewContainer from "../components/ViewContainer";
 import { registerLoginStyles as styles } from "../theme/RegisterLogin.styles";
+import { getAuthErrorKey } from "../utils/authErrors";
 
 const Register = () => {
     const { t } = useTranslation();
@@ -32,8 +33,8 @@ const Register = () => {
             const { user } = await register(email, password);
             await saveUserProfile(user.uid, { name, place, healthCard, email });
             navigate("/home");
-        } catch {
-            setError(t("register.error"));
+        } catch (err) {
+            setError(t(getAuthErrorKey(err, "register.error")));
         } finally {
             setLoading(false);
         }

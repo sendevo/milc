@@ -17,6 +17,7 @@ import ViewContainer from "../components/ViewContainer";
 import { registerLoginStyles as styles } from "../theme/RegisterLogin.styles";
 import { captchaDialogStyles as captchaStyles } from "../theme/CaptchaDialog.styles";
 import { RECAPTCHA_SITE_KEY } from "../constants";
+import { getAuthErrorKey } from "../utils/authErrors";
 
 const Login = () => {
     const { t } = useTranslation();
@@ -48,7 +49,7 @@ const Login = () => {
             await loginAnonymously();
             navigate("/home");
         } catch (err) {
-            setError(err.message);
+            setError(t(getAuthErrorKey(err, "login.error")));
         }
     };
 
@@ -59,8 +60,8 @@ const Login = () => {
         try {
             await login(email, password);
             navigate("/home");
-        } catch {
-            setError(t("login.error"));
+        } catch (err) {
+            setError(t(getAuthErrorKey(err, "login.error")));
         } finally {
             setLoading(false);
         }
