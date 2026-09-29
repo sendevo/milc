@@ -2880,6 +2880,19 @@
                     }
                 ],
                 "type": "image_list"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Back",
+                            "es": "Atrás"
+                        },
+                        "target": "view-233"
+                    }
+                ],
+                "id": "view-240-navigation",
+                "type": "bottom_navigation"
             }
         ],
         "guide-id": "Inspección de ubres y despunte",
@@ -2923,6 +2936,19 @@
                     }
                 ],
                 "type": "image_list"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Back",
+                            "es": "Atrás"
+                        },
+                        "target": "view-234"
+                    }
+                ],
+                "id": "view-241-navigation",
+                "type": "bottom_navigation"
             }
         ],
         "guide-id": "Inspección de ubres y despunte",
@@ -3842,8 +3868,8 @@
                 "buttons": [
                     {
                         "label": {
-                            "en": "Finish",
-                            "es": "Finalizar"
+                            "en": "Back",
+                            "es": "Atrás"
                         },
                         "target": "view-109"
                     }
