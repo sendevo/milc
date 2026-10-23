@@ -15,6 +15,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ViewContainer from "../components/ViewContainer";
 import { useSettings } from "../contexts/SettingsContext";
+import { useSurveyLog } from "../hooks/useSurveyLog";
 import { calendarStyles as styles } from "../theme/Calendar.styles";
 import {
 	toDayStart, 
@@ -51,8 +52,16 @@ const Calendar = () => {
 	const { t } = useTranslation();
 	const navigate = useNavigate();
 	const { getCurrentDateTime } = useSettings();
+	const { getRecords } = useSurveyLog();
 
 	const today = toDayStart(getCurrentDateTime());
+
+	// Days with at least one survey answer (profile setup answers are not activity)
+	const activityDates = useMemo(() => new Set(
+		getRecords()
+			.filter((record) => record.scenario !== "APP-SETUP")
+			.map((record) => record.date),
+	), [getRecords]);
 	const [displayMonth, setDisplayMonth] = useState(() => new Date(today.getFullYear(), today.getMonth(), 1));
 	const [fromDate, setFromDate] = useState(null);
 	const [toDate, setToDate] = useState(null);
@@ -198,6 +207,8 @@ const Calendar = () => {
 								date.getTime() < toDate.getTime(),
 							);
 
+							const hasActivity = activityDates.has(formatAsIsoDate(date));
+
 							return (
 								<Button
 									key={date.toISOString()}
@@ -207,10 +218,20 @@ const Calendar = () => {
 										...(isBetween ? styles.dayInRange : {}),
 										...(isStart || isEnd || isSingle ? styles.dayEdge : {}),
 									}}>
-									{date.getDate()}
+									<Box sx={styles.dayContent}>
+										{date.getDate()}
+										<Box sx={!hasActivity
+											? styles.activityDotEmpty
+											: (isStart || isEnd || isSingle ? styles.activityDotOnEdge : styles.activityDot)} />
+									</Box>
 								</Button>
 							);
 						})}
+					</Box>
+
+					<Box sx={styles.activityLegend}>
+						<Box sx={styles.activityDot} />
+						<Typography sx={styles.activityLegendText}>{t("calendar.activityLegend")}</Typography>
 					</Box>
 				</Box>
 

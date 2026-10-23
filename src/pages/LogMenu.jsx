@@ -93,6 +93,8 @@ const LogMenu = () => {
                     series: milkSeries,
                     xAxisLabel: isMonthlyGrouped ? t("milkBarChart.months") : t("milkBarChart.days"),
                     totalLiters: stats.totalLiters,
+                    milkingDays: stats.milkingDays,
+                    totalDaysInRange: stats.totalDaysInRange,
                     averageLitersPerDay: stats.averageLitersPerDay,
                     litersPerAnimal: stats.litersPerAnimal,
                 },

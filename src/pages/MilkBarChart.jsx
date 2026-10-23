@@ -6,12 +6,13 @@ import BarChart from "../components/BarChart";
 import ViewContainer from "../components/ViewContainer";
 import { useSurveyLog } from "../hooks/useSurveyLog";
 import { milkBarChartStyles as styles } from "../theme/MilkBarChart.styles";
-import { parseIsoDate, formatAsIsoDate, getDaysBetweenInclusive, getMonthSpanInclusive } from "../utils/dateTime";
+import { parseIsoDate, formatAsIsoDate, getDaysBetweenInclusive } from "../utils/dateTime";
 import {
     buildLatestMilkByDate,
     buildMilkedAnimalsByDate,
     buildSeries,
     computeLitersPerAnimal,
+    countMilkingDays,
 } from "../utils/reportData";
 
 const MilkBarChart = () => {
@@ -29,10 +30,6 @@ const MilkBarChart = () => {
     const isRangeValid = Boolean(from && to && from <= to);
     const totalDaysInRange = useMemo(
         () => (from && to && from <= to ? getDaysBetweenInclusive(from, to) : 0),
-        [from, to],
-    );
-    const monthsInRange = useMemo(
-        () => (from && to && from <= to ? getMonthSpanInclusive(from, to) : 0),
         [from, to],
     );
     const isMonthlyGrouped = useMemo(
@@ -60,14 +57,12 @@ const MilkBarChart = () => {
         () => Number(series.reduce((sum, item) => sum + item.value, 0).toFixed(1)),
         [series],
     );
-    const averageLitersPerMonth = useMemo(() => {
-        if (!monthsInRange) return 0;
-        return Number((totalLiters / monthsInRange).toFixed(1));
-    }, [totalLiters, monthsInRange]);
+    // Average over the days with milking, not over every day of the period
+    const milkingDays = useMemo(() => countMilkingDays(milkValuesByDate), [milkValuesByDate]);
     const averageLitersPerDay = useMemo(() => {
-        if (!totalDaysInRange) return 0;
-        return Number((totalLiters / totalDaysInRange).toFixed(1));
-    }, [totalLiters, totalDaysInRange]);
+        if (!milkingDays) return 0;
+        return Number((totalLiters / milkingDays).toFixed(1));
+    }, [totalLiters, milkingDays]);
     const litersPerAnimal = useMemo(() => {
         return computeLitersPerAnimal(from, to, milkValuesByDate, milkedAnimalsByDate);
     }, [from, to, milkValuesByDate, milkedAnimalsByDate]);
@@ -85,7 +80,9 @@ const MilkBarChart = () => {
             subtitle={`
                 ${t("milkBarChart.subtitle")}
                 <br />
-                ${t("milkBarChart.average")} ${averageLitersPerMonth} ${t("milkBarChart.litersMonth")}
+                ${t("milkBarChart.milkingDays", { milked: milkingDays, total: totalDaysInRange })}
+                <br />
+                ${t("milkBarChart.average")} ${averageLitersPerDay} ${t("milkBarChart.litersPerMilkingDay")}
                 <br />
                 ${t("milkBarChart.litersAnimal")} ${litersPerAnimal}
             `}

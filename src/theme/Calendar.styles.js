@@ -94,6 +94,44 @@ export const calendarStyles = {
             backgroundColor: "#156a76",
         },
     },
+    dayContent: {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        lineHeight: 1.1,
+    },
+    // Dot under days with registered answers (white on the selected days' background)
+    activityDot: {
+        width: 6,
+        height: 6,
+        mt: "2px",
+        borderRadius: "50%",
+        backgroundColor: "#1a8090",
+    },
+    activityDotOnEdge: {
+        width: 6,
+        height: 6,
+        mt: "2px",
+        borderRadius: "50%",
+        backgroundColor: "#ffffff",
+    },
+    activityDotEmpty: {
+        width: 6,
+        height: 6,
+        mt: "2px",
+    },
+    activityLegend: {
+        mt: 1.5,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: 1,
+        color: "#1a8090",
+    },
+    activityLegendText: {
+        fontSize: "0.8rem",
+        color: "text.secondary",
+    },
     rangeHint: {
         mt: 1,
         fontSize: "0.875rem",

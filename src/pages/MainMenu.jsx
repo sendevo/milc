@@ -1,8 +1,8 @@
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { Box, Typography } from "@mui/material";
+import { Box, Drawer, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import ViewContainer from "../components/ViewContainer";
 import MenuButtonContainer from "../components/MenuButtonContainer";
 import MenuCircle from "../components/MenuCircle";
@@ -25,11 +25,15 @@ import sheet from "../assets/icons/sheet.png";
 import user from "../assets/icons/user.png";
 import config from "../assets/icons/config.png";
 import info from "../assets/icons/info_help.png";
+import logoutIcon from "../assets/icons/logout.png";
+import { useAuth } from "../contexts/AuthContext";
 
 
 const MainMenu = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
+    const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false);
+    const { logout } = useAuth();
     const theme = useTheme();
     const { openModal } = useModal();
     const { getCurrentDateTime } = useSettings();
@@ -161,15 +165,25 @@ const MainMenu = () => {
             label: t("mainMenu.settings"), 
             onClick: () => navigate("/config") 
         },
-        { 
-            icon: info, 
+        {
+            icon: info,
             label: t("mainMenu.info"),
-            onClick: () => navigate("/info") 
+            onClick: () => navigate("/info")
+        },
+        {
+            icon: logoutIcon,
+            label: t("mainMenu.logout"),
+            onClick: async () => {
+                await logout();
+                navigate("/");
+            }
         }
     ];
 
     return (
-        <ViewContainer title={t("mainMenu.panelTitle")}>
+        <ViewContainer
+            title={t("mainMenu.panelTitle")}
+            onMenu={() => setIsAccountMenuOpen(true)}>
             <Box px={2} display="flex" flexDirection="column" gap={3} marginBottom={"20px"}>
                 {/* MI DÍA section */}
                 <Box mt={3}>
@@ -215,28 +229,35 @@ const MainMenu = () => {
                     </MenuButtonContainer>
                 </Box>
 
-                {/* MI CUENTA section */}
-                <Box>
+            </Box>
+
+            {/* MI CUENTA: side menu opened from the header menu button */}
+            <Drawer
+                anchor="left"
+                open={isAccountMenuOpen}
+                onClose={() => setIsAccountMenuOpen(false)}>
+                <Box sx={styles.accountDrawer}>
                     <Typography
                         variant="subtitle1"
                         fontWeight="bold"
                         textAlign="center"
                         textTransform="uppercase"
-                        sx={styles.sectionTitle}>
+                        sx={styles.sectionTitleFirst}>
                         {t("mainMenu.myAccount")}
                     </Typography>
-                    <MenuButtonContainer>
-                        {accountActionItems.map((item) => (
-                            <MenuCircle
-                                key={item.label}
-                                icon={item.icon}
-                                label={item.label}
-                                borderColor={menuBorder}
-                                onClick={item.onClick} />
-                        ))}
-                    </MenuButtonContainer>
+                    {accountActionItems.map((item) => (
+                        <MenuCircle
+                            key={item.label}
+                            icon={item.icon}
+                            label={item.label}
+                            borderColor={menuBorder}
+                            onClick={() => {
+                                setIsAccountMenuOpen(false);
+                                item.onClick();
+                            }} />
+                    ))}
                 </Box>
-            </Box>
+            </Drawer>
         </ViewContainer>
     );
 };

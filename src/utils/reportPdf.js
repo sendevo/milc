@@ -1,8 +1,6 @@
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 import membrete from "../assets/membrete.jpg";
-import checkTrue from "../assets/icons/check_true.png";
-import checkFalse from "../assets/icons/check_false.png";
 import {
     CONTENT_BOTTOM,
     CONTENT_TOP,
@@ -49,19 +47,71 @@ const drawKeyValueRow = (doc, y, label, value) => {
     return y + 6;
 };
 
-const drawRatingChecks = (doc, y, rating, checkedIconData, uncheckedIconData, scaleLabel) => {
+// Same colors as the rating circles of the result screen (ResultScales.jsx)
+const RATING_CIRCLE_COLORS = {
+    4: { fill: "#2e7d32", border: "#2e7d32" },
+    3: { fill: "#c62828", border: "#c62828" },
+    2: { fill: "stripes", border: "#c62828" },
+    1: { fill: "#111111", border: "#111111" },
+    0: { fill: null, border: "#9e9e9e" },
+};
+
+/**
+ * Draws the 4 rating circles of the result screen on a canvas and returns it as a PNG data URL.
+ */
+const buildRatingCirclesImage = (rating) => {
+    const pxPerMm = 12;
+    const size = SCALE_ICON_SIZE * pxPerMm;
+    const gap = SCALE_ICON_GAP * pxPerMm;
+    const lineWidth = size * 0.06;
+    const radius = size / 2 - lineWidth;
+    const colors = RATING_CIRCLE_COLORS[rating] ?? RATING_CIRCLE_COLORS[0];
+
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.round(size * 4 + gap * 3);
+    canvas.height = Math.round(size);
+    const ctx = canvas.getContext("2d");
+
+    for (let index = 0; index < 4; index += 1) {
+        const cx = index * (size + gap) + size / 2;
+        const cy = size / 2;
+        const isFilled = index < rating && colors.fill;
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+        if (isFilled === "stripes") {
+            ctx.clip();
+            const stripe = size * 0.15;
+            for (let x = cx - radius, i = 0; x < cx + radius; x += stripe, i += 1) {
+                ctx.fillStyle = i % 2 === 0 ? "#c62828" : "#111111";
+                ctx.fillRect(x, cy - radius, stripe, radius * 2);
+            }
+        } else {
+            ctx.fillStyle = isFilled ? colors.fill : "#ffffff";
+            ctx.fill();
+        }
+        ctx.restore();
+
+        ctx.beginPath();
+        ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+        ctx.lineWidth = lineWidth;
+        ctx.strokeStyle = colors.border;
+        ctx.stroke();
+    }
+
+    return canvas.toDataURL("image/png");
+};
+
+const drawRatingCircles = (doc, y, rating, scaleLabel) => {
     const labelX = PAGE_MARGIN_X + 2;
     doc.setFont("helvetica", "normal");
     doc.text(`${scaleLabel}:`, labelX, y);
 
     const labelWidth = doc.getTextWidth(`${scaleLabel}:`);
-    let iconX = labelX + labelWidth + 3;
-
-    for (let index = 0; index < 4; index += 1) {
-        const icon = index < rating ? checkedIconData : uncheckedIconData;
-        doc.addImage(icon, "PNG", iconX, y - SCALE_ICON_SIZE + 0.8, SCALE_ICON_SIZE, SCALE_ICON_SIZE);
-        iconX += SCALE_ICON_SIZE + SCALE_ICON_GAP;
-    }
+    const imageX = labelX + labelWidth + 3;
+    const imageWidth = SCALE_ICON_SIZE * 4 + SCALE_ICON_GAP * 3;
+    doc.addImage(buildRatingCirclesImage(rating), "PNG", imageX, y - SCALE_ICON_SIZE + 0.8, imageWidth, SCALE_ICON_SIZE);
 };
 
 const drawChartImage = (doc, y, imageDataUrl, title, headerImageData) => {
@@ -191,11 +241,7 @@ export const downloadReportPdf = async ({
     fileName,
 }) => {
     const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
-    const [headerImageData, checkedIconData, uncheckedIconData] = await Promise.all([
-        loadImageAsDataUrl(membrete),
-        loadImageAsDataUrl(checkTrue),
-        loadImageAsDataUrl(checkFalse),
-    ]);
+    const headerImageData = await loadImageAsDataUrl(membrete);
     drawHeader(doc, headerImageData);
 
     let y = CONTENT_TOP;
@@ -225,6 +271,10 @@ export const downloadReportPdf = async ({
     y = drawKeyValueRow(doc, y, t("report.totalAnimalCount"), String(Number(dairy.averageTotalAnimals ?? 0).toFixed(1)));
     y = drawKeyValueRow(doc, y, t("report.milkingAnimalCount"), String(Number(dairy.averageMilkedAnimals ?? 0).toFixed(1)));
     y = drawKeyValueRow(doc, y, t("report.processedMilkVolume"), String(milk.totalLiters ?? 0));
+    y = drawKeyValueRow(doc, y, t("report.milkingDays"), t("report.milkingDaysValue", {
+        milked: milk.milkingDays ?? 0,
+        total: milk.totalDaysInRange ?? 0,
+    }));
     y = drawKeyValueRow(doc, y, t("report.averageLitersPerDay"), String(milk.averageLitersPerDay ?? 0));
     y = drawKeyValueRow(doc, y, t("report.averageLitersPerAnimal"), String(milk.litersPerAnimal ?? 0));
 
@@ -259,7 +309,7 @@ export const downloadReportPdf = async ({
         doc.text(aspect.label, PAGE_MARGIN_X, y);
         y += 5;
 
-        drawRatingChecks(doc, y, aspect.rating, checkedIconData, uncheckedIconData, t("report.scale"));
+        drawRatingCircles(doc, y, aspect.rating, t("report.scale"));
         y += 5;
 
         const split = doc.splitTextToSize(aspect.detailMessage || t("resultScales.notEvaluated"), 176);

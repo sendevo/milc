@@ -248,6 +248,12 @@ export const averageByDate = (valuesByDate) => {
 };
 
 /**
+ * Number of days with milk liters recorded (days with milking) in a liters-by-date map.
+ */
+export const countMilkingDays = (milkValuesByDate) =>
+    Object.values(milkValuesByDate).filter((value) => Number(value) > 0).length;
+
+/**
  * Animals being milked per date ("Cantidad de animales en ordeñe"); days
  * without a record keep the last known value.
  */
@@ -267,7 +273,8 @@ export const computeLitersPerAnimal = (from, to, milkValuesByDate, animalsByDate
         const milkValue = Number(milkValuesByDate[isoDate] ?? 0);
         const animalsCount = Number(animalsByDate[isoDate]);
 
-        if (Number.isFinite(animalsCount) && animalsCount > 0) {
+        // Only days with milk recorded: a day without milking is not a day with 0 liters
+        if (milkValue > 0 && Number.isFinite(animalsCount) && animalsCount > 0) {
             totalDailyLitersPerAnimal += milkValue / animalsCount;
             daysWithAnimals += 1;
         }
@@ -292,8 +299,10 @@ export const computeReportStats = (records, inventoryRecords, from, to, language
     const monthsInRange = from && to && from <= to ? getMonthSpanInclusive(from, to) : 0;
 
     const totalLiters = Number(milkSeries.reduce((sum, item) => sum + item.value, 0).toFixed(1));
-    const averageLitersPerDay = totalDaysInRange
-        ? Number((totalLiters / totalDaysInRange).toFixed(1))
+    // Average over the days with milking, not over every day of the period
+    const milkingDays = countMilkingDays(milkValuesByDate);
+    const averageLitersPerDay = milkingDays
+        ? Number((totalLiters / milkingDays).toFixed(1))
         : 0;
     const averageLitersPerMonth = monthsInRange
         ? Number((totalLiters / monthsInRange).toFixed(1))
@@ -327,6 +336,8 @@ export const computeReportStats = (records, inventoryRecords, from, to, language
         milkedAnimalsByDate,
         milkValuesByDate,
         totalLiters,
+        milkingDays,
+        totalDaysInRange,
         averageTotalAnimals: averageByDate(totalAnimalsByDate),
         averageMilkedAnimals: averageByDate(milkedAnimalsByDate),
         averageLitersPerDay,
@@ -388,12 +399,13 @@ export const buildSetupData = (nodes, records, t) => {
     const milkingMethodNode = milkingMethodNodeId ? nodes[milkingMethodNodeId] : null;
     const milkingRoomNode = milkingRoomNodeId ? nodes[milkingRoomNodeId] : null;
 
-    // The milking room is only asked for mechanical milking
-    const isMechanical = milkingMethodRecord?.answer === "mec";
+    // Ignore a milking room answer left over from before the current milking method answer
+    const isRoomCurrent = Boolean(milkingRoomRecord)
+        && (!milkingMethodRecord || milkingRoomRecord.timestamp >= milkingMethodRecord.timestamp);
 
     return {
         milkingMethod: resolveSetupValueLabel(milkingMethodNode, milkingMethodRecord?.answer, t),
-        milkingRoom: isMechanical
+        milkingRoom: isRoomCurrent
             ? resolveSetupValueLabel(milkingRoomNode, milkingRoomRecord?.answer, t)
             : "-",
     };

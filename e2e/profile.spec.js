@@ -14,28 +14,25 @@ test.describe("Profile page", () => {
         ).toBeVisible();
     });
 
-    test("displays the Personal info section", async ({ page }) => {
+    test("summary shows the profile actions", async ({ page }) => {
+        await expect(page.getByRole("button", { name: /edit my profile|modificar mi perfil/i })).toBeVisible();
+        await expect(page.getByRole("button", { name: /change password|cambiar contrase/i })).toBeVisible();
+        await expect(page.getByRole("button", { name: /^(back|atrás)$/i })).toBeVisible();
+    });
+
+    test("edit screen shows the personal info form", async ({ page }) => {
+        await page.getByRole("button", { name: /edit my profile|modificar mi perfil/i }).click();
+        await expect(page).toHaveURL(/\/profile\/edit/);
         await expect(page.getByText(/personal info|datos personales/i)).toBeVisible();
+        await expect(page.getByRole("button", { name: /save profile|guardar perfil/i })).toBeVisible();
     });
 
-    test("displays the Save profile button", async ({ page }) => {
-        await expect(
-            page.getByRole("button", { name: /save profile|guardar perfil/i }),
-        ).toBeVisible();
-    });
-
-    test("displays the Change password section", async ({ page }) => {
-        await expect(page.getByText(/change password|cambiar contrase/i)).toBeVisible();
-        await expect(
-            page.locator('input[type="password"]').first(),
-        ).toBeVisible();
+    test("change password screen shows the password form", async ({ page }) => {
+        await page.getByRole("button", { name: /change password|cambiar contrase/i }).click();
+        await expect(page).toHaveURL(/\/profile\/password/);
+        await expect(page.locator('input[type="password"]').first()).toBeVisible();
         await expect(page.locator('input[type="password"]').nth(1)).toBeVisible();
-    });
-
-    test("displays the Update password button", async ({ page }) => {
-        await expect(
-            page.getByRole("button", { name: /update password|actualizar contrase/i }),
-        ).toBeVisible();
+        await expect(page.getByRole("button", { name: /update password|actualizar contrase/i })).toBeVisible();
     });
 
     test("back button returns to /app", async ({ page }) => {

@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Box, IconButton, Typography } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import MenuIcon from "@mui/icons-material/Menu";
 import DateTime from "../components/DateTime";
 import { viewContainerStyles as styles } from "../theme/ViewContainer.styles";
 import { sanitizeLimitedHtml } from "../utils/sanitizeLimitedHtml";
@@ -12,8 +13,9 @@ const ViewContainer = props => {
         subtitle, 
         showDate, 
         icon, 
-        onBack, 
-        headerRightText, 
+        onBack,
+        onMenu,
+        headerRightText,
         children, 
         backgroundSx, 
         headerSx 
@@ -34,6 +36,14 @@ const ViewContainer = props => {
                         onClick={onBack}
                         sx={styles.backButton}>
                         <ArrowBackIosNewIcon fontSize="small" />
+                    </IconButton>
+                )}
+                {!onBack && onMenu && (
+                    <IconButton
+                        onClick={onMenu}
+                        aria-label="menu"
+                        sx={styles.backButton}>
+                        <MenuIcon />
                     </IconButton>
                 )}
                 <Typography

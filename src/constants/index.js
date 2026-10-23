@@ -85,6 +85,12 @@ export const PROFILE_SETUP_CONFLICTING_NODE_IDS = {
     "view-milking-calendar": new Set(["view-milking-calendar", "view-218", "view-produce-year-round", "view-217"]),
     // Changing the milking method discards the milking room answer (asked again for mechanical)
     "view-milking-method": new Set(["view-milking-room"]),
+    // Answering the udder check again discards that day's mastitis answers (asked again if it was checked)
+    "view-233": new Set(["view-234", "view-236"]),
+    // Answering the mastitis question again discards that day's sick animals count (asked again if "yes")
+    "view-234": new Set(["view-236"]),
+    // Answering the milk conservation again discards that day's labeling answer (asked again if it applies)
+    "view-131": new Set(["view-130"]),
 };
 
 export const CHECKS_BY_RATING = {

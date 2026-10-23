@@ -131,6 +131,20 @@ const App = () => {
                                     <Profile />
                                     </ProtectedRoute>
                                 }/>
+                            <Route
+                                path="/profile/edit"
+                                element={
+                                    <ProtectedRoute>
+                                    <Profile view="edit" />
+                                    </ProtectedRoute>
+                                }/>
+                            <Route
+                                path="/profile/password"
+                                element={
+                                    <ProtectedRoute>
+                                    <Profile view="password" />
+                                    </ProtectedRoute>
+                                }/>
                         </Routes>
                     </ErrorBoundary>
                 </BrowserRouter>

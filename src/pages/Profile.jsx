@@ -1,16 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { 
-    Box, 
-    Button, 
-    TextField, 
+import {
+    Box,
+    Button,
+    TextField,
     Typography,
-    Accordion,
-    AccordionDetails,
-    AccordionSummary 
 } from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useAuth } from "../contexts/AuthContext";
 import { useSurveyNodes } from "../hooks/useSurveyNodes";
 import { useSurveyLog } from "../hooks/useSurveyLog";
@@ -25,9 +21,15 @@ import { getEffectiveHerdSizeOnDate } from "../utils/herdInventory";
 import { formatAsIsoDate } from "../utils/dateTime";
 import { formatMonthList, isNoMilkAllYearAnswer, isYesMilkAllYearAnswer } from "../utils/profileSetup";
 
-const Profile = () => {
+/**
+ * Profile screens (they share the profile data):
+ *   view="summary"  → /profile          read-only summary with the actions
+ *   view="edit"     → /profile/edit     edit personal data and setup data
+ *   view="password" → /profile/password change password
+ */
+const Profile = ({ view = "summary" }) => {
     const { t, i18n } = useTranslation();
-    const { currentUser, getUserProfile, saveUserProfile, changePassword, logout } = useAuth();
+    const { currentUser, getUserProfile, saveUserProfile, changePassword } = useAuth();
     const { showToast } = useToast();
     const navigate = useNavigate();
     const nodes = useSurveyNodes();
@@ -84,8 +86,10 @@ const Profile = () => {
                     return [];
                 }
 
-                // The milking room is only asked for mechanical milking
-                if (nodeId === "view-milking-room" && latestByNode["view-milking-method"]?.answer !== "mec") {
+                // Show the milking room only if it was answered after the milking method,
+                // so an answer left over from a previous setup is not shown
+                const methodRecord = latestByNode["view-milking-method"];
+                if (nodeId === "view-milking-room" && methodRecord && rec.timestamp < methodRecord.timestamp) {
                     return [];
                 }
 
@@ -135,11 +139,6 @@ const Profile = () => {
         return profileRows;
     }, [getCurrentDateTime, getInventoryRecords, getRecordsByScenario, nodes, i18n.language, t]);
 
-    const hasConfiguredSurveyData = useMemo(
-        () => surveyProfileFields.length > 0,
-        [surveyProfileFields],
-    );
-
     const [currentPassword, setCurrentPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [confirmNewPassword, setConfirmNewPassword] = useState("");
@@ -168,6 +167,8 @@ const Profile = () => {
                 email: currentUser.email,
             });
             showToast(t("profile.updateSuccess"), "success");
+            // Continue editing the production data with the setup survey
+            navigate(hasUserProfileSurvey ? "/survey/view-produce-year-round" : "/profile");
         } catch {
             showToast(t("profile.updateError"), "error");
         } finally {
@@ -196,24 +197,134 @@ const Profile = () => {
         }
     };
 
-    const handleLogout = async () => {
-        await logout();
-        navigate("/");
+    const pageProps = {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        px: 3,
+        pt: 2,
+        pb: 5,
+        gap: 3,
+        sx: styles.page,
     };
 
+    if (view === "summary") {
+        const personalRows = [
+            { label: t("register.name"), answerLabel: name },
+            { label: t("register.place"), answerLabel: place },
+            { label: t("register.healthCard"), answerLabel: healthCard },
+        ];
+
+        return (
+            <ViewContainer
+                title={t("profile.title")}
+                onBack={() => navigate("/home")}>
+                <Box {...pageProps}>
+                    <Box sx={styles.surveyDataBox}>
+                        {[...personalRows, ...surveyProfileFields].map(({ label, answerLabel }, i) => (
+                            <Box key={i} sx={styles.surveyDataRow}>
+                                <Typography sx={styles.surveyDataLabel}>{label}</Typography>
+                                <Typography sx={styles.surveyDataValue}>{answerLabel || "-"}</Typography>
+                            </Box>
+                        ))}
+                    </Box>
+
+                    <Box sx={styles.buttonContainer}>
+                        <Button
+                            variant="contained"
+                            fullWidth
+                            onClick={() => navigate("/profile/edit")}
+                            sx={styles.submitButton}>
+                            {t("profile.editProfile")}
+                        </Button>
+                        <Button
+                            variant="contained"
+                            fullWidth
+                            onClick={() => navigate("/profile/password")}
+                            sx={styles.submitButton}>
+                            {t("profile.passwordSection")}
+                        </Button>
+                        <Button
+                            variant="outlined"
+                            fullWidth
+                            onClick={() => navigate("/home")}>
+                            {t("profile.back")}
+                        </Button>
+                    </Box>
+                </Box>
+            </ViewContainer>
+        );
+    }
+
+    if (view === "password") {
+        return (
+            <ViewContainer
+                title={t("profile.passwordSection")}
+                onBack={() => navigate("/profile")}>
+                <Box {...pageProps}>
+                    <FormCard
+                        id="password-form"
+                        onSubmit={handlePasswordSubmit}
+                        error={passwordError}>
+                        {passwordSuccess && (
+                            <Typography variant="body2" color="success.main" textAlign="center">
+                                {t("profile.passwordSuccess")}
+                            </Typography>
+                        )}
+                        <TextField
+                            placeholder={t("profile.currentPassword")}
+                            label={t("profile.currentPassword")}
+                            type="password"
+                            value={currentPassword}
+                            onChange={(e) => setCurrentPassword(e.target.value)}
+                            required
+                            fullWidth />
+                        <TextField
+                            placeholder={t("profile.newPassword")}
+                            label={t("profile.newPassword")}
+                            type="password"
+                            value={newPassword}
+                            onChange={(e) => setNewPassword(e.target.value)}
+                            required
+                            fullWidth />
+                        <TextField
+                            placeholder={t("register.confirmPassword")}
+                            label={t("register.confirmPassword")}
+                            type="password"
+                            value={confirmNewPassword}
+                            onChange={(e) => setConfirmNewPassword(e.target.value)}
+                            required
+                            fullWidth />
+                    </FormCard>
+
+                    <Box sx={styles.buttonContainer}>
+                        <Button
+                            type="submit"
+                            form="password-form"
+                            variant="contained"
+                            fullWidth
+                            disabled={passwordLoading}
+                            sx={styles.submitButton}>
+                            {t("profile.changePassword")}
+                        </Button>
+                        <Button
+                            variant="outlined"
+                            fullWidth
+                            onClick={() => navigate("/profile")}>
+                            {t("profile.back")}
+                        </Button>
+                    </Box>
+                </Box>
+            </ViewContainer>
+        );
+    }
+
+    // view === "edit" (to be redesigned)
     return (
         <ViewContainer
-            title={t("profile.title")}
-            onBack={() => navigate("/home")}>
-            <Box
-                display="flex"
-                flexDirection="column"
-                alignItems="center"
-                px={3}
-                pt={2}
-                pb={5}
-                gap={3}
-                sx={styles.page}>
+            title={t("profile.editProfile")}
+            onBack={() => navigate("/profile")}>
+            <Box {...pageProps}>
 
                 {/* Profile info section */}
                 <FormCard
@@ -258,146 +369,6 @@ const Profile = () => {
                         </Button>
                     </Box>
                 </FormCard>
-
-                <Box sx={styles.surveyDataBox}>
-                    <Typography
-                        variant="h6"
-                        textAlign="center"
-                        fontWeight="bold"
-                        textTransform="uppercase"
-                        sx={{ color: "text.primary", mb: 1 }}>
-                        {t("profile.surveyDataSection")}
-                    </Typography>
-                    
-                    {surveyProfileFields.map(({ label, answerLabel }, i) => (
-                        <Box key={i} sx={styles.surveyDataRow}>
-                            <Typography sx={styles.surveyDataLabel}>{label}</Typography>
-                            <Typography sx={styles.surveyDataValue}>{answerLabel}</Typography>
-                        </Box>
-                    ))}                    
-                
-                    {hasUserProfileSurvey && (
-                        <Box sx={{...styles.buttonContainer, mt:1}}>
-                            <Button
-                                variant="contained"
-                                fullWidth
-                                onClick={() => navigate("/survey/view-produce-year-round")}>
-                                {hasConfiguredSurveyData
-                                    ? t("profile.profileSurveyUpdate")
-                                    : t("profile.profileSurveyComplete")}
-                            </Button>
-                        </Box>
-                    )}
-                </Box>
-
-                {/* Change password section */}
-                <Accordion
-                    disableGutters
-                    sx={{
-                        ...styles.accordionContainer,
-                        boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.08)",
-                        "&:before": {
-                            display: "none",
-                        },
-                    }}>
-                    <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        sx={{
-                            px: 0,
-                            minHeight: 0,
-                            width: "100%",
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            "& .MuiAccordionSummary-content": {
-                                margin: 0,
-                                width: "100%",
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center",
-                            },
-                            "& .MuiAccordionSummary-expandIconWrapper": {
-                                position: "absolute",
-                                right: 16,
-                            },
-                        }}>
-                        <Typography
-                            variant="h6"
-                            textAlign="center"
-                            fontWeight="bold"
-                            textTransform="uppercase"
-                            sx={{ color: "text.primary" }}>
-                            {t("profile.passwordSection")}
-                        </Typography>
-                    </AccordionSummary>
-                    <AccordionDetails sx={{ px: 0, pb: 0 }}>
-                        <FormCard
-                            id="password-form"
-                            sx={{
-                                border: "none",
-                                boxShadow: "none",
-                                width: "100%",
-                                maxWidth: "none",
-                                px: 0,
-                                py: 0,
-                            }}
-                            onSubmit={handlePasswordSubmit}
-                            error={passwordError}>
-                            {passwordSuccess && (
-                                <Typography variant="body2" color="success.main" textAlign="center">
-                                    {t("profile.passwordSuccess")}
-                                </Typography>
-                            )}
-                            <TextField
-                                placeholder={t("profile.currentPassword")}
-                                label={t("profile.currentPassword")}
-                                type="password"
-                                value={currentPassword}
-                                onChange={(e) => setCurrentPassword(e.target.value)}
-                                required
-                                fullWidth />
-                            <TextField
-                                placeholder={t("profile.newPassword")}
-                                label={t("profile.newPassword")}
-                                type="password"
-                                value={newPassword}
-                                onChange={(e) => setNewPassword(e.target.value)}
-                                required
-                                fullWidth />
-                            <TextField
-                                placeholder={t("register.confirmPassword")}
-                                label={t("register.confirmPassword")}
-                                type="password"
-                                value={confirmNewPassword}
-                                onChange={(e) => setConfirmNewPassword(e.target.value)}
-                                required
-                                fullWidth />
-
-                            <Box sx={{...styles.buttonContainer, mt: 1}}>
-                                <Button
-                                    type="submit"
-                                    form="password-form"
-                                    variant="contained"
-                                    fullWidth
-                                    disabled={passwordLoading}
-                                    sx={styles.submitButton}>
-                                    {t("profile.changePassword")}
-                                </Button>
-                            </Box>
-                        </FormCard>
-                    </AccordionDetails>
-                </Accordion>
-
-
-                <Box sx={{...styles.buttonContainer, mt: 1}}>
-                    <Button
-                        variant="outlined"
-                        fullWidth
-                        onClick={handleLogout}
-                        sx={styles.logoutButton}>
-                        {t("mainMenu.logout")}
-                    </Button>
-                </Box>
             </Box>
         </ViewContainer>
     );

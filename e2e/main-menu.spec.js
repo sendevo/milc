@@ -27,7 +27,8 @@ test.describe("Main menu", () => {
         await expect(page.getByText(/facilities/i)).toBeVisible();
     });
 
-    test("displays the My Account section", async ({ page }) => {
+    test("menu button opens the My Account side menu", async ({ page }) => {
+        await page.getByRole("button", { name: "menu" }).click();
         await expect(page.getByText(/my account/i)).toBeVisible();
         await expect(page.getByText(/my profile/i)).toBeVisible();
         await expect(page.getByText(/settings/i)).toBeVisible();
@@ -40,16 +41,19 @@ test.describe("Main menu", () => {
     });
 
     test("Settings button navigates to /config", async ({ page }) => {
+        await page.getByRole("button", { name: "menu" }).click();
         await page.getByText(/^settings$/i).click();
         await expect(page).toHaveURL(/\/config/);
     });
 
     test("My Profile button navigates to /profile", async ({ page }) => {
+        await page.getByRole("button", { name: "menu" }).click();
         await page.getByText(/my profile/i).click();
         await expect(page).toHaveURL(/\/profile/);
     });
 
     test("Information & Help button navigates to /info", async ({ page }) => {
+        await page.getByRole("button", { name: "menu" }).click();
         await page.getByText(/information/i).click();
         await expect(page).toHaveURL(/\/info/);
     });

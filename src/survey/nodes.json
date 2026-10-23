@@ -279,8 +279,8 @@
             {
                 "id": "view-120-alert",
                 "message": {
-                    "en": "<b>Attention</b><br>Weekly alert:<br>Clean the pen",
-                    "es": "<b>Atención</b><br>Alerta semanal:<br>Limpiá el corral"
+                    "en": "<b>Attention</b><br>Clean the pen",
+                    "es": "<b>Atención</b><br>Limpiá el corral"
                 },
                 "severity": "warning",
                 "type": "alert"
@@ -632,13 +632,21 @@
                             "en": "Fridge/pool (0-2 hours)",
                             "es": "Heladera/pileta (0-2 horas)"
                         },
-                        "target": "view-130",
+                        "target": "view-134",
                         "value": "up-to-2-hours"
                     },
                     {
                         "label": {
-                            "en": "Cold tank/fridge (2-48 hours)",
-                            "es": "Tanque frío/heladera (2-48 horas)"
+                            "en": "Cold tank (2-48 hours)",
+                            "es": "Tanque de frío (2-48 horas)"
+                        },
+                        "target": "view-134",
+                        "value": "cold-tank"
+                    },
+                    {
+                        "label": {
+                            "en": "Fridge (2-48 hours)",
+                            "es": "Heladera (2-48 horas)"
                         },
                         "target": "view-130",
                         "value": "up-to-48-hours"
@@ -2639,7 +2647,7 @@
                             "en": "No",
                             "es": "No"
                         },
-                        "target": "view-234",
+                        "target": "view-85",
                         "value": "no"
                     },
                     {
@@ -2732,7 +2740,8 @@
             "en": "Talk to your veterinary advisor",
             "es": "Hablá con tu asesor/a veterinario/a"
         },
-        "recommendation-view": "view-241"
+        "recommendation-view": "view-241",
+        "conditional": true
     },
     "view-235": {
         "category": "before-milking",
@@ -2840,7 +2849,7 @@
                             "en": "Manual",
                             "es": "Manual"
                         },
-                        "target": "view-user-profile-completed",
+                        "target": "view-milking-room",
                         "value": "manual"
                     },
                     {
@@ -3839,6 +3848,19 @@
                 },
                 "severity": "info",
                 "type": "alert"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Finish",
+                            "es": "Finalizar"
+                        },
+                        "target": "profile"
+                    }
+                ],
+                "id": "view-user-profile-completed-navigation",
+                "type": "bottom_navigation"
             }
         ],
         "severity": 0,
@@ -3853,8 +3875,8 @@
             {
                 "id": "view-33-alert",
                 "message": {
-                    "en": "Warning<br>Weekly alert:<br> clean the parlor",
-                    "es": "Atención<br>Alerta semanal:<br>limpiá la sala"
+                    "en": "<b>Attention</b><br>Clean the milking parlor",
+                    "es": "<b>Atención</b><br>Limpiá la sala"
                 },
                 "severity": "warning",
                 "type": "alert"
@@ -4902,11 +4924,31 @@
             {
                 "id": "view-85-alert",
                 "message": {
-                    "en": "Attention<br>Mastitis risk<br>Check and strip the teats",
-                    "es": "Atención<br>Riesgo de mastitis<br>Revisá y despuntá las ubres"
+                    "en": "<b>Attention</b><br>Mastitis risk<br>Check and strip the teats",
+                    "es": "<b>Atención</b><br>Riesgo de mastitis<br>Revisá y despuntá las ubres"
                 },
                 "severity": "warning",
                 "type": "alert"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Back",
+                            "es": "Atrás"
+                        },
+                        "target": "view-233"
+                    },
+                    {
+                        "label": {
+                            "en": "Next",
+                            "es": "Siguiente"
+                        },
+                        "target": "view-111"
+                    }
+                ],
+                "id": "view-85-navigation",
+                "type": "bottom_navigation"
             }
         ],
         "guide-id": "Inspección de ubres y despunte",
