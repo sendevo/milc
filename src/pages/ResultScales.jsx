@@ -114,7 +114,7 @@ const ResultScales = () => {
     return (
         <ViewContainer
             title={t("resultScales.title")}
-            onBack={() => navigate("/calendar")}  
+            onBack={() => navigate(`/log-menu?${searchParams.toString()}`)}
             showDate>
             <Box sx={styles.page}>
                 <Typography sx={{ alignSelf: "flex-start", mb: 1 }}>

@@ -453,16 +453,24 @@ export const getMilkingMethod = (records, nodes) => {
 
 /**
  * Returns the user's milking setup as the list of "milking-method" tokens it
- * matches: the method ("manual" | "mecanico" | "todos") and, for mechanical
- * milking, "con-sala" or "sin-sala" depending on the milking room answer.
+ * matches: the method ("manual" | "mecanico" | "todos") and, for either
+ * milking method, "con-sala" or "sin-sala" depending on the milking room answer.
  */
 export const getMilkingSetup = (records, nodes) => {
     const method = getMilkingMethod(records, nodes);
-    if (method !== "mecanico") return [method];
+    if (method === "todos") return [method];
 
+    const milkingMethodNodeId = findNodeIdByFieldId(nodes, "milk-select");
     const milkingRoomNodeId = findNodeIdByFieldId(nodes, "view-milking-room-select");
-    const roomAnswer = getLatestRecordByNodeId(records, milkingRoomNodeId)?.answer;
-    return [method, roomAnswer === "no" ? "sin-sala" : "con-sala"];
+    const methodRecord = getLatestRecordByNodeId(records, milkingMethodNodeId);
+    const roomRecord = getLatestRecordByNodeId(records, milkingRoomNodeId);
+    // Only a room answer given after the current milking method applies
+    const roomAnswer = roomRecord && (!methodRecord || roomRecord.timestamp >= methodRecord.timestamp)
+        ? roomRecord.answer
+        : undefined;
+    // Without an answer, mechanical milking keeps assuming a room and manual milking a pen
+    const hasRoom = roomAnswer === undefined ? method === "mecanico" : roomAnswer === "yes";
+    return [method, hasRoom ? "con-sala" : "sin-sala"];
 };
 
 export const buildSafetyData = (records, nodes, from, to, t) => {

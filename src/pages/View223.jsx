@@ -49,7 +49,11 @@ const View223 = () => {
             navigate(-resultsDepth);
             return;
         }
-        navigate("/survey/view-130");
+        // Keep the visited steps so the question's own back arrow still returns along the flow
+        const trail = Array.isArray(location.state?.trail) ? location.state.trail : [];
+        navigate("/survey/view-130", {
+            state: { trail: trail[trail.length - 1] === "view-130" ? trail.slice(0, -1) : trail },
+        });
     };
     const { i18n } = useTranslation();
     const { getCurrentDateTime } = useSettings();
@@ -60,7 +64,7 @@ const View223 = () => {
             return {
                 title: "Acondicionar la leche",
                 subtitle: "Rotular el envase",
-                milkingDate: "Fecha de ordeño",
+                milkingDate: "Fecha de guardado",
                 back: "Atrás",
             };
         }
@@ -68,7 +72,7 @@ const View223 = () => {
         return {
             title: "Milk conditioning",
             subtitle: "Label the container",
-            milkingDate: "Milking date",
+            milkingDate: "Storage date",
             back: "Back",
         };
     }, [isSpanish]);
@@ -79,6 +83,7 @@ const View223 = () => {
         <ViewContainer
             title={labels.title}
             subtitle={labels.subtitle}
+            onBack={handleBack}
             showDate={true}>
             <Box sx={containerStyles}>
                 <AudioList audios={LABELING_AUDIOS} />

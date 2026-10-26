@@ -88,6 +88,10 @@ export const resolveTarget = (node, answers, milkingMethod) => {
         }
         // For input fields (number_input, month_picker) with a target attribute
         else if (field.target) {
+            // A zero count can skip the follow-up meant for a positive count
+            if (node["next-if-zero"] && field.type === "number_input" && Number(fieldAnswer) === 0) {
+                return node["next-if-zero"];
+            }
             return field.target;
         }
     }

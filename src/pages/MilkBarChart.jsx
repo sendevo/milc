@@ -86,7 +86,7 @@ const MilkBarChart = () => {
                 <br />
                 ${t("milkBarChart.litersAnimal")} ${litersPerAnimal}
             `}
-            onBack={() => navigate("/calendar")}
+            onBack={() => navigate(`/log-menu?${searchParams.toString()}`)}
             showDate>
             <Box sx={styles.page}>
                 <Typography sx={styles.rangeText}>

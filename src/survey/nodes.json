@@ -418,7 +418,7 @@
         "guide-id": "Requisitos de limpieza del espacio de ordeño manual",
         "icon": "shroom.png",
         "manual-page": "12",
-        "milking-method": "manual,sin-sala",
+        "milking-method": "sin-sala",
         "modified": {
             "at": "2026-05-28T03:41:27.945Z",
             "by": "matias.micheletto@uns.edu.ar"
@@ -1077,7 +1077,8 @@
         "title": {
             "en": "Brucellosis",
             "es": "Brucelosis"
-        }
+        },
+        "next-if-zero": "view-255"
     },
     "view-182": {
         "category": "health",
@@ -1412,7 +1413,8 @@
         "title": {
             "en": "New animals",
             "es": "Nuevos animales"
-        }
+        },
+        "next-if-zero": "view-177"
     },
     "view-192": {
         "category": "health",
@@ -1553,7 +1555,7 @@
                             "en": "No",
                             "es": "No"
                         },
-                        "target": "view-200",
+                        "target": "view-199",
                         "value": "no"
                     },
                     {
@@ -1665,6 +1667,26 @@
                 },
                 "severity": "warning",
                 "type": "alert"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Back",
+                            "es": "Atrás"
+                        },
+                        "target": "view-196"
+                    },
+                    {
+                        "label": {
+                            "en": "Next",
+                            "es": "Siguiente"
+                        },
+                        "target": "view-200"
+                    }
+                ],
+                "id": "view-199-navigation",
+                "type": "bottom_navigation"
             }
         ],
         "guide-id": "Instalaciones",
@@ -1702,7 +1724,7 @@
                             "en": "No",
                             "es": "No"
                         },
-                        "target": "view-202",
+                        "target": "view-204",
                         "value": "no"
                     },
                     {
@@ -1822,7 +1844,7 @@
                             "en": "No",
                             "es": "No"
                         },
-                        "target": "view-263",
+                        "target": "view-205",
                         "value": "no"
                     },
                     {
@@ -1915,6 +1937,96 @@
             "en": "Milk conditioning room",
             "es": "Sala para acondicionar la leche"
         },
+        "title": {
+            "en": "Facilities",
+            "es": "Instalaciones"
+        }
+    },
+    "view-204": {
+        "category": "facilities",
+        "fields": [
+            {
+                "id": "view-204-alert",
+                "message": {
+                    "en": "<b>Attention</b><br>Check your facilities conditions",
+                    "es": "<b>Atención</b><br>Revisá las condiciones de tus instalaciones"
+                },
+                "severity": "warning",
+                "type": "alert"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Back",
+                            "es": "Atrás"
+                        },
+                        "target": "view-200"
+                    },
+                    {
+                        "label": {
+                            "en": "Next",
+                            "es": "Siguiente"
+                        },
+                        "target": "view-202"
+                    }
+                ],
+                "id": "view-204-navigation",
+                "type": "bottom_navigation"
+            }
+        ],
+        "guide-id": "Instalaciones",
+        "manual-page": "",
+        "milking-method": "",
+        "periodicity": "",
+        "scenario": "",
+        "score-answer": "",
+        "severity": 0,
+        "title": {
+            "en": "Facilities",
+            "es": "Instalaciones"
+        }
+    },
+    "view-205": {
+        "category": "facilities",
+        "fields": [
+            {
+                "id": "view-205-alert",
+                "message": {
+                    "en": "<b>Attention</b><br>Check your facilities conditions",
+                    "es": "<b>Atención</b><br>Revisá las condiciones de tus instalaciones"
+                },
+                "severity": "warning",
+                "type": "alert"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Back",
+                            "es": "Atrás"
+                        },
+                        "target": "view-202"
+                    },
+                    {
+                        "label": {
+                            "en": "Next",
+                            "es": "Siguiente"
+                        },
+                        "target": "view-263"
+                    }
+                ],
+                "id": "view-205-navigation",
+                "type": "bottom_navigation"
+            }
+        ],
+        "guide-id": "Instalaciones",
+        "manual-page": "",
+        "milking-method": "",
+        "periodicity": "",
+        "scenario": "",
+        "score-answer": "",
+        "severity": 0,
         "title": {
             "en": "Facilities",
             "es": "Instalaciones"
@@ -2807,7 +2919,8 @@
         "title": {
             "en": "Before milking",
             "es": "Antes de ordeñar"
-        }
+        },
+        "next-if-zero": "view-111"
     },
     "view-237": {
         "category": "before-milking",
@@ -3044,8 +3157,8 @@
         "severity": 3,
         "showDate": true,
         "subtitle": {
-            "en": "Were you fit to milk?",
-            "es": "¿Estabas en condiciones de ordeñar?"
+            "en": "Were you in good health to milk?",
+            "es": "¿Estabas en condiciones de salud para ordeñar?"
         },
         "title": {
             "en": "During milking",
@@ -3076,7 +3189,7 @@
                             "en": "No",
                             "es": "No"
                         },
-                        "target": "view-245",
+                        "target": "view-248",
                         "value": "no"
                     },
                     {
@@ -3137,7 +3250,7 @@
                             "en": "No",
                             "es": "No"
                         },
-                        "target": "view-63",
+                        "target": "view-249",
                         "value": "no"
                     },
                     {
@@ -3190,6 +3303,26 @@
                 },
                 "severity": "warning",
                 "type": "alert"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Back",
+                            "es": "Atrás"
+                        },
+                        "target": "view-244"
+                    },
+                    {
+                        "label": {
+                            "en": "Next",
+                            "es": "Siguiente"
+                        },
+                        "target": "view-245"
+                    }
+                ],
+                "id": "view-248-navigation",
+                "type": "bottom_navigation"
             }
         ],
         "guide-id": "Las personas involucradas en el tambo deben conocer y aplicar las indicaciones de salud",
@@ -3212,13 +3345,33 @@
         "category": "during-milking",
         "fields": [
             {
-                "id": "view-248-alert",
+                "id": "view-249-alert",
                 "message": {
                     "en": "<b>Attention</b><br>Check your hygiene",
                     "es": "<b>Atención</b><br>Revisá tu higiene"
                 },
                 "severity": "warning",
                 "type": "alert"
+            },
+            {
+                "buttons": [
+                    {
+                        "label": {
+                            "en": "Back",
+                            "es": "Atrás"
+                        },
+                        "target": "view-245"
+                    },
+                    {
+                        "label": {
+                            "en": "Next",
+                            "es": "Siguiente"
+                        },
+                        "target": "view-63"
+                    }
+                ],
+                "id": "view-249-navigation",
+                "type": "bottom_navigation"
             }
         ],
         "guide-id": "Las personas involucradas en el tambo deben conocer y aplicar las indicaciones de salud",
@@ -4071,8 +4224,8 @@
             {
                 "id": "view-247-alert",
                 "message": {
-                    "en": "Attention<br>Do not milk with sympthoms",
-                    "es": "Atención<br>No ordeñes con síntomas"
+                    "en": "<b>Attention</b><br>Do not milk with symptoms of an infectious disease",
+                    "es": "<b>Atención</b><br>No ordeñes con síntomas de enfermedad infectocontagiosa"
                 },
                 "severity": "warning",
                 "type": "alert"

@@ -3,6 +3,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useSurveyNodes } from "../hooks/useSurveyNodes";
 import { resolveTarget } from "../model";
+import { buildSurveyParents, resolveSurveyBack } from "../model/surveyNavigation";
 import { useSurveyLog } from "../hooks/useSurveyLog";
 import { useHerdInventory } from "../hooks/useHerdInventory";
 import SurveyStep from "../components/survey/SurveyStep";
@@ -107,6 +108,33 @@ const SurveyPage = () => {
     const { getCurrentDateTime } = useSettings();
 
     const node = nodes[nodeId];
+
+    // Views visited to get here, so the header arrow returns to the previous step of the flow
+    const trail = Array.isArray(location.state?.trail) ? location.state.trail : [];
+    const surveyParents = useMemo(() => buildSurveyParents(nodes), [nodes]);
+    const forwardState = {
+        trail: [...trail, nodeId],
+        ...(fromResults ? { resultsDepth: resultsDepth + 1 } : {}),
+    };
+    // A "Back" button to the step we came from returns to it instead of stacking a new step
+    const navigationStateFor = (target) => (
+        target === trail[trail.length - 1] && !fromResults
+            ? { trail: trail.slice(0, -1) }
+            : forwardState
+    );
+    const handleHeaderBack = () => {
+        if (fromResults) {
+            navigate(-1);
+            return;
+        }
+        const back = resolveSurveyBack(nodeId, trail, surveyParents, nodes);
+        if (back.route) {
+            navigate(back.route);
+            return;
+        }
+        navigate(`/survey/${back.view}`, { state: { trail: back.trail } });
+    };
+
     // Targets that lead back to a scored question (or home) from a guide view
     const isReturnTarget = (target) => target === "home" || Boolean(nodes[target]?.["score-answer"]);
     const SpecialSurveyView = getSpecialSurveyView(nodeId);
@@ -309,7 +337,7 @@ const SurveyPage = () => {
         if (targetId && !targetNode) {
             const targetSpecialView = getSpecialSurveyView(targetId);
             if (targetSpecialView) {
-                navigate(`/survey/${targetId}`);
+                navigate(`/survey/${targetId}`, { state: forwardState });
                 return;
             }
 
@@ -325,7 +353,11 @@ const SurveyPage = () => {
             return;
         }
 
-        navigate(targetId ? `/survey/${targetId}` : "/home");
+        if (!targetId) {
+            navigate("/home");
+            return;
+        }
+        navigate(`/survey/${targetId}`, { state: navigationStateFor(targetId) });
     };
 
     return (
@@ -335,10 +367,10 @@ const SurveyPage = () => {
             node={node}
             initialAnswers={initialAnswers}
             onSubmit={handleSubmit}
-            onBack={() => navigate(-1)}
+            onBack={handleHeaderBack}
             isReturnTarget={fromResults ? isReturnTarget : undefined}
             onReturn={returnToResults}
-            navigationState={fromResults ? { resultsDepth: resultsDepth + 1 } : undefined}
+            navigationState={navigationStateFor}
         />
     );
 };

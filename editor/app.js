@@ -1326,7 +1326,7 @@ function saveNode() {
 
         // Keep recommendation, conditional-scoring and method-branching data, which have no inputs in this form
         const previousNode = selectedNodeId ? nodes[selectedNodeId] : null;
-        for (const key of ['recommendation', 'recommendation-view', 'conditional', 'next-by-method']) {
+        for (const key of ['recommendation', 'recommendation-view', 'conditional', 'next-by-method', 'next-if-zero']) {
             if (previousNode?.[key] !== undefined) node[key] = previousNode[key];
         }
 

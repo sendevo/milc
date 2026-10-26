@@ -50,7 +50,7 @@ const ActivityLog = () => {
 	};
 
 	return (
-		<ViewContainer title={t("activityLog.title")} onBack={() => navigate(-1)}>
+		<ViewContainer title={t("activityLog.title")} onBack={() => navigate("/config")}>
 			<Box sx={styles.page}>
 				<TableContainer component={Paper} elevation={0} sx={styles.tableContainer}>
 					<Table size="small" stickyHeader>

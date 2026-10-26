@@ -52,7 +52,7 @@ import { NON_NODE_TARGET_ROUTES, DEV_TOOLS_ENABLED } from "../../constants";
  *   isReturnTarget — (target) => boolean  optional; bottom navigation targets
  *                                         for which onReturn is called instead
  *   onReturn — () => void                 optional; see isReturnTarget
- *   navigationState — object              optional router state for bottom navigation
+ *   navigationState — object or (target) => object  optional router state for bottom navigation
  */
 
 const inputFieldTypes = ["select", "number_input", "month_picker", "date_picker"];
@@ -209,7 +209,8 @@ const SurveyStep = ({ node, nodeId, initialAnswers = {}, onSubmit, onBack, isRet
                             }
                             const resolved = resolveNavigationTarget(target);
                             if (!resolved) return;
-                            navigate(resolved, { state: navigationState });
+                            const state = typeof navigationState === "function" ? navigationState(target) : navigationState;
+                            navigate(resolved, { state });
                         }} />
                 );
             default:

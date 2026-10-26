@@ -68,7 +68,7 @@ const ResultDetail = () => {
             node={node}
             initialAnswers={NO_ANSWERS}
             onSubmit={handleSubmit}
-            onBack={() => navigate(-1)}
+            onBack={() => navigate(`/resultscales?${searchParams.toString()}`)}
         />
     );
 };
